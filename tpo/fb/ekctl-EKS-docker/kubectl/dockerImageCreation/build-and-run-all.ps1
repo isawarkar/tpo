@@ -36,9 +36,9 @@ $ErrorActionPreference = "Stop"
 $accId = 542115677157
 $Region = "us-east-1"
 
-$BaseProjectPath = "D:\Mywork"
+$BaseProjectPath = "D:\latestworks\tpo"
 
-$DockerBasePath = "D:\Mywork\fb\ekctl-EKS-docker\kubectl\dockerImageCreation"
+$DockerBasePath = "D:\latestworks\tpo\fb\ekctl-EKS-docker\kubectl\dockerImageCreation"
 
 
 # ============================================================
