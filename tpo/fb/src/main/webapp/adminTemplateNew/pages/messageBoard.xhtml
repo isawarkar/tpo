@@ -1,0 +1,158 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<ui:composition template="adminLayoutNew.xhtml">
+	<ui:define name="content">
+		<ui:include src="/xhtml/collegeLookUp.xhtml" />
+		<ui:include src="attachments.xhtml" />
+
+		<section id="card-actions">
+			<!-- Info table about action starts -->
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-header">
+							<h4 class="card-title">#{fbresource['Message_Board']}</h4>
+							<a class="heading-elements-toggle"> <i
+								class='bx bx-dots-vertical font-medium-3' /></a>
+							<div class="heading-elements">
+								<ul class="list-inline mb-0">
+									<li><h:form>
+											<h:panelGroup id="bookmarkButtonPanel">
+												<o:commandLink id="bookmarkButton" execute="bookmarkButton"
+													render="bookmarkButtonPanel bookmarkList errorPanel"
+													actionListener="#{BookmarkBean.setBookmark}">
+													<f:param name="bookmarkName" value="messageBoard" />
+													
+													<i title="#{fbresource['bookmarkToolTip']}"
+														class="ficon bx #{BookmarkBean.getIcon('messageBoard')} warning" />
+												</o:commandLink>
+											</h:panelGroup>
+										</h:form></li>
+									<li><a data-action="collapse"> <i
+											class="bx bx-chevron-down" /></a></li>
+									<li><a data-action="expand"> <i
+											class="bx bx-fullscreen" /></a></li>
+									<li><a data-action="reload"> <i class="bx bx-revision" /></a></li>
+									<li><a data-action="close"> <i class="bx bx-x" /></a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="card-content collapse show">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="table-responsive">
+											<h:form id="ShortForm" enctype="multipart/form-data">
+												<table cellPadding="1" align="center">
+													<ui:include src="commonShort.xhtml" />
+													<tr>
+														<td>#{fbresource['Branch_List']}</td>
+														<td colspan="3"><o:twoListSelection
+																style="width: 100%;"
+																leftListboxHeader="#{fbresource['Available_Branch']}"
+																rightListboxHeader="#{fbresource['Applied_Branch']}"
+																value="#{ShortRecord.selectedBranchList}"
+																reorderingAllowed="false" sortingAllowed="false">
+																<c:forEach items="#{ShortRecord.branchList}"
+																	var="branch">
+																	<f:selectItem itemLabel="#{branch}"
+																		itemValue="#{branch}" />
+																</c:forEach>
+															</o:twoListSelection></td>
+													</tr>
+													<tr>
+														<td>#{fbresource['Email_From_List']}<font color="red">*</font>
+														</td>
+														<td colspan="3"><o:twoListSelection
+																style="width: 100%;"
+																leftListboxHeader="#{fbresource['Available_E_mails']}"
+																id="fromEmail"
+																rightListboxHeader="#{fbresource['Applied_E_mails']}"
+																required="true"
+																value="#{ShortRecord.selectedAdminFromList}"
+																reorderingAllowed="false" sortingAllowed="false">
+																<c:forEach items="#{ShortRecord.adminFromList}"
+																	var="fromEmail">
+																	<f:selectItem itemLabel="#{fromEmail}"
+																		itemValue="#{fromEmail}" />
+																</c:forEach>
+															</o:twoListSelection></td>
+													</tr>
+												</table>
+												<table align="center">
+													<tr>
+														<td><h:outputText styleClass="excelText"
+																title="#{fbresource['Please_select_this_check_box_if_you_want_to_send_only_message_without_Student_Latest_information']}"
+																value="#{fbresource['Send_Only_Message']}" /></td>
+														<td><h:selectBooleanCheckbox
+																title="#{fbresource['Please_select_this_check_box_if_you_want_to_send_only_message_without_Student_Latest_information']}"
+																value="#{ShortRecord.excelReport}" /></td>
+													</tr>
+													<tr>
+														<td><h:outputText styleClass="excelText"
+																value="#{fbresource['Include_Selected_Students']}" /></td>
+														<td><h:selectBooleanCheckbox
+																title="#{fbresource['Please_select_this_check_box_if_you_want_to_send_this_message_to_already_selected_students']}"
+																value="#{ShortRecord.allowSelected}" /></td>
+													</tr>
+												</table>
+												<table>
+													<tr>
+														<td>#{fbresource['Message']}<font color="red">*</font></td>
+														<td colspan="3"><h:inputTextarea required="true"
+																value="#{ShortRecord.studentMessage}"
+																id="studentMessage" width="400" height="270" /></td>
+													</tr>
+													<tr>
+														<td>#{fbresource['selectAttachment']}</td>
+														<td><h:commandButton type="button"
+																title="#{fbresource['selectAttachment']}"
+																image="/images/attachment-solid.png"
+																onclick="O$('AttachmentFormWindow').show();"
+																style="height:25x;width:25px;" /></td>
+													</tr>
+													<o:forEach items="#{EmailAttachmentBean.fileList}"
+														var="file">
+														<tr>
+															<td></td>
+															<td>#{file}</td>
+														</tr>
+													</o:forEach>
+												</table>
+
+												<table align="center" cellSpacing="15" width="150">
+													<tr>
+														<td><h:commandButton class="btn btn-primary glow"
+																title="#{fbresource['Click_here_to_Send_Message']}"
+																id="shortAllRecord"
+																value="#{fbresource['Send_Message']}"
+																action="#{ShortRecord.sendMessage}">
+																<o:confirmation id="buttonConfirmation"
+																	message="#{fbresource['It_can_take_time_to_send_message_for_large_numbers_of_Students']}"
+																	draggable="true" />
+															</h:commandButton></td>
+														<td><h:commandButton class="btn btn-primary glow"
+																type="reset" value="#{fbresource['Reset']}" /></td>
+													</tr>
+												</table>
+												<script>
+													CKEDITOR
+															.replace('ShortForm:studentMessage');
+												</script>
+											</h:form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</ui:define>
+</ui:composition>
+</html>

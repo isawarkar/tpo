@@ -1,0 +1,367 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<f:view locale="#{LanguageLocaleBean.locale}">
+	<f:loadBundle var="fbresource" basename="com.exam.fbresource" />
+	<title>#{fbresource['Online_Test']} #{QuestionBean.test}</title>
+	<h:head>
+		<!-- Style -->
+		<link href="/exam/css/StyleSheet.css" rel="stylesheet"
+			type="text/css" />
+		<link rel="stylesheet"
+			href="/exam/css/start/jquery-ui-1.10.3.custom.css" />
+		<script type="text/javascript" src="/exam/js/jquery-1.9.1.js"></script>
+		<script type="text/javascript"
+			src="/exam/js/jquery-ui-1.10.3.custom.js"></script>
+		<link href="/exam/css/CCP.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="/exam/js/CCP.js"></script>
+		<script src="/exam/js/blockUI.js"></script>
+		<script type="text/javascript"
+			src="/exam/js/jquery.countdownTimer.js"></script>
+		<link rel="stylesheet" type="text/css"
+			href="/exam/css/jquery.countdownTimer.css" />
+
+		<script>
+			$(function() {
+				$("input[type=submit],input[type=button],input[type=reset]")
+						.button().click(function(event) {
+
+						});
+			});
+			$(function() {
+				$("#dialog").dialog({
+					autoOpen : false,
+					width : 500,
+					show : {
+						effect : "blind",
+						duration : 1000
+					},
+					hide : {
+						effect : "explode",
+						duration : 2000
+					}
+				});
+			});
+			
+			$(function() {
+				$("#lastQuestion").dialog({
+					autoOpen : false,
+					width : 500,
+					show : {
+						effect : "blind",
+						duration : 1000
+					},
+					hide : {
+						effect : "explode",
+						duration : 2000
+					}
+				});
+			});
+			
+			$(function() {
+				$("#taggedQuestions").dialog({
+					autoOpen : false,
+					width : 500,
+					show : {
+						effect : "blind",
+						duration : 1000
+					},
+					hide : {
+						effect : "explode",
+						duration : 2000
+					}
+				});
+			});
+			
+		
+			function openIn() {
+				$("#dialog").dialog("open");
+			}
+			function closeTaggedQuestions() {
+			$("#taggedQuestions").dialog("close");
+			}
+		</script>
+	</h:head>
+	<center><div id="overlay"></div>
+	<div id="LoaderX" class="LX">
+		<div style="color: green; font-size: 25px; margin-left: 50px;"
+			id="LoaderContainer">
+			<img src='/exam/css/loading.gif' />
+		</div>
+	</div>
+	</center>
+	<h:body>
+		<h:form id="mainTest">
+			<div id="top_bg"></div>
+			<div id="Wrap">
+				<div id="Top">
+					<a href="#"><img style="margin-top: 10px"
+						src="/exam/images/FreshersBuddy.jpg"
+						title="#{fbresource['Connect_with_US']}" align="left" /></a> <img
+						style="margin-top: 16px;" height="34px;"
+						src="/exam/images/uddanda.jpg" title="Uddanda Technologies"
+						align="right" />
+					<FIELDSET style="margin-top: 70px;">
+						<LEGEND align="right">
+							<font color="red"> <IMG height="20px;" width="20px;"
+								title="#{fbresource['Questions_Tagged']}"
+								src="/exam/images/tag.png" /> = <h:outputText
+									title="Question's Tagged!" style="font-size: 40px;color: cyan;"
+									id="tagged" /></font> <font color="red">#{fbresource['Current_Question_No']}</font>
+							<h:outputText title="#{fbresource['Current_Question']}"
+								style="font-size: 40px;color: blue;" id="quesionNumber"
+								value="#{QuestionBean.questionNo}" />
+							<font color="red">#{fbresource['User_Name']}</font> <font
+								color="blue"><h:outputText
+									value="#{QuestionBean.loginName}" /></font>
+							<font color="red">#{fbresource['Test_Name']}</font> <font
+								color="blue"><h:outputText
+									style="text-transform: uppercase;" value="#{QuestionBean.test}" /></font>
+							<FONT color="red">#{fbresource['and_Started_Date_and_Time']}</FONT>
+							<FONT color="blue">#{QuestionBean.dateAndTime}</FONT> <FONT
+								color="red">#{fbresource['Timer_MM_SS']}</FONT> <span
+								title="#{fbresource['Timer_Time_in_minute_and_Second']}"
+								id="ms_timer"></span>
+						</LEGEND>
+						<table align="center" style="width: 100%;">
+							<tr>
+								<td><h:outputText id="message" value=""
+										styleClass="blinking"
+										style="background-color: #63D4F0;color: red;font-family: arial, helvetica, verdana, sans-serif;
+	font-size: 20px; " />
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2"><h:inputHidden id="questionType"
+										value="#{QuestionBean.questionType}" /> <h:inputHidden
+										id="numberOfquestions" value="#{QuestionBean.noOfQuestions}" />
+								</td>
+							</tr>
+							<tr>
+								<td align="top">
+									<table>
+										<tr align="top">
+											<td><h:panelGrid title="#{fbresource['Question']}">
+													<h:outputText style="color:green;" escape="true"
+														value="#{fbresource['Question']}" />
+													<h:outputLabel styleClass="questionClass" id="question"
+														escape="true" value="#{QuestionBean.question}" />
+													<img onclick="O$('mainTest:biggerPhoto').show();"
+														title="#{fbresource['Click_here_to']} #{fbresource['see_big_image_picture_photo']}"
+														onmouseout="O$('mainTest:biggerPhoto').hide();"
+														style="display: none;" id="imageText" src="" />
+												</h:panelGrid> <o:popupLayer id="biggerPhoto" left="100" top="10"
+													style="z-index: 100;">
+													<img onmouseout="O$('mainTest:biggerPhoto').hide();"
+														onclick="O$('mainTest:biggerPhoto').hide();" width="1100"
+														height="1000" id="imageText1" src="" />
+												</o:popupLayer></td>
+										</tr>
+
+										<tr id="OptionRow" inlineStyle="font-size: 10px;">
+											<td>
+												<table cellSpacing="0">
+													<tr>
+														<td>
+															<table styleClass="optionArea">
+																<tr>
+																	<td><h:outputLabel value="#{fbresource['A']}" /></td>
+																	<td><input type="radio" name="true" id="optionAR" />
+																	</td>
+																	<td><h:outputLabel id="optionAText" escape="true"
+																			value="#{QuestionBean.optionA}" /></td>
+																</tr>
+																<tr>
+																	<td><h:outputLabel value="#{fbresource['B']}" /></td>
+																	<td><input type="radio" name="true" id="optionBR" />
+																	</td>
+																	<td><h:outputLabel id="optionBText" escape="true"
+																			value="#{QuestionBean.optionB}" /></td>
+																</tr>
+																<tr>
+																	<td><h:outputLabel value="#{fbresource['C']}" /></td>
+																	<td><input type="radio" name="true" id="optionCR" />
+																	</td>
+																	<td><h:outputLabel id="optionCText" escape="true"
+																			value="#{QuestionBean.optionC}" /></td>
+																</tr>
+																<tr>
+																	<td><h:outputLabel value="#{fbresource['D']}" /></td>
+																	<td><input type="radio" name="true" id="optionDR" />
+																	</td>
+																	<td><h:outputLabel id="optionDText" escape="true"
+																			value="#{QuestionBean.optionD}" /></td>
+																</tr>
+															</table>
+														</td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<table cellSpacing="5">
+													<tr>
+														<td><h:commandButton
+																value="#{fbresource['Start_Exam']}"
+																rendered="#{!QuestionBean.submitButton}"
+																title="#{fbresource['Click_here_to']} #{fbresource['Start_Exam']}"
+																action="#{QuestionBean.startExam}" /></td>
+
+														<td><h:commandButton
+																value="#{fbresource['submit_next']}"
+																id="submitActionButton"
+																rendered="#{QuestionBean.submitButton}"
+																onclick="nextQuestion();"
+																title="#{fbresource['Click_here_submit_and_go_to_Next_Question']}"
+																type="button" /></td>
+														<td><h:commandButton value="#{fbresource['tag']}"
+																id="tagActionButton"
+																rendered="#{QuestionBean.submitButton}"
+																onclick="tagQuestion();"
+																title="#{fbresource['Click_here_to_Tag_the_Question_for_future_use']}"
+																type="button" /></td>
+
+														<td><h:commandButton type="button"
+																value="#{fbresource['Finish_Exam']}"
+																onclick="return setTimeTaken();"
+																title="#{fbresource['Click_here_to']} #{fbresource['Finish_Exam']}"
+																rendered="#{QuestionBean.finisButton}"
+																id="finishButtonAction">
+																<o:confirmation width="200px;"
+																	details="#{fbresource['Click_OK_to_Finish_Exam']}"
+																	id="buttonConfirmation"
+																	message="#{fbresource['Are_you__sure_you_want_to_Finish']}"
+																	draggable="true" />
+															</h:commandButton> <h:commandButton value="#{fbresource['Finish_Exam']}"
+																style="display:none;"
+																rendered="#{QuestionBean.finisButton}"
+																id="finishHiddenButtonAction"
+																action="#{QuestionBean.setResult}">
+															</h:commandButton> <h:outputText style="display:none;" id="hiddenMessgage1"
+																value="#{fbresource['hiddenMessgage1']}" /> <h:outputText
+																style="display:none;" id="hiddenMessgage2"
+																value="#{fbresource['hiddenMessgage2']}" /> <h:outputText
+																style="display:none;" id="Please_wait_for_result"
+																value="#{fbresource['Please_wait_for_result']}" /> <h:commandButton
+																value="" style="display:none;" id="sessionExpiredAction"
+																action="sessionExpiredAction" /></td>
+														<td><INPUT onclick="openIn();"
+															title="#{fbresource['Click_here_to_see_the_Exam_Instructions']}"
+															type="button" id="opener"
+															value="#{fbresource['Exam_Instructions_button']}" /></td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+										<tr>
+											<td><h:outputLabel escape="true"
+													rendered="#{QuestionBean.messageLabel}"
+													style="color: red;font-size:14px;"
+													value="#{fbresource['This_is_the_sample_Question_Please_read_exam_instructions_carefully_All_the_best']}" /></td>
+										</tr>
+										<tr>
+											<td><h:outputText
+													rendered="#{QuestionBean.negativeExam}"
+													style="background-color: red;"
+													value="#{fbresource['Note_This_exam_has_negative_marking']}" /></td>
+										</tr>
+									</table>
+								</td>
+								<td align="right">
+									<FIELDSET style="width: 200px; height: 450px; overflow: auto">
+										<LEGEND>
+											<FONT color="blue">#{fbresource['Total_Questions']} </FONT><FONT
+												style="font-size: 30px;" color="red">
+												#{QuestionBean.noOfQuestions}</FONT>
+										</LEGEND>
+										<div id="content">
+											<h:outputText value="#{QuestionBean.questionListLinks}"
+												escape="false" />
+										</div>
+										<font color="yellow"
+											title="#{fbresource['No_of_visited_but_not_submitted_questions']}">#{fbresource['Visited']}
+											<b><h:outputText id="visited" /></b>
+										</font><BR /> <font color="green"
+											title="#{fbresource['No_of_visited_and_submitted_questions']}">
+											#{fbresource['Submitted']}<b> <h:outputText
+													id="submitted" /></b>
+										</font><BR /> <font color="blue"
+											title="#{fbresource['No_of_not_visited_questions']}">
+											#{fbresource['Not_Visited']} <b> <h:outputText
+													id="notVisited" /></b>
+										</font><br /> <font color="cyan"
+											title="#{fbresource['No_of_visited_and_tagged_questions_but_not_submitted']}">#{fbresource['Tagged']}<b><h:outputText
+													id="tagged1" /></b></font><BR /> --------------------------------- <br />
+										<font color="red"> #{fbresource['Total_']}</font> <font
+											color="red">#{QuestionBean.noOfQuestions}</font><br />
+									</FIELDSET>
+								</td>
+
+							</tr>
+						</table>
+					</FIELDSET>
+				</div>
+			</div>
+			<o:popupMenu rendered="#{QuestionBean.submitButton}">
+				<o:menuItem iconUrl="/images/save-16x16.png"
+					value="#{fbresource['WarningRight_Click_is_now_allowed']}" />
+			</o:popupMenu>
+		</h:form>
+		<script>
+		 	startExamFirstQuestion();
+			var qLink = document.getElementById('Q1');
+			qLink.style.cssText = yellowVar;
+			var parentLi = qLink.parentNode;
+			parentLi.setAttribute("class", "activeYellow");
+			
+			  $(function(){
+                  $('#ms_timer').countdowntimer({
+                      minutes :#{QuestionBean.minute},
+                      seconds : 60,
+                      timeUp : overExam,
+                      size : "lg"
+                  });
+              });
+			  questionsList();
+			  
+			</script>
+		<div id="dialog" title="#{fbresource['Exam_Instructions_button']}"
+			style="width: 500px;">
+			<p>
+				<h:outputText escape="false"
+					value="#{fbresource['exam_instructions']}">
+				</h:outputText>
+			<center>
+				<font size="10" color="green"> #{fbresource['GOOD_LUCK']}</font><BR />
+			</center>
+			</p>
+		</div>
+
+		<div id="lastQuestion" title="Alert" style="width: 500px;">
+			<p>
+			<center>
+				<font size="10" color="green">
+					#{fbresource['This_is_the_last_question']}</font><BR />
+			</center>
+			</p>
+		</div>
+
+		<div id="taggedQuestions" title="Alert" style="width: 500px;">
+			<p>
+			<center>
+				<font size="5" color="green">#{fbresource['hiddenMessgage3']}<span
+					title="Question's Tagged!" style="font-size: 30px; color: cyan;"
+					id="tagged2"></span> #{fbresource['hiddenMessgage4']}
+				</font><BR /> <INPUT type="button" value="#{fbresource['Cancel']}"
+					onclick="closeTaggedQuestions()" /> <INPUT type="button"
+					value="#{fbresource['submit']}" onclick="submitYourExamNew()" />
+			</center>
+			</p>
+		</div>
+	</h:body>
+</f:view>
+</html>

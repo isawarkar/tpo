@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</h:head>
+<h:form id="QuestionWindowForm" enctype="multipart/form-data">
+
+	<o:window rendered="#{QuestionAddBean.questions ne null}" id="Question"
+		resizable="true" width="1050px" height="500px" styleClass="window"
+		caption="#{fbresource['Add_Update']}"
+		captionStyle="background: #bbbbbb;
+                            border-bottom: #e9e9e9 solid 1px;
+                            position: relative;
+                            padding: 0 0 0 6px;
+                            color: white;"
+		modal="true" modalLayerClass="modalLayer">
+
+		<o:captionArea>
+			<o:minimizeWindowButton minimizeImageUrl="/images/win_minimize.png"
+				restoreImageUrl="./images/win_restore.jpg" styleClass="customButton"
+				rolloverClass="buttonRollover" />
+			<o:maximizeWindowButton maximizeImageUrl="/images/win_maximize.png"
+				restoreImageUrl="images/win_restore.jpg" styleClass="customButton"
+				rolloverClass="buttonRollover" />
+			<o:closeWindowButton imageUrl="/images/win_close.png"
+				styleClass="customButton" rolloverClass="buttonRollover" />
+		</o:captionArea>
+		<ui:include src="/xhtml/errorPanel.xhtml" />
+
+		<h:panelGroup id="QuestionPanel">
+			<fieldset>
+				<legend>#{fbresource['Question']}
+					#{fbresource['ADD_OR_UPDATE']}</legend>
+				<table align="center" cellSpacing="2" width="100%">
+					<tr>
+						<td>#{fbresource['Exam_Name']}<font color="red">*</font></td>
+						<td><o:dropDownField id="testType" maxlength="50"
+								required="true" immediate="true" style="width: 200px;"
+								disabled="#{QuestionAddBean.currentDocMode eq 'Update'}"
+								listItemStyle="white-space: nowrap;"
+								suggestionMode="stringStart" var="testName"
+								value="#{QuestionAddBean.id.qtype}" suggestionMinChars="1">
+								<o:dropDownItems value="#{ExamTableBean.testList}" />
+								<o:column>
+									<h:outputText value="#{testName}"
+										styleClass="dropDownValuesClass" />
+								</o:column>
+							</o:dropDownField> <o:floatingIconMessage style="border-color: red;" for="examName"
+								showDetail="true" showSummary="false" /></td>
+					</tr>
+
+					<tr>
+						<td><f:verbatim
+								rendered="#{QuestionAddBean.currentDocMode eq 'Update'}">#{fbresource['Question_No']}<font
+									color="red">*</font>
+							</f:verbatim></td>
+						<td><h:inputText value="#{QuestionAddBean.id.qno}"
+								rendered="#{QuestionAddBean.currentDocMode eq 'Update'}"
+								disabled="true" id="QuestionNo" size="2" required="true"
+								requiredMessage="#{fbresource['Please_enter']} #{fbresource['Question_No']}">
+							</h:inputText> <o:floatingIconMessage style="border-color: red;"
+								for="QuestionNo" showDetail="true" showSummary="false" /></td>
+
+					</tr>
+					<tr>
+						<td><h:outputText value="#{fbresource['Assigned_No']}" /></td>
+						<td><h:inputText
+								value="#{QuestionAddBean.questions.assignedNo}" id="assignedNo"
+								size="6"
+								requiredMessage="#{fbresource['Please_enter']} #{fbresource['Assigned_No']}" /></td>
+					</tr>
+					<tr>
+						<td>#{fbresource['Select_File']}</td>
+
+						<td><h:inputFile id="uploadlble"
+								value="#{QuestionAddBean.file}" /> <o:dynamicImage
+								rendered="#{QuestionAddBean.questions.isImage eq true}"
+								onclick="O$('QuestionWindowForm:biggerPhoto').show();"
+								onmousemove="O$('QuestionWindowForm:biggerPhoto').show();"
+								onmouseout="O$('QuestionWindowForm:biggerPhoto').hide();"
+								alt="#{fbresource['Click_here_to_See_Full_Message']}"
+								id="dynamicImage" width="100" height="100"
+								data="#{QuestionAddBean.questions.imageBytes}" /> <o:popupLayer
+								id="biggerPhoto" left="448" top="20" style="z-index: 100;">
+								<o:dynamicImage
+									rendered="#{QuestionAddBean.questions.isImage eq true}"
+									width="400" height="440" alt="#{fbresource['Full_Image']}"
+									data="#{QuestionAddBean.questions.imageBytes}" />
+							</o:popupLayer></td>
+					</tr>
+					<tr>
+						<td>#{fbresource['Question']}<font color="red">*</font></td>
+						<td><h:inputTextarea
+								value="#{QuestionAddBean.questions.question}" id="Ques"
+								width="800" height="100" required="true"
+								requiredMessage="#{fbresource['Please_enter']} your question" />
+							<o:floatingIconMessage style="border-color: red;" for="Ques"
+								showDetail="true" showSummary="false" /></td>
+					</tr>
+					<tr>
+						<td>#{fbresource['Option_A']}<font color="red">*</font></td>
+						<td><h:inputTextarea
+								value="#{QuestionAddBean.questions.optiona}" id="OptionA"
+								width="800" height="100" required="true"
+								requiredMessage="#{fbresource['Please_enter']} your Option A" />
+							<o:floatingIconMessage style="border-color: red;" for="OptionA"
+								showDetail="true" showSummary="false" /></td>
+					</tr>
+					<tr>
+						<td>#{fbresource['Option_B']}<font color="red">*</font></td>
+						<td><h:inputTextarea
+								value="#{QuestionAddBean.questions.optionb}" id="OptionB"
+								width="800" height="100" required="true"
+								requiredMessage="#{fbresource['Please_enter']} your Option B" />
+							<o:floatingIconMessage style="border-color: red;" for="OptionB"
+								showDetail="true" showSummary="false" /></td>
+					</tr>
+					<tr>
+						<td>#{fbresource['Option_C']}<font color="red">*</font></td>
+						<td><h:inputTextarea
+								value="#{QuestionAddBean.questions.optionc}" id="OptionC"
+								width="800" height="100" required="true"
+								requiredMessage="#{fbresource['Please_enter']} your Option C" />
+							<o:floatingIconMessage style="border-color: red;" for="OptionC"
+								showDetail="true" showSummary="false" /></td>
+					</tr>
+					<tr>
+						<td>#{fbresource['Option_D']}<font color="red">*</font></td>
+						<td><h:inputTextarea id="optionDText"
+								value="#{QuestionAddBean.questions.optiond}" width="800"
+								height="100" required="true"
+								requiredMessage="#{fbresource['Please_enter']} your Option D" />
+							<o:floatingIconMessage style="border-color: red;" for="optionD"
+								showDetail="true" showSummary="false" /></td>
+					</tr>
+					<tr>
+						<td>#{fbresource['QType']}<font color="red">*</font></td>
+						<td><h:selectOneMenu
+								value="#{QuestionAddBean.questions.questionType}"
+								id="questionType" required="true"
+								requiredMessage="#{fbresource['Please_select']} #{fbresource['QType']}">
+								<f:selectItem itemLabel="#{fbresource['Single']}"
+									itemValue="Single" id="Single" />
+								<f:selectItem itemLabel="#{fbresource['Multiple']}"
+									itemValue="Multiple" id="Multiple" />
+								<f:selectItem itemLabel="#{fbresource['Compile']}"
+									itemValue="Compile" id="Compile" />
+							</h:selectOneMenu> <o:floatingIconMessage style="border-color: red;"
+								for="questionType" showDetail="true" showSummary="false" /></td>
+					</tr>
+					<tr>
+						<td>#{fbresource['Answer']}<font color="red">*</font></td>
+						<td><h:inputText value="#{QuestionAddBean.questions.answer}"
+								id="Answer1" required="true" maxlength="10"
+								requiredMessage="#{fbresource['Please_enter']} your Answer with coma , seprated value.">
+							</h:inputText> <o:floatingIconMessage style="border-color: red;" for="Answer1"
+								showDetail="true" showSummary="false" /></td>
+					</tr>
+				</table>
+				<table halign="left">
+					<tr>
+						<td><h:commandButton class="btn btn-primary glow"
+								value="#{fbresource['save']}"
+								title="#{fbresource['Please_click_here_save_data']}"
+								action="#{QuestionAddBean.insertQuestion}" /></td>
+						<td><h:commandButton class="btn btn-primary glow"
+								value="#{fbresource['Reset']}" type="reset"
+								rendered="#{QuestionAddBean.currentDocMode ne 'Update'}"
+								title="#{fbresource['Please_click_here_to_reset_form_values']}" /></td>
+						<td><h:commandButton class="btn btn-primary glow"
+								value="#{fbresource['Close']}" type="button"
+								onclick="O$('QuestionWindowForm:Question').hide();"
+								title="#{fbresource['Please_click_here_to_close']}" /></td>
+					</tr>
+				</table>
+			</fieldset>
+			<script>
+				CKEDITOR.replace('QuestionWindowForm:Ques');
+				CKEDITOR.replace('QuestionWindowForm:OptionA');
+				CKEDITOR.replace('QuestionWindowForm:OptionB');
+				CKEDITOR.replace('QuestionWindowForm:OptionC');
+				CKEDITOR.replace('QuestionWindowForm:optionDText');
+				function validateForm() {
+					var x = document
+							.getElementById("QuestionWindowForm:OptionA");
+					if ('' == x.value) {
+						alert("#{fbresource['Please_enter']} Question.");
+						return false;
+					}
+					x = document.getElementById("QuestionWindowForm:OptionA");
+					if (x.value == null || '' == x.value) {
+						alert("#{fbresource['Please_enter']} OptionA.");
+						return false;
+					}
+					x = document.getElementById("QuestionWindowForm:OptionB");
+					if (x.value == null || '' == x.value) {
+						alert("#{fbresource['Please_enter']} OptionB.");
+						return false;
+					}
+					x = document.getElementById("QuestionWindowForm:OptionC");
+					if (x.value == null || '' == x.value) {
+						alert("#{fbresource['Please_enter']} OptionC.");
+						return false;
+					}
+					x = document.getElementById("QuestionWindowForm:OptionA");
+					if (x.value == null || '' == x.value) {
+						alert("#{fbresource['Please_enter']} OptionD.");
+						return false;
+					}
+
+				}
+			</script>
+		</h:panelGroup>
+
+	</o:window>
+</h:form>
+</html>

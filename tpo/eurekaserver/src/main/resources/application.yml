@@ -1,0 +1,20 @@
+server:
+  port: 8761
+eureka:
+  client:
+   registerWithEureka: false
+   fetchRegistry: false
+   instance:
+    nonSecurePortEnabled: true
+    preferIpAddress: true
+security:
+  basic:
+    enabled: true
+  user:
+      name: indrajeet
+      password: teejardni
+management:
+  security:
+   enabled: true
+
+   

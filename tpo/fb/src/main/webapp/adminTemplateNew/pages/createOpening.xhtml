@@ -1,0 +1,69 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<tr>
+	<td>#{fbresource['Date_Of_Visit']} <font color="red">*</font></td>
+	<td><o:dateChooser pattern="dd/MM/yyyy" required="true"
+			buttonImageUrl="/images/calendar.gif"
+			value="#{ShortRecord.dateOfVisit}" id="dateofvisit">
+		</o:dateChooser> <o:floatingIconMessage style="border-color: red;" for="dateofvisit"
+			showDetail="true" showSummary="false" /></td>
+
+	<td>#{fbresource['Reporting_Time']}<font color="red">*</font></td>
+	<td><h:inputText required="true"
+			requiredMessage="#{fbresource['Please_enter']} #{fbresource['Reporting_Time']}"
+			id="time" size="5" value="#{ShortRecord.time}"
+			title="#{fbresource['Please_enter']} #{fbresource['Reporting_Time']}">
+		</h:inputText> <o:floatingIconMessage style="border-color: red;" for="time"
+			showDetail="true" showSummary="false" /></td>
+
+</tr>
+<tr>
+	<td>#{fbresource['lastDateToApply']} <font color="red">*</font></td>
+	<td><o:dateChooser pattern="dd/MM/yyyy" required="true"
+			buttonImageUrl="/images/calendar.gif"
+			value="#{ShortRecord.lastDateToApply}" id="lastDateToApply">
+		</o:dateChooser> <o:floatingIconMessage style="border-color: red;" for="dateofvisit"
+			showDetail="true" showSummary="false" /></td>
+	<td>#{fbresource['Package_Offering']}<font color="red">*</font></td>
+	<td><h:inputText required="true" maxlength="50"
+			requiredMessage="#{fbresource['Please_enter']} #{fbresource['Package_Offered_by_Company']}"
+			id="packageOffering" size="8" value="#{ShortRecord.packageOffering}"
+			title="#{fbresource['Please_enter']} #{fbresource['Package_Offered_by_Company']}">
+		</h:inputText> <o:floatingIconMessage style="border-color: red;"
+			for="packageOffering" showDetail="true" showSummary="false" /></td>
+</tr>
+
+<tr>
+	<td>#{fbresource['interviewLocation']} <font color="red">*</font></td>
+	<td><h:inputText required="true"
+			requiredMessage="#{fbresource['Please_enter']} #{fbresource['interviewLocation']}"
+			id="interviewLocation" value="#{ShortRecord.interviewLocation}"
+			title="#{fbresource['Please_enter']} #{fbresource['interviewLocation']}" />
+	</td>
+	<td>#{fbresource['postingLocation']} <font color="red">*</font></td>
+	<td><h:inputText required="true"
+			requiredMessage="#{fbresource['Please_enter']} #{fbresource['postingLocation']}"
+			id="postingLocation" value="#{ShortRecord.postingLocation}"
+			title="#{fbresource['Please_enter']} #{fbresource['postingLocation']}" /></td>
+</tr>
+<tr>
+	<td>#{fbresource['Role']} <font color="red">*</font></td>
+	<td><h:inputText required="true"
+			requiredMessage="#{fbresource['Please_enter']} #{fbresource['Role']}"
+			id="Role" value="#{ShortRecord.role}"
+			title="#{fbresource['Please_enter']} #{fbresource['Role']}" /></td>
+	<td>#{fbresource['AllowDigitalSignature']} <font color="red">*</font></td>
+	<td><h:selectOneMenu style="margin-top:2px;" required="true"
+			title="#{fbresource['Please_select']} #{fbresource['AllowDigitalSignature']}"
+			value="#{ShortRecord.allowDigitalSignature}"
+			id="allowDigitalSignature">
+			<f:selectItem itemValue="true" itemLabel="#{fbresource['YES']}" />
+			<f:selectItem itemValue="false" itemLabel="#{fbresource['NO']}" />
+		</h:selectOneMenu></td>
+</tr>
+
+</html>

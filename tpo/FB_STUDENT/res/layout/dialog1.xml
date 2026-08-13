@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <ImageView
+        android:id="@+id/sucessImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp" />
+
+    <TextView
+        android:id="@+id/sucessText"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/sucessImage"
+        android:textColor="#FF0000" />
+
+    <Button
+        android:id="@+id/sucessDialogButtonOK"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="120sp"
+        android:layout_marginTop="40sp"
+        android:layout_weight="0.20"
+        android:background="@drawable/gradient_lyout"
+        android:text="OK" />
+
+</RelativeLayout>

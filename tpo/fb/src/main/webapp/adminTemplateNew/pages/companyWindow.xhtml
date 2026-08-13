@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<h:form id="companyWindowForm" enctype="multipart/form-data">
+	<o:window rendered="#{CompanyBean.company ne null}" id="company"
+		resizable="true" width="1050px" height="500px"
+		caption="#{fbresource['Add_Update']}"
+		captionStyle="background: #bbbbbb;
+                            border-bottom: #e9e9e9 solid 1px;
+                            position: relative;
+                            padding: 0 0 0 6px;
+                            color: white;"
+		modal="true" modalLayerClass="modalLayer">
+
+		<o:captionArea>
+			<o:minimizeWindowButton minimizeImageUrl="/images/win_minimize.png"
+				restoreImageUrl="./images/win_restore.jpg" styleClass="customButton"
+				rolloverClass="buttonRollover" />
+			<o:maximizeWindowButton maximizeImageUrl="/images/win_maximize.png"
+				restoreImageUrl="images/win_restore.jpg" styleClass="customButton"
+				rolloverClass="buttonRollover" />
+			<o:closeWindowButton imageUrl="/images/win_close.png"
+				styleClass="customButton" rolloverClass="buttonRollover" />
+		</o:captionArea>
+		<ui:include src="/xhtml/errorPanel.xhtml" />
+
+		<fieldset>
+			<legend>#{fbresource['company']}
+				#{fbresource['ADD_OR_UPDATE']}</legend>
+			<table halign="center" cellPadding="2">
+				<tr>
+					<td>#{fbresource['Company_Name']}<font color="red">*</font></td>
+					<td><h:inputText
+							title="#{fbresource['Please_enter']} #{fbresource['Company_Name']}"
+							id="companyName" maxlength="150" required="true"
+							value="#{CompanyBean.company.companyname}"
+							requiredMessage="#{fbresource['Please_enter']} #{fbresource['Company_Name']}" />
+						<o:floatingIconMessage style="border-color: red;"
+							for="companyName" showDetail="true" showSummary="false" /></td>
+					<td>#{fbresource['Company_Logo']}</td>
+					<td><f:verbatim
+							rendered="#{CompanyBean.currentDocMode eq 'Update' or CompanyBean.currentDocMode eq 'View'}">
+						<img id="logoImage" style="height: 30px; width: 100px;"
+						src="#{parent.imageServiceUrl}/download/company/#{CompanyBean.company.companyID}.png" />
+
+						</f:verbatim> <h:inputFile rendered="#{CompanyBean.currentDocMode ne 'View'}"
+							value="#{CompanyBean.logo}" style="margin-left: 10;" id="logo" /></td>
+
+				</tr>
+				<tr>
+					<td>#{fbresource['E_mail']}<font color="red">*</font></td>
+					<td><h:inputText
+							title="#{fbresource['Please_enter']} #{fbresource['E_mail']}"
+							maxlength="100" required="true" size="30"
+							requiredMessage="#{fbresource['Please_enter']} #{fbresource['E_mail']}"
+							value="#{CompanyBean.company.email}" id="email">
+							<f:validator validatorId="EmailValidator" />
+						</h:inputText> <o:floatingIconMessage style="border-color: red;" for="email"
+							showDetail="true" showSummary="false" /></td>
+					<td>#{fbresource['Package_Offering']}</td>
+					<td><h:inputText
+							title="#{fbresource['Please_enter']} #{fbresource['Package_Offering']}"
+							maxlength="50" size="20"
+							value="#{CompanyBean.company.packageOffering}"
+							id="packageOffering" /> <o:floatingIconMessage
+							style="border-color: red;" for="packageOffering"
+							showDetail="true" showSummary="false" /></td>
+				</tr>
+				<tr>
+					<td>#{fbresource['Domain']}</td>
+					<td><h:inputText maxlength="500"
+							title="#{fbresource['Please_enter']} #{fbresource['Domain']}"
+							value="#{CompanyBean.company.domain}" id="Domain" /> <o:floatingIconMessage
+							style="border-color: red;" for="Domain" showDetail="true"
+							showSummary="false" /></td>
+					<td>#{fbresource['Website']}</td>
+					<td><h:inputText maxlength="500"
+							title="#{fbresource['Please_enter']} #{fbresource['Website']}"
+							value="#{CompanyBean.company.website}" id="Website" /> <o:floatingIconMessage
+							style="border-color: red;" for="Website" showDetail="true"
+							showSummary="false" /></td>
+				</tr>
+
+
+				<tr>
+					<td>#{fbresource['LinkedIN']}</td>
+					<td><h:inputText inlineStyle="margin-left:9px;"
+							maxlength="500"
+							title="#{fbresource['Please_enter']} #{fbresource['LinkedIN']}"
+							value="#{CompanyBean.company.linkedIn}" id="LinkedIN" /> <o:floatingIconMessage
+							style="border-color: red;" for="LinkedIN" showDetail="true"
+							showSummary="false" /></td>
+					<td>#{fbresource['Twiter']}</td>
+					<td><h:inputText maxlength="500"
+							title="#{fbresource['Please_enter']} #{fbresource['Twiter']}"
+							value="#{CompanyBean.company.twiter}" id="Twiter" /> <o:floatingIconMessage
+							style="border-color: red;" for="Twiter" showDetail="true"
+							showSummary="false" /></td>
+				</tr>
+
+
+				<tr>
+					<td>#{fbresource['Facebook']}</td>
+					<td><h:inputText inlineStyle="margin-left:9px;"
+							maxlength="500"
+							title="#{fbresource['Please_enter']} #{fbresource['Facebook']}"
+							value="#{CompanyBean.company.facebook}" id="Facebook" /> <o:floatingIconMessage
+							style="border-color: red;" for="Facebook" showDetail="true"
+							showSummary="false" /></td>
+					<td>#{fbresource['GlassDoor']}</td>
+					<td><h:inputText maxlength="500"
+							title="#{fbresource['Please_enter']} #{fbresource['GlassDoor']}"
+							value="#{CompanyBean.company.glassdoor}" id="GlassDoor" /> <o:floatingIconMessage
+							style="border-color: red;" for="GlassDoor" showDetail="true"
+							showSummary="false" /></td>
+				</tr>
+				<tr>
+					<td>#{fbresource['Profile']}</td>
+					<td colspan="5"><h:inputTextarea
+							inlineStyle="margin-left:9px;"
+							title="#{fbresource['Please_enter']} #{fbresource['Profile']}"
+							maxlength="5000" rows="3" value="#{CompanyBean.company.profile}"
+							id="Profile" /> <o:floatingIconMessage
+							style="border-color: red;" for="Profile" showDetail="true"
+							showSummary="false" /></td>
+				</tr>
+
+				<tr>
+					<td>#{fbresource['Remarks']}</td>
+					<td colspan="5"><h:inputTextarea
+							inlineStyle="margin-left:9px;"
+							title="#{fbresource['Please_enter']} #{fbresource['REMARK']}"
+							maxlength="5000" rows="3" value="#{CompanyBean.company.remarks}"
+							id="REMARK" /> <o:floatingIconMessage style="border-color: red;"
+							for="REMARK" showDetail="true" showSummary="false" /></td>
+				</tr>
+
+				<tr>
+					<td>#{fbresource['Last_Updated_By']}</td>
+					<td><h:outputText
+							rendered="#{CompanyBean.currentDocMode eq 'Update'}"
+							value="#{CompanyBean.company.createdBy}" /></td>
+				</tr>
+			</table>
+			<table halign="left">
+				<tr>
+					<td><o:commandButton styleClass="btn btn-primary glow"
+							value="#{fbresource['save']}"
+							rendered="#{CompanyBean.currentDocMode ne 'View'}"
+							title="#{fbresource['Please_click_here_save_data']}"
+							action="#{CompanyBean.addCompany}" /></td>
+					<td><h:commandButton class="btn btn-primary glow"
+							value="#{fbresource['Reset']}" type="reset"
+							rendered="#{CompanyBean.currentDocMode ne 'Update' and CompanyBean.currentDocMode ne 'View'}"
+							title="#{fbresource['Please_click_here_to_reset_form_values']}" /></td>
+					<td><h:commandButton class="btn btn-primary glow"
+							value="#{fbresource['Close']}" type="button"
+							onclick="O$('companyWindowForm:company').hide();"
+							title="#{fbresource['Please_click_here_to_close']}" /></td>
+				</tr>
+			</table>
+		</fieldset>
+	</o:window>
+	<script>
+		CKEDITOR.replace('companyWindowForm:REMARK');
+		CKEDITOR.replace('companyWindowForm:Profile');
+	</script>
+</h:form>
+</html>

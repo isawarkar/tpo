@@ -1,0 +1,346 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<ui:composition template="../pages/adminLayoutNew.xhtml">
+	<ui:define name="content">
+		<ui:include src="effortRemarksAndDescription.xhtml" />
+		<ui:include src="rejectWindow.xhtml" />
+		<section id="card-actions">
+			<!-- Info table about action starts -->
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-header">
+							<h4 class="card-title">#{fbresource['effort_List_Report']}</h4>
+							<a class="heading-elements-toggle"> <i
+								class='bx bx-dots-vertical font-medium-3' /></a>
+							<div class="heading-elements">
+								<ul class="list-inline mb-0">
+									<li><h:form>
+											<h:panelGroup id="bookmarkButtonPanel">
+												<o:commandLink id="bookmarkButton" execute="bookmarkButton"
+													render="bookmarkButtonPanel bookmarkList errorPanel"
+													actionListener="#{BookmarkBean.setBookmark}">
+													<f:param name="bookmarkName" value="effortsListReport" />
+													
+													<i title="#{fbresource['bookmarkToolTip']}"
+														class="ficon bx #{BookmarkBean.getIcon('effortsListReport')} warning" />
+												</o:commandLink>
+											</h:panelGroup>
+										</h:form></li>
+									<li><a data-action="collapse"> <i
+											class="bx bx-chevron-down" /></a></li>
+									<li><a data-action="expand"> <i
+											class="bx bx-fullscreen" /></a></li>
+									<li><a data-action="reload"> <i class="bx bx-revision" /></a></li>
+									<li><a data-action="close"> <i class="bx bx-x" /></a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="card-content collapse show">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="table-responsive">
+											<h:form rendered="#{AdminMenu.enableEffortSystemFlag}"
+												id="EffortReportForm">
+												<ui:include src="projectAndModuleInfo.xhtml" />
+												<table width="99%">
+													<tr>
+														<td><h:panelGroup id="advParent">
+																<table inlineStyle="color:green;" halign="left"
+																	cellSpacing="5">
+																	<tr>
+																		<td><h:outputText
+																				rendered="#{param['EffortReportForm:addvance'] eq null}"
+																				value="#{fbresource.Employee_Name}" /></td>
+																		<td><o:dropDownField
+																				rendered="#{param['EffortReportForm:addvance'] eq null}"
+																				id="employeeName" maxlength="50"
+																				style="width: 150px;"
+																				listItemStyle="white-space: nowrap;"
+																				suggestionMode="stringStart" var="employeeName"
+																				value="#{EffortReportTableBean.employeeName}"
+																				suggestionMinChars="1">
+																				<o:dropDownItems
+																					value="#{EffortReportTableBean.employeeNameList}" />
+																				<o:column>
+																					<h:outputText value="#{employeeName}"
+																						styleClass="dropDownValuesClass" />
+																				</o:column>
+																			</o:dropDownField></td>
+																		<td><h:outputText value="#{fbresource.Date}" /></td>
+																		<td><o:dateChooser pattern="dd/MM/yyyy" size="5"
+																				buttonImageUrl="/images/calendar.gif"
+																				immediate="true"
+																				title="#{common['Please_enter_date_in_dd_mm_yyyy_format']}"
+																				value="#{EffortReportTableBean.date}" id="date">
+																				<f:convertDateTime locale="in" pattern="dd/MM/yyyy" />
+																			</o:dateChooser></td>
+																		<td><h:outputText value="#{fbresource.to}" /></td>
+																		<td><o:dateChooser pattern="dd/MM/yyyy"
+																				buttonImageUrl="/images/calendar.gif"
+																				immediate="true"
+																				title="#{common['Please_enter_date_in_dd_mm_yyyy_format']}"
+																				value="#{EffortReportTableBean.toDate}" id="toDate">
+																				<f:convertDateTime locale="in" pattern="dd/MM/yyyy" />
+																			</o:dateChooser></td>
+																		<td align="right"><h:commandButton
+																				title="#{fbresource['Previous_Week']}"
+																				style="height:15px;margin-top:5px;"
+																				image="/images/pagination/previous.png"
+																				action="#{EffortReportTableBean.previousWeek}">
+																				<f:ajax
+																					execute="date toDate employeeName employeeName1 status"
+																					render="paginationTableContainner date toDate employeeName employeeName1 status" />
+																			</h:commandButton></td>
+																		<td><h:commandButton
+																				title="#{fbresource['Next_Week']}"
+																				image="/images/pagination/next.png"
+																				style="height:15px;margin-top:5px;"
+																				action="#{EffortReportTableBean.nextWeek}">
+																				<f:ajax
+																					execute="date toDate employeeName employeeName1 status"
+																					render="paginationTableContainner date toDate employeeName employeeName1 status" />
+																			</h:commandButton></td>
+																		<td><h:commandButton class="btn btn-primary glow"
+																				value="#{fbresource['search']}"
+																				title="#{fbresource['Click_here_to']} #{fbresource['Search_Record']}"
+																				action="#{EffortReportTableBean.searchRecord}" /></td>
+																		<td><h:commandButton class="btn btn-primary glow"
+																				value="#{fbresource['Approve']}"
+																				id="approveButtonAction"
+																				title="#{fbresource['Click_here_to']} #{fbresource['Approve']}"
+																				action="#{EffortTableBean.approveSeletedRecord}">
+																			</h:commandButton></td>
+																		<td><o:commandButton
+																				styleClass="btn btn-primary glow"
+																				value="#{fbresource['Reject']}"
+																				id="rejectButtonAction"
+																				action="#{EffortTableBean.beforeReject}"
+																				execute="effortListTable"
+																				render="EffortReportForm rejectWindowForm errorPanel"
+																				onajaxend="if(O$('rejectWindowForm:reason') != null){O$('rejectWindowForm:reason').show();}" />
+																		</td>
+																		<td><h:commandButton class="btn btn-primary glow"
+																				value="#{fbresource['delete']}"
+																				id="deleteButtonAction"
+																				title="#{fbresource['Click_here_to']} #{fbresource['delete']}"
+																				action="#{EffortTableBean.deleteSeletedRecord}">
+																				<o:confirmation id="buttonConfirmation"
+																					message="#{fbresource['Are_you__sure_you_want_to_delete']}"
+																					draggable="true" />
+																			</h:commandButton></td>
+																		<td><input type="button"
+																			value="#{fbresource['Print']}"
+																			class="btn btn-primary glow"
+																			title="#{fbresource['Click_here_to']} #{fbresource['Print']}"
+																			onClick="window.print()" /></td>
+																		<td><h:commandButton
+																				title="#{fbresource['Generate']} #{fbresource['Excel_report']}"
+																				value="#{fbresource['Excel_report']}"
+																				image="/images/excel_button.png"
+																				style="height:40px;width:40px;" id="generateXls"
+																				action="#{EffortReportTableBean.generateXls}" /></td>
+																		<td><h:commandButton
+																				title="#{fbresource['Generate']} #{fbresource['PDF_report']}"
+																				value="#{fbresource['PDF_report']}"
+																				image="/images/pdf_button.png"
+																				style="height:40px;width:40px;"
+																				action="#{EffortReportTableBean.generatePdfReport}" /></td>
+
+																	</tr>
+																	<tr>
+																		<td colspan="3"><h:outputText
+																				value="#{fbresource['Advanced_search']}" /> <h:selectBooleanCheckbox
+																				id="addvance"
+																				title="#{fbresource['Please_check_to_show_Advance_Search_fields']}">
+																				<o:ajax
+																					listener="#{RegistrationTableBean.setAdvSearch}"
+																					event="change" execute="addvance"
+																					render="advParent" />
+																			</h:selectBooleanCheckbox></td>
+																		<td></td>
+
+
+																	</tr>
+																	<TR>
+																		<td colspan="5"><h:panelGroup
+																				rendered="#{param['EffortReportForm:addvance'] eq 'on'}">
+																				<o:twoListSelection style="width: 100%;"
+																					id="employeeName1"
+																					leftListboxHeader="#{fbresource['Available_Branch']}"
+																					rightListboxHeader="#{fbresource['Applied_Branch']}"
+																					value="#{EffortReportTableBean.selectedEmpList}"
+																					reorderingAllowed="false" sortingAllowed="false">
+																					<c:forEach
+																						items="#{EffortReportTableBean.employeeNameList}"
+																						var="emp">
+																						<f:selectItem itemLabel="#{emp}"
+																							itemValue="#{emp}" />
+																					</c:forEach>
+																				</o:twoListSelection>
+																			</h:panelGroup></td>
+																		<td><h:outputLabel
+																				rendered="#{param['EffortReportForm:addvance'] eq 'on'}"
+																				value="#{fbresource['Status']}" /></td>
+																		<td><h:selectOneMenu id="status"
+																				rendered="#{param['EffortReportForm:addvance'] eq 'on'}"
+																				value="#{EffortReportTableBean.status}">
+																				<f:selectItem itemLabel="All" itemValue="" />
+																				<f:selectItem
+																					itemLabel="#{fbresource['effort_submitted']}"
+																					itemValue="S" />
+																				<f:selectItem
+																					itemLabel="#{fbresource['effort_rejected']}"
+																					itemValue="R" />
+																				<f:selectItem
+																					itemLabel="#{fbresource['effort_approved']}"
+																					itemValue="A" />
+																			</h:selectOneMenu></td>
+																	</TR>
+																</table>
+															</h:panelGroup></td>
+													</tr>
+												</table>
+												<h:panelGroup id="paginationTableContainner">
+													<h:outputText
+														rendered="#{EffortReportTableBean.totalEfforts > 0}"
+														style="color:green;"
+														value="#{fbresource['Total_Efforts']} = " />
+													<h:outputText
+														rendered="#{EffortReportTableBean.totalEfforts > 0}"
+														style="color:green;"
+														value="#{EffortReportTableBean.totalEfforts}" />
+													<o:dataTable id="effortListTable" var="effort"
+														value="#{EffortReportTableBean.effortsList}"
+														sortColumnId="effortid" sortAscending="true"
+														sortableHeaderRolloverStyle="background: #d4d4d4"
+														noDataRowStyle="color:red; font-weight:bold; font-size:20pt"
+														style="width: 100%; line-height: 17px;"
+														styleClass="datatable"
+														rolloverRowStyle="background: #f1f1f1;">
+														<o:multipleRowSelection
+															rowDatas="#{EffortTableBean.selectedEffortsList}"
+															style="background: #a4aec5; color: white;" />
+														<o:columnReordering />
+														<f:facet name="columnMenu">
+															<o:columnMenu />
+														</f:facet>
+														<o:selectionColumn style="width: 6%;" sortable="true"
+															header="#{fbresource['Selection']}">
+															<f:facet name="header">
+																<o:selectAllCheckbox />
+															</f:facet>
+														</o:selectionColumn>
+														<f:facet name="noDataMessage">
+															<h:outputText value="#{fbresource['no_data']}" />
+														</f:facet>
+														<o:column
+															rendered="#{AdminUser.role eq 'Super User' || AdminUser.role eq 'Admin'}"
+															header="#{fbresource['User_Name']}"
+															sortingExpression="#{effort.logindetails.userName}"
+															style="text-align: center;">
+								#{effort.logindetails.userName}
+							</o:column>
+														<o:column id="effortid" header="#{fbresource['effortid']}"
+															sortingExpression="#{effort.effortid}"
+															style="text-align: center;">
+								#{effort.effortid}
+							</o:column>
+														<o:column header="#{fbresource['Effort_Date']}"
+															sortingExpression="#{effort.sdate}"
+															style="text-align: center;">
+															<h:outputText value="#{effort.sdate}">
+																<f:convertDateTime pattern="dd/MM/yyyy" />
+															</h:outputText>
+														</o:column>
+														<o:column header="#{fbresource['Project_ID']}"
+															sortingExpression="#{effort.project}"
+															style="text-align: center;">
+															<o:commandLink style="color:blue;" id="projectValue"
+																value="#{effort.project}"
+																title="#{fbresource['Click_here_to_see_the_Project_Details']}"
+																actionListener="#{EffortTableBean.setProject}"
+																onajaxend="openProject();" render="projectInfo">
+															</o:commandLink>
+														</o:column>
+														<o:column header="#{fbresource['Module_id']}"
+															sortingExpression="#{effort.module}"
+															style="text-align: center;">
+															<o:commandLink style="color:blue;" id="moduleValue"
+																value="#{effort.module}"
+																title="#{fbresource['Click_here_to_see_the_Module_Details']}"
+																actionListener="#{EffortTableBean.setModule}"
+																onajaxend="openModule();" render="moduleInfo">
+															</o:commandLink>
+														</o:column>
+														<o:column header="#{fbresource['Time']}"
+															sortingExpression="#{effort.time}"
+															style="text-align: center;">
+								#{effort.time}
+							</o:column>
+														<o:column
+															header="#{fbresource['Description']}/#{fbresource['Remarks']}"
+															sortingExpression="#{effort.remarks}"
+															style="text-align: center;">
+															<o:commandLink
+																title="#{fbresource['click_here_to_see']} #{fbresource['Description']}/#{fbresource['Remarks']}"
+																actionListener="#{EffortReportTableBean.setData}"
+																onajaxend="document.getElementById('remarkAndDescButton').click();"
+																render="remarkAndDeacription"
+																style="font-size:20px;color:blue;"
+																id="remarksandDescription">
+																<f:param name="description"
+																	value="#{effort.description}" />
+																<f:param name="remark" value="#{effort.remarks}" />
+																#{fbresource['Click_here']}
+															</o:commandLink>
+														</o:column>
+														<o:column header="#{fbresource['Status']}"
+															sortingExpression="#{effort.status}"
+															style="text-align: center;">
+															<h:outputText rendered="#{effort.status eq 'S'}"
+																style="color:orange;"
+																value="#{fbresource['effort_submitted']}" />
+															<h:outputText rendered="#{effort.status eq 'R'}"
+																style="color:red;"
+																value="#{fbresource['effort_rejected']}" />
+															<h:outputText rendered="#{effort.status eq 'A'}"
+																style="color:green;"
+																value="#{fbresource['effort_approved']}" />
+														</o:column>
+														<o:column header="#{fbresource['Leave_Day']}"
+															sortingExpression="#{effort.leaveday}"
+															style="text-align: center;">
+															<h:outputText rendered="#{effort.leaveday eq 'F'}"
+																style="color:red;" value="#{fbresource['FullDay']}" />
+															<h:outputText rendered="#{effort.leaveday eq 'H'}"
+																style="color:red;" value="#{fbresource['HalfDay']}" />
+														</o:column>
+
+														<f:event listener="#{EffortReportTableBean.inIt}"
+															type="preRenderView" />
+													</o:dataTable>
+													<table align="right">
+														<tr>
+															<td><ui:include src="/xhtml/pagination.xhtml" /></td>
+														</tr>
+													</table>
+												</h:panelGroup>
+											</h:form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,78 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.2.xsd 
+    http://www.springframework.org/schema/tx 
+    http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<!-- Hibernate session factory -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.connection.useUnicode">true</prop>
+				<prop key="hibernate.connection.characterEncoding">UTF-8</prop>
+				<prop key="hibernate.connection.charSet">UTF-8</prop>
+				<prop key="c3p0.acquire_increment">1</prop>
+				<prop key="c3p0.idle_test_period">100</prop>
+				<prop key="c3p0.max_size">100</prop>
+				<prop key="c3p0.max_statements">100</prop>
+				<prop key="c3p0.min_size">10</prop>
+				<prop key="c3p0.timeout">100</prop>
+			</props>
+		</property>
+
+		<property name="mappingResources">
+			<list>
+
+				<value>com/student/hibernate/Achivements.hbm.xml</value>
+				<value>com/student/hibernate/Backdetails.hbm.xml</value>
+				<value>com/student/hibernate/College.hbm.xml</value>
+				<value>com/student/hibernate/Company.hbm.xml</value>
+				<value>com/student/hibernate/Contactinfo.hbm.xml</value>
+				<value>com/student/hibernate/Exam.hbm.xml</value>
+				<value>com/student/hibernate/HallTicket.hbm.xml</value>
+				<value>com/student/hibernate/HallTicketConnect.hbm.xml</value>
+				<value>com/student/hibernate/Logindetails.hbm.xml</value>
+				<value>com/student/hibernate/Notice.hbm.xml</value>
+				<value>com/student/hibernate/Percentageinfo.hbm.xml</value>
+				<value>com/student/hibernate/Personalinfo.hbm.xml</value>
+				<value>com/student/hibernate/Questions.hbm.xml</value>
+				<value>com/student/hibernate/Registration.hbm.xml</value>
+				<value>com/student/hibernate/Result.hbm.xml</value>
+				<value>com/student/hibernate/Userdetails.hbm.xml</value>
+
+			</list>
+		</property>
+		<property name="annotatedClasses">
+			<list>
+				<value>com.annotation.SessionData</value>
+				<value>com.annotation.ReferralHistory</value>
+				<value>com.annotation.CommonData</value>
+				<value>com.annotation.DocumentList</value>
+				<value>com.annotation.StudentFeeDetails</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager"
+		p:sessionFactory-ref="sessionFactory">
+	</bean>
+
+	<tx:annotation-driven
+		transaction-manager="transactionManager" />
+	<context:annotation-config />
+
+
+</beans>    

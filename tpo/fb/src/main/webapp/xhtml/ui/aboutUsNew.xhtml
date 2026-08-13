@@ -1,0 +1,171 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<ui:composition template="/templateNew/layout.xhtml">
+	<ui:define name="content">
+		<ui:include src="/xhtml/allPopUps.xhtml" />
+		<h:form id="aboutUsNew">
+			<div class="page-content bg-white">
+				<!-- Page Heading Box ==== -->
+				<div class="page-banner ovbl-dark"
+					style="background-image: url(/FB/theme/assets/images/about/back.jpg);">
+					<div class="container">
+						<div class="page-banner-entry">
+							<h1 class="text-white">#{fbresource['Freshers_Buddy']}</h1>
+						</div>
+					</div>
+				</div>
+				<!-- Page Heading Box END ==== -->
+				<!-- Page Content Box ==== -->
+				<div class="content-block">
+					<!-- Why Choose ==== -->
+					<div class="section-area bg-gray section-sp2 choose-bx">
+						<div class="container">
+							<div class="row">
+								<div class="col-md-12 heading-bx text-center">
+									<h2 class="title-head text-uppercase m-b0">
+										#{fbresource['why_Choose']} <span> #{fbresource['fb']}</span>
+									</h2>
+								</div>
+							</div>
+							<div class="row choose-bx-in" style="margin-top: 20px;">
+								<div class="col-lg-4 col-md-4 col-sm-6">
+									<div class="service-bx">
+										<div class="action-box">
+											<img src="/FB/theme/assets/images/about/campus.jpg" alt="" />
+										</div>
+										<div class="info-bx text-center">
+											<div class="feature-box-sm radius bg-white">
+												<i class="fa fa-bank text-primary"></i>
+											</div>
+											<h4>
+												<a href="#">#{fbresource['campus_selection']}</a>
+											</h4>
+											<div
+												class="section-area section-sp5 ovpr-dark bg-fix online-cours">
+												<div class="container">
+													<div class="mw800 m-auto">
+														<div class="cours-search-bx m-b30">
+															<div class="icon-box">
+																<h3>
+																	<i class="ti-crown"></i><span class="counter">#{CommonDBBean.studentSelection}</span>+
+																</h3>
+															</div>
+															<span class="cours-search-text">#{fbresource['morethan']}
+																#{CommonDBBean.studentSelection}+
+																#{fbresource['campus_selection']}</span>
+														</div>
+													</div>
+												</div>
+											</div>
+											<a href="#" class="btn radius-xl">#{fbresource['View_More']}</a>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-4 col-md-4 col-sm-6">
+									<div class="service-bx">
+										<div class="action-box">
+											<img src="/FB/theme/assets/images/about/test.jpg" alt="" />
+										</div>
+										<div class="info-bx text-center">
+											<div class="feature-box-sm radius bg-white">
+												<i class="fa fa-book text-primary"></i>
+											</div>
+											<h4>
+												<a href="#">#{fbresource['Take_Online_Assessments']}</a>
+											</h4>
+											<div
+												class="section-area section-sp5 ovpr-dark bg-fix online-cours">
+												<div class="container">
+													<div class="mw800 m-auto">
+														<div class="cours-search-bx m-b30">
+															<div class="icon-box">
+																<h3>
+																	<i class="ti-user"></i><span class="counter">#{CommonDBBean.examCount}</span>+
+																</h3>
+															</div>
+															<span class="cours-search-text">#{fbresource['morethan']}
+																#{CommonDBBean.examCount}+
+																#{fbresource['Online_Test']}</span>
+														</div>
+													</div>
+												</div>
+											</div>
+											<a href="#" class="btn radius-xl">#{fbresource['View_More']}</a>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-4 col-md-4 col-sm-6">
+									<div class="service-bx">
+										<div class="action-box">
+											<img src="/FB/theme/assets/images/about/campus.jpg" alt="" />
+										</div>
+										<div class="info-bx text-center">
+											<div class="feature-box-sm radius bg-white">
+												<i class="fa fa-bank text-primary"></i>
+											</div>
+											<h4>
+												<a href="#">#{fbresource['campus_selection']}</a>
+											</h4>
+											<div
+												class="section-area section-sp5 ovpr-dark bg-fix online-cours">
+												<div class="container">
+													<div class="mw800 m-auto">
+														<div class="cours-search-bx m-b30">
+															<div class="icon-box">
+																<h3>
+																	<i class="ti-crown"></i><span class="counter">#{CommonDBBean.studentSelection}</span>+
+																</h3>
+															</div>
+															<span class="cours-search-text">#{fbresource['morethan']}
+																#{CommonDBBean.studentSelection}+
+																#{fbresource['campus_selection']}</span>
+														</div>
+													</div>
+												</div>
+											</div>
+											<a href="#" class="btn radius-xl">#{fbresource['View_More']}</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Why Choose END ==== -->
+					<!--Count ==== -->
+					<ui:include src="/xhtml/ui/count.xhtml" />
+					<!-- Count Stats END ==== -->
+					<!-- Our Story ==== -->
+					<div class="section-area bg-gray section-sp1 our-story">
+						<div class="container">
+							<div class="row align-items-center d-flex">
+								<div class="col-lg-5 col-md-12 heading-bx">
+									<h2 class="m-b10">Our Story</h2>
+									<h5 class="fw4">It is a long established fact that a
+										reade.</h5>
+									<p>#{fbresource['about_fb']}</p>
+									<a href="#" class="btn">#{fbresource['Read_More']}</a>
+								</div>
+								<div class="col-lg-7 col-md-12 heading-bx p-lr">
+									<div class="video-bx">
+										<img src="/FB/theme/assets/images/about/pic1.jpg" alt="" />
+										<a href="https://www.youtube.com/watch?v=x_sJzVe9P_8"
+											class="popup-youtube video"><i class="fa fa-play"></i></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Our Story END ==== -->
+
+					<ui:include src="/xhtml/ui/whatPeopleSay.xhtml" />
+				</div>
+				<!-- Page Content Box END ==== -->
+			</div>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

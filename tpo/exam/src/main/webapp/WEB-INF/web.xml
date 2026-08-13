@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
+	<session-config>
+		<session-timeout>5</session-timeout>
+	</session-config>
+	<context-param>
+		<param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<!-- <context-param> <param-name>log4jConfigLocation</param-name> <param-value>/WEB-INF/log4j.xml</param-value> 
+		</context-param> <listener> <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class> 
+		</listener> -->
+	<context-param>
+		<param-name>org.jboss.jbossfaces.WAR_BUNDLES_JSF_IMPL</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<param-name>javax.faces.PROJECT_STAGE</param-name>
+		<param-value>Production</param-value>
+	</context-param>
+	<context-param>
+		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+		<param-value>server</param-value>
+	</context-param>
+	<context-param>
+		<description>This parameter specifies the way of session expiration handling.
+      Possible values:
+      default - the confirmation that asks the user to reload the page appears when the current session is expired.
+      silent - the page is reloaded when the current session is expired.
+    </description>
+		<param-name>org.openfaces.ajax.sessionExpiration</param-name>
+		<param-value>default</param-value>
+	</context-param>
+	<context-param>
+		<param-name>javax.faces.DEFAULT_SUFFIX</param-name>
+		<param-value>.xhtml</param-value>
+	</context-param>
+	<context-param>
+		<description>This flag indicates whether client-side validation for the application is enabled.
+      Possible values:
+      onSubmit - Client-side validation is enabled for all the components within the application
+      and is triggered automatically before each form submission.
+      onDemand - Client-side validation is enabled for all the components within the application,
+      but is not triggered automatically.
+      off - Client-side validation is turned off for the application. This is the default value.
+    </description>
+		<param-name>org.openfaces.validation.clientValidation</param-name>
+		<param-value>onSubmit</param-value>
+	</context-param>
+	<context-param>
+		<description>This flag indicates whether the OpenFaces validation
+      for the entire application is disabled. The default is &quot;false&quot;.
+      If the org.openfaces.validation.disabled property is set to &quot;true&quot;, all OpenFaces validation features
+      are disabled. This property can be used for debugging purposes.
+    </description>
+		<param-name>org.openfaces.validation.disabled</param-name>
+		<param-value>false</param-value>
+	</context-param>
+	<context-param>
+		<description>This flag indicates whether validatable components use the default presentation
+      if no validation or conversion error presentation is set for these components.
+      This property is relevant when client-side validation is enabled for the application.
+    </description>
+		<param-name>org.openfaces.validation.useDefaultClientPresentation</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<description>This flag indicates whether validatable components use the default presentation
+      if no validation or conversion error presentation is set for these components.
+      This property is relevant when client-side validation is disabled for the application.
+    </description>
+		<param-name>org.openfaces.validation.useDefaultServerPresentation</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<description>The full class name of the component that will be used as a default validation
+      presentation component. The component should extend the UIMessage class.
+      If this parameter is omitted, the FloatingIconMessage component is used as
+      a default validation presentation component.
+    </description>
+		<param-name>org.openfaces.validation.defaultPresentationClass</param-name>
+		<param-value>org.openfaces.component.validation.FloatingIconMessage</param-value>
+	</context-param>
+	<context-param>
+		<description>This flag indicates whether the focus is saved between form submissions
+      for all application pages. The default is &quot;false&quot;.
+    </description>
+		<param-name>org.openfaces.autoSaveFocus</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<description>This flag indicates whether the scroll position is tracked for
+      all application pages. The default is &quot;false&quot;.
+    </description>
+		<param-name>org.openfaces.autoSaveScrollPos</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.jsf</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.faces</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.xhtml</url-pattern>
+	</servlet-mapping>
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+	<!-- <filter>
+		<filter-name>login</filter-name>
+		<filter-class>tpo.login.LoginFilter</filter-class>
+		<init-param>
+			<param-name>startURL</param-name>
+			<param-value>sessionInvalidated.faces</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>login</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping> -->
+	<servlet>
+		<servlet-name>SubmitQuestion</servlet-name>
+		<servlet-class>com.servlet.SubmitQuestion</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SubmitQuestion</servlet-name>
+		<url-pattern>/servlet/SubmitQuestion</url-pattern>
+	</servlet-mapping>
+	
+</web-app>

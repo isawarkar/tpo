@@ -1,0 +1,47 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<button style="display: none" id="remarkAndDescButton" type="button"
+	data-toggle="modal" data-target="#remarkAndDesc" />
+<div class="modal fade text-left" id="remarkAndDesc" tabindex="-1"
+	role="dialog" aria-labelledby="myModalLabel160" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+		role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-primary">
+				<h5 class="modal-title white" id="myModalLabel160">#{fbresource['Description']}/#{fbresource['Remarks']}</h5>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<i class="bx bx-x"></i>
+				</button>
+			</div>
+			<div class="modal-body">
+				<h:panelGroup id="remarkAndDeacription">
+					<center>
+						<table border="1">
+							<th>#{fbresource['Description']}</th>
+							<th>#{fbresource['Remarks']}</th>
+							<tr>
+								<td><h:outputText escape="false"
+										value="#{EffortReportTableBean.description}" /></td>
+								<td><h:outputText escape="false"
+										value="#{EffortReportTableBean.remarks}" /></td>
+							</tr>
+						</table>
+					</center>
+				</h:panelGroup>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-light-secondary"
+					data-dismiss="modal">
+					<i class="bx bx-x d-block d-sm-none"></i> <span
+						class="d-none d-sm-block">Close</span>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+</html>

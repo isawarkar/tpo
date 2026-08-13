@@ -1,0 +1,61 @@
+spring:
+  application:
+    name: fb
+  main:
+    allow-bean-definition-overriding: true
+  profiles:
+    active: prod
+
+management:
+  security:
+    enabled: false
+
+logging:
+  level:
+    root: INFO
+
+---
+
+spring:
+  profiles: dev
+
+server:
+  address: localhost
+  port: 8080
+
+eureka:
+  client:
+    healthcheck:
+      enabled: true
+    serviceUrl:
+      defaultZone: http://host.docker.internal:8761/eureka
+  instance:
+    statusPageUrl: http://localhost:8080/FB/actuator/health
+    healthCheckUrl: http://localhost:8080/FB/actuator/health
+    homePageUrl: http://localhost:8080/FB/index.faces
+    ip-address: ${server.address}:${server.port}
+    nonSecurePortEnabled: true
+    preferIpAddress: true
+
+---
+
+spring:
+  profiles: prod
+
+server:
+  address: 0.0.0.0  # ✅ Bind to all interfaces, better for EKS
+  port: 8080
+
+eureka:
+  client:
+    healthcheck:
+      enabled: true
+    serviceUrl:
+      defaultZone: http://54.152.32.45:8761/eureka
+  instance:
+    statusPageUrl: https://www.fresherbuddy.in/FB/actuator/health
+    healthCheckUrl: https://www.fresherbuddy.in/FB/actuator/health
+    homePageUrl: https://www.fresherbuddy.in/
+    ip-address: ${server.address}
+    nonSecurePortEnabled: true
+    preferIpAddress: true

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<bean id="runBackUP"  class="tpo.admin.backup.CollegeConnectBackUp">
+	   <property name="commonDBBean" ref="CommonDBBean" /> 
+	</bean>
+	<bean id="runBackUPJob"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+
+		<property name="targetObject" ref="runBackUP" />
+		<property name="targetMethod" value="doBackup" />
+
+	</bean>
+
+	<!-- Cron Trigger -->
+	<bean id="cronTriggerDay" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="runBackUPJob" />
+		<property name="cronExpression" value="${cronExpression}" />
+	</bean>
+	
+	
+	<bean id="runHeapCheckJob"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="runBackUP" />
+		<property name="targetMethod" value="checkHeapSize" />
+	</bean>
+
+	<!-- Simple Trigger -->
+	<bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+		<property name="jobDetail" ref="runHeapCheckJob" />
+		<property name="repeatInterval" value="600000" />
+		<property name="startDelay" value="1000" />
+	</bean>
+
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="jobDetails">
+			<list>
+				<ref bean="runBackUPJob" />
+				<ref bean="runHeapCheckJob" />
+			</list>
+		</property>
+
+		<property name="triggers">
+			<list>
+			    <ref bean="cronTriggerDay" />
+			</list>
+		</property>
+	</bean>
+</beans>

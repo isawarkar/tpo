@@ -1,0 +1,389 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<tr>
+	<td>#{fbresource['Graduation_percent']}</td>
+	<td><h:inputText value="#{ShortRecord.graduation}"
+			title="#{fbresource['Please_enter']} #{fbresource['Graduation_percent']} #{fbresource['It_should_be_numeric']}"
+			size="2" id="Graduation" maxlength="5">
+			<f:validateDoubleRange minimum="0.0" maximum="99.99" />
+		</h:inputText></td>
+	<td>#{fbresource['Post_Graduation_percent']}</td>
+	<td><h:inputText value="#{ShortRecord.postGradustion}"
+			title="#{fbresource['Please_enter']} #{fbresource['Post_Graduation_percent']} #{fbresource['It_should_be_numeric']}"
+			size="2" id="postGraduation" maxlength="5">
+			<f:validateDoubleRange minimum="0.0" maximum="99.99" />
+		</h:inputText></td>
+</tr>
+
+<tr>
+	<td>#{fbresource['High_School']}</td>
+	<td><h:inputText style="margin-top:2px;"
+			value="#{ShortRecord.highSchool}"
+			title="#{fbresource['Please_enter']} #{fbresource['High_School']} #{fbresource['It_should_be_numeric']}"
+			size="2" id="X" maxlength="5">
+			<f:validateDoubleRange minimum="0.0" maximum="99.99" />
+		</h:inputText></td>
+	<td>#{fbresource['Higher_Secondary']}</td>
+	<td><h:inputText value="#{ShortRecord.higherSecondary}"
+			title="#{fbresource['Please_enter']} #{fbresource['Higher_Secondary']} #{fbresource['It_should_be_numeric']}"
+			size="2" id="XII" maxlength="5">
+			<f:validateDoubleRange minimum="0.0" maximum="99.99" />
+		</h:inputText></td>
+</tr>
+
+<tr>
+	<td>#{fbresource['Present_Backlog']}</td>
+	<td><h:selectOneMenu
+			title="#{fbresource['Please_select']} #{fbresource['Present_Backlog']}"
+			value="#{ShortRecord.presentBacklog}" id="presentbacklog">
+			<f:selectItem itemValue="" itemLabel="" />
+			<f:selectItem itemValue="0" itemLabel="#{fbresource['NO']}" />
+			<f:selectItem itemValue="1" itemLabel="#{fbresource['YES']}" />
+		</h:selectOneMenu></td>
+	<td>#{fbresource['Any_semester_cleared_in_gt_1_attempt']}</td>
+	<td><h:selectOneMenu
+			title="#{fbresource['Please_select']} #{fbresource['YES_if_you_want_to_allow_students_Who_has_clear_his_her_semester_in_more_then_attempt']}"
+			value="#{ShortRecord.passMoreThenOne}" id="morethenone">
+			<f:selectItem itemValue="" itemLabel="" />
+			<f:selectItem itemValue="1" itemLabel="#{fbresource['YES']}" />
+			<f:selectItem itemValue="0" itemLabel="#{fbresource['NO']}" />
+		</h:selectOneMenu></td>
+</tr>
+
+
+<tr>
+	<td>#{fbresource['Semester']}</td>
+	<td><h:selectOneMenu
+			title="#{fbresource['Please_select']} #{fbresource['Semester']}"
+			value="#{ShortRecord.semester}" id="sem">
+			<f:selectItem itemValue="" itemLabel="" />
+			<c:forEach items="#{CommonDBBean.getCommonData('Semester')}" var="semester">
+				<f:selectItem itemLabel="#{semester}" itemValue="#{semester}" />
+			</c:forEach>
+		</h:selectOneMenu></td>
+	<td>#{fbresource['Year_of_Passing']}</td>
+	<td><h:selectOneMenu
+			title="#{fbresource['Please_select']} #{fbresource['Year_of_Passing']}"
+			value="#{ShortRecord.yearOfPassing}" id="yearofpassing">
+			<f:selectItem itemValue="" itemLabel="" />
+			<c:forEach items="#{CommonDBBean.getCommonData('YearOfPassing')}" var="year">
+				<f:selectItem itemLabel="#{year}" itemValue="#{year}" />
+			</c:forEach>
+		</h:selectOneMenu></td>
+</tr>
+
+
+<tr>
+	<td>#{fbresource['Glass_Power_Left']}</td>
+	<td><h:selectOneMenu
+			title="#{fbresource['Please_select']} #{fbresource['Glass_Power_Left']}"
+			value="#{ShortRecord.glassPowerL}" id="HlassPowerL">
+			<f:selectItem itemValue="" itemLabel="" />
+			<c:forEach items="#{CommonDBBean.getCommonData('GlassPower')}" var="power">
+				<f:selectItem itemLabel="#{power}" itemValue="#{power}" />
+			</c:forEach>
+		</h:selectOneMenu></td>
+	<td>#{fbresource['Glass_Power_Right']}</td>
+	<td><h:selectOneMenu
+			title="#{fbresource['Please_select']} #{fbresource['Glass_Power_Right']}"
+			value="#{ShortRecord.glassPowerR}" id="HlassPowerR">
+			<f:selectItem itemValue="" itemLabel="" />
+			<c:forEach items="#{CommonDBBean.getCommonData('GlassPower')}" var="power">
+				<f:selectItem itemLabel="#{power}" itemValue="#{power}" />
+			</c:forEach>
+		</h:selectOneMenu></td>
+</tr>
+
+<tr>
+	<td>#{fbresource['Date_of_Birth']}</td>
+	<td><o:dateChooser pattern="dd/MM/yyyy"
+			buttonImageUrl="/images/calendar.gif" immediate="true"
+			value="#{ShortRecord.dateOfBirth}" id="dob">
+
+		</o:dateChooser> <o:floatingIconMessage style="border-color: red;" for="dob"
+			showDetail="true" showSummary="false" /></td>
+	<td>#{fbresource['College_Code']}</td>
+	<td><h:panelGrid columns="2">
+			<h:inputText id="collegeCodeLookUpValue"
+				value="#{ShortRecord.collegeName}"
+				title="#{fbresource['Please_enter']} #{fbresource['College_Code']}">
+			</h:inputText>
+			<h:graphicImage url="/images/lookUp.png" height="20px;"
+				style="cursor:hand;margin-top:10px;"
+				title="#{fbresource['Please_click_here_to_find_College_Code']}"
+				onclick="O$('collegeLookUpForm:collegeLookUp').show();" />
+		</h:panelGrid></td>
+</tr>
+
+
+
+<tr>
+	<td>#{fbresource['Diploma_percent']}</td>
+	<td><h:inputText
+			title="#{fbresource['Please_enter']} #{fbresource['Diploma_percent']} #{fbresource['It_should_be_numeric']}"
+			size="2" value="#{ShortRecord.diploma}" maxlength="5" id="diplomaPer">
+			<f:validateDoubleRange minimum="0.0" maximum="99.99" />
+		</h:inputText></td>
+	<td>#{fbresource['Highest_Education']}</td>
+	<td><h:selectOneMenu value="#{ShortRecord.currentCourse}"
+			title="#{fbresource['Please_select']} #{fbresource['Highest_Education']}"
+			id="currentCourse">
+			<f:selectItem itemValue="" itemLabel="" />
+			<f:selectItem itemValue="10" itemLabel="#{fbresource['High_School_L']}" />
+			<f:selectItem itemValue="12"
+				itemLabel="#{fbresource['Higher_Secondary_L']}" />
+			<f:selectItem id="diploma" itemValue="Diploma" itemLabel="Diploma" />
+			<f:selectItem id="graduation" itemValue="Graduation"
+				itemLabel="Graduation" />
+			<f:selectItem id="pgraduation" itemValue="Post Graduation"
+				itemLabel="Post Graduation" />
+		</h:selectOneMenu></td>
+</tr>
+
+<tr>
+	<td><label for="course">
+			#{fbresource['Current_Course']}
+	</label></td>
+	<td><o:dropDownField id="course" maxlength="100"
+			style="width: 250px;" listItemStyle="white-space: nowrap;"
+			suggestionMode="stringStart" var="course"
+			value="#{ShortRecord.course}" suggestionMinChars="1">
+			<o:dropDownItems value="#{CommonDBBean.getCommonData('Course')}" />
+			<o:column>
+				<h:outputText value="#{course}" styleClass="dropDownValuesClass" />
+			</o:column>
+		</o:dropDownField></td>
+	<td><label for="bl">
+			#{fbresource['Is_Black_Listed_allowed']}
+	</label></td>
+	<td><h:selectOneMenu
+			title="#{fbresource['Please_select']} #{fbresource['Is_Black_Listed_allowed']}"
+			value="#{ShortRecord.isBackListed}" id="blackListed">
+			<f:selectItem itemValue="NO" itemLabel="#{fbresource['NO']}" />
+			<f:selectItem itemValue="YES" itemLabel="#{fbresource['YES']}" />
+		</h:selectOneMenu></td>
+</tr>
+
+<tr>
+	<td>#{fbresource['Height']}</td>
+	<td><h:inputText
+			title="#{fbresource['Please_enter']} #{fbresource['Height']} #{fbresource['It_should_be_numeric']}"
+			id="Height" size="2" value="#{ShortRecord.height}" maxlength="3">
+		</h:inputText></td>
+	<td>#{fbresource['Weight']}</td>
+	<td><h:inputText
+			title="#{fbresource['Please_enter']} #{fbresource['Weight']} #{fbresource['It_should_be_numeric']}"
+			id="Weight" size="4" value="#{ShortRecord.weight}" maxlength="3">
+		</h:inputText></td>
+</tr>
+
+<tr>
+	<td>#{fbresource['Gender']}</td>
+	<td><h:selectOneMenu style="margin-top:2px;"
+			title="#{fbresource['Please_select']} #{fbresource['Gender']}"
+			value="#{ShortRecord.gender}" id="Gender">
+			<f:selectItem itemValue="" itemLabel="" />
+			<f:selectItem itemValue="M" itemLabel="#{fbresource['Male']}" />
+			<f:selectItem itemValue="F" itemLabel="#{fbresource['Female']}" />
+		</h:selectOneMenu></td>
+	<td>#{fbresource['Is_Handicapped_allowed']}</td>
+	<td><h:selectOneMenu style="margin-top:2px;"
+			title="#{fbresource['Please_select']} #{fbresource['Is_Handicapped_allowed']}"
+			value="#{ShortRecord.handicapped}" id="hcd">
+			<f:selectItem itemValue="YES" itemLabel="#{fbresource['YES']}" />
+			<f:selectItem itemValue="NA" itemLabel="#{fbresource['NO']}" />
+		</h:selectOneMenu></td>
+</tr>
+<tr>
+	<td><FONT color="blue">#{fbresource['Show_Semester_Criteria']}</FONT></td>
+	<td><h:selectBooleanCheckbox id="semesterCriteria"
+			title="#{fbresource['Please_check_to_show_semester_based_fields']}">
+			<o:ajax event="change" execute="semesterCriteria" render="advParent" />
+		</h:selectBooleanCheckbox></td>
+	<td>#{fbresource['Education_Gap_not_allowed_Years']}</td>
+	<td><h:selectOneMenu value="#{ShortRecord.educationGap}"
+			id="educationGap">
+			<f:selectItem itemValue="" itemLabel="" />
+			<f:selectItem itemValue="0" itemLabel="" />
+			<f:selectItem itemValue="1" itemLabel="1" />
+			<f:selectItem itemValue="2" itemLabel="2" />
+			<f:selectItem itemValue="3" itemLabel="3" />
+			<f:selectItem itemValue="4" itemLabel="4" />
+			<f:selectItem itemValue="5" itemLabel="5" />
+			<f:selectItem itemValue="6" itemLabel="6" />
+			<f:selectItem itemValue="7" itemLabel="7" />
+			<f:selectItem itemValue="8" itemLabel="8" />
+		</h:selectOneMenu></td>
+</tr>
+
+<tr>
+	<td colspan="5"><h:panelGroup id="advParent">
+			<h:panelGroup
+				rendered="#{param['ShortForm:semesterCriteria'] eq 'on'}">
+				<table cellPadding="1" align="center">
+					<tr>
+						<td>#{fbresource['Diploma_I_Sem']}</td>
+						<td><h:inputText
+								title="#{fbresource['Please_enter']} #{fbresource['Diploma_I_Sem']} #{fbresource['It_should_be_numeric']}"
+								id="diplomaI" size="2" value="#{ShortRecord.diplomaI}"
+								maxlength="5">
+								<f:validateDoubleRange minimum="0.0" maximum="99.99" />
+							</h:inputText></td>
+						<td>#{fbresource['Diploma_II_Sem']}</td>
+						<td><h:inputText id="diplomaII"
+								title="#{fbresource['Please_enter']} #{fbresource['Diploma_II_Sem']} #{fbresource['It_should_be_numeric']}"
+								value="#{ShortRecord.diplomaII}" size="2" maxlength="5">
+								<f:validateDoubleRange minimum="0.0" maximum="99.99" />
+							</h:inputText></td>
+						<td>#{fbresource['Diploma_III_Sem']}</td>
+						<td><h:inputText
+								title="#{fbresource['Please_enter']} #{fbresource['Diploma_III_Sem']} #{fbresource['It_should_be_numeric']}"
+								id="diplomaIII" size="2" value="#{ShortRecord.diplomaIII}"
+								maxlength="5">
+								<f:validateDoubleRange minimum="0.0" maximum="99.99" />
+							</h:inputText></td>
+						<td>#{fbresource['Diploma_IV_Sem']}</td>
+						<td><h:inputText id="diplomaIV"
+								title="#{fbresource['Please_enter']} #{fbresource['Diploma_IV_Sem']} #{fbresource['It_should_be_numeric']}"
+								value="#{ShortRecord.diplomaIV}" size="2" maxlength="5">
+								<f:validateDoubleRange minimum="0.0" maximum="99.99" />
+							</h:inputText></td>
+					</tr>
+
+					<tr>
+						<td>#{fbresource['Diploma_V_Sem']}</td>
+						<td><h:inputText
+								title="#{fbresource['Please_enter']} #{fbresource['Diploma_V_Sem']} #{fbresource['It_should_be_numeric']}"
+								id="diplomaV" size="2" value="#{ShortRecord.diplomaV}"
+								maxlength="5">
+								<f:validateDoubleRange minimum="0.0" maximum="99.99" />
+							</h:inputText></td>
+						<td>#{fbresource['Diploma_VI_Sem']}</td>
+						<td><h:inputText id="diplomaVI"
+								title="#{fbresource['Please_enter']} #{fbresource['Diploma_VI_Sem']} #{fbresource['It_should_be_numeric']}"
+								value="#{ShortRecord.diplomaVI}" size="2" maxlength="5">
+								<f:validateDoubleRange minimum="0.0" maximum="99.99" />
+							</h:inputText></td>
+					</tr>
+					<tr>
+						<td>#{fbresource['Graduation_I_Sem']}</td>
+						<td><h:inputText
+								title="#{fbresource['Please_enter']} #{fbresource['Graduation_I_Sem']} #{fbresource['It_should_be_numeric']}"
+								size="2" value="#{ShortRecord.firstSem}" maxlength="5" id="Isem">
+								<f:validateDoubleRange minimum="0.0" maximum="99.99" />
+							</h:inputText></td>
+						<td>#{fbresource['Graduation_II_Sem']}</td>
+						<td><h:inputText
+								title="#{fbresource['Please_enter']} #{fbresource['Graduation_II_Sem']} #{fbresource['It_should_be_numeric']}"
+								id="IIsem" value="#{ShortRecord.secondSem}" size="2"
+								maxlength="5">
+								<f:validateDoubleRange minimum="0.0" maximum="99.99" />
+							</h:inputText></td>
+						<td>#{fbresource['Graduation_III_Sem']}</td>
+						<td><h:inputText id="IIIsem" size="2"
+								title="#{fbresource['Please_enter']} #{fbresource['Graduation_III_Sem']} #{fbresource['It_should_be_numeric']}"
+								value="#{ShortRecord.thirdSem}" maxlength="5">
+								<f:validateDoubleRange minimum="0.0" maximum="99.99" />
+							</h:inputText></td>
+						<td>#{fbresource['Graduation_IV_Sem']}</td>
+						<td><h:inputText size="2"
+								title="#{fbresource['Please_enter']} #{fbresource['Graduation_IV_Sem']} #{fbresource['It_should_be_numeric']}"
+								maxlength="5" id="IVsem" value="#{ShortRecord.fourthSem}">
+								<f:validateDoubleRange minimum="0.0" maximum="99.99" />
+							</h:inputText></td>
+					</tr>
+
+					<tr>
+						<td>#{fbresource['Graduation_V_Sem']}</td>
+						<td><h:inputText id="Vsem" size="2"
+								title="#{fbresource['Please_enter']} #{fbresource['Graduation_V_Sem']} #{fbresource['It_should_be_numeric']}"
+								value="#{ShortRecord.fifthSem}" maxlength="5">
+								<f:validateDoubleRange minimum="0.0" maximum="99.99" />
+							</h:inputText></td>
+						<td>#{fbresource['Graduation_VI_Sem']}</td>
+						<td><h:inputText id="VIsem"
+								title="#{fbresource['Please_enter']} #{fbresource['Graduation_VI_Sem']} #{fbresource['It_should_be_numeric']}"
+								value="#{ShortRecord.sixthSem}" size="2" maxlength="5">
+								<f:validateDoubleRange minimum="0.0" maximum="99.99" />
+							</h:inputText></td>
+						<td>#{fbresource['Graduation_VII_Sem']}</td>
+						<td><h:inputText
+								title="#{fbresource['Please_enter']} #{fbresource['Graduation_VII_Sem']} #{fbresource['It_should_be_numeric']}"
+								id="VIIsem" size="2" value="#{ShortRecord.seventhSem}"
+								maxlength="5">
+								<f:validateDoubleRange minimum="0.0" maximum="99.99" />
+							</h:inputText></td>
+						<td>#{fbresource['Graduation_VIII_Sem']}</td>
+						<td><h:inputText id="VIIIsem"
+								title="#{fbresource['Please_enter']} #{fbresource['Graduation_VIII_Sem']} #{fbresource['It_should_be_numeric']}"
+								value="#{ShortRecord.eightSem}" size="2" maxlength="5">
+								<f:validateDoubleRange minimum="0.0" maximum="99.99" />
+							</h:inputText></td>
+					</tr>
+					<tr>
+						<td>#{fbresource['Graduation_First_Year']}</td>
+						<td><h:inputText
+								title="#{fbresource['Please_enter']} #{fbresource['Graduation_First_Year']} #{fbresource['It_should_be_numeric']}"
+								id="firstYear" size="2" maxlength="5"
+								value="#{ShortRecord.firstYear}">
+								<f:validateDoubleRange minimum="0.0" maximum="99.99" />
+							</h:inputText></td>
+						<td>#{fbresource['Graduation_Second_Year']}</td>
+						<td><h:inputText id="secondYear"
+								title="#{fbresource['Please_enter']} #{fbresource['Graduation_Second_Year']} #{fbresource['It_should_be_numeric']}"
+								value="#{ShortRecord.secondYear}" size="2" maxlength="5">
+								<f:validateDoubleRange minimum="0.0" maximum="99.99" />
+							</h:inputText></td>
+						<td>#{fbresource['Graduation_Third_Year']}</td>
+						<td><h:inputText id="thirdYear" size="2"
+								title="#{fbresource['Please_enter']} #{fbresource['Graduation_Third_Year']} #{fbresource['It_should_be_numeric']}"
+								value="#{ShortRecord.thirdYear}" maxlength="5">
+
+								<f:validateDoubleRange minimum="0.0" maximum="99.99" />
+							</h:inputText></td>
+						<td>#{fbresource['Graduation_Fourth_Year']}</td>
+						<td><h:inputText id="fourthYear"
+								value="#{ShortRecord.fourthYear}" size="2"
+								title="#{fbresource['Please_enter']} #{fbresource['Graduation_Fourth_Year']} #{fbresource['It_should_be_numeric']}"
+								maxlength="5">
+								<f:validateDoubleRange minimum="0.0" maximum="99.99" />
+							</h:inputText></td>
+					</tr>
+
+					<tr>
+						<td>#{fbresource['PG_I_Sem']}</td>
+						<td><h:inputText
+								title="#{fbresource['Please_enter']} #{fbresource['PG_I_Sem']} #{fbresource['It_should_be_numeric']}"
+								id="pgFirst" size="2" value="#{ShortRecord.pgFirst}"
+								maxlength="5">
+								<f:validateDoubleRange minimum="0.0" maximum="99.99" />
+							</h:inputText></td>
+						<td>#{fbresource['PG_II_Sem']}</td>
+						<td><h:inputText id="pgSecond"
+								title="#{fbresource['Please_enter']} #{fbresource['PG_II_Sem']} #{fbresource['It_should_be_numeric']}"
+								value="#{ShortRecord.pgSecond}" size="2" maxlength="5">
+								<f:validateDoubleRange minimum="0.0" maximum="99.99" />
+							</h:inputText></td>
+						<td>#{fbresource['PG_III_Sem']}</td>
+						<td><h:inputText
+								title="#{fbresource['Please_enter']} #{fbresource['PG_III_Sem']} #{fbresource['It_should_be_numeric']}"
+								id="pgThird" size="2" value="#{ShortRecord.pgThird}"
+								maxlength="5">
+								<f:validateDoubleRange minimum="0.0" maximum="99.99" />
+							</h:inputText></td>
+						<td>#{fbresource['PG_IV_Sem']}</td>
+						<td><h:inputText id="pgFourth"
+								title="#{fbresource['Please_enter']} #{fbresource['PG_IV_Sem']} #{fbresource['It_should_be_numeric']}"
+								value="#{ShortRecord.pgFourth}" size="2" maxlength="5">
+								<f:validateDoubleRange minimum="0.0" maximum="99.99" />
+							</h:inputText></td>
+					</tr>
+				</table>
+			</h:panelGroup>
+		</h:panelGroup></td>
+</tr>
+</html>

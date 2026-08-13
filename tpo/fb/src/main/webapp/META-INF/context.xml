@@ -1,0 +1,51 @@
+<Context path="/JMSTest" docBase="JMSTest"
+        debug="5" reloadable="true" crossContext="true">
+
+    <!-- factory: The class who's going to create the objects we need.
+         -->
+
+    <!-- brokerURL: The broker URL to set.
+         -->
+
+    <!-- brokerName: The name of the broker to use if
+            creating an embedded broker.
+         -->
+
+    <!-- userName and password: ActiveMQ username and password
+            for JMS connections.
+         -->
+
+    <!-- useEmbeddedBroker: Allows embedded brokers to be
+            associated with a connection factory.
+         -->
+
+    <!-- clientID: String identification to use when connection to a
+            topic.
+         -->
+
+    <!-- physicalName: The name for the JMS destination.
+         -->
+
+    <Resource name="jms/ConnectionFactory" auth="Container"
+                 type="org.apache.activemq.ActiveMQConnectionFactory"
+                 description="JMS Connection Factory"
+                 factory="org.apache.activemq.jndi.JNDIReferenceFactory"
+                 brokerURL="vm://localhost"
+                 brokerName="LocalActiveMQBroker"
+                 userName="activemq" password="activemq"
+                 useEmbeddedBroker="false"
+                 clientID="TomcatClientID" />
+
+    <Resource name="jms/myQueue" auth="Container"
+                 type="org.apache.activemq.command.ActiveMQQueue"
+                 description="JMS Queue"
+                 factory="org.apache.activemq.jndi.JNDIReferenceFactory"
+                 physicalName="TEST.FOO" />
+
+    <Resource name="jms/myTopic" auth="Container"
+                 type="org.apache.activemq.command.ActiveMQTopic"
+                 description="JMS Topic"
+                 factory="org.apache.activemq.jndi.JNDIReferenceFactory"
+                 physicalName="topic"/>
+
+</Context>

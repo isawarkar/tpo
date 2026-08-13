@@ -1,0 +1,27 @@
+Create imageService.serice in /etc/systemd/system folder with belo content
+###############################
+[Unit]
+Description=Image Service
+
+[Service]
+SuccessExitStatus=143
+User=root
+Group=root
+Type=simple
+
+ExecStart=/usr/lib/jvm/java-1.11.0-openjdk-amd64/bin/java -jar -Xms50m -Xmx100m /home/ubuntu/apps/Image-Service-0.0.1-SNAPSHOT.jar
+ExecStop=/bin/kill -15 $MAINPID
+
+[Install]
+WantedBy=multi-user.target
+##############################
+
+
+Run your service
+as super user
+
+$ systemctl start imageService.service # starts the service
+$ systemctl enable imageService.service # auto starts the service
+$ systemctl disable imageService.service # stops autostart
+$ systemctl stop imageService.service # stops the service
+$ systemctl restart imageService.service # restarts the service

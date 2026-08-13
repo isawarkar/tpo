@@ -1,0 +1,102 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<style>
+#breadcrumbs-two {
+	overflow: hidden;
+	width: 100%;
+}
+
+#breadcrumbs-two li {
+	float: left;
+	margin: 0 .5em 0 1em;
+}
+
+#breadcrumbs-two a {
+	background: #ddd;
+	padding: .7em 1em;
+	float: left;
+	text-decoration: none;
+	color: #444;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
+	position: relative;
+}
+
+#breadcrumbs-two a:hover {
+	background: #99db76;
+}
+
+#breadcrumbs-two a::before {
+	content: "";
+	position: absolute;
+	top: 50%;
+	margin-top: -1.5em;
+	border-width: 1.5em 0 1.5em 1em;
+	border-style: solid;
+	border-color: #ddd #ddd #ddd transparent;
+	left: -1em;
+}
+
+#breadcrumbs-two a:hover::before {
+	border-color: #99db76 #99db76 #99db76 transparent;
+}
+
+#breadcrumbs-two a::after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	margin-top: -1.5em;
+	border-top: 1.5em solid transparent;
+	border-bottom: 1.5em solid transparent;
+	border-left: 1em solid #ddd;
+	right: -1em;
+}
+
+#breadcrumbs-two a:hover::after {
+	border-left-color: #99db76;
+}
+
+#breadcrumbs-two .current {
+	color: blue;
+	background: #99db76;
+}
+
+#breadcrumbs-two .current::after {
+	border-left-color: #99db76;
+}
+
+#breadcrumbs-two .current::before {
+	border-color: #99db76 #99db76 #99db76 transparent;
+}
+</style>
+<ul id="breadcrumbs-two">
+	<li><h:commandLink onclick="pleaseWaitLoading();" title="#{fbresource['Please_click_here_to_go_on']} #{fbresource['Main_Information']}" 
+			value="#{fbresource['Main_Information']}" 
+			styleClass="#{WebFlow.selectedPage eq 'Main Information' ? 'current':''}"
+			action="#{WebFlow.mainPage}" /></li>
+	<li><h:commandLink onclick="pleaseWaitLoading();" title="#{fbresource['Please_click_here_to_go_on']} #{fbresource['Personal_Information']}" 
+			value="#{fbresource['Personal_Information']}"
+			styleClass="#{WebFlow.selectedPage eq 'Personal Information' ? 'current':''}"
+			 action="#{WebFlow.firstPage}" /></li>
+	<li><h:commandLink onclick="pleaseWaitLoading();" title="#{fbresource['Please_click_here_to_go_on']} #{fbresource['Academic_Information']}" 
+			value="#{fbresource['Academic_Information']}"
+			styleClass="#{WebFlow.selectedPage eq 'Academic Information' ? 'current':''}"
+			 action="#{WebFlow.secondPage}" /></li>
+	<li><h:commandLink rendered="#{!(StudentRegistrationBean.currentCourse eq '10' || StudentRegistrationBean.currentCourse eq '12')}" onclick="pleaseWaitLoading();" title="#{fbresource['Please_click_here_to_go_on']} #{fbresource['Backlog_Information']}" 
+			value="#{fbresource['Backlog_Information']}"
+			styleClass="#{WebFlow.selectedPage eq 'Backlog Information' ? 'current':''}"
+			 action="#{WebFlow.thirdPage}" /></li>
+	<li><h:commandLink onclick="pleaseWaitLoading();" title="#{fbresource['Please_click_here_to_go_on']} #{fbresource['Contact_Information']}" 
+			value="#{fbresource['Contact_Information']}"
+			styleClass="#{WebFlow.selectedPage eq 'Contact Information' ? 'current':''}"
+			 action="#{WebFlow.contactPage}" /></li>
+	<li><h:commandLink onclick="pleaseWaitLoading();" rendered="#{Student.userName ne null}"
+			title="#{fbresource['Please_click_here_to_go_on']} #{fbresource['All_Documents']}"
+			value="#{fbresource['All_Documents']}"
+			styleClass="#{WebFlow.selectedPage eq 'All Documents' ? 'current':''}"
+			action="#{WebFlow.allDocumentPageForStudent}" /></li>
+</ul>
+
+</html>

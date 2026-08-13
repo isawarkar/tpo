@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+
+<style type="text/css">
+.commandLink {
+	border-bottom: 1px dashed #007ECE;
+	text-decoration: none;
+	font-size: 0.9em;
+}
+
+.modalLayer {
+	filter: alpha(opacity =       75);
+	-moz-opacity: .75;
+	opacity: .75;
+	background: GhostWhite;
+}
+
+.modalLayerShade {
+	background: #B2B2B2;
+}
+
+.window {
+	border: 2px solid #BBBBBB;
+}
+
+.customButton {
+	vertical-align: top;
+	padding: 0;
+}
+
+.macButton {
+	padding: 2px;
+}
+
+.buttonRollover {
+	background: none;
+}
+
+.application {
+	margin: 10px 10px 0 10px;
+}
+
+div.img {
+	margin: 2px;
+	border: 1px solid #0000ff;
+	height: auto;
+	width: auto;
+	float: left;
+	text-align: center;
+}
+
+div.img img {
+	display: inline;
+	margin: 3px;
+	border: 1px solid #ffffff;
+}
+
+div.img a:hover img {
+	border: 1px solid #0000ff;
+}
+
+.browserCaption {
+	background: url('./images/mac_header.png') repeat;
+	text-align: center;
+	padding: 0;
+}
+
+.refresh a:link {
+	color: #9c9c9c;
+}
+
+.calculatorButtons td {
+	padding: 3px;
+}
+</style>
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<ui:composition>
+	<h:form id="forgotStudentPasswordForm">
+		<o:window id="forgotStudentPassword" resizable="true" width="550px"
+			height="240px" styleClass="window"
+			style="margin-top:300px;margin-left:300px;"
+			caption="#{fbresource['Forgot_Student_Password']}"
+			captionStyle="background: #bbbbbb;
+                            border-bottom: #e9e9e9 solid 1px;
+                            position: relative;
+                            padding: 0 0 0 6px;
+                            color: white;"
+			modal="true" modalLayerClass="modalLayer">
+
+			<o:captionArea>
+				<o:minimizeWindowButton minimizeImageUrl="/images/win_minimize.png"
+					restoreImageUrl="./images/win_restore.jpg"
+					styleClass="customButton" rolloverClass="buttonRollover" />
+				<o:maximizeWindowButton maximizeImageUrl="/images/win_maximize.png"
+					restoreImageUrl="images/win_restore.jpg" styleClass="customButton"
+					rolloverClass="buttonRollover" />
+				<o:closeWindowButton imageUrl="/images/win_close.png"
+					styleClass="customButton" rolloverClass="buttonRollover" />
+			</o:captionArea>
+			<ui:include src="/xhtml/errorPanel.xhtml" />
+
+			<table align="center" style="margin-top: 5px;" width="500px">
+				<tr>
+					<td colspan="2">#{fbresource['forgotPasswordMessage']}</td>
+				</tr>
+				<tr>
+					<td>#{fbresource['Enrollment_No']}<font color="red">*</font></td>
+					<td><h:inputText value="#{StudentLogin.enrollmentNo}"
+							id="studentEnrollmentNo" required="true" maxlength="14">
+						</h:inputText> <o:floatingIconMessage style="border-color: red;"
+							for="studentEnrollmentNo" showDetail="true" showSummary="false" /></td>
+				</tr>
+				<tr>
+					<td>#{fbresource['E_mail']}<font color="red">*</font></td>
+					<td><h:inputText style="margin-top:10px;" id="email"
+							required="true" value="#{StudentLogin.email}" size="40"
+							requiredMessage="#{fbresource['Please_enter_email']}">
+							<f:validator validatorId="EmailValidator" />
+						</h:inputText> <o:floatingIconMessage style="border-color: red;" for="email"
+							showDetail="true" showSummary="false" /></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center"><h:commandButton
+							value="#{fbresource['submit']}" style="margin-top:10px;"
+							action="#{StudentLogin.sendStudentPassword}"
+							title="#{fbresource['Please_click_here_to_reset_password']}" />
+						&nbsp;&nbsp;&nbsp;&nbsp; <h:commandButton type="button"
+							style="margin-top:10px;"
+							onclick="O$('forgotStudentPasswordForm:forgotStudentPassword').hide();"
+							title="#{fbresource['Please_click_here_to_close_this_window']}"
+							value="#{fbresource['Close']}" /></td>
+				</tr>
+				<tr>
+					<td colspan="2"><font color="red">#{fbresource['forgotPasswordMessage1']}
+							#{fbresource['fb_email']}</font></td>
+				</tr>
+			</table>
+		</o:window>
+	</h:form>
+
+	<div id="Top">
+		<a href="/student/index.jsf"><img style="margin-top: 5px"
+			height="40px;" src="/student/images/FreshersBuddy.jpg"
+			title="#{fbresource['Connect_with_US']}" align="left" /></a>
+
+		<div id="Top_login">
+
+			<div id="loginContainer">
+				<f:verbatim
+					rendered="#{Student.userName eq null || Student.userName eq ''}">
+					<a
+						title="#{fbresource['If_you_are_a_student_Please_click_here_for_login']}"
+						href="#" id="loginButton"><span>#{fbresource['Student_Login']}</span></a>
+				</f:verbatim>
+				<h:form rendered="#{Student.userName ne null}">
+					<h:commandLink title="#{fbresource['Click_here_to_logout']}"
+						action="#{StudentLogin.logout}">
+						<img src="/student/images/logout.jpg" />
+					</h:commandLink>
+				</h:form>
+				<div style="clear: both"></div>
+				<div id="loginBox">
+					<h:form id="loginForm">
+						<fieldset id="body">
+							<fieldset>
+								<label for="enrollmentNo">
+									#{fbresource['Enrollment_No']}<font color="red">*</font>
+								</label>
+								<h:inputText title="#{fbresource['Please_enter_Enrollment_No']}"
+									value="#{StudentLogin.enrollmentNo}" id="enrollmentNo"
+									required="true" maxlength="14"
+									requiredMessage="#{fbresource['Please_enter_Enrollment_No']}">
+									<f:validator validatorId="EnrollmentNumberValidator" />
+									<o:ajax render="enrollmentNo password login label" />
+								</h:inputText>
+								<o:floatingIconMessage style="border-color: red;"
+									id="enrollmentNoError" for="enrollmentNo" showDetail="true"
+									showSummary="false" />
+							</fieldset>
+							<fieldset>
+								<h:outputLabel id="label" style="display:none;">#{fbresource['Password']}<font
+										color="red">*</font>
+								</h:outputLabel>
+								<h:inputSecret redisplay="true"
+									title="#{fbresource['Text_Field_is_disabled_Please_enter_enrollment_number_first']}"
+									disabled="true" value="#{StudentLogin.password}" id="password"
+									maxlength="20" style="display:none;" required="true"
+									requiredMessage="#{fbresource['Please_enter_Password']}">
+								</h:inputSecret>
+								<o:floatingIconMessage style="border-color: red;" for="password"
+									showDetail="true" showSummary="false" />
+							</fieldset>
+							<o:commandButton style="display:none;" id="login"
+								render="errorPanel loginForm" execute="enrollmentNo password"
+								disabled="true" title=""
+								action="#{StudentLogin.validateStudentLogin}"
+								onajaxend="submitUserForm('loginForm:hiddenLogin');" value="" />
+							<h:commandLink id="register" immediate="true" style="color:blue;"
+								title="#{fbresource['Please_click_here_for_Register_Free']}"
+								action="studentHomePageT0"
+								value="#{fbresource['Register_Free']}" />
+							| <a href="#" onclick="openwhyfb();" style="color: blue;">#{fbresource['Why_to_Join']}</a>
+							<h:commandButton rendered="#{Student.rollNumber ne null}"
+								style="display:none" id="hiddenLogin"
+								action="#{StudentLogin.goToStudentHomePage}" />
+						</fieldset>
+						<span><a
+							onclick="O$('forgotStudentPasswordForm:forgotStudentPassword').show();"
+							title="forgot_password_q" href="#">#{fbresource['Forgot_your_password']}</a></span>
+					</h:form>
+				</div>
+			</div>
+		</div>
+
+		<f:verbatim
+			rendered="#{Student.userName eq null || Student.userName eq ''}">
+			<img style="margin-top: 10px;" height="40px;"
+				src="/student//images/new/users2.gif" align="right" />
+		</f:verbatim>
+
+		<a href="/student/android/FBN.apk"><img style="margin-top: 5px"
+			height="40px;" src="/student/android/android.png"
+			title="#{fbresource['download']}" align="right" /></a>
+
+	</div>
+
+	<h:form>
+		<div class="productMenu">
+			<h:panelGroup rendered="#{Student.userName eq null}">
+				<ul class="kwicks horizontal" style="margin-bottom: 5px;">
+					<li id="kwick_1"><center>
+							<h:commandLink title="#{fbresource['Home']}" action="CCPHomePage">
+								<table>
+									<tr>
+										<td><img height="35px" src="/student/images/home.png" /></td>
+										<td><font color="white">#{fbresource['Home']}</font></td>
+									</tr>
+								</table>
+							</h:commandLink>
+						</center></li>
+					<li id="kwick_2"><center>
+							<h:commandLink title="#{fbresource['Register_Free']}"
+								action="/xhtml/newStudent.xhtml">
+								<table>
+									<tr>
+										<td><img height="35px" src="/student/images/link.png" /></td>
+										<td><font color="white">#{fbresource['Register_Free']}</font></td>
+									</tr>
+								</table>
+							</h:commandLink>
+						</center></li>
+					<li id="kwick_3"><center>
+							<h:commandLink title="#{fbresource['Online_Test']}"
+								action="/xhtml/onlineTest.xhtml">
+								<table>
+									<tr>
+										<td><img height="35px" src="/student/images/history.png" /></td>
+										<td><font color="white">#{fbresource['Online_Test']}</font></td>
+									</tr>
+								</table>
+							</h:commandLink>
+						</center></li>
+					<li id="kwick_4"><center>
+							<h:commandLink title="#{fbresource['Placed_Students']}"
+								action="/xhtml/placedStudentList.xhtml">
+								<table>
+									<tr>
+										<td><img height="35px" src="/student/images/calendar.png" /></td>
+										<td><font color="white">#{fbresource['Placed_Students']}</font></td>
+									</tr>
+								</table>
+							</h:commandLink>
+						</center></li>
+					<li id="kwick_5"><center>
+							<h:commandLink title="#{fbresource['About_Us']}"
+								action="/xhtml/aboutUs.xhtml">
+								<table>
+									<tr>
+										<td><img height="35px"
+											src="/student/images/portfolio.png" /></td>
+										<td><font color="white">#{fbresource['About_Us']}</font></td>
+									</tr>
+								</table>
+							</h:commandLink>
+						</center></li>
+					<li id="kwick_6"><center>
+							<h:commandLink title="#{fbresource['Contact_US']}"
+								action="/xhtml/contactUs.xhtml">
+								<table>
+									<tr>
+										<td><img height="35px" src="/student/images/email.png" /></td>
+										<td><font color="white">#{fbresource['Contact_US']}</font></td>
+									</tr>
+								</table>
+							</h:commandLink>
+						</center></li>
+				</ul>
+			</h:panelGroup>
+			<h:panelGrid columns="2" rendered="#{Student.userName ne null}">
+				<h:panelGroup>
+					<!-- Product Menu -->
+					<ul class="kwicks horizontal" style="margin-bottom: 5px;">
+						<li id="kwick_1">
+							<center>
+								<h:commandLink title="#{fbresource['Student_Home']}"
+									action="studentHomePageT0">
+									<table>
+										<tr>
+											<td><img height="35px"
+												src="/student/images/house_blue.png" /></td>
+											<td><font color="white">#{fbresource['Student_Home']}</font></td>
+										</tr>
+									</table>
+								</h:commandLink>
+							</center>
+						</li>
+						<li id="kwick_2">
+							<center>
+								<h:commandLink title="#{fbresource['Exam_List']}"
+									action="studentExamList">
+									<table>
+										<tr>
+											<td><img height="35px" src="/student/images/exam.png" /></td>
+											<td><font color="white">#{fbresource['Exam_List']}</font></td>
+										</tr>
+									</table>
+								</h:commandLink>
+							</center>
+						</li>
+						<li id="kwick_3">
+							<center>
+								<h:commandLink title="#{fbresource['Result_List']}"
+									action="resultList">
+									<table>
+										<tr>
+											<td><img height="35px" src="/student/images/result.png" /></td>
+											<td><font color="white">#{fbresource['Result_List']}</font></td>
+										</tr>
+									</table>
+								</h:commandLink>
+							</center>
+						</li>
+						<li id="kwick_4">
+							<center>
+								<h:commandLink title="Download Hall Ticket"
+									action="hallTicketListdownload">
+									<table>
+										<tr>
+											<td><img height="35px"
+												src="/student/images/pdf_button.png" /></td>
+											<td><font color="white">#{fbresource['Hall_Ticket']}</font></td>
+										</tr>
+									</table>
+								</h:commandLink>
+							</center>
+						</li>
+						<li id="kwick_5">
+							<center>
+								<h:commandLink title="#{fbresource['Student_fee_list']}"
+									action="feeListStudent">
+									<table>
+										<tr>
+											<td><img height="35px"
+												src="/student/images/calendar_blue.png" /></td>
+											<td><font color="white">#{fbresource['Student_fee_list']}</font></td>
+										</tr>
+									</table>
+								</h:commandLink>
+							</center>
+						</li>
+						<li id="kwick_6">
+							<center>
+								<table>
+									<tr>
+										<td><h:commandLink rendered="#{Student.theme ne 'T0'}" title="#{fbresource['Click_here_to']} #{fbresource['Select']} #{fbresource['Theme1']}" value="#{fbresource['Theme1']}" style="color:white;"
+												class="dropdown-item waves-effect waves-light"
+												action="#{Student.updateTheme('T0')}">
+											</h:commandLink></td>
+										<td><h:commandLink rendered="#{Student.theme ne 'T1'}" title="#{fbresource['Click_here_to']} #{fbresource['Select']} #{fbresource['Theme2']}" value="#{fbresource['Theme2']}" style="color:white;"
+												class="dropdown-item waves-effect waves-light"
+												action="#{Student.updateTheme('T1')}">
+											</h:commandLink></td>
+										<td><h:commandLink rendered="#{Student.theme ne 'T2'}" title="#{fbresource['Click_here_to']} #{fbresource['Select']} #{fbresource['Theme3']}" value="#{fbresource['Theme3']}" style="color:white;"
+												class="dropdown-item waves-effect waves-light"
+												action="#{Student.updateTheme('T2')}">
+											</h:commandLink></td>
+									<td><h:commandLink rendered="#{Student.theme ne 'T3'}" title="#{fbresource['Click_here_to']} #{fbresource['Select']} #{fbresource['Theme4']}" value="#{fbresource['Theme4']}" style="color:white;"
+												class="dropdown-item waves-effect waves-light"
+												action="#{Student.updateTheme('T3')}">
+											</h:commandLink></td>
+									</tr>
+								</table>
+
+							</center>
+						</li>
+					</ul>
+				</h:panelGroup>
+			</h:panelGrid>
+		</div>
+		<div id="whyfb" title="#{fbresource['Why_to_join_Freshers_Buddy']}">
+			<ul class="ca-menu">
+				<li><a href="#"> <span class="ca-icon">F</span>
+						<div class="ca-content">
+							<h2 class="ca-main">
+								<font color="white">#{fbresource['Freshers']}</font>
+							</h2>
+						</div>
+				</a></li>
+				<li><a href="#"> <span class="ca-icon">C</span>
+						<div class="ca-content">
+							<h2 class="ca-main">
+								<font color="white">#{fbresource['Going_College']}</font>
+							</h2>
+						</div>
+				</a></li>
+				<li><a href="/student/xhtml/newStudent.xhtml"> <span
+						class="ca-icon" id="heart">R</span>
+						<div class="ca-content">
+							<h2 class="ca-main">
+								<font color="white">#{fbresource['Register_with_Freshers_Buddy']}</font>
+							</h2>
+						</div>
+				</a></li>
+				<li><a href="#"> <span class="ca-icon">C</span>
+						<div class="ca-content">
+							<h2 class="ca-main">
+								<font color="white">#{fbresource['Campus_in_College']}</font>
+							</h2>
+						</div>
+				</a></li>
+				<li><a href="#"> <span class="ca-icon">S</span>
+						<div class="ca-content">
+							<h2 class="ca-main">
+								<font color="white">#{fbresource['Selected']}</font>
+							</h2>
+						</div>
+				</a></li>
+			</ul>
+		</div>
+		<script>
+			$(function() {
+				$("#whyfb").dialog({
+					autoOpen : false,
+					width : 1150,
+					height : 350,
+					show : {
+						effect : "blind",
+						duration : 1000
+					},
+					hide : {
+						effect : "explode",
+						duration : 1000
+					}
+				});
+			});
+
+			function openwhyfb() {
+				$("#whyfb").dialog("open");
+			}
+		</script>
+	</h:form>
+</ui:composition>
+</html>
+
+

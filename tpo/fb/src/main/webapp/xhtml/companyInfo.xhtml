@@ -1,0 +1,77 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<center>
+	<o:dynamicImage  style="height: 50px; width: 100px;" data="#{CommonDBBean.getCompanyePic(company.companyID)}" />
+</center>
+<h:panelGrid columns="2">
+	<h:outputText style="color:green;"
+		value="#{fbresource['Company_Name']}" />
+	<h:outputText style="color:blue" value="#{company.companyname}" />
+
+
+	<h:outputText style="color:green;" rendered="#{AdminUser.role ne null}"
+		value="#{fbresource['Date_Of_Visit']}" />
+	<h:outputText rendered="#{AdminUser.role ne null}" style="color:blue"
+		value="#{company.dateofvisit}" />
+
+
+	<h:outputText style="color:green;" rendered="#{AdminUser.role ne null}"
+		value="#{fbresource['Package_Offered_by_Company']}" />
+	<h:outputText rendered="#{AdminUser.role ne null}" style="color:blue"
+		value="#{company.packageOffering}rs" />
+
+
+	<h:outputText style="color:green;" rendered="#{AdminUser.role ne null}"
+		value="#{fbresource['Selected']}" />
+	<h:outputText rendered="#{AdminUser.role ne null}" style="color:blue"
+		value="#{company.total}" />
+
+
+	<h:outputText style="color:green;" value="#{fbresource['E_mail']}" />
+	<h:outputText style="color:blue" value="#{company.email}" />
+
+
+	<h:outputText style="color:green;" value="#{fbresource['Domain']}" />
+	<h:outputText style="color:blue" value="#{company.domain}" />
+
+
+	<h:outputText style="color:green;" value="#{fbresource['Website']}" />
+	<a style="color: blue;" target="_blank"
+		href="https://#{company.website}">#{company.website}</a>
+
+
+	<h:outputText style="color:green;" value="#{fbresource['LinkedIN']}" />
+	<a style="color: blue;" target="_blank"
+		href="https://#{company.linkedIn}">#{company.linkedIn}</a>
+
+
+	<h:outputText style="color:green;" value="#{fbresource['Twiter']}" />
+	<a style="color: blue;" target="_blank"
+		href="https://#{company.twiter}">#{company.twiter}</a>
+
+
+	<h:outputText style="color:green;" value="#{fbresource['Facebook']}" />
+	<a style="color: blue;" target="_blank"
+		href="https://#{company.facebook}">#{company.facebook}</a>
+
+
+	<h:outputText style="color:green;" value="#{fbresource['GlassDoor']}" />
+	<a style="color: blue;" target="_blank"
+		href="https://#{company.glassdoor}">#{company.glassdoor}</a>
+
+</h:panelGrid>
+
+<h:panelGrid columns="2">
+	<h:outputText style="color:green;" value="#{fbresource['Profile']}" />
+	<h:outputText escape="false" value="#{company.profile}" />
+
+	<h:outputText style="color:green;" value="#{fbresource['Remarks']}" />
+	<h:outputText escape="false" value="#{company.remarks}" />
+</h:panelGrid>
+
+<br />
+<br />
+</html>

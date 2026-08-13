@@ -1,0 +1,63 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb breadcrumb-divider">
+		<li
+			class="breadcrumb-item #{WebFlow.selectedPage eq 'Main Information' ? 'active':''}">
+			<h:commandLink onclick="pleaseWaitLoading();"
+				title="#{fbresource['Please_click_here_to_go_on']} #{fbresource['Main_Information']}"
+				action="#{WebFlow.mainPage}"><i class="ficon bx bx-dots-vertical" /><i class="ficon bx bx-user" />#{fbresource['Main_Information']}
+			     </h:commandLink>
+		</li>
+
+		<li
+			class="breadcrumb-item #{WebFlow.selectedPage eq 'Personal Information' ? 'active':''}">
+			<h:commandLink onclick="pleaseWaitLoading();"
+				title="#{fbresource['Please_click_here_to_go_on']} #{fbresource['Personal_Information']}"
+				action="#{WebFlow.firstPage}"><i class="ficon bx bxs-user-rectangle" />#{fbresource['Personal_Information']}
+			     </h:commandLink>
+		</li>
+		
+		
+		<li
+			class="breadcrumb-item #{WebFlow.selectedPage eq 'Academic Information' ? 'active':''}">
+			<h:commandLink onclick="pleaseWaitLoading();"
+				title="#{fbresource['Please_click_here_to_go_on']} #{fbresource['Academic_Information']}"
+				action="#{WebFlow.secondPage}"><i class="ficon bx bxs-graduation" />#{fbresource['Academic_Information']}
+			     </h:commandLink>
+		</li>
+		
+		
+		
+		<li
+			class="breadcrumb-item #{WebFlow.selectedPage eq 'Backlog Information' ? 'active':''}">
+			<h:commandLink onclick="pleaseWaitLoading();" rendered="#{!(StudentRegistrationBean.currentCourse eq '10' || StudentRegistrationBean.currentCourse eq '12')}"
+				title="#{fbresource['Please_click_here_to_go_on']} #{fbresource['Backlog_Information']}"
+				action="#{WebFlow.thirdPage}"><i class="ficon bx bx-bold" />#{fbresource['Backlog_Information']}
+			     </h:commandLink>
+		</li>
+		
+		
+		<li
+			class="breadcrumb-item #{WebFlow.selectedPage eq 'Contact Information' ? 'active':''}">
+			<h:commandLink onclick="pleaseWaitLoading();"
+				title="#{fbresource['Please_click_here_to_go_on']} #{fbresource['Contact_Information']}"
+				action="#{WebFlow.contactPage}"><i class="ficon bx bxs-contact" />#{fbresource['Contact_Information']}
+			     </h:commandLink>
+		</li>
+		
+		<li
+			class="breadcrumb-item #{WebFlow.selectedPage eq 'All Documents' ? 'active':''}">
+			<h:commandLink onclick="pleaseWaitLoading();"
+				title="#{fbresource['Please_click_here_to_go_on']} #{fbresource['All_Documents']}"
+				action="#{WebFlow.allDocumentPageForStudent}"><i class="ficon bx bxs-file-doc" />#{fbresource['All_Documents']}<i class="ficon bx bx-dots-vertical" />
+			     </h:commandLink>
+		</li>
+		
+		
+	</ol>
+</nav>
+</html>

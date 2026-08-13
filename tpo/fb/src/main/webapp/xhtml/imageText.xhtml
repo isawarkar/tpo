@@ -1,0 +1,25 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+	<td><h:panelGrid columns="2">
+			<o:dynamicImage id="imageText" title="#{fbresource['Image_Text']}"
+				data="#{StudentRegistrationBean.textAsImage}"
+				style="border: 1px solid gray; " />
+			<o:commandButton title="#{fbresource['Click_here_to_Generate_New_Image']}"
+				execute="@this" style="border:0px;"
+				action="#{StudentRegistrationBean.refreshImage}" render="LoginForm:imageText LoginAdminForm:imageText imageText"
+				image="/css/refresh_icon.png">
+			</o:commandButton>
+			<h:inputHidden id="ImageText"
+				value="#{StudentRegistrationBean.verificationNumber}" />
+		</h:panelGrid></td>
+	<td><h:inputText immediate="true" id="EnterImageText" 
+			title="#{fbresource['Enter_above_Image_Text']}" maxlength="6" size="6" required="true">
+			<f:validator validatorId="ChaptaValidator" />
+			<o:ajax render="EnterImageText" />
+		</h:inputText> <o:floatingIconMessage style="border-color: red;"
+			id="EnterImageTextIcon" for="EnterImageText" showDetail="true"
+			showSummary="false" /></td>
+</html>

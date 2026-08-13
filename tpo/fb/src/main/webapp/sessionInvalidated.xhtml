@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<ui:composition template="/templateNew/layout.xhtml">
+	<ui:define name="content">
+	<ui:include src="/xhtml/allPopUps.xhtml" />
+
+		<style rel="stylesheet" type="text/css">
+#wrapper_error {
+	width: 500px;
+	padding: 0px;
+	margin: auto;
+	position: relative;
+	top: 20px;
+}
+
+#login_header_error {
+	width: 100%;
+	padding: 0px;
+	float: left;
+	margin: 0px 0px 3px 0px;
+	height: 40px;
+}
+
+#logo_connect {
+	float: left;
+	margin: 12px 15px 13px 0px;
+	padding: 0px;
+	width: 400px;
+	_margin: 12px 15px 13px 0px;
+}
+
+#logo_connect div.logo_College {
+	background: url(./images/FreshersBuddy.jpg) no-repeat;
+	width: 300px;
+	height: 50px;
+	margin-bottom: 20px;
+	float: left;
+	margin-right: 6px;
+}
+
+#logo_connect div.logo_uddanda {
+	background: url(./images/uddanda.jpg) no-repeat;
+	width: 200px;
+	height: 100px;
+	float: left;
+	margin-right: 6px;
+}
+
+#content {
+	float: left;
+	width: 484px;
+	_width: 470px;
+}
+
+#login_box {
+	float: left:    width:  484px;
+	border: 2px solid green;
+	background-color: red;
+	height: 255px;
+	_height: 250px;
+	*height: 250px;
+}
+
+#body_input_error {
+	background-color: red;
+	border-bottom: 1px solid #c4c4c4;
+	padding: 15px 10px 8px 20px;
+	_padding: 15px 0px 8px 20px;
+}
+
+#error_box {
+	width: 100%;
+}
+
+.error_text {
+	color: white;
+	font-size: 30px;
+}
+
+#error_message {
+	float: left;
+	margin-left: 18px;
+	width: 100%;
+	color: white;
+	margin-bottom: 70px;
+	_margin-left: 9px;
+}
+
+.err_msg {
+	margin: 11px 5px 0px 100px;
+	font-weight: bold;
+	font-size: 20px;
+	color: white;
+	font-family: Arial, Helvetica, sans-serif;
+}
+</style>
+		<h:form id="MainForm">
+			<div class="account-form">
+			<div class="account-form-inner">
+			<center>
+				<div align="center" id="wrapper_error">
+					<div id="login_header_error">
+						<div id="logo_connect">
+							<div class="logo_College"></div>
+						</div>
+					</div>
+					<div id="content" style="margin-bottom: 50px;">
+						<div id="login_box">
+							<div id="body_input_error">
+								<div id="error_box">
+									<div class="error_text">#{fbresource['Your_session_has_been_Expired']}</div>
+								</div>
+								<div id="login_fields">
+									<h:panelGroup rendered="#{QuestionBean.sessionExpiredMessage}">
+										<div class="error_text">#{fbresource['Close_Browser']}</div>
+									</h:panelGroup>
+									<h:panelGroup rendered="#{!QuestionBean.sessionExpiredMessage}">
+										<div id="error_message">
+											<br />
+											<center>
+												<a href="/FB/index.faces"><font color="cyan"
+													size="5">#{fbresource['Please_login_again']}</font></a>
+											</center>
+										</div>
+									</h:panelGroup>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</center>
+			</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.hibernate.Exam" table="exam" >
+        <id name="testname" type="java.lang.String">
+            <column name="testname" length="50" />
+            <generator class="assigned" />
+        </id>
+        <property name="passingcriteria" type="java.lang.Integer">
+            <column name="passingcriteria" precision="4" scale="0" />
+        </property>
+        <property name="startrange" type="java.lang.Integer">
+            <column name="startrange" precision="4" scale="0" />
+        </property>
+        <property name="endrange" type="java.lang.Integer">
+            <column name="endrange" precision="5" scale="0" />
+        </property>
+         <property name="noOfQuestions" type="java.lang.Integer">
+            <column name="noOfQuestions" />
+        </property>
+        <property name="minute" type="java.lang.Integer">
+            <column name="minute" />
+        </property>
+          <property name="createdBy" type="java.lang.String">
+            <column name="createdBy" length="20" not-null="true" />
+        </property>
+         <property name="resultType" type="java.lang.String">
+            <column name="resultType" length="20" not-null="true" />
+        </property>
+         <property name="negativeMark" type="java.lang.Double">
+            <column name="negativeMark"  />
+        </property>
+         <property name="firstClassMark" type="java.lang.Integer">
+            <column name="firstClassMark"  />
+        </property>
+         <property name="honoursMark" type="java.lang.Integer">
+            <column name="honoursMark"  />
+        </property>
+         <property name="allowCertDownload" type="java.lang.Boolean">
+            <column name="allowCertDownload" />
+        </property>
+         <property name="validFrom" type="java.util.Date">
+            <column name="validFrom" />
+        </property>
+         <property name="validTo" type="java.util.Date">
+            <column name="validTo" />
+        </property>
+        <property name="showResult" type="java.lang.Boolean">
+            <column name="showresult" />
+        </property>
+    </class>
+</hibernate-mapping>

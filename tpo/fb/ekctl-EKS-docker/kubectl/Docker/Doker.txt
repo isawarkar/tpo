@@ -1,0 +1,60 @@
+####################Dockerfile
+FROM centos:7
+RUN mkdir /opt/tomcat/
+RUN yum install java -y
+RUN yum install unzip -y
+WORKDIR /tmp
+ADD https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.62/bin/apache-tomcat-9.0.62.zip .
+RUN unzip apache*.zip
+RUN mv apache-tomcat-9.0.62/* /opt/tomcat
+RUN ls -l
+WORKDIR /opt/tomcat/webapps
+RUN curl -O -L https://app-online-exam.s3.ap-south-1.amazonaws.com/exam.war
+RUN ls -l
+WORKDIR /opt/tomcat/bin
+#RUN chown -R tomcat: /opt/tomcat
+RUN sh -c 'chmod +x /opt/tomcat/bin/*.sh'
+RUN ls -l
+EXPOSE 8080
+CMD ["/opt/tomcat/bin/catalina.sh", "run"]
+######################
+
+docker build -t onlineexam . //Docker build images
+docker run -d --name A1 -p 8080:8080 onlineexam //Docker run images
+
+docker container logs fb //to see the logs
+docker kill A1 //TO kill COntainer
+
+kubectl create deployment indrajeet-demo-app-deploy --image indrajeetsawarkar/images --replicas=2
+kubectl expose deployment indrajeet-demo-app-deploy --name indrajeet-demo-app-svc-lb --type NodePort --port 8080 --target-port 8080
+
+// TO see the pod logs
+kubectl describe pod indrajeet-app-deployment-674ccfdff-8hpcs
+
+################# Docker login to pull private image in kubctl ##################
+
+Create a Secret based on existing credentials
+A Kubernetes cluster uses the Secret of kubernetes.io/dockerconfigjson type to authenticate with a container registry to pull a private image.
+
+If you already ran docker login, you can copy that credential into Kubernetes:
+
+kubectl create secret generic regcred \
+    --from-file=.dockerconfigjson=/root/.docker/config.json \
+    --type=kubernetes.io/dockerconfigjson
+    
+If you need more control (for example, to set a namespace or a label on the new secret) then you can customise the Secret before storing it. Be sure to:
+
+set the name of the data item to .dockerconfigjson
+base64 encode the Docker configuration file and then paste that string, unbroken as the value for field data[".dockerconfigjson"]
+set type to kubernetes.io/dockerconfigjson
+Example:
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: myregistrykey
+  namespace: awesomeapps
+data:
+  .dockerconfigjson: UmVhbGx5IHJlYWxseSByZWVlZWVlZWVlZWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGx5eXl5eXl5eXl5eXl5eXl5eXl5eSBsbGxsbGxsbGxsbGxsbG9vb29vb29vb29vb29vb29vb29vb29vb29vb25ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubmdnZ2dnZ2dnZ2dnZ2dnZ2dnZ2cgYXV0aCBrZXlzCg==
+type: kubernetes.io/dockerconfigjson
+

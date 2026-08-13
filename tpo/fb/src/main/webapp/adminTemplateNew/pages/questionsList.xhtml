@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<ui:composition template="adminLayoutNew.xhtml">
+	<ui:define name="content">
+		<ui:include src="/xhtml/allPopUps.xhtml" />
+		<section id="card-actions">
+			<!-- Info table about action starts -->
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-header">
+							<h4 class="card-title">#{fbresource['Question_List']}</h4>
+							<a class="heading-elements-toggle"> <i
+								class='bx bx-dots-vertical font-medium-3' /></a>
+							<div class="heading-elements">
+								<ul class="list-inline mb-0">
+									<li><h:form>
+											<h:panelGroup id="bookmarkButtonPanel">
+												<o:commandLink id="bookmarkButton" execute="bookmarkButton"
+													render="bookmarkButtonPanel bookmarkList errorPanel"
+													actionListener="#{BookmarkBean.setBookmark}">
+													<f:param name="bookmarkName" value="questionsList" />
+
+													<i title="#{fbresource['bookmarkToolTip']}"
+														class="ficon bx #{BookmarkBean.getIcon('questionsList')} warning" />
+												</o:commandLink>
+											</h:panelGroup>
+										</h:form></li>
+									<li><a data-action="collapse"> <i
+											class="bx bx-chevron-down" /></a></li>
+									<li><a data-action="expand"> <i
+											class="bx bx-fullscreen" /></a></li>
+									<li><a data-action="reload"> <i class="bx bx-revision" /></a></li>
+									<li><a data-action="close"> <i class="bx bx-x" /></a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="card-content collapse show">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="table-responsive">
+											<h:head>
+												<meta http-equiv="Content-Type"
+													content="text/html; charset=UTF-8" />
+											</h:head>
+											<h:form id="QuestionListForm">
+												<table>
+													<tr>
+														<td>#{fbresource['Test_Name']}</td>
+														<td><o:dropDownField id="examName" maxlength="50"
+																immediate="true" style="width: 200px;"
+																listItemStyle="white-space: nowrap;"
+																suggestionMode="stringStart" var="testName"
+																value="#{QuestionListTableBean.testName}"
+																suggestionMinChars="1">
+																<o:dropDownItems value="#{ExamTableBean.testList}" />
+																<o:column>
+																	<h:outputText value="#{testName}"
+																		styleClass="dropDownValuesClass" />
+																</o:column>
+															</o:dropDownField> <o:floatingIconMessage style="border-color: red;"
+																for="examName" showDetail="true" showSummary="false" /></td>
+
+														<TD><o:commandButton
+																styleClass="btn btn-primary glow"
+																style="margin-left: 20px;"
+																action="#{QuestionListTableBean.searchRecord}"
+																value="#{fbresource['search']}">
+															</o:commandButton></TD>
+														<td><o:commandButton
+																styleClass="btn btn-primary glow"
+																value="#{fbresource['add']}" id="addQuestion"
+																title="#{fbresource['Click_here_to']} Add new Question"
+																onajaxend="document.getElementById('questionButton').click();"
+																render="QuestionWindowForm"
+																actionListener="#{QuestionListTableBean.setQuestionToAdd}" />
+														</td>
+														<td><o:commandButton
+																styleClass="btn btn-primary glow"
+																value="#{fbresource['update']}" id="update"
+																title="#{fbresource['Click_here_to']} #{fbresource['update']}"
+																onajaxend="document.getElementById('questionButton').click();"
+																execute="questionListTable"
+																render="QuestionWindowForm errorPanel"
+																actionListener="#{QuestionListTableBean.setQuestion}" /></td>
+														<TD><o:commandButton
+																styleClass="btn btn-primary glow"
+																action="#{QuestionListTableBean.deleteSelectedQuestion}"
+																value="#{fbresource['delete']}">
+																<o:confirmation id="buttonConfirmation"
+																	message="#{fbresource['Are_you__sure_you_want_to_delete']}"
+																	draggable="true" />
+															</o:commandButton></TD>
+														<td><button
+																title="#{fbresource['Please_click_here_to_open_Import_Export_Exam_Window']}"
+																class="btn btn-primary glow" id="importExam"
+																type="button" data-toggle="modal"
+																data-target="#importExam">
+																#{fbresource['Import_Export_Exam']}</button></td>
+														<td><input type="button"
+															value="#{fbresource['Print']}"
+															class="btn btn-primary glow"
+															title="#{fbresource['Click_here_to']} #{fbresource['Print']}"
+															onClick="window.print()" /></td>
+													</tr>
+												</table>
+												<h:panelGroup id="paginationTableContainner">
+													<o:dataTable id="questionListTable" var="question"
+														value="#{QuestionListTableBean.questionList}"
+														sortColumnId="questionID" sortAscending="true"
+														sortableHeaderRolloverStyle="background: #d4d4d4"
+														style="width: 100%;margin-top: 10px; line-height: 17px;"
+														styleClass="datatable"
+														rolloverRowStyle="background: #f1f1f1;">
+														<o:multipleRowSelection
+															rowDatas="#{QuestionListTableBean.seletectQuestionList}"
+															style="background: #a4aec5; color: white;" />
+														<o:columnReordering />
+														<f:facet name="columnMenu">
+															<o:columnMenu />
+														</f:facet>
+
+														<o:selectionColumn style="width: 6%;" sortable="true"
+															header="#{fbresource['Selection']}">
+															<f:facet name="header">
+																<o:selectAllCheckbox />
+															</f:facet>
+														</o:selectionColumn>
+
+														<o:column header="#{fbresource['No']}"
+															sortingExpression="#{question.id.qno}">
+															<h:outputLabel value="#{question.id.qno}">
+															</h:outputLabel>
+														</o:column>
+														<o:column header="#{fbresource['AN']}"
+															sortingExpression="#{question.assignedNo}">
+															<h:outputLabel
+																title="#{fbresource['Marks_assigned_to_this_question']}"
+																value="#{question.assignedNo}">
+															</h:outputLabel>
+														</o:column>
+														<o:column header="#{fbresource['Image']}">
+															<h:outputLabel rendered="#{question.isImage eq true}"
+																value="#{fbresource['YES']}" />
+															<h:outputLabel rendered="#{question.isImage eq false}"
+																value="#{fbresource['NO']}" />
+														</o:column>
+
+														<o:column header="#{fbresource['Question']}"
+															sortingExpression="#{question.question}">
+															<h:outputText title="#{question.question}" escape="false" value="#{question.question.length() gt 20 ? question.question.substring(0,20).concat('...') : question.question}" />
+														</o:column>
+														<o:column header="#{fbresource['Option_A']}"
+															sortingExpression="#{question.optiona}">
+															<h:outputText title="#{question.optiona}"  escape="false" value="#{question.optiona.length() gt 20 ? question.optiona.substring(0,20).concat('...') : question.optiona}" />
+														</o:column>
+														<o:column header="#{fbresource['Option_B']}"
+															sortingExpression="#{question.optionb}">
+															<h:outputText title="#{question.optionb}" escape="false" value="#{question.optionb.length() gt 20 ? question.optionb.substring(0,20).concat('...') : question.optionb}" />
+														</o:column>
+														<o:column header="#{fbresource['Option_C']}"
+															sortingExpression="#{question.optionc}">
+															<h:outputText title="#{question.optionc}" escape="false" value="#{question.optionc.length() gt 20 ? question.optionc.substring(0,20).concat('...') : question.optionc}" />
+														</o:column>
+														<o:column header="#{fbresource['Option_D']}"
+															sortingExpression="#{question.optiond}">
+															<h:outputText title="#{question.optiond}" escape="false" value="#{question.optiond.length() gt 20 ? question.optiond.substring(0,20).concat('...') : question.optiond}" />
+														</o:column>
+														<o:column header="#{fbresource['Answer']}"
+															sortingExpression="#{question.answer}">
+															<h:outputLabel value="#{question.answer}">
+															</h:outputLabel>
+														</o:column>
+														<o:column header="#{fbresource['QType']}"
+															sortingExpression="#{question.questionType}">
+															<h:outputLabel value="#{question.questionType}">
+															</h:outputLabel>
+														</o:column>
+														<o:column header="#{fbresource['Image']}">
+															<o:commandLink
+																actionListener="#{QuestionListTableBean.setFileName}"
+																onajaxend="document.getElementById('biggetQuestionPicButton').click();"
+																render="biggetQuestionPicPanel"
+																style="font-size:20px;color:blue;" id="qImage">
+																<f:param name="imageButes"
+																	value="#{question.imageBytes}" />
+																<o:dynamicImage rendered="#{question.isImage eq true}"
+																	alt="Click here to see full image." id="dynamicImage"
+																	width="50" height="50" data="#{question.imageBytes}" />
+															</o:commandLink>
+
+														</o:column>
+														<f:event listener="#{QuestionListTableBean.inIt}"
+															type="preRenderView" />
+													</o:dataTable>
+													<h:panelGroup
+														rendered="#{QuestionListTableBean.testName ne null}">
+														<table align="right">
+															<tr>
+																<td><ui:include src="/xhtml/pagination.xhtml" /></td>
+															</tr>
+														</table>
+													</h:panelGroup>
+												</h:panelGroup>
+												<button style="display: none" id="biggetQuestionPicButton"
+													type="button" data-toggle="modal"
+													data-target="#biggetQuestionPic" />
+												<div class="modal fade text-left" id="biggetQuestionPic"
+													tabindex="-1" role="dialog"
+													aria-labelledby="myModalLabel160" aria-hidden="true">
+													<div
+														class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+														role="document">
+														<div class="modal-content">
+															<div class="modal-header bg-primary">
+																<h5 class="modal-title white" id="myModalLabel160">#{fbresource['Large_Photo']}</h5>
+																<button type="button" class="close" data-dismiss="modal"
+																	aria-label="Close">
+																	<i class="bx bx-x"></i>
+																</button>
+															</div>
+															<div class="modal-body">
+																<h:panelGroup id="biggetQuestionPicPanel">
+																	<center>
+																		<o:dynamicImage id="dynamicImage1"
+																			data="#{QuestionListTableBean.imageBytes}" />
+																	</center>
+																</h:panelGroup>
+															</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-light-secondary"
+																	data-dismiss="modal">
+																	<i class="bx bx-x d-block d-sm-none"></i> <span
+																		class="d-none d-sm-block">#{fbresource['Close']}</span>
+																</button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</h:form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</ui:define>
+</ui:composition>
+</html>

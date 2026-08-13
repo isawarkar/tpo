@@ -1,0 +1,200 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<ui:composition template="../pages/adminLayoutNew.xhtml">
+	<ui:define name="content">
+		<ui:include src="projectWindow.xhtml" />
+
+		<section id="card-actions">
+			<!-- Info table about action starts -->
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-header">
+							<h4 class="card-title">#{fbresource['project_List']}</h4>
+							<a class="heading-elements-toggle"> <i
+								class='bx bx-dots-vertical font-medium-3' /></a>
+							<div class="heading-elements">
+								<ul class="list-inline mb-0">
+									<li><h:form>
+											<h:panelGroup id="bookmarkButtonPanel">
+												<o:commandLink id="bookmarkButton" execute="bookmarkButton"
+													render="bookmarkButtonPanel bookmarkList errorPanel"
+													actionListener="#{BookmarkBean.setBookmark}">
+													<f:param name="bookmarkName" value="projectList" />
+													
+													<i title="#{fbresource['bookmarkToolTip']}"
+														class="ficon bx #{BookmarkBean.getIcon('projectList')} warning" />
+												</o:commandLink>
+											</h:panelGroup>
+										</h:form></li>
+									<li><a data-action="collapse"> <i
+											class="bx bx-chevron-down" /></a></li>
+									<li><a data-action="expand"> <i
+											class="bx bx-fullscreen" /></a></li>
+									<li><a data-action="reload"> <i class="bx bx-revision" /></a></li>
+									<li><a data-action="close"> <i class="bx bx-x" /></a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="card-content collapse show">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="table-responsive">
+											<h:form rendered="#{AdminMenu.enableEffortSystemFlag}"
+												id="ProjectForm">
+												<table width="99%">
+													<tr>
+														<td>
+															<table inlineStyle="color:green;" halign="left"
+																cellSpacing="5">
+																<tr>
+																	<td><h:outputText
+																			value="#{fbresource.project_name}" /></td>
+																	<td><h:inputText id="projectName" size="20"
+																			maxlength="100"
+																			value="#{ProjectTableBean.projectName}" /></td>
+
+																	<td><h:outputText value="#{fbresource.Project_ID}" /></td>
+																	<td><h:inputText id="projectId" size="5"
+																			maxlength="10" value="#{ProjectTableBean.projectId}" /></td>
+																	<td><h:commandButton class="btn btn-primary glow"
+																			value="#{fbresource['search']}"
+																			title="#{fbresource['Click_here_to']} #{fbresource['Search_Record']}"
+																			action="#{ProjectTableBean.searchRecord}" /></td>
+																	<td><o:commandButton
+																			styleClass="btn btn-primary glow"
+																			value="#{fbresource['add']}" id="addCompany"
+																			title="#{fbresource['Click_here_to']} #{fbresource['add']}"
+																			onajaxend="if(O$('projectWindowForm:project') != null){O$('projectWindowForm:project').show();}"
+																			render="projectWindowForm"
+																			actionListener="#{ProjectTableBean.setProjectToAdd}" /></td>
+																	<td><o:commandButton
+																			styleClass="btn btn-primary glow"
+																			value="#{fbresource['update']}" id="update"
+																			title="#{fbresource['Click_here_to']} #{fbresource['update']}"
+																			onajaxend="if(O$('projectWindowForm:project') != null){O$('projectWindowForm:project').show();}"
+																			execute="effortListTable"
+																			render="projectWindowForm errorPanel"
+																			actionListener="#{ProjectTableBean.setProject}" /></td>
+																	<td><h:commandButton class="btn btn-primary glow"
+																			value="#{fbresource['delete']}"
+																			id="deleteButtonAction"
+																			title="#{fbresource['Click_here_to']} #{fbresource['delete']}"
+																			action="#{ProjectTableBean.deleteSeletedRecord}">
+																			<o:confirmation id="buttonConfirmation"
+																				message="#{fbresource['Are_you__sure_you_want_to_delete_module'] }"
+																				draggable="true" />
+																		</h:commandButton></td>
+																	<td><h:commandButton class="btn btn-primary glow"
+																			value="#{fbresource['Change_Status']}"
+																			id="changeStatus"
+																			title="#{fbresource['Click_here_to']} #{fbresource['Change_Status']}"
+																			action="#{ProjectTableBean.changeStatus}">
+																			<o:confirmation id="changeStatusCOnfirm"
+																				message="#{fbresource['Are_you__sure_you_want_to_change_the_status']}"
+																				draggable="true" />
+																		</h:commandButton></td>
+																	<td><input type="button"
+																		value="#{fbresource['Print']}"
+																		class="btn btn-primary glow"
+																		title="#{fbresource['Click_here_to']} #{fbresource['Print']}"
+																		onClick="window.print()" /></td>
+																	<td><h:commandButton
+																			title="#{fbresource['Generate']} #{fbresource['Excel_report']}"
+																			value="#{fbresource['Excel_report']}"
+																			image="/images/excel_button.png"
+																			style="height:40px;width:40px;" id="generateXls"
+																			action="#{ProjectTableBean.generateXls}" /></td>
+																	<td><h:commandButton
+																			title="#{fbresource['Generate']} #{fbresource['PDF_report']}"
+																			value="#{fbresource['PDF_report']}"
+																			image="/images/pdf_button.png"
+																			style="height:40px;width:40px;"
+																			action="#{ProjectTableBean.generatePdfReport}" /></td>
+
+																</tr>
+															</table>
+														</td>
+													</tr>
+												</table>
+												<h:panelGroup id="paginationTableContainner">
+													<o:dataTable
+														rendered="#{not empty ProjectTableBean.projectList}"
+														id="effortListTable" var="project"
+														value="#{ProjectTableBean.projectList}"
+														sortColumnId="rollnumber" sortAscending="true"
+														sortableHeaderRolloverStyle="background: #d4d4d4"
+														style="width: 100%; line-height: 17px;"
+														styleClass="datatable"
+														rolloverRowStyle="background: #f1f1f1;">
+														<o:multipleRowSelection
+															rowDatas="#{ProjectTableBean.selectedProjectList}"
+															style="background: #a4aec5; color: white;" />
+														<o:columnReordering />
+														<f:facet name="columnMenu">
+															<o:columnMenu />
+														</f:facet>
+														<o:selectionColumn style="width: 6%;" sortable="true"
+															header="#{fbresource['Selection']}">
+															<f:facet name="header">
+																<o:selectAllCheckbox />
+															</f:facet>
+														</o:selectionColumn>
+														<o:column
+															rendered="#{AdminUser.role eq 'Super User' || AdminUser.role eq 'Admin'}"
+															header="#{fbresource['User_Name']}"
+															sortingExpression="#{project.createdBy}"
+															style="text-align: center;">
+								#{project.createdBy}
+							</o:column>
+														<o:column header="#{fbresource['Project_ID']}"
+															sortingExpression="#{project.projectid}"
+															style="text-align: center;">
+															<h:commandLink style="cursor:hand;color:blue;"
+																action="#{ProjectTableBean.showInfo}"
+																value="#{project.projectid}"
+																title="#{fbresource['Please_click_here_to_see_modules_list']}"></h:commandLink>
+
+														</o:column>
+														<o:column header="#{fbresource['project_name']}"
+															sortingExpression="#{project.projectname}"
+															style="text-align: center;">
+								#{project.projectname}
+							</o:column>
+														<o:column header="#{fbresource['Status']}"
+															sortingExpression="#{project.status}"
+															style="text-align: center;">
+															<h:outputText rendered="#{project.status eq 1}"
+																value="#{fbresource['Active']}" />
+															<h:outputText rendered="#{project.status eq 0}"
+																value="#{fbresource['InActive']}" />
+														</o:column>
+
+
+														<f:event listener="#{ProjectTableBean.inIt}"
+															type="preRenderView" />
+													</o:dataTable>
+													<table align="right">
+														<tr>
+															<td><ui:include src="/xhtml/pagination.xhtml" /></td>
+														</tr>
+													</table>
+												</h:panelGroup>
+											</h:form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</ui:define>
+</ui:composition>
+</html>

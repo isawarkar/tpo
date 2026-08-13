@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.hibernate.Result" table="result" >
+        <composite-id name="id" class="com.hibernate.ResultId">
+            <key-property name="loginname" type="java.lang.String">
+                <column name="loginname" length="20" />
+            </key-property>
+            <key-property name="attempt" type="java.lang.Integer">
+                <column name="attempt" />
+            </key-property>
+        </composite-id>
+        <property name="totalnumbers" type="java.lang.Double">
+            <column name="totalnumbers" precision="5" />
+        </property>
+        <property name="result" type="java.lang.String">
+            <column name="result" />
+        </property>
+        <property name="testName" type="java.lang.String">
+            <column name="testName" length="50" />
+        </property>
+        <property name="dateTaken" type="java.util.Date">
+            <column name="dateTaken" length="19" not-null="true" />
+        </property>
+        <property name="totalTimeTaken" type="java.lang.Double">
+            <column name="totalTimeTaken" not-null="true" />
+        </property>
+        <property name="numberOfQuestion" type="java.lang.Integer">
+            <column name="numberOfQuestion" not-null="true" />
+        </property>
+         <property name="totalTime" type="java.lang.Double">
+            <column name="totalTime" not-null="true" />
+        </property>
+         <property name="createdBy" type="java.lang.String">
+            <column name="createdBy" length="20" not-null="true" />
+        </property>
+        <property name="questions" type="java.lang.String">
+            <column name="questions" length="250" />
+        </property>
+    </class>
+</hibernate-mapping>

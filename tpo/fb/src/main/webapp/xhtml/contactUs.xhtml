@@ -1,0 +1,108 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<script type="text/javascript"
+	src="https://maps.googleapis.com/maps/api/js?sensor=true">
+	
+</script>
+<ui:composition template="/template/commonLayout.xhtml">
+	<ui:define name="content">
+
+		<h:form id="contactUs">
+			<table style="margin-top: 20px;" width="1100px">
+				<tr>
+					<td>#{fbresource['Complaint_Number']}</td>
+					<td align="left"><h:inputText id="complaintNumber1"
+							maxlength="8" value="#{FeedBackBean.complaint.complaintNumber}"
+							requiredMessage="#{fbresource['Please_enter']} #{fbresource['Complaint_Number']}">
+						</h:inputText> <o:floatingIconMessage style="border-color: red;"
+							for="complaintNumber" showDetail="true" showSummary="false" /> <o:commandButton
+							style="margin-left:10px;" value="#{fbresource['Check']}"
+							id="check"
+							title="#{fbresource['Click_here_to']} #{fbresource['Check']}"
+							execute="complaintNumber1" render="contactUs errorPanel"
+							actionListener="#{FeedBackBean.setComplaint}" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel
+							rendered="#{FeedBackBean.complaint.status ne null}"
+							value="#{fbresource['Status']}" /></td>
+					<td align="left"><h:outputLabel style="color:red;font-size:20px;"
+							rendered="#{FeedBackBean.complaint.status eq false}"
+							value="#{fbresource['Open']}" /> <h:outputLabel style="color:green;font-size:20px;"
+							rendered="#{FeedBackBean.complaint.status eq true}"
+							value="#{fbresource['Closed']}" /></td>
+
+				</tr>
+				<tr>
+					<td><font color="red">OR</font></td>
+				</tr>
+				<tr>
+					<td>#{fbresource['name']}<font color="red">*</font></td>
+					<td><h:inputText id="name" required="true" maxlength="100"
+							value="#{FeedBackBean.complaint.name}"
+							requiredMessage="#{fbresource['Please_enter']} #{fbresource['Name']}">
+						</h:inputText> <o:floatingIconMessage style="border-color: red;" for="name"
+							showDetail="true" showSummary="false" /></td>
+				</tr>
+				<tr>
+					<td>#{fbresource['Contact_Number']}<font color="red">*</font></td>
+					<td><h:panelGrid id="mobilePan">
+							<h:inputText style="margin-top:10px;" id="number" required="true"
+								maxlength="10" value="#{FeedBackBean.complaint.contactNumber}"
+								requiredMessage="#{fbresource['Please_enter']} #{fbresource['Contact_Number']}">
+								<f:convertNumber />
+								<f:validateLength minimum="10" />
+								<f:ajax event="blur" render="mobilePan" />
+							</h:inputText>
+							<o:floatingIconMessage style="border-color: red;" for="number"
+								showDetail="true" showSummary="false" />
+						</h:panelGrid></td>
+				</tr>
+				<tr>
+					<td>#{fbresource['E_mail']}<font color="red">*</font></td>
+					<td><h:inputText style="margin-top:10px;" id="email"
+							required="true" value="#{FeedBackBean.complaint.email}" size="40"
+							maxlength="200"
+							requiredMessage="#{fbresource['Please_enter']} #{fbresource['E_mail']}">
+							<o:ajax render="email emailMessage" />
+							<f:validator validatorId="EmailValidator" />
+						</h:inputText> <o:floatingIconMessage id="emailMessage"
+							style="border-color: red;" for="email" showDetail="true"
+							showSummary="false" /></td>
+				</tr>
+
+				<tr>
+					<td>#{fbresource['Comment_Message']}<font color="red">*</font></td>
+					<td><h:inputTextarea style="margin-top:50px;" id="message"
+							rows="10" cols="50" value="#{FeedBackBean.complaint.complaint}"
+							required="true" maxlength="1000"
+							requiredMessage="#{fbresource['Please_enter']} #{fbresource['Comment_Message']}">
+						</h:inputTextarea> <o:floatingIconMessage style="border-color: red;" for="message"
+							showDetail="true" showSummary="false" /></td>
+				</tr>
+			</table>
+			<table style="margin-top: 50px;" width="1100px">
+				<tr>
+					<td colspan="2" align="center"><h:commandButton
+							value="#{fbresource['Send_Feedback']}"
+							action="#{FeedBackBean.sendFeedback}"
+							title="#{fbresource['Click_here_to']} #{fbresource['Send_Feedback']}" />
+						<h:commandButton type="reset" style="margin-left: 50px;"
+							title="#{fbresource['Click_here_to']} #{fbresource['Reset']}"
+							value="#{fbresource['Reset']}" /></td>
+				</tr>
+			</table>
+			<br />
+			<script>
+				CKEDITOR.replace('contactUs:message');
+			</script>
+		</h:form>
+		<ui:include src="/xhtml/footer.xhtml" />
+
+	</ui:define>
+</ui:composition>
+</html>

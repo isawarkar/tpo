@@ -1,0 +1,40 @@
+aws s3 cp D:\cgi-bin\cgi-bin\target\cgi-bin.war s3://build-bucket-fb-new/FB_new/target/
+
+scp D:\AWS\cgi-bin-spring-boot\FB\target\FB.war indra@13.234.198.251:/home/ubuntu
+scp D:\AWS\exam\target\exam.war indra@3.108.77.227:/home/ubuntu
+scp D:\AWS\student\target\student.war indra@3.6.60.174:/home/ubuntu
+
+scp D:\AWS\imageservice\target\imageservice.war indra@13.235.4.43:/home/ubuntu
+scp D:\AWS\eurekaserver\target\eurekaServer-0.0.1-SNAPSHOT.jar indra@3.111.143.228:/home/ubuntu/apps
+
+
+
+ ### For FB ###
+ #sh installjar.sh
+ mvn clean install
+ sudo cp /var/lib/jenkins/workspace/FB/target/FB.war /home/ubuntu/
+ cd /home/ubuntu
+ sudo sh buildAndInstall.sh
+
+ ### For student ###
+ #sh installjar.sh
+ mvn clean install
+ sudo chmod +rwx /var/lib/jenkins/workspace/STUDENT/target/student.war
+ sudo scp -i /home/ubuntu/ppk/studentppk.pem  /var/lib/jenkins/workspace/STUDENT/target/student.war ubuntu@3.6.60.174:/home/ubuntu
+ 
+ ### For EXAM ###
+ mvn clean install
+ sudo chmod +rwx /var/lib/jenkins/workspace/EXAM/target/exam.war
+ sudo scp -i /home/ubuntu/ppk/myexamserverkey.pem  /var/lib/jenkins/workspace/EXAM/target/exam.war ubuntu@3.108.77.227:/home/ubuntu
+ 
+ ### For IMAGESERVER ###
+ mvn clean install
+ sudo chmod +rwx /var/lib/jenkins/workspace/IMAGESERVICE/target/imageservice.war
+ sudo scp -i /home/ubuntu/ppk/FB_mumbai_ppk.pem /var/lib/jenkins/workspace/IMAGESERVICE/target/imageservice.war ubuntu@13.235.4.43:/home/ubuntu
+ 
+ ### For EUREKA SERVER ###
+ mvn clean install
+ sudo chmod +rwx /var/lib/jenkins/workspace/eurekaserver/target/eurekaServer-0.0.1-SNAPSHOT.jar
+ sudo scp -i /home/ubuntu/ppk/fbppk.pem /var/lib/jenkins/workspace/eurekaserver/target/eurekaServer-0.0.1-SNAPSHOT.jar ubuntu@3.111.143.228:/home/ubuntu/apps
+ 
+ 

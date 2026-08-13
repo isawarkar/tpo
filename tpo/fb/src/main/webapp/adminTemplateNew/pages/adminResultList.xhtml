@@ -1,0 +1,412 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<ui:composition template="adminLayoutNew.xhtml">
+	<ui:define name="content">
+		<section id="card-actions">
+			<!-- Info table about action starts -->
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-header">
+							<h4 class="card-title">#{fbresource['Result_List']}</h4>
+							<a class="heading-elements-toggle"> <i
+								class='bx bx-dots-vertical font-medium-3' /></a>
+							<div class="heading-elements">
+								<ul class="list-inline mb-0">
+									<li><h:form>
+											<h:panelGroup id="bookmarkButtonPanel">
+												<o:commandLink id="bookmarkButton" execute="bookmarkButton"
+													render="bookmarkButtonPanel bookmarkList errorPanel"
+													actionListener="#{BookmarkBean.setBookmark}">
+													<f:param name="bookmarkName" value="adminResultList" />
+													<i title="#{fbresource['bookmarkToolTip']}"
+														class="ficon bx #{BookmarkBean.getIcon('adminResultList')} warning" />
+												</o:commandLink>
+											</h:panelGroup>
+										</h:form></li>
+									<li><a data-action="collapse"> <i
+											class="bx bx-chevron-down" /></a></li>
+									<li><a data-action="expand"> <i
+											class="bx bx-fullscreen" /></a></li>
+									<li><a data-action="reload"> <i class="bx bx-revision" /></a></li>
+									<li><a data-action="close"> <i class="bx bx-x" /></a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="card-content collapse show">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="table-responsive">
+											<h:form id="ResultForm">
+												<button style="display: none" id="questionsButton"
+													type="button" data-toggle="modal" data-target="#questions" />
+												<div class="modal fade text-left w-100" id="questions"
+													tabindex="-1" role="dialog"
+													aria-labelledby="myModalLabel20" aria-hidden="true">
+													<div
+														class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-full"
+														role="document">
+														<div class="modal-content">
+															<div class="modal-header  bg-primary">
+																<h4 class="modal-title" id="myModalLabel20">#{fbresource['Question_List']}</h4>
+																<button type="button" class="close" data-dismiss="modal"
+																	aria-label="Close">
+																	<i class="bx bx-x"></i>
+																</button>
+															</div>
+															<div class="modal-body">
+																<h:panelGroup id="questionsInfo">
+																	<center>
+																		<FONT size="5"><B>#{fbresource['Answers_given']}</B></FONT>
+																		<TABLE border="1">
+																			<th bgcolor="orange">#{fbresource['Question_No']}</th>
+																			<th bgcolor="orange">#{fbresource['Question']}</th>
+																			<th bgcolor="orange">#{fbresource['Option_A']}</th>
+																			<th bgcolor="orange">#{fbresource['Option_B']}</th>
+																			<th bgcolor="orange">#{fbresource['Option_C']}</th>
+																			<th bgcolor="orange">#{fbresource['Option_D']}</th>
+																			<th bgcolor="orange">#{fbresource['Answer']}</th>
+																			<o:forEach
+																				items="#{StudentTableBean.questionListCorrect}"
+																				var="questionCorrect">
+																				<tr>
+																					<td bgcolor="green"><h:outputLabel
+																							style="color:white;" escape="false"
+																							value="#{questionCorrect.id.qno}" /></td>
+																					<td bgcolor="green"><h:panelGrid columns="2">
+																							<o:dynamicImage
+																								rendered="#{questionCorrect.isImage eq true}"
+																								alt="Click here to see full image."
+																								id="dynamicImage" width="100" height="100"
+																								data="#{questionCorrect.imageBytes}" />
+																							<h:outputLabel style="color:white;"
+																								escape="false"
+																								value="#{questionCorrect.question}" />
+																						</h:panelGrid></td>
+																					<td bgcolor="green"><h:outputLabel
+																							style="color:white;" escape="false"
+																							value="#{questionCorrect.optiona}" /></td>
+																					<td bgcolor="green"><h:outputLabel
+																							style="color:white;" escape="false"
+																							value="#{questionCorrect.optionb}" /></td>
+																					<td bgcolor="green"><h:outputLabel
+																							style="color:white;" escape="false"
+																							value="#{questionCorrect.optionc}" /></td>
+																					<td bgcolor="green"><h:outputLabel
+																							style="color:white;" escape="false"
+																							value="#{questionCorrect.optiond}" /></td>
+																					<td bgcolor="green"><h:outputLabel
+																							style="color:white;" escape="false"
+																							value="#{questionCorrect.answer}" /></td>
+																				</tr>
+																			</o:forEach>
+																		</TABLE>
+																		<BR /> <FONT size="5"><B>#{fbresource['Answers_not_given']}</B></FONT>
+																		<TABLE border="1">
+																			<th bgcolor="orange">#{fbresource['Question_No']}</th>
+																			<th bgcolor="orange">#{fbresource['Question']}</th>
+																			<th bgcolor="orange">#{fbresource['Option_A']}</th>
+																			<th bgcolor="orange">#{fbresource['Option_B']}</th>
+																			<th bgcolor="orange">#{fbresource['Option_C']}</th>
+																			<th bgcolor="orange">#{fbresource['Option_D']}</th>
+																			<th bgcolor="orange">#{fbresource['Answer']}</th>
+																			<o:forEach items="#{StudentTableBean.questionList}"
+																				var="question">
+																				<tr>
+																					<td bgcolor="red"><h:outputLabel
+																							escape="false" value="#{question.id.qno}" /></td>
+																					<td bgcolor="red"><o:dynamicImage
+																							rendered="#{question.isImage eq true}"
+																							alt="Click here to see full image."
+																							id="dynamicImage" width="100" height="100"
+																							data="#{question.imageBytes}" /> <h:outputLabel
+																							escape="false" value="#{question.question}" /></td>
+																					<td bgcolor="red"><h:outputLabel
+																							escape="false" value="#{question.optiona}" /></td>
+																					<td bgcolor="red"><h:outputLabel
+																							escape="false" value="#{question.optionb}" /></td>
+																					<td bgcolor="red"><h:outputLabel
+																							escape="false" value="#{question.optionc}" /></td>
+																					<td bgcolor="red"><h:outputLabel
+																							escape="false" value="#{question.optiond}" /></td>
+																					<td bgcolor="red"><h:outputLabel
+																							escape="false" value="#{question.answer}" /></td>
+																				</tr>
+																			</o:forEach>
+																		</TABLE>
+																		<BR /> <input type="button"
+																			class="btn btn-primary glow"
+																			onclick="closeQuestions();"
+																			value="#{fbresource['Close']}"
+																			title="#{fbresource['Please_click_here_to_close']}" />
+																	</center>
+																</h:panelGroup>
+															</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-light-secondary"
+																	data-dismiss="modal">
+																	<i class="bx bx-x d-block d-sm-none"></i> <span
+																		class="d-none d-sm-block">#{fbresource['Close']}</span>
+																</button>
+															</div>
+														</div>
+													</div>
+												</div>
+												<table>
+													<tr>
+														<td>#{fbresource['En_No']}</td>
+														<td><h:inputText size="10"
+																value="#{StudentTableBean.loginName}" /></td>
+														<td>#{fbresource['Exam_Name']}</td>
+														<td><h:inputText size="6"
+																value="#{StudentTableBean.testName}" /></td>
+														<td>#{fbresource['Result']}</td>
+														<td><h:selectOneMenu
+																value="#{StudentTableBean.result}">
+																<f:selectItem itemLabel="" itemValue="" />
+																<f:selectItem itemLabel="#{fbresource['Qualified']}"
+																	itemValue="Qualified" />
+																<f:selectItem itemLabel="#{fbresource['DisQualified']}"
+																	itemValue="Disqualified" />
+																<f:selectItem
+																	itemLabel="#{fbresource['Qualified_in_First_Class']}"
+																	itemValue="Qualified in First Class" />
+																<f:selectItem
+																	itemLabel="#{fbresource['Qualified_In_Honors']}"
+																	itemValue="Qualified in Honours" />
+															</h:selectOneMenu></td>
+														<TD><o:commandButton
+																styleClass="btn btn-primary glow" id="searchButton"
+																action="#{StudentTableBean.searchRecord}"
+																value="#{fbresource['search']}">
+															</o:commandButton></TD>
+														<TD><o:commandButton
+																styleClass="btn btn-primary glow"
+																action="#{StudentTableBean.deleteSelectedResult}"
+																value="#{fbresource['delete']}">
+																<o:confirmation id="buttonConfirmation"
+																	message="#{fbresource['Are_you__sure_you_want_to_delete']}"
+																	draggable="true" />
+															</o:commandButton></TD>
+														<TD><o:commandButton
+																styleClass="btn btn-primary glow"
+																action="#{StudentTableBean.deleteJunkResult}"
+																value="#{fbresource['delete_junk_records']}">
+																<o:confirmation id="buttonJunkConfirmation"
+																	message="#{fbresource['Are_you__sure_you_want_to_delete']}"
+																	draggable="true" />
+															</o:commandButton></TD>
+														<TD><o:commandButton
+																styleClass="btn btn-primary glow"
+																action="#{StudentTableBean.createCertificate}"
+																value="#{fbresource['create_Certificate']}">
+															</o:commandButton></TD>
+														<td><input type="button"
+															value="#{fbresource['Print']}"
+															class="btn btn-primary glow"
+															title="#{fbresource['Click_here_to']} #{fbresource['Print']}"
+															onClick="window.print()" /></td>
+														<td><h:commandButton
+																title="#{fbresource['Generate']} #{fbresource['Excel_report']}"
+																value="#{fbresource['Excel_report']}"
+																image="/images/excel_button.png"
+																style="height:40px;width:40px;" id="generateXls"
+																action="#{StudentTableBean.generateXls}" /></td>
+														<td><h:commandButton
+																title="#{fbresource['Generate']} #{fbresource['PDF_report']}"
+																value="#{fbresource['PDF_report']}"
+																image="/images/pdf_button.png"
+																style="height:40px;width:40px;"
+																action="#{StudentTableBean.generatePdfReport}" /></td>
+													</tr>
+												</table>
+												<!-- bodySectionStyle="#{result.result ne Disqualified ? 'background-color:red;':'background-color:green;'} color:#106574" -->
+												<h:panelGroup id="paginationTableContainner">
+													<o:dataTable id="bookMultipleSelection" var="result"
+														value="#{StudentTableBean.adminResultList}"
+														noDataRowStyle="color:red; font-weight:bold; font-size:20pt"
+														sortColumnId="testName" sortAscending="true"
+														sortableHeaderRolloverStyle="background: #d4d4d4"
+														footerSectionStyle="font-size:13pt; color:#223957"
+														headerRowStyle="background-color:#e1caa2"
+														footerRowStyle="background-color:#aabede"
+														commonHeaderRowStyle="background-color:#aec2c5"
+														commonFooterRowStyle="background-color:#769ecb"
+														subHeaderRowStyle="background-color:#faefd2"
+														style="width: 100%;margin-top: 10px; line-height: 17px;"
+														styleClass="datatable"
+														rolloverRowStyle="background: #f1f1f1;">
+														<o:multipleRowSelection
+															rowDatas="#{StudentTableBean.list}"
+															style="background: #a4aec5; color: white;" />
+														<o:columnReordering />
+														<f:facet name="columnMenu">
+															<o:columnMenu />
+														</f:facet>
+														<f:facet name="noDataMessage">
+															<h:outputText value="#{fbresource['no_data']}" />
+														</f:facet>
+
+														<o:selectionColumn style="width: 6%;" sortable="true"
+															header="#{fbresource['Selection']}">
+															<f:facet name="header">
+																<o:selectAllCheckbox />
+															</f:facet>
+														</o:selectionColumn>
+
+														<o:column header="#{fbresource['Enrollment_No']}"
+															sortingExpression="#{result.id.loginname}"
+															style="cursor:hand; width: 50px; text-align: left;">
+															<h:commandLink style="cursor:hand;color:blue;"
+																action="#{StudentTableBean.showInfo}"
+																value="#{result.id.loginname}"
+																title="#{fbresource['Please_click_here_to_see_full_information']}"></h:commandLink>
+														</o:column>
+
+														<o:column header="#{fbresource['Attempt']}"
+															sortingExpression="#{result.id.attempt}"
+															style="width: 50px; text-align: left;">
+															<h:outputText value="#{result.id.attempt}" />
+														</o:column>
+
+														<o:column header="#{fbresource['Test_Name']}"
+															sortingExpression="#{result.testName}"
+															style="width: 50px; text-align: left;">
+															<h:commandLink style="cursor:hand;color:blue;"
+																action="#{StudentTableBean.showExamInfo}"
+																value="#{result.testName}"
+																title="#{fbresource['Please_click_here_to_go_on_exam']}" />
+														</o:column>
+														<o:column header="#{fbresource['Percentage_No']}"
+															sortingExpression="#{result.totalnumbers}"
+															style="width: 58px; text-align: center;">
+															<h:outputText value="#{result.totalnumbers}" />
+														</o:column>
+														<o:column header="#{fbresource['Result']}"
+															sortingExpression="#{result.result}" headerClass="red"
+															style="width: 58px; text-align: center;">
+															<h:outputText rendered="#{result.result eq 'Qualified'}"
+																style="color:green;font-size:15px;"
+																styleClass="blinking" value="#{fbresource['Qualified']}" />
+															<h:outputText
+																rendered="#{result.result eq 'Disqualified'}"
+																style="color:red;font-size:15px;" styleClass="blinking"
+																value="#{fbresource['DisQualified']}" />
+															<h:outputText
+																rendered="#{result.result eq 'Qualified in First Class'}"
+																style="color:cyan;font-size:15px;" styleClass="blinking"
+																value="#{fbresource['Qualified_in_First_Class']}" />
+															<h:outputText
+																rendered="#{result.result eq 'Qualified in Honours'}"
+																style="color:orange;font-size:15px;"
+																styleClass="blinking"
+																value="#{fbresource['Qualified_In_Honors']}" />
+															<h:outputText styleClass="blinking" style="color:red;"
+																rendered="#{result.result eq 'Test Started'}"
+																value="#{result.result}" />
+														</o:column>
+														<o:column header="#{fbresource['Date_of_Exam']}"
+															sortingExpression="#{result.dateTaken}"
+															style="width: 100px; text-align: center;">
+															<h:outputText value="#{result.dateTaken}" />
+														</o:column>
+														<o:column header="#{fbresource['Time_Was']}"
+															sortingExpression="#{result.totalTime}"
+															style="width: 58px; text-align: center;">
+															<h:outputText value="#{result.totalTime}" />
+														</o:column>
+														<o:column header="#{fbresource['Time_Taken']}"
+															sortingExpression="#{result.totalTimeTaken}"
+															style="width: 58px; text-align: center;">
+															<h:outputText
+																rendered="#{result.result eq 'Qualified' || result.result eq 'Disqualified' || result.result eq 'Qualified in First Class' || result.result eq 'Qualified in Honours'}"
+																value="#{result.totalTimeTaken}" />
+														</o:column>
+														<o:column header="#{fbresource['No_of_Questions']}"
+															sortingExpression="#{result.numberOfQuestion}"
+															style="width: 20px; text-align: center;">
+															<h:outputText value="#{result.numberOfQuestion}" />
+														</o:column>
+														<o:column header="#{fbresource['Answer']}"
+															style="width: 20px; text-align: center;">
+															<h:panelGroup
+																rendered="#{result.result eq 'Qualified' || result.result eq 'Disqualified' || result.result eq 'Qualified in First Class' || result.result eq 'Qualified in Honours'}">
+																<h:inputHidden id="testName" value="#{result.testName}" />
+																<h:inputHidden id="questions"
+																	value="#{result.questions}" />
+																<o:commandLink style="color:blue;" id="questionsLink"
+																	value="#{fbresource['List']}"
+																	title="#{fbresource['Please_click_here_to_see_list']}"
+																	actionListener="#{StudentTableBean.setQuestionList}"
+																	onajaxend="document.getElementById('questionsButton').click();"
+																	render="questionsInfo">
+																</o:commandLink>
+															</h:panelGroup>
+														</o:column>
+														<o:column header="#{fbresource['download_Certificate']}"
+															sortingExpression="#{result.certificateAvialable}"
+															style="width: 20px; text-align: center;">
+															<h:commandButton
+																rendered="#{result.certificateAvialable}"
+																action="#{StudentTableBean.downloadCertificate}"
+																image="/images/pdf_button.png"
+																style="height:20px;width:15px;"
+																value="#{fbresource['download_Certificate']}">
+															</h:commandButton>
+														</o:column>
+														<f:event listener="#{StudentTableBean.adminInit}"
+															type="preRenderView" />
+													</o:dataTable>
+													<table align="right">
+														<tr>
+															<td><ui:include src="/xhtml/pagination.xhtml" /></td>
+														</tr>
+													</table>
+													<h:panelGrid columns="2">
+														<o:chart height="300" width="500" id="piechart"
+															rendered="#{StudentTableBean.resultAnalysisStudent ne null}"
+															model="#{StudentTableBean.resultAnalysisStudent}"
+															titleText="#{fbresource['Result_Analysis']} #{fbresource['of']} #{StudentTableBean.totalResultCount}">
+															<o:chartSelection execute="piechart"
+																item="#{StudentTableBean.pieSelectedCategory}"
+																render="paginationTableContainner barchart" />
+															<o:pieChartView colors="cyan,orange,red,green"
+																labelsVisible="true"
+																tooltip="#{sector.key} - #{sector.value}"
+																showShadow="true" shadowColor="black"
+																shadowXOffset="10.0" shadowYOffset="5.0" />
+														</o:chart>
+														<o:chart
+															rendered="#{StudentTableBean.resultBarAnalysisStudent ne null}"
+															model="#{StudentTableBean.resultBarAnalysisStudent}"
+															id="barchart" style="marging-left:1000px;" height="300"
+															width="500" view="bar"
+															titleText="#{fbresource['Result_Analysis']} #{fbresource['of']} #{StudentTableBean.totalResultCount}">
+															<o:chartSelection execute="barchart"
+																item="#{StudentTableBean.selectedCategory}"
+																render="paginationTableContainner piechart" />
+															<o:barChartView colors="green,cyan,orange,red"
+																labelsVisible="true" enable3D="true" shadowColor="green">
+															</o:barChartView>
+															<!--  <o:chartTitle text="Average Temperature During the Year"/> -->
+														</o:chart>
+													</h:panelGrid>
+												</h:panelGroup>
+												<font style="margin-left: 20px;" color="red">#{fbresource['Note_Select_row']}</font>
+											</h:form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</ui:define>
+</ui:composition>
+</html>

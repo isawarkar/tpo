@@ -1,0 +1,25 @@
+/*=================  
+	Basic 
+====================*/
+
+
+a {
+	color: #6f6f6f;
+	outline: 0 none;
+	text-decoration: none;
+}
+
+a:hover, a:focus {
+	text-decoration: none;
+	outline: 0 none;
+}
+
+a:active, a:hover {
+	color: #333333;
+}
+
+p a {
+	color: #333333;
+}
+
+

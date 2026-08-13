@@ -1,0 +1,54 @@
+sudo curl -L "https://github.com/docker/compose/releases/download/2.6.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+docker-compose --version
+docker compose up -d //to up the container
+
+#######################create docker-compose.yml for FB
+version: "1.0"
+services:
+  rstudio:
+    image: "fb:latest"
+    build:
+     context: /home/ubuntu
+     dockerfile: Dockerfile
+    working_dir: /home/ubuntu
+    container_name: fb
+    ports:
+      - 8443:8443
+#######################create docker-compose.yml for onlineexam
+version: "1.0"
+services:
+  rstudio:
+    image: "onlineexam:latest"
+    build:
+     context: /home/ubuntu
+     dockerfile: Dockerfile
+    working_dir: /home/ubuntu
+    container_name: onlineexam
+    ports:
+      - 443:443
+########################docker_compose.service
+[Unit]
+Description=docker boot
+After=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory=/home/ubuntu
+ExecStart=/usr/bin/docker rm /fb
+ExecStart=/usr/bin/docker compose -f /home/ubuntu/docker-compose.yml up -d --remove-orphans
+
+[Install]
+WantedBy=multi-user.target
+~
+
+###############################
+
+copy docker_compose.service
+cp docker_compose.service /etc/systemd/system
+sudo systemctl enable docker_compose.service
+sudo systemctl start docker_compose.service
+sudo systemctl status docker_compose.service
+
+

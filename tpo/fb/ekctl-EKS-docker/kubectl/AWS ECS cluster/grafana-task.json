@@ -1,0 +1,26 @@
+{
+  "family": "grafana",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "512",
+  "memory": "1024",
+  "executionRoleArn": "arn:aws:iam::542115677157:role/ecsTaskExecutionRole",
+  "taskRoleArn": "arn:aws:iam::542115677157:role/GrafanaEcsTaskRole",
+  "containerDefinitions": [
+    {
+      "name": "grafana",
+      "image": "grafana/grafana:latest",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 3000,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [
+        { "name": "GF_SECURITY_ADMIN_USER", "value": "indrajeet" },
+        { "name": "GF_SECURITY_ADMIN_PASSWORD", "value": "JeeT@1984" }
+      ]
+    }
+  ]
+}

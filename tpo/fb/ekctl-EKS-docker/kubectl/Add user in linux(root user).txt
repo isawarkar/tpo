@@ -1,0 +1,19 @@
+sudo cp -p /etc/ssh/sshd_config /etc/ssh/sshd_config_backup;
+sudo sed -i 's/^PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config;
+sudo sed -i 's/^PermitRootLogin*/PermitRootLogin yes/' /etc/ssh/sshd_config;
+sudo echo "PermitRootLogin yes" >> /etc/ssh/sshd_config;
+sudo systemctl restart sshd;
+sudo adduser indra
+usermod -G root indra
+usermod -G 0 -o -u indra
+passwd indrajeet
+
+Method 3: Editing /etc/passwd file
+Edit /etc/passwd for the particular user. Change the user's UID and GID to '0'. This will give root permissions to user.
+
+root:x:0:0:root:/root:/bin/bash
+indrajeet:x:128:128:indrajeet
+Now, indrajeet user should have root privilege:
+
+root:x:0:0:root:/root:/bin/bash
+indrajeet:x:0:0:indrajeet

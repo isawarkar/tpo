@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<o:ajaxSettings>
+	<f:facet name="progressMessage">
+		<o:defaultProgressMessage text="#{fbresource['Please_Wait']}"
+			style="width:200px;border: 1px solid gray; background: cyan;"
+			horizontalAlignment="center" verticalAlignment="center"
+			transparency="0" transparencyTransitionPeriod="0"
+			fillBackground="true" backgroundStyle="background: #d8d8d8"
+			backgroundTransparency="0"
+			backgroundTransparencyTransitionPeriod="180" />
+	</f:facet>
+</o:ajaxSettings>
+</html>

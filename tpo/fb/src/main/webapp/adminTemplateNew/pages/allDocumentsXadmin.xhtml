@@ -1,0 +1,174 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<ui:composition template="adminLayoutNew.xhtml">
+	<ui:define name="content">
+		<ui:include src="/xhtml/allPopUps.xhtml" />
+		<section id="card-actions">
+			<!-- Info table about action starts -->
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-header">
+							<h4 class="card-title">
+								<h:outputText
+									rendered="#{StudentRegistrationBean.currentMode eq 'Update'}"
+									value="#{fbresource['Last_Updated_on']} #{StudentRegistrationBean.contactinfo.lastUpdated} #{fbresource['By']} #{StudentRegistrationBean.contactinfo.lastUpdatedBy}"></h:outputText>
+							</h4>
+							<a class="heading-elements-toggle"> <i
+								class='bx bx-dots-vertical font-medium-3'></i>
+							</a>
+							<div class="heading-elements">
+								<ul class="list-inline mb-0">
+									<li><a data-action="collapse"> <i
+											class="bx bx-chevron-down"></i>
+									</a></li>
+									<li><a data-action="expand"> <i
+											class="bx bx-fullscreen"></i>
+									</a></li>
+									<li><a data-action="reload"> <i class="bx bx-revision"></i>
+									</a></li>
+									<li><a data-action="close"> <i class="bx bx-x"></i>
+									</a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="card-content collapse show">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="table-responsive">
+											<h:form id="contactAndAchivmentsForm">
+												<ui:include src="webflow.xhtml" />
+												<table cellSpacing="5">
+													<tr>
+														<td><h:outputText
+																value="#{fbresource['Document_Name']}" /></td>
+														<td><h:inputText
+																value="#{AllDocumentsBean.documentName}" id="fileName"
+																columns="15" maximumLength="12">
+															</h:inputText></td>
+														<td><h:commandButton class="btn btn-primary glow"
+																value="#{fbresource['search']}"
+																title="#{fbresource['Click_here_to']} #{fbresource['Search_Record']}"
+																action="#{AllDocumentsBean.searchRecord}" /></td>
+														<td><h:commandButton class="btn btn-primary glow"
+																value="#{fbresource['delete']}" id="deleteButtonAction"
+																title="#{fbresource['Click_here_to']} #{fbresource['delete']}"
+																action="#{AllDocumentsBean.deleteSeletedRecord}">
+																<o:confirmation id="buttonConfirmation"
+																	message="#{fbresource['Are_you__sure_you_want_to_delete']}"
+																	draggable="true" />
+															</h:commandButton></td>
+														<td><h:commandButton class="btn btn-primary glow"
+																value="#{fbresource['Verify']}"
+																id="verifySelectedButtonAction"
+																title="#{fbresource['Click_here_to']} #{fbresource['Verify']}"
+																action="#{AllDocumentsBean.verifySelected}">
+																<o:confirmation id="verifyButtonConfirmation"
+																	message="#{fbresource['verify_document_with_orignal']}"
+																	draggable="true" />
+															</h:commandButton></td>
+														<td>
+															<button class="btn btn-primary glow"
+																title="#{fbresource['Please_click_here_to_upload_document']}"
+																id="companyButton" type="button" data-toggle="modal"
+																data-target="#upload">
+																#{fbresource['Upload_Document']}</button>
+														</td>
+														<td><input type="button" class="btn btn-primary glow"
+															value="#{fbresource['Print']}"
+															title="#{fbresource['Click_here_to']} #{fbresource['Print']}"
+															onClick="window.print()" /></td>
+													</tr>
+												</table>
+												<h:panelGroup id="paginationTableContainner">
+													<o:dataTable id="comapanyListTable" var="document"
+														value="#{AllDocumentsBean.allDocumentList}"
+														sortColumnId="fileName" sortAscending="true"
+														sortableHeaderRolloverStyle="background: #d4d4d4"
+														style="width: 100%;margin-top: 10px; line-height: 17px;"
+														styleClass="datatable"
+														rolloverRowStyle="background: #f1f1f1;">
+														<o:multipleRowSelection
+															rowDatas="#{AllDocumentsBean.selectedDocumentList}"
+															style="background: #a4aec5; color: white;" />
+														<o:columnReordering />
+														<f:facet name="columnMenu">
+															<o:columnMenu />
+														</f:facet>
+														<o:selectionColumn style="width: 6%;" sortable="true"
+															header="#{fbresource['Selection']}">
+															<f:facet name="header">
+																<o:selectAllCheckbox />
+															</f:facet>
+														</o:selectionColumn>
+														<o:column
+															sortingExpression="#{document.isVerifiedWithOrgnal}"
+															style="text-align: center;">
+															<h:graphicImage url="/images/document.png" />
+														</o:column>
+														<o:column header="#{fbresource['Document_Name']}"
+															sortingExpression="#{document.documentID.documentName}"
+															style="text-align: left;">
+															<o:commandLink
+																rendered="#{StudentRegistrationBean.currentMode eq 'Update'}"
+																actionListener="#{DocumentUploadBean.setDocumentName}"
+																onajaxend="document.getElementById('documentFullInformationButton').click();"
+																render="documentFullInfo"
+																style="font-size:20px;color:blue;">
+																<f:param name="documentName"
+																	value="#{document.documentID.documentName}" />
+																#{document.documentID.documentName}
+																</o:commandLink>
+														</o:column>
+														<o:column header="#{fbresource['Verified']}"
+															sortingExpression="#{document.isVerifiedWithOrgnal}"
+															style="text-align: center;">
+															<h:outputText
+																rendered="#{document.isVerifiedWithOrgnal eq true}"
+																value="#{fbresource['YES']}" />
+															<h:outputText
+																rendered="#{document.isVerifiedWithOrgnal eq false}"
+																value="#{fbresource['NO']}" />
+														</o:column>
+														<o:column header="#{fbresource['date_of_verify']}"
+															sortingExpression="#{document.verifiedDate}"
+															style="text-align: center;">
+															<h:outputText value="#{document.verifiedDate}">
+																<f:convertDateTime pattern="dd/MM/yyyy" />
+															</h:outputText>
+														</o:column>
+														<o:column header="#{fbresource['date_of_uploading']}"
+															sortingExpression="#{document.uploadedDate}"
+															style="text-align: center;">
+															<h:outputText value="#{document.uploadedDate}">
+																<f:convertDateTime pattern="dd/MM/yyyy" />
+															</h:outputText>
+														</o:column>
+														<f:event listener="#{AllDocumentsBean.inIt}"
+															type="preRenderView" />
+													</o:dataTable>
+													<table align="right">
+														<tr>
+															<td><ui:include src="/xhtml/pagination.xhtml" /></td>
+														</tr>
+													</table>
+												</h:panelGroup>
+												<button style="display: none" id="largeButton" type="button"
+													data-toggle="modal" data-target="#largePhoto" />
+											</h:form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</ui:define>
+</ui:composition>
+</html>

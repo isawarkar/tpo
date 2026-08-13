@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<h:form id="feeWindowForm">
+	<o:window rendered="#{StudentFeeBean.studentFeeDetails ne null}"
+		id="studentFeeDetails" resizable="true"  width="1030px" height="450px" styleClass="window"
+		style="margin-right:45px;"
+		caption="#{fbresource['Add_Update']}"
+		captionStyle="background: #bbbbbb;
+                            border-bottom: #e9e9e9 solid 1px;
+                            position: relative;
+                            padding: 0 0 0 6px;
+                            color: white;"
+		modal="true" modalLayerClass="modalLayer">
+
+		<o:captionArea>
+			<o:minimizeWindowButton minimizeImageUrl="/images/win_minimize.png"
+				restoreImageUrl="./images/win_restore.jpg" styleClass="customButton"
+				rolloverClass="buttonRollover" />
+			<o:maximizeWindowButton maximizeImageUrl="/images/win_maximize.png"
+				restoreImageUrl="images/win_restore.jpg" styleClass="customButton"
+				rolloverClass="buttonRollover" />
+			<o:closeWindowButton imageUrl="/images/win_close.png"
+				styleClass="customButton" rolloverClass="buttonRollover" />
+		</o:captionArea>
+		<ui:include src="/xhtml/errorPanel.xhtml" />
+
+		<fieldset>
+			<legend>#{fbresource['studentFeeDetails']}
+				#{fbresource['ADD_OR_UPDATE']}</legend>
+			<table halign="center" cellPadding="2">
+				<tr>
+					<td><label for="En_No">
+							<p>
+								#{fbresource['Enrollment_No']}<font color="red">*</font>
+							</p>
+					</label></td>
+					<td><h:inputText disabled="true"
+							rendered="#{StudentFeeBean.currentDocMode eq 'Update'}"
+							value="#{StudentFeeBean.studentFeeDetails.rollNumber}" /> <h:inputText
+							immediate="true" maxlength="14"
+							rendered="#{StudentFeeBean.currentDocMode eq 'Create'}"
+							value="#{StudentFeeBean.studentFeeDetails.rollNumber}"
+							id="En_No" 
+							requiredMessage="#{fbresource['Please_enter']} #{fbresource['Enrollment_No']}">
+							<f:validator validatorId="EnrollmentNumberValidatorInvert" />
+							<o:ajax render="En_No En_No_msg" />
+						</h:inputText> <o:floatingIconMessage id="En_No_msg" style="border-color: red;"
+							for="En_No" showDetail="true" showSummary="false" /></td>
+						</tr>
+						<tr>
+					<td>#{fbresource['Amount_Paid']}<font color="red">*</font></td>
+					<td><h:inputText
+							title="#{fbresource['Please_enter']} #{fbresource['Amount_Paid']}"
+							maxlength="6"  size="10" immediate="true"
+							requiredMessage="#{fbresource['Please_enter']} #{fbresource['Amount_Paid']}"
+							value="#{StudentFeeBean.studentFeeDetails.amountPaid}" id="amountPaid">
+							<o:ajax
+												listener="#{StudentFeeBean.calculateDueAmount}"
+												execute="amountPaid En_No"
+												render="amountDue dueOn" />
+						</h:inputText> <o:floatingIconMessage style="border-color: red;" for="email"
+							showDetail="true" showSummary="false" /></td>
+					<td>#{fbresource['Amount_Paid_On']}<font color="red">*</font></td>
+					<td><o:dateChooser
+							pattern="dd/MM/yyyy HH:mm a" buttonImageUrl="/images/calendar.gif"
+							immediate="true" value="#{StudentFeeBean.studentFeeDetails.paidOn}"
+							id="paidOn" >
+						</o:dateChooser> <o:floatingIconMessage style="border-color: red;"
+							for="paidOn" showDetail="true" showSummary="false" /></td>
+				</tr>
+				<tr>
+					<td>#{fbresource['Amount_Due']}<font color="red">*</font></td>
+					<td><h:inputText
+							title="#{fbresource['Please_enter']} #{fbresource['Amount_Due']}"
+							maxlength="6"  size="10"
+							requiredMessage="#{fbresource['Please_enter']} #{fbresource['Amount_Due']}"
+							value="#{StudentFeeBean.studentFeeDetails.amountDue}" id="amountDue">
+						</h:inputText> <o:floatingIconMessage style="border-color: red;" for="email"
+							showDetail="true" showSummary="false" /></td>
+					<td>#{fbresource['Amount_Due_On']}<font color="red">*</font></td>
+					<td><o:dateChooser 
+							pattern="dd/MM/yyyy HH:mm a" buttonImageUrl="/images/calendar.gif"
+							immediate="true" value="#{StudentFeeBean.studentFeeDetails.dueOn}"
+							id="dueOn" >
+						</o:dateChooser> <o:floatingIconMessage style="border-color: red;"
+							for="dueOn" showDetail="true" showSummary="false" /></td>
+				</tr>
+			</table>
+			<table halign="left">
+				<tr>
+					<td><o:commandButton styleClass="btn btn-primary glow"  value="#{fbresource['save']}"
+							title="#{fbresource['Please_click_here_save_data']}"
+							action="#{StudentFeeBean.addFeeDetails}" /></td>
+					<td><h:commandButton class="btn btn-primary glow"  value="#{fbresource['Reset']}"
+							type="reset"
+							rendered="#{StudentFeeBean.currentDocMode ne 'Update'}"
+							title="#{fbresource['Please_click_here_to_reset_form_values']}" /></td>
+					<td><h:commandButton class="btn btn-primary glow"  value="#{fbresource['Close']}"
+							type="button" onclick="O$('feeWindowForm:studentFeeDetails').hide();"
+							title="#{fbresource['Please_click_here_to_close']}" /></td>
+				</tr>
+			</table>
+		</fieldset>
+	</o:window>
+</h:form>
+</html>

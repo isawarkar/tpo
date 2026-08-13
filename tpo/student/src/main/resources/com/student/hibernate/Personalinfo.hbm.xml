@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.hibernate.Personalinfo" table="personalinfo">
+		<id name="rollnumber" type="java.lang.String">
+			<column name="rollnumber" length="14" />
+			<generator class="assigned" />
+		</id>
+		<one-to-one name="registration"
+			class="com.hibernate.Registration" constrained="true"></one-to-one>
+		<property name="course" type="java.lang.String">
+			<column name="course" length="100" />
+		</property>
+		<property name="branch" type="java.lang.String">
+			<column name="branch" length="100" />
+		</property>
+		<property name="semester" type="java.lang.String">
+			<column name="semester" length="10" not-null="true" />
+		</property>
+		<property name="specialization" type="java.lang.String">
+			<column name="specialization" length="50" />
+		</property>
+		<property name="companyName" type="java.lang.String">
+			<column name="companyName" length="100" />
+		</property>
+		<property name="remark" type="java.lang.String">
+			<column name="remark" length="100" />
+		</property>
+		<property name="gender" type="java.lang.String">
+			<column name="gender" not-null="true" />
+		</property>
+		<property name="dob" type="java.util.Date">
+			<column name="dob" not-null="true" />
+		</property>
+		<property name="yearOfPassing" type="java.lang.Integer">
+			<column name="yearOfPassing" />
+		</property>
+		<property name="resume" type="java.lang.String">
+			<column name="resume" length="100" not-null="false" />
+		</property>
+		<property name="postGraduationCourse" type="java.lang.String">
+			<column name="postGraduationCourse" length="100" />
+		</property>
+		<property name="postGraduationBranch" type="java.lang.String">
+			<column name="postGraduationBranch" length="100" />
+		</property>
+		<property name="pgYearOfPassing" type="java.lang.Integer">
+			<column name="pgYearOfPassing" />
+		</property>
+
+		<property name="currentCourse" type="java.lang.String">
+			<column name="currentCourse" length="15" not-null="true" />
+		</property>
+		<property name="diploma" type="java.lang.String">
+			<column name="diploma" length="100" />
+		</property>
+		<property name="diplomaBranch" type="java.lang.String">
+			<column name="diplomaBranch" length="100" />
+		</property>
+		<property name="graduationUniversity" type="java.lang.String">
+			<column name="graduationUniversity" length="100" />
+		</property>
+		<property name="postGraduationUniversity"
+			type="java.lang.String">
+			<column name="postGraduationUniversity" length="100" />
+		</property>
+		<property name="diplomaUniversity" type="java.lang.String">
+			<column name="diplomaUniversity" length="100" />
+		</property>
+		<property name="diplomaYearOfPassing"
+			type="java.lang.Integer">
+			<column name="diplomaYearOfPassing" />
+		</property>
+
+		<property name="bloodGroup" type="java.lang.String">
+			<column name="bloodGroup" length="2" />
+		</property>
+		<property name="handicapped" type="java.lang.String">
+			<column name="handicapped" length="100" />
+		</property>
+		<property name="lastUpdated" type="java.util.Date">
+			<column name="lastUpdated" />
+		</property>
+		<property name="lastUpdatedBy" type="java.lang.String">
+			<column name="lastUpdatedBy" />
+		</property>
+		<property name="companyID" type="java.lang.String">
+			<column name="companyID" />
+		</property>
+	</class>
+</hibernate-mapping>

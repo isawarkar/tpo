@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="tpo.hibernate.Contactinfo" table="contactinfo" >
+        <id name="rollnumber" type="java.lang.String">
+            <column name="rollnumber" length="14" />
+            <generator class="assigned" />
+        </id>
+        <one-to-one name="registration" class="tpo.hibernate.Registration" constrained="true"></one-to-one>
+        <property name="phoneNumber" type="java.lang.String">
+            <column name="phoneNumber" length="20" />
+        </property>
+        <property name="mobileNumber" type="java.lang.String">
+            <column name="mobileNumber" length="10" not-null="true" />
+        </property>
+         <property name="numberVerified" type="java.lang.Boolean">
+            <column name="numberVerified" not-null="true" />
+        </property>
+        <property name="presentAddress" type="java.lang.String">
+            <column name="presentAddress" length="100" not-null="true" />
+        </property>
+        <property name="presentCity" type="java.lang.String">
+            <column name="presentCity" length="50" not-null="true" />
+        </property>
+        <property name="presentState" type="java.lang.String">
+            <column name="presentState" length="50" not-null="true" />
+        </property>
+        <property name="permanentAddress" type="java.lang.String">
+            <column name="permanentAddress" length="100" not-null="true" />
+        </property>
+        <property name="permanentCity" type="java.lang.String">
+            <column name="permanentCity" length="50" not-null="true" />
+        </property>
+        <property name="permanentState" type="java.lang.String">
+            <column name="permanentState" length="50" not-null="true" />
+        </property>
+        <property name="hieght" type="java.lang.Double">
+            <column name="hieght" precision="3" scale="1" not-null="true" />
+        </property>
+        <property name="weight" type="java.lang.Integer">
+            <column name="weight" not-null="true" />
+        </property>
+        <property name="glassPowerLeft" type="java.lang.String">
+            <column name="glassPowerLeft" length="6" not-null="true" />
+        </property>
+        <property name="glassPowerRight" type="java.lang.String">
+            <column name="glassPowerRight" length="6" not-null="true" />
+        </property>
+        <property name="lastUpdated" type="java.util.Date">
+            <column name="lastUpdated" />
+        </property>
+        <property name="lastUpdatedBy" type="java.lang.String">
+            <column name="lastUpdatedBy" />
+        </property>
+    </class>
+</hibernate-mapping>

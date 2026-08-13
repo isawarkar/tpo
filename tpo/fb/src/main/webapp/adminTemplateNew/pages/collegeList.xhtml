@@ -1,0 +1,220 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<ui:composition template="adminLayoutNew.xhtml">
+	<ui:define name="content">
+		<ui:include src="/xhtml/collegeLookUp.xhtml" />
+		<ui:include src="collegeWindow.xhtml" />
+
+		<section id="card-actions">
+			<!-- Info table about action starts -->
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-header">
+							<h4 class="card-title">#{fbresource['College_List']}</h4>
+							<a class="heading-elements-toggle"> <i
+								class='bx bx-dots-vertical font-medium-3' /></a>
+							<div class="heading-elements">
+								<ul class="list-inline mb-0">
+									<li><h:form>
+										<h:panelGroup id="bookmarkButtonPanel">
+											<o:commandLink id="bookmarkButton" execute="bookmarkButton"
+												render="bookmarkButtonPanel bookmarkList errorPanel"
+												actionListener="#{BookmarkBean.setBookmark}">
+												<f:param name="bookmarkName" value="collegeList" />
+												
+												<i title="#{fbresource['bookmarkToolTip']}" class="ficon bx #{BookmarkBean.getIcon('collegeList')} warning" />
+											</o:commandLink>
+										</h:panelGroup>
+									</h:form></li>
+									
+									<li><a data-action="collapse"> <i
+											class="bx bx-chevron-down" /></a></li>
+									<li><a data-action="expand"> <i
+											class="bx bx-fullscreen" /></a></li>
+									<li><a data-action="reload"> <i class="bx bx-revision" /></a></li>
+									<li><a data-action="close"> <i class="bx bx-x" /></a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="card-content collapse show">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="table-responsive">
+											<h:form id="CollegeForm">
+												<table width="100%" cellSpacing="5">
+													<tr>
+														<td><h:outputText
+																value="#{fbresource['College_Name']}" /></td>
+														<td><h:panelGrid columns="2">
+																<h:inputText value="#{CollegeTableBean.collegeName}"
+																	id="collegeCodeLookUpValue" columns="15"
+																	maximumLength="12"
+																	title="#{fbresource['Please_enter']} #{fbresource['College_Name']}">
+																</h:inputText>
+																<h:graphicImage url="/images/lookUp.png" height="20px;"
+																	style="cursor:hand;margin-top:10px;"
+																	title="#{fbresource['Please_click_here_to_find_College_Code']}"
+																	onclick="O$('collegeLookUpForm:collegeLookUp').show();" />
+															</h:panelGrid></td>
+														<td><h:commandButton class="btn btn-primary glow"
+																value="#{fbresource['search']}"
+																title="#{fbresource['Click_here_to']} #{fbresource['Search_Record']}"
+																action="#{CollegeTableBean.searchRecord}" /></td>
+														<td><o:commandButton
+																styleClass="btn btn-primary glow"
+																value="#{fbresource['add']}" id="addCollege"
+																title="#{fbresource['Click_here_to']} #{fbresource['add']}"
+																onajaxend="if(O$('CollegeWindowForm:College') != null){O$('CollegeWindowForm:College').show();}"
+																render="CollegeWindowForm"
+																actionListener="#{CollegeTableBean.setCollegeToAdd}" /></td>
+														<td><o:commandButton
+																styleClass="btn btn-primary glow"
+																value="#{fbresource['update']}" id="update"
+																title="#{fbresource['Click_here_to']} #{fbresource['update']}"
+																onajaxend="if(O$('CollegeWindowForm:College') != null){O$('CollegeWindowForm:College').show();}"
+																execute="collegeListTable"
+																render="CollegeWindowForm errorPanel"
+																actionListener="#{CollegeTableBean.setCollege}" /></td>
+														<td><h:commandButton class="btn btn-primary glow"
+																value="#{fbresource['delete']}" id="deleteButtonAction"
+																title="#{fbresource['Click_here_to']} #{fbresource['delete']}"
+																action="#{CollegeTableBean.deleteSeletedRecord}">
+																<o:confirmation id="buttonConfirmation"
+																	message="#{fbresource['Are_you__sure_you_want_to_delete']}"
+																	draggable="true" />
+															</h:commandButton></td>
+														<td><h:commandButton class="btn btn-primary glow"
+																value="#{fbresource['Force_Delete']}"
+																id="deleteSeletedRecordWithStudents"
+																title="#{fbresource['Please_click_here_to_Delete_the_colleges_with_there_students']}"
+																action="#{CollegeTableBean.deleteSeletedRecordWithStudents}">
+																<o:confirmation id="buttonConfirmationForce"
+																	message="#{fbresource['Are_you__sure_you_want_to_delete_the_college_with_all_the_connected_students']}"
+																	draggable="true" />
+															</h:commandButton></td>
+														<td><input type="button"
+															value="#{fbresource['Print']}"
+															class="btn btn-primary glow"
+															title="#{fbresource['Click_here_to']} #{fbresource['Print']}"
+															onClick="window.print()" /></td>
+														<td><h:commandButton
+																title="#{fbresource['Generate']} #{fbresource['Excel_report']}"
+																value="#{fbresource['Excel_report']}"
+																image="/images/excel_button.png"
+																style="height:40px;width:40px;" id="generateXls"
+																action="#{CollegeTableBean.generateXls}" /></td>
+														<td><h:commandButton
+																title="#{fbresource['Generate']} #{fbresource['PDF_report']}"
+																value="#{fbresource['PDF_report']}"
+																image="/images/pdf_button.png"
+																style="height:40px;width:40px;"
+																action="#{CollegeTableBean.generatePdfReport}" /></td>
+
+													</tr>
+												</table>
+												<h:panelGroup id="paginationTableContainner">
+													<o:dataTable id="collegeListTable" var="college"
+														value="#{CollegeTableBean.collegeList}"
+														sortColumnId="rollnumber" sortAscending="true"
+														sortableHeaderRolloverStyle="background: #d4d4d4"
+														style="width: 100%; line-height: 17px;"
+														styleClass="datatable"
+														rolloverRowStyle="background: #f1f1f1;">
+														<o:multipleRowSelection
+															rowDatas="#{CollegeTableBean.selectedCollegeList}"
+															style="background: #a4aec5; color: white;" />
+														<o:columnReordering />
+														<f:facet name="columnMenu">
+															<o:columnMenu />
+														</f:facet>
+														<o:selectionColumn style="width: 6%;" sortable="true"
+															header="#{fbresource['Selection']}">
+															<f:facet name="header">
+																<o:selectAllCheckbox />
+															</f:facet>
+														</o:selectionColumn>
+														<o:column header="#{fbresource['College_Code']}"
+															sortingExpression="#{college.collegeName}"
+															style="text-align: center;">
+															<o:hintLabel hintStyle="color:blue;font-size:15px;"
+																hint="#{college.collegeName.length() gt 20 ? college.collegeName : ''}"
+																value="#{college.collegeName.length() gt 20 ? college.collegeName.substring(0,20).concat('...') : college.collegeName}" />
+														</o:column>
+														<o:column header="#{fbresource['College_Full_Name']}"
+															sortingExpression="#{college.collegeFullName}"
+															style="text-align: center;">
+															<o:hintLabel hintStyle="color:blue;font-size:15px;"
+																hint="#{college.collegeFullName.length() gt 20 ? college.collegeFullName : ''}"
+																value="#{college.collegeFullName.length() gt 20 ? college.collegeFullName.substring(0,20).concat('...') : college.collegeFullName}" />
+														</o:column>
+														<o:column header="#{fbresource['Place']}"
+															sortingExpression="#{college.place}"
+															style="text-align: center;">
+															<o:hintLabel hintStyle="color:blue;font-size:15px;"
+																hint="#{college.place.length() gt 20 ? college.place : ''}"
+																value="#{college.place.length() gt 20 ? college.place.substring(0,20).concat('...') : college.place}" />
+														</o:column>
+														<o:column header="#{fbresource['University']}"
+															sortingExpression="#{college.university}"
+															style="text-align: center;">
+															<o:hintLabel hintStyle="color:blue;font-size:15px;"
+																hint="#{college.university.length() gt 20 ? college.university : ''}"
+																value="#{college.university.length() gt 20 ? college.university.substring(0,20).concat('...') : college.university}" />
+														</o:column>
+														<o:column header="#{fbresource['Date_Of_Opening']}"
+															sortingExpression="#{college.dateOfOpening}"
+															style="text-align: center;">
+															<h:outputText value="#{college.dateOfOpening}">
+																<f:convertDateTime pattern="dd/MM/yyyy" />
+															</h:outputText>
+														</o:column>
+														<o:column header="#{fbresource['E_mail']}"
+															sortingExpression="#{college.emailAddress}"
+															style="text-align: center;">
+															<o:hintLabel hintStyle="color:blue;font-size:15px;"
+																hint="#{college.emailAddress.length() gt 20 ? college.emailAddress : ''}"
+																value="#{college.emailAddress.length() gt 20 ? college.emailAddress.substring(0,20).concat('...') : college.emailAddress}" />
+														</o:column>
+														<o:column header="#{fbresource['Website']}"
+															sortingExpression="#{college.siteAddress}"
+															style="text-align: center;">
+															<o:hintLabel hintStyle="color:blue;font-size:15px;"
+																hint="#{college.siteAddress.length() gt 20 ? college.siteAddress : ''}"
+																value="#{college.siteAddress.length() gt 20 ? college.siteAddress.substring(0,20).concat('...') : college.siteAddress}" />
+														</o:column>
+														<o:column header="#{fbresource['Address']}"
+															sortingExpression="#{college.address}"
+															style="text-align: center;">
+															<o:hintLabel hintStyle="color:blue;font-size:15px;"
+																hint="#{college.address}" escape="false"
+																value="#{college.address.length() gt 15 ? college.address.substring(0,15).concat('...') : college.address}" />
+
+														</o:column>
+														<f:event listener="#{CollegeTableBean.inIt}"
+															type="preRenderView" />
+													</o:dataTable>
+													<table align="right">
+														<tr>
+															<td><ui:include src="/xhtml/pagination.xhtml" /></td>
+														</tr>
+													</table>
+												</h:panelGroup>
+											</h:form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</ui:define>
+</ui:composition>
+</html>

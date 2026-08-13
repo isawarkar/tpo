@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:stretchColumns="1" >
+
+    <ProgressBar
+        android:id="@+id/progressbar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/framelauout"
+        android:layout_marginTop="-7dp"
+        android:backgroundTint="#FEFBDE"
+        android:indeterminate="true"
+        android:indeterminateTint="#1a09d6"
+        android:max="100"
+        android:visibility="gone" />
+
+   
+    <ImageView
+        android:id="@+id/profileImage"
+        android:layout_marginTop="10dp"
+        android:layout_width="340dp"
+        android:layout_height="270dp"
+        android:contentDescription="Profile Image"
+        android:visibility="gone" />
+
+    <TableRow>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enrollment NO:"
+            android:textColor="#b6d6fb"
+            android:textSize="10pt" />
+
+        <TextView
+            android:id="@+id/enrollmentNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#0000FF"
+            android:textSize="10pt" />
+    </TableRow>
+
+    <TableRow>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Company ID:"
+            android:textColor="#b6d6fb"
+            android:textSize="10pt" />
+
+        <TextView
+            android:id="@+id/companyID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#0000FF"
+            android:textSize="10pt" />
+    </TableRow>
+
+    <TableRow>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Company Name:"
+            android:textColor="#b6d6fb"
+            android:textSize="10pt" />
+
+        <TextView
+            android:id="@+id/companyName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#0000FF"
+            android:textSize="10pt" />
+    </TableRow>
+
+    <TableRow>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Created By:"
+            android:textColor="#b6d6fb"
+            android:textSize="10pt" />
+
+        <TextView
+            android:id="@+id/createdBy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#0000FF"
+            android:textSize="10pt" />
+    </TableRow>
+
+    <TableRow>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total ShotListed:"
+            android:textColor="#b6d6fb"
+            android:textSize="10pt" />
+
+        <TextView
+            android:id="@+id/totalShotListed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FF0000"
+            android:textSize="10pt" />
+    </TableRow>
+
+    <TableRow>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Applied:"
+            android:textColor="#b6d6fb"
+            android:textSize="10pt" />
+
+        <TextView
+            android:id="@+id/totalApplied"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FF0000"
+            android:textSize="10pt" />
+    </TableRow>
+
+    <TableRow>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Approved:"
+            android:textColor="#b6d6fb"
+            android:textSize="10pt" />
+
+        <TextView
+            android:id="@+id/totalApproved"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FF0000"
+            android:textSize="10pt" />
+    </TableRow>
+
+    <TableRow>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Arrived:"
+            android:textColor="#b6d6fb"
+            android:textSize="10pt" />
+
+        <TextView
+            android:id="@+id/totalArrived"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FF0000"
+            android:textSize="10pt" />
+    </TableRow>
+
+    <TableRow>
+
+         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Status:"
+            android:textColor="#b6d6fb"
+            android:textSize="10pt" />
+         
+        <TextView
+            android:id="@+id/verifiedByServer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FF0000"
+            android:gravity="center"
+            android:textSize="15pt" />
+    </TableRow>
+
+    <View
+        android:layout_height="2dip"
+        android:background="#FF909090" />
+
+    <Button
+        android:id="@+id/buttonScan"
+        android:layout_width="340dp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradient_lyout"
+        android:text="Scan QR Code from Halll Ticket PDF" />
+
+</TableLayout>

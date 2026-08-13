@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<h:form id="editUserPasswordForm">
+	<h:panelGroup rendered="#{CreateUser.passwordForm}">
+		<button style="display: none" id="changePasswordButton" type="button"
+			data-toggle="modal" data-target="#changePassword" />
+		<div class="modal fade text-left" id="changePassword" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel160" aria-hidden="true">
+			<div
+				class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg"
+				role="document">
+				<div class="modal-content">
+					<div class="modal-header bg-primary">
+						<h5 class="modal-title white" id="myModalLabel160">#{fbresource['Change_Password']}</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<i class="bx bx-x"></i>
+						</button>
+					</div>
+					<div class="modal-body">
+						<center>
+							<table width="350px">
+								<tr>
+									<td colspan="2"><label for="password">
+											<p>
+												#{fbresource['New_Password']}<font color="red">*</font>
+											</p>
+									</label></td>
+									<td><h:inputSecret immediate="true" redisplay="true"
+											maxlength="20" value="#{CreateUser.newPassword}"
+											title="#{fbresource['Password_must_contains_one_lower_case_char']}"
+											id="password" required="true"
+											requiredMessage="#{fbresource['Please_enter']} #{fbresource['New_Password']}">
+											<f:validator validatorId="PasswordValidator" />
+										</h:inputSecret> <o:floatingIconMessage style="border-color: red;"
+											for="password" showDetail="true" showSummary="false" /></td>
+									<td><input id="showPass" type="checkbox"
+										onclick="showPassword('editUserPasswordForm','password');"
+										title="#{fbresource['showPassword']}" /></td>
+								</tr>
+								<tr>
+									<td colspan="2"><label for="confirmPassword">
+											<p>
+												#{fbresource['Confirm_Password']}<font color="red">*</font>
+											</p>
+									</label></td>
+									<td><h:inputSecret immediate="true" redisplay="true"
+											maxlength="20"
+											title="#{fbresource['Password_must_contains_one_lower_case_char']}"
+											id="confrmPassword" required="true"
+											requiredMessage="#{fbresource['Please_enter']} #{fbresource['Confirm_Password']}">
+											<f:validator validatorId="PasswordValidator" />
+											<o:validateEqual for="password" />
+										</h:inputSecret> <o:floatingIconMessage style="border-color: red;"
+											for="confrmPassword" showDetail="true" showSummary="false" /></td>
+								</tr>
+								<tr>
+									<td><o:commandButton styleClass="btn btn-primary glow"
+											value="#{fbresource['Change_Password']}"
+											action="#{CreateUser.changePassword}" /> <o:floatingIconMessage
+											style="border-color: red;" for="imageFile" showDetail="true"
+											showSummary="false" /></td>
+								</tr>
+							</table>
+						</center>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary glow"
+							data-dismiss="modal">
+							<i class="bx bx-x d-block d-sm-none"></i> <span
+								class="d-none d-sm-block">#{fbresource['Close']}</span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</h:panelGroup>
+</h:form>
+<h:form id="ProfileWindowForm" enctype="multipart/form-data">
+	<script src="/FB/ckeditor/ckeditor.js" />
+	<button style="display: none" id="profileButton" type="button"
+		data-toggle="modal" data-target="#profile" />
+	<div class="modal fade text-left" id="profile" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel160" aria-hidden="true">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl"
+			role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-primary">
+					<h5 class="modal-title white" id="myModalLabel160">#{fbresource['Profile']}</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<i class="bx bx-x"></i>
+					</button>
+				</div>
+				<div class="modal-body">
+					<table>
+						<tr>
+							<td>
+								<table style="">
+									<tr>
+										<td>#{fbresource['profile_Pic']}<br /> <o:dynamicImage
+												data="#{AdminUser.profilePic}" height="100"
+												width="200" alt="Prifile Pic" />
+
+										</td>
+									</tr>
+									<tr>
+										<td>#{fbresource['Photo_Logo']}<br />  <o:dynamicImage
+												data="#{AdminUser.logo}" height="100" style="height: 100px; width: 200px; margin-bottom: 840px;"
+												width="200" alt="Prifile Pic" />
+										</td>
+									</tr>
+								</table>
+							</td>
+							<td>
+								<table align="center" cellPadding="2">
+									<tr>
+										<td>#{fbresource['User_Name']}<font color="red">*</font></td>
+										<td>#{CreateUser.logindetails.userName}</td>
+									</tr>
+
+									<tr>
+										<td>#{fbresource['First_Name']}<font color="red">*</font></td>
+										<td><h:inputText
+												title="#{fbresource['Please_enter']} #{fbresource['First_Name']}"
+												value="#{CreateUser.userdetails.firstName}" id="firstname"
+												size="15" required="true" maxlength="50"
+												requiredMessage="#{fbresource['Please_enter']} #{fbresource['First_Name']}" /></td>
+										<td>#{fbresource['Last_Name']}<font color="red">*</font></td>
+										<td><h:inputText
+												title="#{fbresource['Please_enter']} #{fbresource['Last_Name']}"
+												value="#{CreateUser.userdetails.lastName}" id="lastname"
+												size="15" required="true" maxlength="50"
+												requiredMessage="#{fbresource['Please_enter']} #{fbresource['Last_Name']}" /></td>
+									</tr>
+
+									<tr>
+										<td>#{fbresource['Gender']}<font color="red">*</font></td>
+										<td><h:selectOneMenu
+												title="#{fbresource['Please_select']} #{fbresource['Gender']}"
+												value="#{CreateUser.userdetails.gender}" id="gender"
+												required="true"
+												requiredMessage="#{fbresource['Please_select']} #{fbresource['Gender']}">
+												<f:selectItem itemLabel="" itemValue="" />
+												<f:selectItem itemLabel="#{fbresource['Male']}"
+													itemValue="M" />
+												<f:selectItem itemLabel="#{fbresource['Female']}"
+													itemValue="F" />
+												<f:selectItem itemLabel="#{fbresource['NA']}" itemValue="N" />
+											</h:selectOneMenu></td>
+										<h:panelGroup rendered="#{AdminUser.role eq 'Super User'}">
+											<td>#{fbresource['Logo_Display_on_MainPage']}<font
+												color="red">*</font></td>
+											<td><h:selectOneMenu
+													title="#{fbresource['Please_select']} #{fbresource['Logo_Display_on_MainPage']}"
+													value="#{CreateUser.logindetails.logoDisplay}"
+													id="logoDisplay" required="true"
+													requiredMessage="#{fbresource['Please_select']} #{fbresource['Logo_Display_on_MainPage']}">
+													<f:selectItem itemLabel="" itemValue="" />
+													<f:selectItem itemLabel="#{fbresource['YES']}"
+														itemValue="true" />
+													<f:selectItem itemLabel="#{fbresource['NO']}"
+														itemValue="false" />
+												</h:selectOneMenu></td>
+										</h:panelGroup>
+									</tr>
+
+									<tr>
+										<td>#{fbresource['E_mail']}<font color="red">*</font></td>
+										<td><h:inputText
+												readonly="#{CreateUser.currentDocMode eq 'Update'}"
+												style="#{CreateUser.userdetails.emailVarified eq true and CreateUser.currentDocMode eq 'Update' ? 'background:green;color:white;':'background:red;color:white;'}"
+												title="#{CreateUser.userdetails.emailVarified eq true and CreateUser.currentDocMode eq 'Update' ?'Verified E-mail Address':'E-mail Address is not verified.It is important to add valid E-mail.It is required for all the communication.'}"
+												value="#{CreateUser.userdetails.email}" id="email" size="30"
+												required="true" maxlength="100"
+												requiredMessage="#{fbresource['Please_enter']} #{fbresource['E_mail']}">
+												<f:validator validatorId="EmailValidator" />
+											</h:inputText> <h:graphicImage
+												rendered="#{CreateUser.userdetails.emailVarified eq true}"
+												title="Verified E-mail Address" height="15px;" width="15px;"
+												url="/css/success.png" /> <h:graphicImage
+												rendered="#{CreateUser.userdetails.emailVarified eq false}"
+												title="#{fbresource['Email_Address_is_not_verified']}"
+												height="15px;" width="15px;" url="/css/error.png"
+												styleClass="blinking" /></td>
+										<td><f:verbatim
+												rendered="#{CreateUser.currentDocMode eq 'Update'}">
+												<button style="display: none;" id="editUserEmailButton"
+													data-dismiss="modal" type="button" data-toggle="modal"
+													data-target="#editUserEmail">#{fbresource['Edit']}</button>
+											</f:verbatim> <o:commandButton execute="email"
+												styleClass="btn btn-primary glow"
+												title="#{fbresource['Click_here_to_edit_email']}" id="edit"
+												rendered="#{CreateUser.currentDocMode eq 'Update'}"
+												value="#{fbresource['Edit']}"
+												action="#{CreateUser.clearNewEmail}"
+												onajaxend="document.getElementById('editUserEmailButton').click();"
+												render="editUserEmailForm">
+											</o:commandButton> <o:commandButton execute="verifyEmail"
+												styleClass="btn btn-primary glow" style="margin-left:10px;"
+												title="#{fbresource['Your_Email_is_not_verified']}"
+												id="verifyEmail"
+												rendered="#{CreateUser.userdetails.emailVarified eq false and CreateUser.currentDocMode eq 'Update'}"
+												value="#{fbresource['Verify']}"
+												action="#{CreateUser.sendEmail}"
+												onajaxstart="alert(#{fbresource['Please_Wait']});"
+												onajaxend="alert(#{fbresource['Verification_Email_sent']});document.getElementById('close').click();"
+												render="errorPanel">
+											</o:commandButton></td>
+									</tr>
+
+									<tr>
+										<td>#{fbresource['Mobile_Number']}<font color="red">*</font></td>
+										<td><h:inputText
+												style="#{CreateUser.userdetails.numberVerified eq true and CreateUser.currentDocMode eq 'Update' ? 'background:green;color:white;':'background:red;color:white;'}"
+												readonly="#{CreateUser.currentDocMode eq 'Update'}"
+												title="#{fbresource['Please_enter']} #{fbresource['Mobile_Number']}"
+												value="#{CreateUser.userdetails.mobleNo}" id="mobleno"
+												size="15" required="true" maxlength="10"
+												requiredMessage="#{fbresource['Please_enter']} #{fbresource['Mobile_Number']}">
+												<f:validateLength minimum="10" />
+											</h:inputText> <h:graphicImage
+												rendered="#{CreateUser.userdetails.numberVerified eq true and CreateUser.currentDocMode eq 'Update'}"
+												title="#{fbresource['Verified_Mobile_Number']}"
+												height="15px;" width="15px;" url="/css/success.png" /> <h:graphicImage
+												styleClass="blinking"
+												rendered="#{CreateUser.userdetails.numberVerified eq false and CreateUser.currentDocMode eq 'Update'}"
+												title="#{fbresource['Mobile_Number_is_not_verified']}"
+												height="15px;" width="15px;" url="/css/error.png" /></td>
+										<td><f:verbatim
+												rendered="#{CreateUser.currentDocMode eq 'Update'}">
+												<button style="display: none;" id="editUserNumberButton"
+													data-dismiss="modal" type="button" data-toggle="modal"
+													data-target="#editUserNumber">#{fbresource['Edit']}</button>
+											</f:verbatim> <o:commandButton execute="mobleno"
+												styleClass="btn btn-primary glow"
+												title="#{fbresource['Click_here_to_edit_number']}"
+												id="editNumber"
+												rendered="#{CreateUser.currentDocMode eq 'Update'}"
+												value="#{fbresource['Edit']}"
+												action="#{CreateUser.clearNewNumber}"
+												onajaxend="document.getElementById('editUserNumberButton').click();"
+												render="editUserNumberForm">
+											</o:commandButton> <o:commandButton styleClass="btn btn-primary glow"
+												style="margin-left:10px;" execute="mobleno"
+												render="errorPanel"
+												onajaxend="document.getElementById('close').click();"
+												action="#{CreateUser.verifyNumberFromAdmin}"
+												title="#{fbresource['Your_number_is_not_verified']}"
+												rendered="#{CreateUser.userdetails.numberVerified eq false and CreateUser.currentDocMode eq 'Update'}"
+												value="#{fbresource['Verify']}" /></td>
+									</tr>
+
+									<tr>
+										<td>#{fbresource['Website']}</td>
+										<td><h:inputText
+												title="#{fbresource['Please_enter']} #{fbresource['Website']}"
+												value="#{CreateUser.userdetails.website}" id="website"
+												size="30" maxlength="100">
+											</h:inputText></td>
+									</tr>
+									<tr>
+										<td>#{fbresource['profile_Pic']}</td>
+										<td><h:inputFile style="margin-left: 10;" id="profilePic"
+												value="#{CreateUser.profileFile}" /></td>
+										<td><h:commandButton class="btn btn-primary glow"
+												value="#{fbresource['Upload']}"
+												title="#{fbresource['Note_Please_select_only_Image_file_Max_size_100KB']}"
+												styleClass="exam_submit_button"
+												action="#{CreateUser.uploadProfileImage}" /></td>
+									</tr>
+									<tr>
+										<td>#{fbresource['Photo_Logo']}</td>
+										<td><h:inputFile style="margin-left: 10;" id="image"
+												value="#{CreateUser.file}" /></td>
+										<td><h:commandButton class="btn btn-primary glow"
+												value="Upload"
+												title="#{fbresource['Note_Please_select_only_Image_file_Max_size_100KB']}"
+												styleClass="exam_submit_button"
+												action="#{CreateUser.uploadImage}" /></td>
+									</tr>
+									<tr>
+										<td>#{fbresource['Address']}<font color="red">*</font></td>
+										<td colspan="4"><h:inputTextarea
+												title="#{fbresource['Please_enter']} #{fbresource['Address']}"
+												rows="3" value="#{CreateUser.userdetails.address}"
+												id="address" size="50" required="true" maxlength="1000"
+												requiredMessage="#{fbresource['Please_enter']} #{fbresource['Address']}" /></td>
+									</tr>
+									<tr>
+										<td>#{fbresource['Profile']}</td>
+										<td colspan="4"><h:inputTextarea
+												value="#{CreateUser.userdetails.details}" id="details"
+												width="1000" height="200" /></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+					<table align="center" cellSpacing="15" width="200">
+						<tr>
+							<td><h:commandButton class="btn btn-primary glow"
+									title="#{fbresource['Click_here_to']} #{fbresource['submit']}"
+									value="#{fbresource['submit']}"
+									action="#{CreateUser.saveAction}" /></td>
+						</tr>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary glow" id="close"
+						data-dismiss="modal">
+						<i class="bx bx-x d-block d-sm-none"></i> <span
+							class="d-none d-sm-block">#{fbresource['Close']}</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+	CKEDITOR.replace('ProfileWindowForm:address');
+		CKEDITOR.replace('ProfileWindowForm:details');
+	</script>
+</h:form>
+</html>

@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<h:form id="UserWindowForm" prependId="false"
+	enctype="multipart/form-data">
+	<o:window rendered="#{CreateUser.logindetails ne null}" id="User"
+		resizable="true" width="1050px" height="450px" styleClass="window"
+		caption="#{fbresource['Add_Update']}"
+		captionStyle="background: #bbbbbb;
+                            border-bottom: #e9e9e9 solid 1px;
+                            position: relative;
+                            padding: 0 0 0 6px;
+                            color: white;"
+		modal="true" modalLayerClass="modalLayer">
+
+		<o:captionArea>
+			<o:minimizeWindowButton minimizeImageUrl="/images/win_minimize.png"
+				restoreImageUrl="./images/win_restore.jpg" styleClass="customButton"
+				rolloverClass="buttonRollover" />
+			<o:maximizeWindowButton maximizeImageUrl="/images/win_maximize.png"
+				restoreImageUrl="images/win_restore.jpg" styleClass="customButton"
+				rolloverClass="buttonRollover" />
+			<o:closeWindowButton imageUrl="/images/win_close.png"
+				styleClass="customButton" rolloverClass="buttonRollover" />
+		</o:captionArea>
+		<ui:include src="/xhtml/errorPanel.xhtml" />
+
+		<fieldset>
+			<legend>#{fbresource['User']} #{fbresource['ADD_OR_UPDATE']}</legend>
+
+			<table>
+				<tr>
+					<td>
+						<table>
+							<tr>
+								<td>#{fbresource['profile_Pic']}<br /> <img height="100px;"
+									width="200px;"
+									src="#{parent.imageServiceUrl}/download/userprofilepics/#{CreateUser.logindetails.userName}.png" />
+								</td>
+							</tr>
+							<tr>
+								<td>#{fbresource['Photo_Logo']}<br /> <img height="100px;"
+									width="200px;"
+									src="#{parent.imageServiceUrl}/download/userlogo/#{CreateUser.logindetails.userName}.png" />
+								</td>
+							</tr>
+						</table>
+					</td>
+					<td>
+						<table align="center" cellPadding="2">
+							<tr>
+								<td>#{fbresource['User_Name']}<font color="red">*</font></td>
+								<td><h:inputText
+										title="#{fbresource['Please_enter']} #{fbresource['User_Name']}"
+										readonly="#{CreateUser.currentDocMode eq 'Update'}"
+										value="#{CreateUser.logindetails.userName}" id="LoginName"
+										size="15" maxlength="20" required="true"
+										requiredMessage="#{fbresource['Please_enter']} #{fbresource['User_Name']}" /></td>
+								<td>#{fbresource['Valid_Till']}<font color="red">*</font></td>
+								<td><o:dateChooser pattern="dd/MM/yyyy hh:mm:ss"
+										buttonImageUrl="/images/calendar.gif" immediate="true"
+										value="#{CreateUser.logindetails.validTill}" id="validTill"
+										required="true">
+
+									</o:dateChooser> <o:floatingIconMessage style="border-color: red;"
+										for="validTill" showDetail="true" showSummary="false" /></td>
+							</tr>
+
+							<tr>
+								<td>#{fbresource['First_Name']}<font color="red">*</font></td>
+								<td><h:inputText
+										title="#{fbresource['Please_enter']} #{fbresource['First_Name']}"
+										value="#{CreateUser.userdetails.firstName}" id="firstName"
+										size="15" required="true" maxlength="50"
+										requiredMessage="#{fbresource['Please_enter']} #{fbresource['First_Name']}" /></td>
+								<td>#{fbresource['Last_Name']}<font color="red">*</font></td>
+								<td><h:inputText
+										title="#{fbresource['Please_enter']} #{fbresource['Last_Name']}"
+										value="#{CreateUser.userdetails.lastName}" id="lastName"
+										size="15" required="true" maxlength="50"
+										requiredMessage="#{fbresource['Please_enter']} #{fbresource['Last_Name']}" /></td>
+							</tr>
+							<h:panelGroup rendered="#{CreateUser.currentDocMode eq 'Create'}">
+								<tr>
+									<td>#{fbresource['Password']}<font color="red">*</font></td>
+									<td><h:inputSecret redisplay="true"
+											rendered="#{CreateUser.currentDocMode eq 'Create'}"
+											title="#{fbresource['Password_must_contains_one_lower_case_char_6_15']}"
+											value="#{CreateUser.logindetails.password}" id="password"
+											size="15" required="true" maxlength="15"
+											requiredMessage="#{fbresource['Please_enter']} #{fbresource['Password']}">
+											<f:validator validatorId="PasswordValidator" />
+										</h:inputSecret></td>
+									<td>#{fbresource['Confirm_Password']}<font color="red">*</font></td>
+									<td><h:inputSecret onchange="validatePassword(this);"
+											redisplay="true"
+											title="#{fbresource['Password_must_contains_one_lower_case_char_6_15']}"
+											value="#{CreateUser.confirmPassword}" maxlength="15"
+											id="confirmPassword" size="15" required="true"
+											requiredMessage="#{fbresource['Please_enter']} #{fbresource['Confirm_Password']}">
+											<f:validator validatorId="PasswordValidator" />
+											<o:validateEqual for="password" />
+										</h:inputSecret></td>
+								</tr>
+							</h:panelGroup>
+							<tr>
+								<td>#{fbresource['E_mail']}<font color="red">*</font></td>
+								<td><h:inputText
+										title="#{fbresource['Please_enter']} #{fbresource['E_mail']}"
+										value="#{CreateUser.userdetails.email}" id="email" size="30"
+										required="true" maxlength="100"
+										requiredMessage="#{fbresource['Please_enter']} #{fbresource['E_mail']}">
+										<f:validator validatorId="EmailValidator" />
+									</h:inputText></td>
+								<td>#{fbresource['Address']}<font color="red">*</font></td>
+								<td><h:inputTextarea
+										title="#{fbresource['Please_enter']} #{fbresource['Address']}"
+										rows="3" value="#{CreateUser.userdetails.address}"
+										id="address" size="50" required="true" maxlength="1000"
+										requiredMessage="#{fbresource['Please_enter']} #{fbresource['Address']}" /></td>
+							</tr>
+
+							<tr>
+								<td>#{fbresource['Mobile_Number']}<font color="red">*</font></td>
+								<td><h:inputText
+										title="#{fbresource['Please_enter']} #{fbresource['Mobile_Number']}"
+										value="#{CreateUser.userdetails.mobleNo}" id="mobleno"
+										size="15" required="true" maxlength="10"
+										requiredMessage="#{fbresource['Please_enter']} #{fbresource['Mobile_Number']}">
+										<f:validateLength minimum="10" />
+									</h:inputText></td>
+								<td><h:outputText value="#{fbresource['Role']}" /> <f:verbatim>
+										<font color="red">*</font>
+									</f:verbatim></td>
+								<td><h:selectOneMenu
+										rendered="#{AdminUser.role eq 'Admin' || AdminUser.role eq 'College' || AdminUser.role eq 'Company'}"
+										title="#{fbresource['Please_select']} #{fbresource['Role']}"
+										value="#{CreateUser.logindetails.role}" id="role"
+										required="true"
+										requiredMessage="#{fbresource['Please_select']} #{fbresource['Role']}">
+										<f:selectItem itemValue="U" itemLabel="#{fbresource['User']}" />
+									</h:selectOneMenu> <h:selectOneMenu rendered="#{AdminUser.role eq 'Super User'}"
+										title="#{fbresource['Please_select']} #{fbresource['Role']}"
+										value="#{CreateUser.logindetails.role}" id="role1"
+										required="true"
+										requiredMessage="#{fbresource['Please_select']} #{fbresource['Role']}">
+										<f:selectItem itemLabel="" itemValue="" />
+										<f:selectItem itemValue="U" itemLabel="#{fbresource['User']}" />
+										<f:selectItem id="Admin" itemValue="A"
+											itemLabel="#{fbresource['Admin']}" />
+										<f:selectItem id="CollegeUser" itemValue="C"
+											itemLabel="#{fbresource['CollegeUser']}" />
+										<f:selectItem id="CompanyUser" itemValue="N"
+											itemLabel="#{fbresource['CompanyUser']}" />
+										<f:selectItem id="SuperUser" itemValue="S"
+											itemLabel="#{fbresource['SuperUser']}" />
+									</h:selectOneMenu></td>
+							</tr>
+							<tr>
+								<td>#{fbresource['Gender']}<font color="red">*</font></td>
+								<td><h:selectOneMenu
+										title="#{fbresource['Please_select']} #{fbresource['Gender']}"
+										value="#{CreateUser.userdetails.gender}" id="gender"
+										required="true"
+										requiredMessage="#{fbresource['Please_select']} #{fbresource['Gender']}">
+										<f:selectItem itemLabel="" itemValue="" />
+										<f:selectItem itemLabel="#{fbresource['Male']}" itemValue="M" />
+										<f:selectItem itemLabel="#{fbresource['Female']}"
+											itemValue="F" />
+										<f:selectItem itemLabel="#{fbresource['NA']}" itemValue="N" />
+									</h:selectOneMenu></td>
+								<h:panelGroup rendered="#{AdminUser.role eq 'Super User'}">
+									<td>#{fbresource['Logo_Display_on_MainPage']}<font
+										color="red">*</font></td>
+									<td><h:selectOneMenu
+											title="#{fbresource['Please_select']} #{fbresource['Logo_Display_on_MainPage']}"
+											value="#{CreateUser.logindetails.logoDisplay}"
+											id="logoDisplay" required="true"
+											requiredMessage="#{fbresource['Please_select']} #{fbresource['Logo_Display_on_MainPage']}">
+											<f:selectItem itemLabel="" itemValue="" />
+											<f:selectItem itemLabel="#{fbresource['YES']}"
+												itemValue="true" />
+											<f:selectItem itemLabel="#{fbresource['NO']}"
+												itemValue="false" />
+										</h:selectOneMenu></td>
+								</h:panelGroup>
+							</tr>
+							<tr>
+								<td>#{fbresource['Website']}</td>
+								<td><h:inputText
+										title="#{fbresource['Please_enter']} #{fbresource['Website']}"
+										value="#{CreateUser.userdetails.website}" id="website"
+										size="25" maxlength="100">
+									</h:inputText></td>
+								<td>#{fbresource['profile_Pic']}</td>
+								<td><h:inputFile
+										disabled="#{CreateUser.currentDocMode eq 'Create'}"
+										style="margin-left: 10;" id="profilePic"
+										value="#{CreateUser.profileFile}" /></td>
+								<td><h:commandButton
+										disabled="#{CreateUser.currentDocMode eq 'Create'}"
+										class="btn btn-primary glow" value="#{fbresource['Upload']}"
+										title="#{fbresource['Note_Please_select_only_Image_file_Max_size_100KB']}"
+										styleClass="exam_submit_button"
+										action="#{CreateUser.uploadProfileImage}" /></td>
+							</tr>
+							<tr>
+								<td colspan="2"></td>
+								<td>#{fbresource['Photo_Logo']}</td>
+								<td><h:inputFile
+										disabled="#{CreateUser.currentDocMode eq 'Create'}"
+										style="margin-left: 10;" id="image" value="#{CreateUser.file}" /></td>
+								<td><h:commandButton
+										disabled="#{CreateUser.currentDocMode eq 'Create'}"
+										class="btn btn-primary glow" value="#{fbresource['Upload']}"
+										title="#{fbresource['Note_Please_select_only_Image_file_Max_size_100KB']}"
+										styleClass="exam_submit_button"
+										action="#{CreateUser.uploadImage}" /></td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+
+			<table align="center" cellSpacing="15" width="200">
+				<tr>
+					<td><h:commandButton class="btn btn-primary glow"
+							title="#{fbresource['Click_here_to']} #{fbresource['submit']}"
+							value="#{fbresource['submit']}" action="#{CreateUser.saveAction}" /></td>
+				</tr>
+			</table>
+		</fieldset>
+	</o:window>
+</h:form>
+</html>

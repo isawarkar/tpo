@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="tpo.hibernate.Backdetails" table="backdetails"
+		>
+		<id name="rollnumber" type="java.lang.String">
+			<column name="rollnumber" length="14" />
+			<generator class="assigned" />
+		</id>
+		<one-to-one name="registration" class="tpo.hibernate.Registration"
+			constrained="true"></one-to-one>
+		<property name="backLog" type="java.lang.Integer">
+			<column name="backLog" not-null="true" />
+		</property>
+		<property name="backDetails" type="java.lang.String">
+			<column name="backDetails" length="50" />
+		</property>
+		<property name="passMoreThenOneAttempt" type="java.lang.Integer">
+			<column name="passMoreThenOneAttempt" not-null="true" />
+		</property>
+		<property name="numberOfBacklogs" type="java.lang.Integer">
+			<column name="numberOfBacklogs" not-null="true" />
+		</property>
+		<property name="baGroup" type="java.lang.Integer">
+			<column name="baGroup" not-null="true" />
+		</property>
+		<property name="blackList" type="java.lang.Boolean">
+			<column name="blackList" />
+		</property>
+		<property name="educationGap" type="java.lang.Short">
+            <column name="educationGap" not-null="true"/>
+        </property>
+        <property name="lastUpdated" type="java.util.Date">
+            <column name="lastUpdated" />
+        </property>
+        <property name="lastUpdatedBy" type="java.lang.String">
+            <column name="lastUpdatedBy" />
+        </property>
+	</class>
+</hibernate-mapping>

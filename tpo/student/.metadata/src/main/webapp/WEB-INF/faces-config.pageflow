@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf16553143222220" configfile="/student/src/main/webapp/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="1906" id="pf16553143484261" outlinks="pf16553143484262 pf16553189546784 pf16553189546785 pf16553189546786 pf16553189546797 pf16553189546798 pf16553189546799 pf165531895467910 pf165531895467911 pf165531895467912" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="sessionInvalidated.xhtml" x="338" y="178" id="pf16553143484263" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf16553143484262" path="/sessionInvalidated.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="student/studentExamList.xhtml" x="338" y="562" id="pf165531895467913" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf16553189546784" path="/student/studentExamList.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="student/resultList.xhtml" x="338" y="946" id="pf165531895467914" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" inlinks="pf16553189546785" path="/student/resultList.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="student/calendar.xhtml" x="338" y="1330" id="pf165531895467915" referenceLink="//@navigationRule.0/@navigationCase.3/@toViewId|" inlinks="pf16553189546786" path="/student/calendar.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="xhtml/ui/newStudent.xhtml" x="338" y="1714" id="pf165531895467916" referenceLink="//@navigationRule.0/@navigationCase.4/@toViewId|" inlinks="pf16553189546797" path="/xhtml/ui/newStudent.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="xhtml/newStudent.xhtml" x="338" y="2098" id="pf165531895467917" referenceLink="//@navigationRule.0/@navigationCase.5/@toViewId|" inlinks="pf16553189546798" path="/xhtml/newStudent.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="studentTemplate/studentHome.xhtml" x="338" y="2482" id="pf165531895467918" referenceLink="//@navigationRule.0/@navigationCase.6/@toViewId|" inlinks="pf16553189546799" path="/studentTemplate/studentHome.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="studentTemplateTheme2/studentHome.xhtml" x="338" y="2866" id="pf165531895467919" referenceLink="//@navigationRule.0/@navigationCase.7/@toViewId|" inlinks="pf165531895467910" path="/studentTemplateTheme2/studentHome.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="studentTemplateTheme3/studentHome.xhtml" x="338" y="3250" id="pf165531895467920" referenceLink="//@navigationRule.0/@navigationCase.8/@toViewId|" inlinks="pf165531895467911" path="/studentTemplateTheme3/studentHome.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="student/downloadHallTicketList.xhtml" x="338" y="3634" id="pf165531895467921" referenceLink="//@navigationRule.0/@navigationCase.9/@toViewId|" inlinks="pf165531895467912" path="/student/downloadHallTicketList.xhtml"/>
+  <links id="pf16553143484262" target="pf16553143484263" source="pf16553143484261" outcome="sessionExpiredAction" redirect="true"/>
+  <links id="pf16553189546784" target="pf165531895467913" source="pf16553143484261" outcome="studentExamList"/>
+  <links id="pf16553189546785" target="pf165531895467914" source="pf16553143484261" outcome="resultList" redirect="true"/>
+  <links id="pf16553189546786" target="pf165531895467915" source="pf16553143484261" outcome="calendar"/>
+  <links id="pf16553189546797" target="pf165531895467916" source="pf16553143484261" outcome="studentRegistration"/>
+  <links id="pf16553189546798" target="pf165531895467917" source="pf16553143484261" outcome="studentHomePageT0"/>
+  <links id="pf16553189546799" target="pf165531895467918" source="pf16553143484261" outcome="studentHomePageT1"/>
+  <links id="pf165531895467910" target="pf165531895467919" source="pf16553143484261" outcome="studentHomePageT2"/>
+  <links id="pf165531895467911" target="pf165531895467920" source="pf16553143484261" outcome="studentHomePageT3"/>
+  <links id="pf165531895467912" target="pf165531895467921" source="pf16553143484261" outcome="hallTicketListdownload"/>
+</pageflow:Pageflow>

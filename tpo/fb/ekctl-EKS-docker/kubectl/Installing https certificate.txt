@@ -1,0 +1,23 @@
+Step 1: Sudo -s
+
+Step 2 : Change all domain to FB server IP address (13.234.198.251)
+
+onlinetest.fresherbuddy.in	A	Simple	-13.234.198.251
+student.fresherbuddy.in	A	Simple	-13.234.198.251
+uddanda.fresherbuddy.in	A	Simple	-13.234.198.251
+www.fresherbuddy.in	       A	Simple	-13.234.198.251
+fresherbuddy.in	       A	Simple	-13.234.198.251
+
+Step 3:Run below command on FB server address (13.234.198.251)
+certbot certonly --standalone -d www.fresherbuddy.in,fresherbuddy.in,onlinetest.fresherbuddy.in,student.fresherbuddy.in,uddanda.fresherbuddy.in
+
+Step 4: copy certificate t tomcat config directory or AWS Certificate manager from /etc/letsencrypt/live/www.fresherbuddy.in/
+
+cert.pem  chain.pem  fullchain.pem  privkey.pem 
+
+Step 5: Change all domain to load balancer address
+
+onlinetest.fresherbuddy.in	A	Simple	-exam-lb-1220290233.ap-south-1.elb.amazonaws.com.
+student.fresherbuddy.in	A	Simple	-student-1182154232.ap-south-1.elb.amazonaws.com.
+uddanda.fresherbuddy.in	A	Simple	-dualstack.fb-2097781751.ap-south-1.elb.amazonaws.com.
+www.fresherbuddy.in	        A	Simple	-dualstack.fb-2097781751.ap-south-1.elb.amazonaws.com.

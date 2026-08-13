@@ -1,0 +1,97 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<ui:composition template="/templateNew/layout.xhtml">
+	<ui:define name="content">
+		<ui:include src="/xhtml/allPopUps.xhtml" />
+		<h:form id="NoticeForm">
+			<div class="account-form">
+				<div class="account-form-inner" style="margin-bottom: 400px;">
+					<table style="width: 500px; margin-left: 210px;" cellSpacing="5">
+						<tr>
+							<td><h:outputText value="#{fbresource['Notice_Name']}" /></td>
+							<td><h:inputText value="#{NoticeTableBean.noticeName}"
+									id="noticeName" /></td>
+							<td><h:commandButton class="btn btn-primary glow"
+									value="#{fbresource['search']}"
+									title="#{fbresource['Click_here_to']} #{fbresource['Search_Record']}"
+									action="#{NoticeTableBean.searchRecord}" /></td>
+							<td><o:commandButton styleClass="btn btn-primary glow"
+									value="#{fbresource['View']}" id="View"
+									title="#{fbresource['Click_here_to']} #{fbresource['View']}"
+									onajaxend="showNotice('noticeButton');"
+									execute="noticeListTable" render="noticeForm errorPanel"
+									actionListener="#{NoticeTableBean.setNoticeObj}" /></td>
+						</tr>
+					</table>
+					<h:panelGroup id="paginationTableContainner">
+						<o:dataTable id="noticeListTable" var="notice"
+							value="#{NoticeTableBean.noticeList}" sortColumnId="noticeName"
+							sortAscending="true"
+							sortableHeaderRolloverStyle="background: #d4d4d4"
+							style="width:900px;margin-left: 210px;margin-top: 10px; line-height: 17px;"
+							styleClass="datatable" rolloverRowStyle="background: #f1f1f1;">
+							<o:multipleRowSelection
+								rowDatas="#{NoticeTableBean.selectedNoticeList}"
+								style="background: #a4aec5; color: white;" />
+							<o:columnReordering />
+							<f:facet name="columnMenu">
+								<o:columnMenu />
+							</f:facet>
+							<o:selectionColumn style="width: 6%;" sortable="true"
+								header="#{fbresource['Selection']}">
+								<f:facet name="header">
+									<o:selectAllCheckbox />
+								</f:facet>
+							</o:selectionColumn>
+							<o:column header="#{fbresource['Notice_Name']}"
+								sortingExpression="#{notice.noticeName}"
+								style="text-align: left;">
+								<o:hintLabel hintStyle="color:blue;font-size:15px;"
+									hint="#{notice.noticeName}"
+									value="#{notice.noticeName.length() gt 70 ? notice.noticeName.substring(0,70).concat('...') : notice.noticeName}" />
+							</o:column>
+							<o:column header="#{fbresource['Status']}"
+								sortingExpression="#{notice.active}" style="text-align: center;">
+								<h:outputText rendered="#{notice.active eq true}"
+									value="#{fbresource['Active']}" />
+								<h:outputText rendered="#{notice.active eq false}"
+									value="#{fbresource['InActive']}" />
+							</o:column>
+							<o:column header="#{fbresource['Expiry']}"
+								sortingExpression="#{notice.expiryDate}"
+								style="text-align: center;">
+								<h:outputText style="color:red;"
+									rendered="#{notice.className ne ''}"
+									styleClass="#{notice.className}" value="#{notice.expiryDate}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+								<h:outputText style="color:green;"
+									rendered="#{notice.className eq ''}"
+									styleClass="#{notice.className}" value="#{notice.expiryDate}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</o:column>
+							<o:column header="#{fbresource['IMP']}"
+								sortingExpression="#{notice.impTag}" style="text-align: center;">
+								<h:outputText value="#{notice.impTag ? 'YES' : 'NO'}" />
+							</o:column>
+							
+
+							<f:event listener="#{NoticeTableBean.inItMain}" type="preRenderView" />
+						</o:dataTable>
+						<table align="right">
+							<tr>
+								<td><ui:include src="/xhtml/pagination.xhtml" /></td>
+							</tr>
+						</table>
+					</h:panelGroup>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

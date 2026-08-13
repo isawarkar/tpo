@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<ui:composition>
+<ui:include src="/xhtml/allPopUps.xhtml" />
+	<h:form id="headerForm">
+		<!-- header start -->
+		<header class="ttr-header">
+		<div class="ttr-header-wrapper">
+			<!--sidebar menu toggler start -->
+			<div class="ttr-toggle-sidebar ttr-material-button">
+				<i class="ti-close ttr-open-icon" /> <i
+					class="ti-menu ttr-close-icon" />
+			</div>
+			<!--sidebar menu toggler end -->
+			<!--logo start -->
+			<div class="ttr-logo-box">
+				<div>
+					<a href="/student/studentTemplateTheme2/studentHome.xhtml"
+						class="ttr-logo"> <img class="ttr-logo-desktop"
+						style="height: 30px;" src="/student/images/FreshersBuddy.jpg"
+						title="#{fbresource['Connect_with_US']}" /></a>
+				</div>
+			</div>
+			<!--logo end -->
+			<div class="ttr-header-menu">
+				<!-- header left menu start -->
+				<ul class="ttr-header-navigation">
+					<li><a href="#" class="ttr-material-button ttr-submenu-toggle">#{fbresource['ThemeOrColor']}<i class="fa fa-angle-down" />
+					</a>
+						<div class="ttr-header-submenu">
+							<ul>
+								<li><h:commandLink rendered="#{Student.theme ne 'T0'}"
+										value="#{fbresource['Theme1']}"
+										action="#{Student.updateTheme('T0')}" /></li>
+								<li><h:commandLink rendered="#{Student.theme ne 'T1'}"
+										value="#{fbresource['Theme2']}"
+										action="#{Student.updateTheme('T1')}" /></li>
+								<li><h:commandLink rendered="#{Student.theme ne 'T2'}"
+										value="#{fbresource['Theme3']}"
+										action="#{Student.updateTheme('T2')}" /></li>
+								<li><h:commandLink rendered="#{Student.theme ne 'T3'}"
+										value="#{fbresource['Theme4']}"
+										action="#{Student.updateTheme('T3')}" /></li>
+								<li style="background-color: #4c1864;"><h:commandLink
+										value="#{fbresource['Color1']}"
+										action="#{Student.updateColor(1)}" /></li>
+								<li style="background-color: #ff5e14;"><h:commandLink
+										value="#{fbresource['Color2']}"
+										action="#{Student.updateColor(2)}" /></li>
+								<li style="background-color: #6021ff;"><h:commandLink
+										value="#{fbresource['Color3']}"
+										action="#{Student.updateColor(3)}" /></li>
+								<li style="background-color: #ff4b36;"><h:commandLink
+										value="#{fbresource['Color4']}"
+										action="#{Student.updateColor(4)}" /></li>
+							</ul>
+						</div></li>
+				</ul>
+
+
+
+				<!-- header left menu end -->
+			</div>
+			<div class="ttr-header-right ttr-with-seperator">
+				<!-- header right menu start -->
+				<ul class="ttr-header-navigation">
+					<li><a href="#" class="ttr-material-button ttr-search-toggle"><i
+							class="fa fa-search" /></a></li>
+					<li><a href="#" class="ttr-material-button ttr-submenu-toggle"><span
+							class="notification-icon dashbg-#{StudentNoticeBean.color}"><i
+								class="fa fa-bell" /></span></a>
+						<div class="ttr-header-submenu noti-menu">
+							<div class="ttr-notify-header">
+								<span class="ttr-notify-text-top">#{StudentNoticeBean.count}</span>
+								<span class="ttr-notify-text">#{fbresource['Notifications']}</span>
+							</div>
+							<div class="noti-box-list">
+								<ul>
+									<o:forEach items="#{StudentNoticeBean.noticeList}" var="notice">
+										<li><span class="notification-icon dashbg-yellow">
+												<i class="fa fa-check" />
+										</span> <span class="notification-text"> <span><o:commandLink
+														title="#{fbresource['Click_here_to_See_Full_Message']}"
+														style="cursor:hand;color:red;font-size: 15px;"
+														value="#{notice}"
+														actionListener="#{StudentRegistrationBean.setNotice}"
+														onajaxend="document.getElementById('noticeButton').click();"
+														render="noticeFormNew">
+													</o:commandLink></span>
+										</span></li>
+									</o:forEach>
+									<li></li>
+									<o:forEach items="#{StudentNoticeBean.campusList}" var="campus">
+										<li><span class="notification-icon dashbg-green">
+												<i class="fa fa-check" />
+										</span> <span class="notification-text"> <span>#{campus}</span>
+										</span></li>
+									</o:forEach>
+
+
+								</ul>
+							</div>
+						</div></li>
+					<li><a href="#" class="ttr-material-button ttr-submenu-toggle"><i class="ti-user" /></a>
+						<div class="ttr-header-submenu">
+							<ul>
+								<li><h:commandLink class="ttr-material-button"
+										title="#{fbresource['Profile']}" action="studentHomePageT2">
+										<i class="ti-user" />
+										&nbsp;&nbsp;#{fbresource['Profile']}
+									</h:commandLink></li>
+								<li><a data-toggle="modal" data-target="#changePassword"
+									href="#"> <i class="ti-settings" />
+										&nbsp;&nbsp;#{fbresource['Change_Password']}
+								</a></li>
+								<li><h:commandLink rendered="#{Student.userName ne null}"
+										title="#{fbresource['Logout']}"
+										action="#{StudentLogin.logout}">
+										<i class="ti-power-off" /> &nbsp;&nbsp;#{fbresource['Logout']} 
+						</h:commandLink></li>
+							</ul>
+						</div></li>
+					<!-- <li class="ttr-hide-on-mobile"><a href="#"
+						class="ttr-material-button"><i class="ti-layout-grid3-alt" /></a>
+						<div class="ttr-header-submenu ttr-extra-menu">
+							<a href="#"> <i class="fa fa-music" /> <span>Musics</span>
+							</a> <a href="#"> <i class="fa fa-youtube-play" /> <span>Videos</span>
+							</a> <a href="#"> <i class="fa fa-envelope" /> <span>Emails</span>
+							</a> <a href="#"> <i class="fa fa-book" /> <span>Reports</span>
+							</a> <a href="#"> <i class="fa fa-smile-o" /> <span>Persons</span>
+							</a> <a href="#"> <i class="fa fa-picture-o" /> <span>Pictures</span>
+							</a>
+						</div></li> -->
+				</ul>
+				<!-- header right menu end -->
+			</div>
+			<!--header search panel start -->
+			<div class="ttr-search-bar">
+				<div class="ttr-search-input-wrapper">
+					<input type="text" name="qq" placeholder="search something..."
+						class="ttr-search-input" />
+					<button type="submit" name="search" class="ttr-search-submit">
+						<i class="ti-arrow-right" />
+					</button>
+				</div>
+				<span class="ttr-search-close ttr-search-toggle"> <i
+					class="ti-close" />
+				</span>
+			</div>
+			<!--header search panel end -->
+		</div>
+		</header>
+		<!-- header end -->
+		<!-- Left sidebar menu start -->
+		<div class="ttr-sidebar">
+			<div class="ttr-sidebar-wrapper content-scroll">
+				<!-- side menu logo start -->
+				<div class="ttr-sidebar-logo">
+					<a href="/student/studentTemplateTheme2/studentHome.xhtml"><img
+						alt="" src="/student/images/FreshersBuddy.jpg" width="122"
+						height="27" /></a>
+					<!-- <div class="ttr-sidebar-pin-button" title="Pin/Unpin Menu">
+					<i class="material-icons ttr-fixed-icon">gps_fixed</i>
+					<i class="material-icons ttr-not-fixed-icon">gps_not_fixed</i>
+				</div> -->
+					<div class="ttr-sidebar-toggle-button">
+						<i class="ti-arrow-left" />
+					</div>
+				</div>
+				<!-- side menu logo end -->
+				<!-- sidebar menu start -->
+				<nav class="ttr-sidebar-navi">
+				<ul>
+					<li><h:commandLink class="ttr-material-button"
+							title="#{fbresource['Student_Home']}" action="studentHomePageT2">
+							<span class="ttr-icon"><i class="ti-user" /></span>
+							<span class="ttr-label">#{fbresource['Student_Home']}</span>
+						</h:commandLink></li>
+
+					<li class="nav-item"><h:commandLink
+							class="ttr-material-button" title="#{fbresource['Exam_List']}"
+							action="studentExamListNew">
+							<span class="ttr-icon"><i class="ti-list" /></span>
+							<span class="ttr-label">#{fbresource['Exam_List']} </span>
+						</h:commandLink></li>
+					<li class="nav-item"><h:commandLink
+							class="ttr-material-button" title="#{fbresource['Result_List']}"
+							action="resultListNew">
+							<span class="ttr-icon"><i class="ti-list-ol" /></span>
+							<span class="ttr-label">#{fbresource['Result_List']} </span>
+						</h:commandLink></li>
+					<li class="nav-item"><h:commandLink
+							class="ttr-material-button" title="#{fbresource['Hall_Ticket']}"
+							action="downloadHallTicketListNew">
+							<span class="ttr-icon"><i class="ti-menu-alt" /></span>
+							<span class="ttr-label">#{fbresource['Hall_Ticket']} </span>
+						</h:commandLink></li>
+					<li class="nav-item"><h:commandLink
+							class="ttr-material-button"
+							title="#{fbresource['Student_fee_list']}"
+							action="studentFeeListNew">
+							<span class="ttr-icon"><i class="ti-money" /></span>
+							#{fbresource['Student_fee_list']}
+						</h:commandLink></li>
+				</ul>
+				<!-- sidebar menu end --> </nav>
+				<!-- sidebar menu end -->
+			</div>
+		</div>
+		<!-- Left sidebar menu end -->
+
+	</h:form>
+
+	<div class="modal fade text-left" id="changePassword" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel160" aria-hidden="true">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+			role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-primary">
+					<h5 class="modal-title white" id="myModalLabel160">#{fbresource['Change_Password']}</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<i class="bx bx-x" />
+					</button>
+				</div>
+				<div class="modal-body">
+					<h:form id="editPasswordForm" prependId="false">
+						<table width="300px">
+							<tr>
+								<td colspan="2" valign="top"><label for="oldPassword">
+										<p>
+											#{fbresource['Old_Password']}<font color="red">*</font>
+										</p>
+								</label></td>
+								<td><h:inputSecret immediate="true" redisplay="true"
+										maxlength="20" value="#{CommonDBBean.oldPassword}"
+										title="#{fbresource['Password_must_contains_one_lower_case_char']}"
+										id="oldPassword" required="true"
+										requiredMessage="#{fbresource['Please_enter']} #{fbresource['Old_Password']}">
+										<f:validator validatorId="PasswordValidator" />
+									</h:inputSecret> <o:floatingIconMessage style="border-color: red;"
+										for="oldPassword" showDetail="true" showSummary="false" /></td>
+							</tr>
+							<tr>
+								<td colspan="2" valign="top"><label for="newPassword">
+										<p>
+											New Password<font color="red">*</font>
+										</p>
+								</label></td>
+								<td><h:inputSecret immediate="true" redisplay="true"
+										maxlength="20" value="#{CommonDBBean.confirmPassword}"
+										title="#{fbresource['Password_must_contains_one_lower_case_char']}"
+										id="newPassword" required="true"
+										requiredMessage="#{fbresource['Please_enter']} #{fbresource['New_Password']}">
+										<f:validator validatorId="PasswordValidator" />
+									</h:inputSecret> <o:floatingIconMessage style="border-color: red;"
+										for="newPassword" showDetail="true" showSummary="false" /></td>
+							</tr>
+							<tr>
+								<td colspan="2" valign="top"><label for="confirmPassword">
+										<p>
+											Confirm Password<font color="red">*</font>
+										</p>
+								</label></td>
+								<td><h:inputSecret immediate="true" redisplay="true"
+										maxlength="20"
+										title="#{fbresource['Password_must_contains_one_lower_case_char']}"
+										id="confirmPassword" required="true"
+										requiredMessage="#{fbresource['Please_enter']} #{fbresource['Confirm_Password']}">
+										<f:validator validatorId="PasswordValidator" />
+										<o:validateEqual for="newPassword" />
+									</h:inputSecret> <o:floatingIconMessage style="border-color: red;"
+										for="confirmPassword" showDetail="true" showSummary="false" /></td>
+							</tr>
+							<tr>
+								<td><o:commandButton styleClass="btn btn-primary glow"
+										value="#{fbresource['Change_Password']}"
+										action="#{CommonDBBean.updatePassword}" /></td>
+							</tr>
+						</table>
+					</h:form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary glow"
+						data-dismiss="modal">
+						<i class="bx bx-x d-block d-sm-none" /> <span
+							class="d-none d-sm-block">#{fbresource['Close']}</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<h:form id="noticeFormNew" prependId="false">
+		<!--Notice Message start -->
+		<button style="display: none" id="noticeButton" type="button"
+			data-toggle="modal" data-target="#notice" />
+		<div class="modal fade text-left" id="notice" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel160" aria-hidden="true">
+			<div
+				class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+				role="document">
+				<div class="modal-content">
+					<div class="modal-header bg-primary">
+						<h5 class="modal-title white" id="myModalLabel160">#{fbresource['Notice_Message']}</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<i class="bx bx-x"></i>
+						</button>
+					</div>
+					<div class="modal-body">
+						<font color='red'>#{fbresource['impTag']}:<b><h:outputText
+									rendered="#{StudentRegistrationBean.notice.impTag}"
+									value="#{fbresource['YES']}" /> <h:outputText
+									rendered="#{!StudentRegistrationBean.notice.impTag}"
+									value="#{fbresource['NO']}" /> </b></font> <font color='red'>#{fbresource['studentSpecific']}:<b><h:outputText
+									rendered="#{StudentRegistrationBean.notice.studentSpecific}"
+									value="#{fbresource['YES']}" /> <h:outputText
+									rendered="#{!StudentRegistrationBean.notice.studentSpecific}"
+									value="#{fbresource['NO']}" /> </b></font> <br />
+						<o:commandLink
+							rendered="#{StudentRegistrationBean.notice.fileName1 ne null}"
+							actionListener="#{StudentRegistrationBean.setFileName}"
+							onajaxend="document.getElementById('fileButton').click();"
+							render="fileFullInfo" style="font-size:20px;color:blue;">
+							<f:param name="1"
+								value="#{StudentRegistrationBean.notice.fileName1}" />
+				#{StudentRegistrationBean.notice.fileName1}
+				</o:commandLink>
+						<f:verbatim
+							rendered="#{StudentRegistrationBean.notice.fileName1 ne null}">
+							<br />
+						</f:verbatim>
+						<o:commandLink
+							rendered="#{StudentRegistrationBean.notice.fileName2 ne null}"
+							actionListener="#{StudentRegistrationBean.setFileName}"
+							onajaxend="document.getElementById('fileButton').click();"
+							render="fileFullInfo" style="font-size:20px;color:blue;">
+							<f:param name="2"
+								value="#{StudentRegistrationBean.notice.fileName2}" />
+				#{StudentRegistrationBean.notice.fileName2}
+				</o:commandLink>
+						<f:verbatim
+							rendered="#{StudentRegistrationBean.notice.fileName2 ne null}">
+							<br />
+						</f:verbatim>
+						<o:commandLink
+							rendered="#{StudentRegistrationBean.notice.fileName3 ne null}"
+							actionListener="#{StudentRegistrationBean.setFileName}"
+							onajaxend="document.getElementById('fileButton').click();"
+							render="fileFullInfo" style="font-size:20px;color:blue;">
+							<f:param name="3"
+								value="#{StudentRegistrationBean.notice.fileName3}" />
+				#{StudentRegistrationBean.notice.fileName3}
+				</o:commandLink>
+						<f:verbatim
+							rendered="#{StudentRegistrationBean.notice.fileName3 ne null}">
+							<br />
+						</f:verbatim>
+						<o:commandLink
+							rendered="#{StudentRegistrationBean.notice.fileName4 ne null}"
+							actionListener="#{StudentRegistrationBean.setFileName}"
+							onajaxend="document.getElementById('fileButton').click();"
+							render="fileFullInfo" style="font-size:20px;color:blue;">
+							<f:param name="4"
+								value="#{StudentRegistrationBean.notice.fileName4}" />
+				#{StudentRegistrationBean.notice.fileName4}
+				</o:commandLink>
+						<f:verbatim
+							rendered="#{StudentRegistrationBean.notice.fileName4 ne null}">
+							<br />
+						</f:verbatim>
+						<o:commandLink
+							rendered="#{StudentRegistrationBean.notice.fileName5 ne null}"
+							actionListener="#{StudentRegistrationBean.setFileName}"
+							onajaxend="document.getElementById('fileButton').click();"
+							render="fileFullInfo" style="font-size:20px;color:blue;">
+							<f:param name="5"
+								value="#{StudentRegistrationBean.notice.fileName5}" />
+				#{StudentRegistrationBean.notice.fileName5}
+				</o:commandLink>
+						<f:verbatim
+							rendered="#{StudentRegistrationBean.notice.fileName5 ne null}">
+							<br />
+						</f:verbatim>
+						<h:outputText value="#{StudentRegistrationBean.notice.notice}"
+							escape="false" />
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-light-secondary"
+							data-dismiss="modal">
+							<i class="bx bx-x d-block d-sm-none"></i> <span
+								class="d-none d-sm-block">#{fbresource['Close']}</span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--Notice Message start -->
+	</h:form>
+
+	<h:form id="fileForm" prependId="false">
+		<!--Notice Message start -->
+		<button style="display: none" id="fileButton" type="button"
+			data-toggle="modal" data-target="#file" />
+		<div class="modal fade text-left" id="file" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel160" aria-hidden="true">
+			<div
+				class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+				role="document">
+				<div class="modal-content">
+					<div class="modal-header bg-primary">
+						<h5 class="modal-title white" id="myModalLabel160">#{fbresource['Large_Photo']}</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<i class="bx bx-x"></i>
+						</button>
+					</div>
+					<div class="modal-body">
+						<h:panelGroup id="fileFullInfo">
+							<center>
+								<o:dynamicImage
+									rendered="#{StudentRegistrationBean.notice ne null and StudentRegistrationBean.fileName ne null}"
+									id="dynamicImage1"
+									data="#{StudentRegistrationBean.imageBytesAsImage}" />
+								<br /> #{StudentRegistrationBean.fileName} <br />
+								<h:commandButton style="margin-left:30px;"
+									title="#{fbresource['Please_click_here_to_download_document']}"
+									action="#{StudentRegistrationBean.downloadDocument()}"
+									value="#{fbresource['download_Certificate']}" />
+							</center>
+						</h:panelGroup>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-light-secondary"
+							data-dismiss="modal">
+							<i class="bx bx-x d-block d-sm-none"></i> <span
+								class="d-none d-sm-block">#{fbresource['Close']}</span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--Notice Message start -->
+	</h:form>
+
+</ui:composition>
+</html>
+
+

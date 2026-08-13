@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<h:form id="collegeLookUpForm">
+	<script>
+		function checkCollegeCOdeSelected() {
+			var selectedVar = $("input[name='collegeCodeRadio']:checked");
+			var seletedValue = selectedVar.val();
+			if (typeof (seletedValue) != "undefined") {
+				O$('collegeLookUpForm:collegeLookUp').hide();
+				document.getElementById(findElement('collegeCodeLookUpValue')).value = seletedValue;
+			} else {
+				alert('Please select collge code.');
+			}
+		}
+	</script>
+	<o:window id="collegeLookUp" resizable="true" width="1050px"
+		height="300px" styleClass="window" caption="#{fbresource['Search_College_Code']}"
+		captionStyle="background: #bbbbbb;
+                            border-bottom: #e9e9e9 solid 1px;
+                            position: relative;
+                            padding: 0 0 0 6px;
+                            color: white;"
+		modal="true" modalLayerClass="modalLayer">
+
+		<o:captionArea>
+			<o:minimizeWindowButton minimizeImageUrl="/images/win_minimize.png"
+				restoreImageUrl="./images/win_restore.jpg" styleClass="customButton"
+				rolloverClass="buttonRollover" />
+			<o:maximizeWindowButton maximizeImageUrl="/images/win_maximize.png"
+				restoreImageUrl="images/win_restore.jpg" styleClass="customButton"
+				rolloverClass="buttonRollover" />
+			<o:closeWindowButton imageUrl="/images/win_close.png"
+				styleClass="customButton" rolloverClass="buttonRollover" />
+		</o:captionArea>
+		<ui:include src="/xhtml/errorPanel.xhtml" />
+
+		<fieldset>
+			<legend>#{fbresource['College_List']}</legend>
+			<table halign="left">
+				<tr>
+					<td>#{fbresource['College_Code']}</td>
+					<td><h:inputText value="#{CollegeLookUpBean.collegeCode}"
+							id="collegeCode">
+						</h:inputText></td>
+					<td>#{fbresource['College_Name']}</td>
+					<td><h:inputText value="#{CollegeLookUpBean.collegeName}"
+							id="collegeName">
+						</h:inputText></td>
+					<td>#{fbresource['City_Place']}</td>
+					<td><h:inputText value="#{CollegeLookUpBean.city}" id="city">
+						</h:inputText></td>
+					<td>#{fbresource['Address']}</td>
+					<td><h:inputText value="#{CollegeLookUpBean.address}"
+							id="address">
+						</h:inputText></td>
+					<td><o:commandButton value="#{fbresource['search']}" title="#{fbresource['Click_here_to']} #{fbresource['Search_Record']}"
+							render="collegeLookUPPanel"
+							execute="collegeCode collegeName city address"
+							action="#{CollegeLookUpBean.searchRecord}" /></td>
+				</tr>
+			</table>
+			<h:panelGroup id="collegeLookUPPanel">
+				<h:panelGroup id="paginationTableContainner">
+					<o:dataTable id="collegeLookUPTable" var="college"
+						value="#{CollegeLookUpBean.collegeList}" sortColumnId="title"
+						sortAscending="true"
+						sortableHeaderRolloverStyle="background: #d4d4d4"
+						style="width: 980px;line-height: 17px;" styleClass="datatable"
+						rolloverRowStyle="background: #f1f1f1;">
+						<o:singleRowSelection style="background: #a4aec5; color: white" />
+						<o:columnReordering />
+						<f:facet name="columnMenu">
+							<o:columnMenu />
+						</f:facet>
+						<o:column id="select" header="#{fbresource['Select']}" style="text-align: center;">
+							<input type="radio" value="#{college.collegeName}"
+								name="collegeCodeRadio"></input>
+						</o:column>
+
+						<o:column id="collegeCode" header="#{fbresource['College_Code']}"
+							sortingExpression="#{college.collegeName}"
+							style="text-align: center;">
+							<h:outputText value="#{college.collegeName}" />
+						</o:column>
+						<o:column header="#{fbresource['College_Name']}"
+							sortingExpression="#{college.collegeFullName}"
+							style="text-align: center;">
+							<h:outputText value="#{college.collegeFullName}" />
+						</o:column>
+						<o:column header="#{fbresource['City_Place']}" sortingExpression="#{college.place}"
+							style="text-align: center;">
+							<h:outputText value="#{college.place}" />
+						</o:column>
+						<o:column header="#{fbresource['Address']}" sortingExpression="#{college.address}"
+							style="text-align: center;">
+							<h:outputText escape="false" value="#{college.address}" />
+						</o:column>
+						<o:column   style="text-align: center;">
+						<h:commandButton type="button" value="#{fbresource['Select']}"
+									title="Select College Code"
+									onclick="checkCollegeCOdeSelected();" />
+						</o:column>
+						<f:event listener="#{CollegeLookUpBean.inIt}" type="preRenderView" />
+					</o:dataTable>
+					<table align="right" style="margin-right: 20px;">
+						<tr>
+							<td><ui:include src="/xhtml/pagination.xhtml" /></td>
+						</tr>
+					</table>
+					<!-- <table halign="left">
+						<tr>
+							<td><h:commandButton type="button" value="#{fbresource['Select']}"
+									title="Select College Code"
+									onclick="checkCollegeCOdeSelected();" /></td>
+						</tr>
+					</table> -->
+				</h:panelGroup>
+			</h:panelGroup>
+			<font color="red" size="4">#{fbresource['college_Note']}</font>
+		</fieldset>
+	</o:window>
+</h:form>
+</html>

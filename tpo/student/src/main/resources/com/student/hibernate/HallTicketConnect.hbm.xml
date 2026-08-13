@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.hibernate.HallTicketConnect"
+		table="hallticketconnect">
+		<composite-id name="id"
+			class="com.hibernate.HallTicketConnectID">
+			<key-property name="rollnumber" type="java.lang.String">
+				<column name="rollnumber" length="14" />
+			</key-property>
+			<key-many-to-one lazy="false" name="hallTicket"
+				class="com.hibernate.HallTicket">
+				<column name="hallTicketId" length="20" />
+			</key-many-to-one>
+		</composite-id>
+		<property name="isApplied" type="java.lang.Boolean">
+			<column name="isApplied" not-null="true" />
+		</property>
+		<property name="appliedOn" type="java.util.Date">
+			<column name="appliedOn" />
+		</property>
+		<property name="isApproved" type="java.lang.Boolean">
+			<column name="isApproved" not-null="true" />
+		</property>
+		<property name="approvedOn" type="java.util.Date">
+			<column name="approvedOn" />
+		</property>
+		 <property name="arrived" type="java.lang.Boolean">
+            <column name="arrived"  />
+        </property>
+	</class>
+</hibernate-mapping>

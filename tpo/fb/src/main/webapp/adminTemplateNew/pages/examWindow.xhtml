@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<h:form id="ExamWindowForm">
+	<o:window rendered="#{ExamBean.exam ne null}" id="Exam"
+		resizable="true" width="1050px" height="400px" styleClass="window"
+		caption="#{fbresource['Add_Update']}" 
+		captionStyle="background: #bbbbbb;
+                            border-bottom: #e9e9e9 solid 1px;
+                            position: relative;
+                            padding: 0 0 0 6px;
+                            color: white;"
+		modal="true" modalLayerClass="modalLayer">
+
+		<o:captionArea>
+			<o:minimizeWindowButton minimizeImageUrl="/images/win_minimize.png"
+				restoreImageUrl="./images/win_restore.jpg" styleClass="customButton"
+				rolloverClass="buttonRollover" />
+			<o:maximizeWindowButton maximizeImageUrl="/images/win_maximize.png"
+				restoreImageUrl="images/win_restore.jpg" styleClass="customButton"
+				rolloverClass="buttonRollover" />
+			<o:closeWindowButton imageUrl="/images/win_close.png"
+				styleClass="customButton" rolloverClass="buttonRollover" />
+		</o:captionArea>
+		<ui:include src="/xhtml/errorPanel.xhtml" />
+
+		<fieldset>
+			<legend>#{fbresource['Exam']} #{fbresource['ADD_OR_UPDATE']}</legend>
+			<table align="center" styleClass="registration_table" cellSpacing="2">
+				<tr>
+					<td>#{fbresource['Exam_Name']}<font color="red">*</font></td>
+					<td><h:inputText
+							disabled="#{ExamBean.currentDocMode eq 'Update'}"
+							value="#{ExamBean.exam.testname}" id="testName" size="15"
+							required="true" requiredMessage="#{fbresource['Please_enter']} testName" /> <o:floatingIconMessage
+							style="border-color: red;" for="testName" showDetail="true"
+							showSummary="false" /></td>
+				</tr>
+				<tr>
+					<td>#{fbresource['Result_Type']}<font color="red">*</font></td>
+					<td><h:selectOneMenu value="#{ExamBean.exam.resultType}"
+							id="resultType" required="true"
+							requiredMessage="#{fbresource['Please_select']} #{fbresource['Result_Type']}">
+							<f:selectItem itemLabel="#{fbresource['Percent']}" itemValue="Percent"
+								id="Percent" />
+							<f:selectItem itemLabel="#{fbresource['Number']}" itemValue="Number" id="Number" />
+						</h:selectOneMenu> <o:floatingIconMessage style="border-color: red;"
+							for="questionType" showDetail="true" showSummary="false" /></td>
+				</tr>
+
+				<tr>
+					<td>#{fbresource['Passing_Criteria']}<font color="red">*</font></td>
+					<td><h:inputText value="#{ExamBean.exam.passingcriteria}"
+							id="passingCriteria" size="1" maxlength="4" required="true"
+							requiredMessage="#{fbresource['Please_enter']} #{fbresource['Passing_Criteria']}">
+						</h:inputText> <o:floatingIconMessage style="border-color: red;"
+							for="passingCriteriaPercent" showDetail="true"
+							showSummary="false" /></td>
+					<td>#{fbresource['First_Class_Marks']}</td>
+					<td><h:inputText value="#{ExamBean.exam.firstClassMark}"
+							id="firstClassMark" size="1" maxlength="4">
+						</h:inputText> <o:floatingIconMessage style="border-color: red;"
+							for="firstClassMark" showDetail="true" showSummary="false" /></td>
+					<td>#{fbresource['Honours_Marks']}</td>
+					<td><h:inputText value="#{ExamBean.exam.honoursMark}"
+							id="honoursMark" size="1" maxlength="4">
+						</h:inputText> <o:floatingIconMessage style="border-color: red;"
+							for="honoursMark" showDetail="true" showSummary="false" /></td>
+				</tr>
+
+				<tr>
+					<td>#{fbresource['Start_Range']}<font color="red">*</font></td>
+					<td><h:inputText value="#{ExamBean.exam.startrange}"
+							id="startRange" size="2" maxlength="4" required="true"
+							requiredMessage="#{fbresource['Please_enter']} #{fbresource['Start_Range']}">
+						</h:inputText> <o:floatingIconMessage style="border-color: red;"
+							for="startRange" showDetail="true" showSummary="false" /></td>
+			
+					<td>#{fbresource['End_Range']}<font color="red">*</font></td>
+					<td><h:inputText value="#{ExamBean.exam.endrange}"
+							id="endRange" size="2" maxlength="5" required="true"
+							requiredMessage="#{fbresource['Please_enter']} #{fbresource['End_Range']}">
+						</h:inputText> <o:floatingIconMessage style="border-color: red;" for="endRange"
+							showDetail="true" showSummary="false" /></td>
+					<td>#{fbresource['No_Of_Questions']}<font color="red">*</font></td>
+					<td><h:inputText value="#{ExamBean.exam.noOfQuestions}"
+							id="noOfQuestions" size="1" maxlength="3" required="true"
+							requiredMessage="#{fbresource['Please_enter']} #{fbresource['No_Of_Questions']}">
+						</h:inputText> <o:floatingIconMessage style="border-color: red;"
+							for="noOfQuestions" showDetail="true" showSummary="false" /></td>
+				</tr>
+				<tr>
+					<td>#{fbresource['Time_MM']}<font color="red">*</font></td>
+					<td><h:inputText value="#{ExamBean.exam.minute}" id="minute"
+							size="1" maxlength="3" required="true"
+							requiredMessage="#{fbresource['Please_enter']} #{fbresource['Time_MM']}">
+						</h:inputText> <o:floatingIconMessage style="border-color: red;" for="minute"
+							showDetail="true" showSummary="false" /></td>
+					<td>#{fbresource['Negative_Marks']}</td>
+					<td><h:inputText value="#{ExamBean.exam.negativeMark}" id="negativeMark"
+							size="1" maxlength="4" >
+						</h:inputText> <o:floatingIconMessage style="border-color: red;" for="negativeMark"
+							showDetail="true" showSummary="false" /></td>
+					<td>#{fbresource['Certificate_Download_Allowed']}<font color="red">*</font></td>
+					<td><h:selectOneMenu value="#{ExamBean.exam.allowCertDownload}"
+							id="allowCertDownload" required="true"
+							requiredMessage="#{fbresource['Please_select']} #{fbresource['Certificate_Download_Allowed']}">
+							<f:selectItem itemLabel="#{fbresource['YES']}" itemValue="true" id="false" />
+							<f:selectItem itemLabel="#{fbresource['NO']}" itemValue="false"
+								id="true" />
+						</h:selectOneMenu> <o:floatingIconMessage style="border-color: red;"
+							for="allowCertDownload" showDetail="true" showSummary="false" /></td>
+				</tr>
+				<tr>
+					<td>#{fbresource['Valid_From']}</td>
+					<td>
+					<o:dateChooser 
+							pattern="dd/MM/yyyy HH:mm a" buttonImageUrl="/images/calendar.gif"
+							immediate="true" value="#{ExamBean.exam.validFrom}"
+							id="validFrom" required="true">
+						</o:dateChooser>
+					<o:floatingIconMessage style="border-color: red;" for="validFrom"
+							showDetail="true" showSummary="false" /></td>
+				
+					<td>#{fbresource['Valid_To']}</td>
+					<td><o:dateChooser 
+							pattern="dd/MM/yyyy HH:mm a" buttonImageUrl="/images/calendar.gif"
+							immediate="true" value="#{ExamBean.exam.validTo}"
+							id="validTo" required="true">
+						</o:dateChooser>
+				<o:floatingIconMessage style="border-color: red;" for="validTo"
+							showDetail="true" showSummary="false" /></td>
+				</tr>
+				<tr>
+					<td>#{fbresource['Show_Result']}<font color="red">*</font></td>
+					<td><h:selectOneMenu value="#{ExamBean.exam.showResult}"
+							id="showResult" required="true"
+							requiredMessage="#{fbresource['Please_select']} #{fbresource['Show_Result']}">
+							<f:selectItem itemLabel="#{fbresource['NO']}" itemValue="false" />
+							<f:selectItem itemLabel="#{fbresource['YES']}" itemValue="true"  />
+						</h:selectOneMenu> <o:floatingIconMessage style="border-color: red;"
+							for="showResult" showDetail="true" showSummary="false" /></td>
+				</tr>
+			</table>
+			<table halign="left">
+				<tr>
+					<td><o:commandButton styleClass="btn btn-primary glow"  value="#{fbresource['save']}"
+							title="#{fbresource['Please_click_here_save_data']}" action="#{ExamBean.addExam}" /></td>
+					<td><h:commandButton class="btn btn-primary glow"  value="#{fbresource['Reset']}" type="reset"
+							rendered="#{ExamBean.currentDocMode ne 'Update'}"
+							 title="#{fbresource['Please_click_here_to_reset_form_values']}" /></td>
+					<td><h:commandButton class="btn btn-primary glow"  value="#{fbresource['Close']}"
+							type="button" onclick="O$('ExamWindowForm:Exam').hide();"
+							title="#{fbresource['Please_click_here_to_close']}" /></td>
+				</tr>
+			</table>
+		</fieldset>
+	</o:window>
+</h:form>
+</html>

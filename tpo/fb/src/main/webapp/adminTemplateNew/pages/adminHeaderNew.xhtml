@@ -1,0 +1,581 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<ui:composition>
+	<ui:include src="profileWindow.xhtml" />
+	<h:form id="MainPage">
+		<!-- BEGIN: Header-->
+		<div class="header-navbar-shadow"></div>
+		<nav
+			class="header-navbar main-header-navbar navbar-expand-lg navbar navbar-with-menu fixed-top ">
+		<div class="navbar-wrapper">
+			<div class="navbar-container content">
+				<div class="navbar-collapse" id="navbar-mobile">
+					<div
+						class="mr-auto float-left bookmark-wrapper d-flex align-items-center">
+						<ul class="nav navbar-nav">
+							<li class="nav-item mobile-menu d-xl-none mr-auto"><a
+								class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i
+									class="ficon bx bx-menu" /></a></li>
+						</ul>
+						<h:panelGrid id="bookmarkList">
+							<o:forEach items="#{CommonDBBean.bookmarkList}" var="bookmark">
+								<h:commandLink action="#{bookmark.goToBookMark}">
+									<i data-toggle="tooltip" data-placement="bottom"
+										title="#{fbresource['Please_click_here_to_go_on']} #{bookmark.id.bookMark}"
+										class="ficon bx #{BookmarkIcons.getIcon(bookmark.id.bookMark)} warning" />
+								</h:commandLink>
+							</o:forEach>
+						</h:panelGrid>
+					</div>
+					<ul class="nav navbar-nav float-right">
+						<li data-toggle="tooltip" data-placement="right"
+							title="#{fbresource['Please_click_here_to_Open_Close_left_menu']}"
+							class="opdown dropdown-language nav-item"><div
+								class="collapse-option-switch">
+								<div style="margin-top: 10px;"
+									class="custom-control custom-switch">
+									<input type="checkbox" class="custom-control-input"
+										value="true" id="collapse-sidebar-switch" /> <label
+										class="custom-control-label" for="collapse-sidebar-switch"></label>
+								</div>
+							</div></li>
+						<li data-toggle="tooltip" data-placement="right"
+							class="opdown dropdown-language nav-item"
+							title="#{fbresource['download_admin']}"><a
+							href="https://android-fb-apps.s3.ap-south-1.amazonaws.com/FB Admin.apk"><img
+								height="40px;" src="/FB/images/android.png" align="right" /></a></li>
+						<li data-toggle="tooltip" data-placement="right"
+							title="#{fbresource['Please_click_here_to_change_language']}"
+							class="dropdown dropdown-language nav-item"><a
+							class="dropdown-toggle nav-link" id="dropdown-flag" href="#"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<i class="flag-icon flag-icon-#{LanguageLocaleBean.countryCode}" /><span
+								class="selected-language">#{LanguageLocaleBean.countryLanguage}</span>
+						</a>
+							<div class="dropdown-menu" aria-labelledby="dropdown-flag">
+								<h:commandLink action="#{LanguageLocaleBean.setEnglish}"
+									class="dropdown-item">
+									<i class="flag-icon flag-icon-us mr-50" />English</h:commandLink>
+								<h:commandLink action="#{LanguageLocaleBean.setHindi}"
+									class="dropdown-item">
+									<i class="flag-icon flag-icon-in mr-50" />Hindi</h:commandLink>
+							</div></li>
+
+						<li class="nav-item d-none d-lg-block"><a
+							class="nav-link nav-link-expand"><i
+								class="ficon bx bx-fullscreen" /></a></li>
+
+						<h:panelGroup rendered="#{AdminUser.noOfNotification > 0}">
+							<li class="dropdown dropdown-notification nav-item"><a
+								class="nav-link nav-link-label" href="#" data-toggle="dropdown"><i
+									class="ficon bx bx-bell bx-tada bx-flip-horizontal" /><span
+									class="badge badge-pill badge-danger badge-up"><h:outputText
+											rendered="#{AdminUser.role ne 'Super User'}"
+											value="#{AdminUser.noOfNotification}" /></span></a>
+								<ul
+									class="dropdown-menu dropdown-menu-media dropdown-menu-right">
+									<li class="dropdown-menu-header">
+										<div
+											class="dropdown-header px-1 py-75 d-flex justify-content-between">
+											<span class="notification-title"><h:outputText
+													rendered="#{AdminUser.role ne 'Super User'}"
+													value="#{AdminUser.noOfNotification}" />
+												#{fbresource['New_Notification']}</span>
+										</div>
+									</li>
+									<li class="scrollable-container media-list"><h:panelGroup
+											rendered="#{AdminUser.role ne 'Super User'}">
+											<o:forEach items="#{CommonDBBean.adminNoticeList}"
+												var="alert">
+												<a class="d-flex justify-content-between"
+													href="javascript:void(0)">
+													<div class="media d-flex align-items-center">
+														<div class="media-left pr-0">
+															<i class="ficon bx bx-bell bx-tada bx-flip-horizontal" />
+														</div>
+														<div class="media-body">
+															<h6 class="media-heading">
+																<span class="text-bold-500"><o:commandLink
+																		title="#{fbresource['Click_here_to_See_Full_Message']}"
+																		style="color:red;font-size: 15px;" value="#{alert}"
+																		actionListener="#{DashBoardBean.setNotice}"
+																		onajaxend="document.getElementById('noticeButton').click();"
+																	render="noticeForm">
+																	</o:commandLink> </span>
+															</h6>
+															<!-- 	<small class="notification-text">Mar 15 12:32pm</small> -->
+														</div>
+													</div>
+												</a>
+											</o:forEach>
+											
+										</h:panelGroup> <h:panelGroup rendered="#{AdminUser.role ne 'Super User'}">
+											<div class="d-flex justify-content-between cursor-pointer">
+												<div class="media d-flex align-items-center border-0">
+													<div class="media-left pr-0">
+														<i class="ficon bx bx-bell bx-tada bx-flip-horizontal" />
+													</div>
+													<div class="media-body">
+														<h6 class="media-heading">
+															<span class="text-bold-500"> <h:outputText
+																	style="color:#{DashBoardBean.color}"
+																	rendered="#{DashBoardBean.color ne null}"
+																	value="#{DashBoardBean.broadCastMessage.messageSeverity}" />
+																<button
+																	title="#{fbresource['Click_here_to_See_Full_Message']}"
+																	value="Show Details" type="button"
+																	class="btn btn-outline-#{DashBoardBean.classCode}"
+																	data-toggle="modal" data-target="#broadCastMessage">
+																	#{DashBoardBean.broadCastMessage.broadcastMessageTitle}
+																</button>
+															</span>
+														</h6>
+													</div>
+												</div>
+											</div>
+										</h:panelGroup> <h:panelGroup rendered="#{AdminUser.expString ne null}">
+											<div class="d-flex justify-content-between cursor-pointer">
+												<div class="media d-flex align-items-center border-0">
+													<div class="media-left pr-0">
+														<i class="ficon bx bx-bell bx-tada bx-flip-horizontal" />
+													</div>
+													<div class="media-body">
+														<h6 class="media-heading">
+															<span class="text-bold-500"><font color='red'>
+																	#{AdminUser.expString} </font> </span>
+														</h6>
+													</div>
+												</div>
+											</div>
+										</h:panelGroup></li>
+									<li class="dropdown-menu-footer"><a
+										class="dropdown-item p-50 text-primary justify-content-center"
+										href="javascript:void(0)">#{fbresource['Close']}</a></li>
+								</ul></li>
+						</h:panelGroup>
+						<li class="dropdown dropdown-user nav-item"><a
+							class="dropdown-toggle nav-link dropdown-user-link" href="#"
+							data-toggle="dropdown">
+								<div class="user-nav d-sm-flex d-none">
+									<span class="user-name">#{AdminUser.fullName}(<h:outputText
+											title="#{fbresource['You_are_a']} '#{fbresource['SuperUser']}'"
+											rendered="#{AdminUser.role eq 'Super User'}"
+											value="#{fbresource['SuperUser']}" /> <h:outputText
+											rendered="#{AdminUser.role eq 'User'}"
+											title="#{fbresource['You_are_a']} '#{fbresource['User']}'"
+											value="#{fbresource['User']}-#{AdminUser.childUserName}" />
+										<h:outputText rendered="#{AdminUser.role eq 'Admin'}"
+											title="#{fbresource['You_are_a']} '#{fbresource['Admin']}'"
+											value="#{fbresource['Admin']}" /> <h:outputText
+											rendered="#{AdminUser.role eq 'College User'}"
+											title="#{fbresource['You_are_a']} '#{fbresource['CollegeUser']}'"
+											value="#{fbresource['CollegeUser']}" /> <h:outputText
+											rendered="#{AdminUser.role eq 'Company User'}"
+											value="#{fbresource['CompanyUser']}"
+											title="#{fbresource['You_are_a']} '#{fbresource['CompanyUser']}'" />)
+									</span> <span class="user-status text-muted"> <font size="1"
+										color="red">#{fbresource['Last_logged_in']}
+											#{AdminUser.lastLogin}</font></span>
+								</div> <span>
+								<o:dynamicImage data="#{AdminUser.profilePic}" styleClass="round" height="40" width="40"
+									alt="Prifile Pic" data-toggle="tooltip" data-placement="right"/>
+								</span>
+						</a>
+							<div class="dropdown-menu dropdown-menu-right pb-0">
+								<a
+									onclick="document.getElementById('MainPage:updateAccount').click();"
+									href="#"
+									title="#{fbresource['Click_here_to']} #{fbresource['update']}"
+									class="dropdown-item"><i class="bx bx-user mr-50" />#{fbresource['Update_Account']}</a>
+								<a
+									onclick="document.getElementById('MainPage:changePassword').click();"
+									href="#"
+									title="#{fbresource['Click_here_to']} #{fbresource['Change_Password']}"
+									class="dropdown-item"><i class="bx bxs-edit mr-50" />#{fbresource['Change_Password']}</a>
+
+								<div class="dropdown-divider mb-0" />
+								<a onclick="document.getElementById('MainPage:logout').click();"
+									href="#"
+									title="#{fbresource['Click_here_to']} #{fbresource['Logout']}"
+									class="dropdown-item"><i class="bx bx-power-off mr-50" />#{fbresource['Logout']}</a>
+							</div></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		</nav>
+		<o:commandButton id="updateAccount" style="display:none;"
+			class="dropdown-item"
+			rendered="#{AdminUser.role eq 'Super User' || AdminUser.role eq 'Admin' || AdminUser.role eq 'Company User'}"
+			execute="@this"
+			onajaxend="document.getElementById('profileButton').click();"
+			render="ProfileWindowForm errorPanel"
+			actionListener="#{CreateUser.setUser}" />
+		<o:commandButton id="changePassword" style="display:none;"
+			rendered="#{AdminUser.role eq 'Super User' || AdminUser.role eq 'Admin' || AdminUser.role eq 'Company User'}"
+			execute="@this" actionListener="#{CreateUser.setPassword}"
+			onajaxend="document.getElementById('changePasswordButton').click();"
+			render="editUserPasswordForm errorPanel" />
+		<o:commandButton id="switchUI" style="display:none;"
+			action="#{AdminUser.switchUI}" />
+		<o:commandButton id="logout" style="display:none;"
+			action="#{CCPLoginBean.logout}" />
+		<!-- END: Header-->
+
+		<!-- BEGIN: Main Menu-->
+		<div
+			class="main-menu menu-fixed menu-light menu-accordion menu-shadow"
+			data-scroll-to-active="true">
+			<div class="navbar-header">
+				<ul class="nav navbar-nav flex-row">
+					<li class="nav-item mr-auto"><h:commandLink
+							action="#{CCPLoginBean.goToDashBoard}" styleClass="navbar-brand">
+							<div class="brand-logo">
+								<o:dynamicImage data="#{AdminUser.logo}" styleClass="logo" title="#{fbresource['Click_here_to']} #{fbresource['go_on_Home_Page']}"/>
+								
+							</div>
+						</h:commandLink></li>
+					<li class="nav-item nav-toggle"><a
+						class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i
+							class="bx bx-x d-block d-xl-none font-medium-4 primary" /><i
+							class="toggle-icon bx bx-disc font-medium-4 d-none d-xl-block primary"
+							data-ticon="bx-disc" /></a></li>
+				</ul>
+			</div>
+			<div class="shadow-bottom"></div>
+			<div class="main-menu-content">
+				<ul class="navigation navigation-main" id="main-menu-navigation"
+					data-menu="menu-navigation" data-icon-style="lines">
+
+					<li class="nav-item"><a href="#"><i
+							class="ficon bx bx-menu success" /><span class="menu-title">#{fbresource['List_Screens']}</span></a>
+						<ul class="menu-content">
+							<li><h:commandLink
+									action="#{AdminMenu.goToPage('studentList')}">
+									<i class="bx #{BookmarkIcons.getIcon('studentList')}" />
+									<span class="menu-item">#{fbresource['Student_List']}</span>
+								</h:commandLink></li>
+							<li><h:commandLink
+									rendered="#{AdminUser.role eq 'Super User' || AdminUser.role eq 'Admin'}"
+									action="#{AdminMenu.goToPage('companyList')}">
+									<i class="bx #{BookmarkIcons.getIcon('companyList')}" />
+									<span class="menu-item">#{fbresource['Company_List']}</span>
+								</h:commandLink></li>
+							<li><h:commandLink
+									rendered="#{AdminUser.role eq 'Super User' || AdminUser.role eq 'Admin'}"
+									action="#{AdminMenu.goToPage('collegeList')}">
+									<i class="bx #{BookmarkIcons.getIcon('collegeList')}" />
+									<span class="menu-item">#{fbresource['College_List']}</span>
+								</h:commandLink></li>
+							<li><h:commandLink
+									action="#{AdminMenu.goToPage('openningList')}">
+									<i class="bx #{BookmarkIcons.getIcon('openningList')}" />
+									<span class="menu-item">#{fbresource['Opening_List']}</span>
+								</h:commandLink></li>
+							<li><h:commandLink
+									action="#{AdminMenu.goToPage('hallTicketList')}">
+									<i class="bx #{BookmarkIcons.getIcon('hallTicketList')}" />
+									<span class="menu-item">#{fbresource['Hall_Ticket_List']}</span>
+								</h:commandLink></li>
+
+							<li><h:commandLink
+									action="#{AdminMenu.goToPage('examList')}">
+									<i class="bx #{BookmarkIcons.getIcon('examList')}" />
+									<span class="menu-item">#{fbresource['Exam_List']}</span>
+								</h:commandLink></li>
+							<li><h:commandLink
+									action="#{AdminMenu.goToPage('questionsList')}">
+									<i class="bx #{BookmarkIcons.getIcon('questionsList')}" />
+									<span class="menu-item">#{fbresource['Questions_List']}</span>
+								</h:commandLink></li>
+							<li><h:commandLink
+									action="#{AdminMenu.goToPage('adminResultList')}">
+									<i class="bx #{BookmarkIcons.getIcon('adminResultList')}" />
+									<span class="menu-item">#{fbresource['Result_List']}</span>
+								</h:commandLink></li>
+							<li><h:commandLink
+									action="#{AdminMenu.goToPage('studentFeeList')}">
+									<i class="bx #{BookmarkIcons.getIcon('studentFeeList')}" />
+									<span class="menu-item">#{fbresource['Student_fee_list']}</span>
+								</h:commandLink></li>
+
+							<li><h:commandLink
+									action="#{AdminMenu.goToPage('shortRecordHistoryList')}">
+									<i
+										class="bx #{BookmarkIcons.getIcon('shortRecordHistoryList')}" />
+									<span class="menu-item">#{fbresource['Short_History_List']}</span>
+								</h:commandLink></li>
+							<li><h:commandLink
+									rendered="#{StudentRegistrationBean.referralFlag and (AdminUser.role eq 'Super User' || AdminUser.role eq 'Admin')}"
+									action="#{AdminMenu.goToPage('referralList')}">
+									<i class="bx #{BookmarkIcons.getIcon('referralList')}" />
+									<span class="menu-item">#{fbresource['referralList']}</span>
+								</h:commandLink></li>
+							<li><h:commandLink
+									rendered="#{AdminUser.role eq 'Super User' || AdminUser.role eq 'Admin'}"
+									action="#{AdminMenu.goToPage('newsLetterList')}">
+									<i class="bx #{BookmarkIcons.getIcon('newsLetterList')}" />
+									<span class="menu-item">#{fbresource['News_Letter_List']}</span>
+								</h:commandLink></li>
+						</ul></li>
+
+
+					<li class=" nav-item"><a href="#"><i
+							class="ficon bx bxs-id-card danger" /><span class="menu-title">#{fbresource['Administrator']}</span></a>
+						<ul class="menu-content">
+							<li><h:commandLink
+									action="#{AdminMenu.goToPageShortRecord('shortRecord',false)}">
+									<i class="bx #{BookmarkIcons.getIcon('shortRecord')}" />
+									<span class="menu-item">#{fbresource['Short_Record']}</span>
+								</h:commandLink></li>
+							<li><h:commandLink
+									action="#{AdminMenu.goToPageShortRecord('shortRecord',true)}">
+									<i class="bx #{BookmarkIcons.getIcon('createOpeninng')}" />
+									<span class="menu-item">#{fbresource['Create_Opening']}</span>
+								</h:commandLink></li>
+							<li><h:commandLink
+									rendered="#{AdminUser.role eq 'Super User' || AdminUser.role eq 'Admin'}"
+									action="#{AdminMenu.goToPage('userList')}">
+									<i class="bx #{BookmarkIcons.getIcon('userList')}" />
+									<span class="menu-item">#{fbresource['User_List']} </span>
+								</h:commandLink></li>
+							<li><h:commandLink
+									action="#{AdminMenu.goToPage('collegeGroup')}">
+									<i class="bx #{BookmarkIcons.getIcon('collegeGroup')}" />
+									<span class="menu-item">#{fbresource['College_Group']}</span>
+								</h:commandLink></li>
+
+							<li><h:commandLink
+									action="#{AdminMenu.goToPage('messageBoard')}">
+									<i class="bx #{BookmarkIcons.getIcon('messageBoard')}" />
+									<span class="menu-item">#{fbresource['Send_Message']}</span>
+								</h:commandLink></li>
+							<li><h:commandLink
+									action="#{AdminMenu.goToPage('noticeList')}">
+									<i class="bx #{BookmarkIcons.getIcon('noticeList')}" />
+									<span class="menu-item">#{fbresource['Notice_List']}</span>
+								</h:commandLink></li>
+							<li><h:commandLink
+									rendered="#{AdminUser.role eq 'Super User' || AdminUser.role eq 'Admin'}"
+									action="#{AdminMenu.goToPage('complaintList')}">
+									<i class="bx #{BookmarkIcons.getIcon('complaintList')}" />
+									<span class="menu-item">#{fbresource['Complaint_List']}</span>
+								</h:commandLink></li>
+							<li><h:commandLink
+									rendered="#{StudentRegistrationBean.referralFlag}"
+									action="#{AdminMenu.goToPageCustomerReview('review')}">
+									<i class="bx #{BookmarkIcons.getIcon('review')}" />
+									<span class="menu-item">#{fbresource['Write_Review']}</span>
+								</h:commandLink></li>
+
+							<li><h:commandLink
+									action="#{AdminMenu.goToPage('sendNewsLetter')}">
+									<i class="bx #{BookmarkIcons.getIcon('sendNewsLetter')}" />
+									<span class="menu-item">#{fbresource['News_Letter']}</span>
+								</h:commandLink></li>
+							<li><h:commandLink
+									action="#{AdminMenu.goToPage('generateTestUser')}">
+									<i class="bx #{BookmarkIcons.getIcon('generateTestUser')}" />
+									<span class="menu-item">#{fbresource['generateTestUser']}</span>
+								</h:commandLink></li>
+							<li><h:commandLink
+									action="#{AdminMenu.goToPage('currentTestDashboard')}">
+									<i class="bx #{BookmarkIcons.getIcon('currentTestDashboard')}" />
+									<span class="menu-item">#{fbresource['currentTestDashboard']}</span>
+								</h:commandLink></li>
+							<li><h:commandLink
+									rendered="#{AdminUser.role eq 'Super User' || AdminUser.role eq 'Admin'}"
+									action="#{AdminMenu.goToPage('broadCastMessage')}">
+									<i class="bx #{BookmarkIcons.getIcon('broadCastMessage')}" />
+									<span class="menu-item">#{fbresource['broadCastMessage']}</span>
+								</h:commandLink></li>
+						</ul></li>
+
+					<h:panelGroup rendered="#{AdminUser.role eq 'Super User'}">
+						<li class=" nav-item"><a href="#"><i
+								class="ficon bx bx-data warning" /><span class="menu-title">#{fbresource['Backup_Tool']}</span></a>
+							<ul class="menu-content">
+								<li><o:commandLink
+										onajaxend="document.getElementById('doBackupButton').click();"
+										render="backupDateAndTime" id="doBackupLink">
+										<i class="bx #{BookmarkIcons.getIcon('doBackup')} success" />
+										<span class="menu-item success">#{fbresource['Do_Backup']}</span>
+									</o:commandLink></li>
+								<li><h:commandLink action="#{DashBoardBean.disbledAction}"
+										rendered="#{AdminUser.envirnment eq 'SERVER'}"
+										title="This is disabled action">
+										<i class="bx #{BookmarkIcons.getIcon('restoreBackup')} danger" />
+										<span class="menu-item danger">#{fbresource['Restore_Backup']}</span>
+									</h:commandLink> <h:commandLink rendered="#{AdminUser.envirnment ne 'SERVER'}"
+										action="#{DashBoardBean.restoreBackup}">
+										<i
+											class="bx #{BookmarkIcons.getIcon('restoreBackup')} success" />
+										<span class="menu-item success">#{fbresource['Restore_Backup']}</span>
+									</h:commandLink></li>
+								<li><h:commandLink action="#{DashBoardBean.disbledAction}"
+										rendered="#{AdminUser.envirnment eq 'SERVER'}"
+										title="This is disabled action">
+										<i
+											class="bx #{BookmarkIcons.getIcon('downloadBackup')} danger" />
+										<span class="menu-item danger">#{fbresource['Download_Backup_File']}</span>
+									</h:commandLink> <h:commandLink rendered="#{AdminUser.envirnment ne 'SERVER'}"
+										action="#{DashBoardBean.downloadBackup}">
+										<i
+											class="bx #{BookmarkIcons.getIcon('downloadBackup')} success" />
+										<span class="menu-item success">#{fbresource['Download_Backup_File']}</span>
+									</h:commandLink></li>
+
+							</ul></li>
+					</h:panelGroup>
+
+					<li class=" nav-item"><a href="#"><i
+							class="ficon bx bx-calendar-alt info" /><span class="menu-title">#{fbresource['Effort_System']}</span></a>
+						<ul class="menu-content">
+							<li><h:commandLink
+									rendered="#{AdminMenu.enableEffortSystemFlag}"
+									action="#{AdminMenu.goToPage('effortsList')}">
+									<i class="bx #{BookmarkIcons.getIcon('effortsList')}" />
+									<span class="menu-item">#{fbresource['your_effort_List']}</span>
+								</h:commandLink></li>
+							<li><h:commandLink
+									rendered="#{(AdminUser.role eq 'Super User' || AdminUser.role eq 'Admin') and AdminMenu.enableEffortSystemFlag}"
+									action="#{AdminMenu.goToPage('effortsListReport')}">
+									<i class="bx #{BookmarkIcons.getIcon('effortsListReport')}" />
+									<span class="menu-item">#{fbresource['effort_List_Report']}</span>
+								</h:commandLink></li>
+							<li><h:commandLink
+									rendered="#{(AdminUser.role eq 'Super User' || AdminUser.role eq 'Admin') and AdminMenu.enableEffortSystemFlag}"
+									action="#{AdminMenu.goToPage('projectList')}">
+									<i class="bx #{BookmarkIcons.getIcon('projectList')}" />
+									<span class="menu-item">#{fbresource['project_List']}</span>
+								</h:commandLink></li>
+							<li><h:commandLink
+									rendered="#{(AdminUser.role eq 'Super User' || AdminUser.role eq 'Admin') and AdminMenu.enableEffortSystemFlag}"
+									action="#{AdminMenu.goToPage('moduleList')}">
+									<i class="bx #{BookmarkIcons.getIcon('moduleList')}" />
+									<span class="menu-item">#{fbresource['module_List']}</span>
+								</h:commandLink></li>
+						</ul></li>
+
+
+					<li class=" nav-item"><h:commandLink
+							action="#{CCPLoginBean.goToDashBoard}">
+							<i class="ficon bx bx-check-square secondary" />
+							<span class="menu-title" data-i18n="Widgets">Extra</span>
+							<span
+								class="badge badge-light-primary badge-pill badge-round float-right">New</span>
+						</h:commandLink></li>
+				</ul>
+			</div>
+		</div>
+		<!--BroadCast Message start -->
+		<div class="modal fade text-left" id="broadCastMessage" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel160" aria-hidden="true">
+			<div
+				class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+				role="document">
+				<div class="modal-content">
+					<div class="modal-header bg-#{DashBoardBean.classCode}">
+						<h5 class="modal-title white" id="myModalLabel160">#{fbresource['Alerts']}</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<i class="bx bx-x"></i>
+						</button>
+					</div>
+					<div class="modal-body">
+						<h:outputText
+							value="#{DashBoardBean.broadCastMessage.broadcastMessage}"
+							escape="false" />
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-light-secondary"
+							data-dismiss="modal">
+							<i class="bx bx-x d-block d-sm-none"></i> <span
+								class="d-none d-sm-block">#{fbresource['Close']}</span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--BroadCast Message start -->
+
+		
+
+		<!-- END: Main Menu-->
+	</h:form>
+
+	<h:form id="backupDateAndTime">
+		<button style="display: none" id="doBackupButton" type="button"
+			data-toggle="modal" data-target="#doBackupPop" />
+		<div class="modal fade text-left" id="doBackupPop" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel160" aria-hidden="true">
+			<div
+				class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+				role="document">
+				<div class="modal-content">
+					<div class="modal-header bg-primary">
+						<h5 class="modal-title white" id="myModalLabel160">#{fbresource['Do_Backup']}</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<i class="bx bx-x"></i>
+						</button>
+					</div>
+					<div class="modal-body">
+						<center>
+							<font size="2" color="green"
+								title="#{collegeConnectBackUp.dateAndTime}"><b>#{fbresource['Latest_Updates']}
+									: #{collegeConnectBackUp.dateAndTime}</b></font> <br /> <font size="2"
+								color="green" title="#{collegeConnectBackUp.dateAndTime}"><b>#{fbresource['backup_confirmation']}</b></font>
+							<br /> <br />
+							<h:commandButton style="margin-right:20px;"
+								styleClass="btn btn-primary glow"
+								action="#{DashBoardBean.doBackup}"
+								value="#{fbresource['Do_Backup']}" />
+							<button type="button" class="btn btn-primary glow"
+								data-dismiss="modal">
+								<i class="bx bx-x d-block d-sm-none"></i> <span
+									class="d-none d-sm-block">#{fbresource['Close']}</span>
+							</button>
+							<br /> <br />
+
+							<table border="1">
+								<th>File Name &amp; Time</th>
+								<th>Action</th>
+								<c:forEach items="#{collegeConnectBackUp.fileList}"
+									var="fileName">
+									<tr>
+										<td>#{fileName}</td>
+										<td><o:commandLink styleClass="btn btn-primary glow"
+												actionListener="#{collegeConnectBackUp.deleteFile}">
+												<f:param name="fileName" value="#{fileName}" />
+												<span>#{fbresource['delete']}</span>
+											</o:commandLink> <o:commandLink 
+												styleClass="btn btn-primary glow"
+												actionListener="#{collegeConnectBackUp.copyFile}">
+												<f:param name="fileName" value="#{fileName}" />
+												<span>#{fbresource['copyToS3']}</span>
+
+											</o:commandLink></td>
+
+									</tr>
+
+								</c:forEach>
+							</table>
+						</center>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</h:form>
+</ui:composition>
+</html>
+
+

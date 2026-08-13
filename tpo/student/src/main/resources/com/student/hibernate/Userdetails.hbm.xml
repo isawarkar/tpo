@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.hibernate.Userdetails" table="userdetails" >
+        <id name="userName" type="java.lang.String">
+            <column name="userName" length="20" />
+            <generator class="assigned" />
+        </id>
+        <one-to-one name="logindetails" class="com.hibernate.Logindetails" constrained="true"></one-to-one>
+        <property name="firstName" type="java.lang.String">
+            <column name="firstName" length="50" not-null="true" />
+        </property>
+        <property name="lastName" type="java.lang.String">
+            <column name="lastName" length="50" not-null="true" />
+        </property>
+        <property name="address" type="java.lang.String">
+            <column name="address" length="1000" />
+        </property>
+        <property name="email" type="java.lang.String">
+            <column name="email" length="100" not-null="true" />
+        </property>
+        <property name="mobleNo" type="java.lang.Long">
+            <column name="mobleNo" precision="10" scale="0" not-null="true" />
+        </property>
+        <property name="gender" type="java.lang.String">
+            <column name="gender" length="1" />
+        </property>
+        <property name="website" type="java.lang.String">
+            <column name="website" length="100" />
+        </property>
+       <property name="details" type="java.lang.String">
+			<column name="details" length="5000"/>
+		</property>
+		<property name="numberVerified" type="java.lang.Boolean">
+			<column name="numberVerified"/>
+		</property>
+		<property name="emailVarified" type="java.lang.Boolean">
+			<column name="emailVarified"/>
+		</property>
+    </class>
+</hibernate-mapping>

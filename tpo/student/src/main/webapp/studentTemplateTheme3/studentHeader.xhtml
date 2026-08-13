@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<ui:composition>
+	<ui:include src="/xhtml/allPopUps.xhtml" />
+	<h:form id="MainPage">
+		<!-- BEGIN: Header-->
+		<div class="header-navbar-shadow"></div>
+		<nav
+			class="header-navbar main-header-navbar navbar-expand-lg navbar navbar-with-menu fixed-top ">
+		<div class="navbar-wrapper">
+			<div class="navbar-container content">
+				<div class="navbar-collapse" id="navbar-mobile">
+					<div
+						class="mr-auto float-left bookmark-wrapper d-flex align-items-center">
+						<ul class="nav navbar-nav">
+							<li class="nav-item mobile-menu d-xl-none mr-auto"><a
+								class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i
+									class="ficon bx bx-menu" /></a></li>
+						</ul>
+						
+					</div>
+					<ul class="nav navbar-nav float-right">
+						
+						<li data-toggle="tooltip" data-placement="right"
+							title="#{fbresource['Please_click_here_to_Open_Close_left_menu']}" class="opdown dropdown-language nav-item"><div
+								class="collapse-option-switch">
+								<div  style="margin-top: 10px;"
+									class="custom-control custom-switch">
+									<input type="checkbox" class="custom-control-input"
+										id="collapse-sidebar-switch" /> <label
+										class="custom-control-label" for="collapse-sidebar-switch"></label>
+								</div>
+							</div></li>
+							
+						<li data-toggle="tooltip" data-placement="right"
+							title="#{fbresource['Please_click_here_to_change_language']}"
+							class="dropdown dropdown-language nav-item"><a
+							class="dropdown-toggle nav-link" id="dropdown-flag" href="#"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<i class="flag-icon flag-icon-#{LanguageLocaleBean.countryCode}" /><span
+								class="selected-language">#{LanguageLocaleBean.countryLanguage}</span>
+						</a>
+							<div class="dropdown-menu" aria-labelledby="dropdown-flag">
+								<h:commandLink action="#{LanguageLocaleBean.setEnglish}"
+									class="dropdown-item">
+									<i class="flag-icon flag-icon-us mr-50" />English</h:commandLink>
+								<h:commandLink action="#{LanguageLocaleBean.setHindi}"
+									class="dropdown-item">
+									<i class="flag-icon flag-icon-in mr-50" />Hindi</h:commandLink>
+							</div></li>
+						<li class="nav-item d-none d-lg-block"><a
+							class="nav-link nav-link-expand"><i
+								class="ficon bx bx-fullscreen" /></a></li>
+
+						<!-- 	<li class="nav-item nav-search"><a
+							class="nav-link nav-link-search"><i
+								class="ficon bx bx-search" /></a>
+							<div class="search-input">
+								<div class="search-input-icon">
+									<i class="bx bx-search primary" />
+								</div>
+								<input class="input" type="text" placeholder="Search In FB"
+									tabindex="-1" data-search="template-search" />
+								<div class="search-input-close">
+									<i class="bx bx-x" />
+								</div>
+								<ul class="search-list"></ul>
+							</div></li> -->
+						<h:panelGroup rendered="#{StudentNoticeBean.count > 0}">
+							<li class="dropdown dropdown-notification nav-item"><a
+								class="nav-link nav-link-label" href="#" data-toggle="dropdown"><i
+									class="ficon bx bx-bell bx-tada bx-flip-horizontal" /><span
+									class="badge badge-pill badge-danger badge-up"><h:outputText
+											value="#{StudentNoticeBean.count}" /></span></a>
+								<ul
+									class="dropdown-menu dropdown-menu-media dropdown-menu-right">
+									<li class="dropdown-menu-header">
+										<div
+											class="dropdown-header px-1 py-75 d-flex justify-content-between">
+											<span class="notification-title"><h:outputText
+													value="#{StudentNoticeBean.count}" />
+												#{fbresource['New_Notification']}</span>
+										</div>
+									</li>
+									<li class="scrollable-container media-list"><o:forEach
+											items="#{StudentNoticeBean.noticeList}" var="notice">
+											<a class="d-flex justify-content-between"
+												href="javascript:void(0)">
+												<div class="media d-flex align-items-center">
+													<div class="media-left pr-0">
+														<i class="ficon bx bx-bell bx-tada bx-flip-horizontal" />
+													</div>
+													<div class="media-body">
+														<h6 class="media-heading">
+															<span class="text-bold-500"><o:commandLink
+																	title="#{fbresource['Click_here_to_See_Full_Message']}"
+																	style="cursor:hand;color:red;font-size: 15px;"
+																	value="#{notice}"
+																	actionListener="#{StudentRegistrationBean.setNotice}"
+																	onajaxend="document.getElementById('noticeButton').click();"
+																	render="noticeForm">
+																</o:commandLink></span>
+														</h6>
+													</div>
+												</div>
+											</a>
+										</o:forEach> <o:forEach items="#{StudentNoticeBean.campusList}"
+											var="campus">
+											<a class="d-flex justify-content-between"
+												href="javascript:void(0)">
+												<div class="media d-flex align-items-center">
+													<div class="media-left pr-0">
+														<i class="ficon bx bx-bell bx-tada bx-flip-horizontal" />
+													</div>
+													<div class="media-body">
+														<h6 class="media-heading">#{campus}</h6>
+													</div>
+												</div>
+											</a>
+										</o:forEach></li>
+									<li class="dropdown-menu-footer"><a
+										class="dropdown-item p-50 text-primary justify-content-center"
+										href="javascript:void(0)">#{fbresource['Close']}</a></li>
+								</ul></li>
+						</h:panelGroup>
+						<li class="dropdown dropdown-user nav-item"><a
+							class="dropdown-toggle nav-link dropdown-user-link" href="#"
+							data-toggle="dropdown">
+								<div class="user-nav d-sm-flex d-none">
+									<span class="user-name">#{Student.userName}</span>
+								</div> <span><o:dynamicImage height="40" width="40"
+										style="border: 2px solid red;cursor: auto;" id="profilePic"
+										data="#{DynamicImageByteArrayBean.imageBytes}" /></span>
+						</a>
+							<div class="dropdown-menu dropdown-menu-right pb-0">
+								<a
+									onclick="document.getElementById('MainPage:updateAccount').click();"
+									href="#"
+									title="#{fbresource['Click_here_to']} #{fbresource['update']}"
+									class="dropdown-item"><i class="bx bx-user mr-50" />#{fbresource['Profile']}</a>
+								<a data-toggle="modal" data-target="#changePassword" href="#"
+									title="#{fbresource['Click_here_to']} #{fbresource['Change_Password']}"
+									class="dropdown-item"><i class="bx bxs-edit mr-50" />#{fbresource['Change_Password']}</a>
+								<div class="dropdown-divider mb-0" />
+								<a onclick="document.getElementById('MainPage:logout').click();"
+									href="#"
+									title="#{fbresource['Click_here_to']} #{fbresource['Logout']}"
+									class="dropdown-item"><i class="bx bx-power-off mr-50" />#{fbresource['Logout']}</a>
+							</div></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		</nav>
+		<o:commandButton id="updateAccount" style="display:none;"
+			action="#{WebFlow.mainPage}" />
+		<o:commandButton id="logout" style="display:none;"
+			action="#{StudentLogin.logout}" />
+		<!-- END: Header-->
+
+		<!-- BEGIN: Main Menu-->
+		<div
+			class="main-menu menu-fixed menu-light menu-accordion menu-shadow"
+			data-scroll-to-active="true">
+			<div class="navbar-header">
+				<ul class="nav navbar-nav flex-row">
+					<li class="nav-item mr-auto"><h:commandLink
+							action="#{WebFlow.mainPage}" styleClass="navbar-brand">
+							<div class="brand-logo">
+								<img class="logo" src="/student/images/FreshersBuddy.jpg" />
+							</div>
+						</h:commandLink></li>
+					<li class="nav-item nav-toggle"><a
+						class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i
+							class="bx bx-x d-block d-xl-none font-medium-4 primary" /><i
+							class="toggle-icon bx bx-disc font-medium-4 d-none d-xl-block primary"
+							data-ticon="bx-disc" /></a></li>
+				</ul>
+			</div>
+			<div class="shadow-bottom"></div>
+			<div class="main-menu-content">
+				<ul class="navigation navigation-main" id="main-menu-navigation"
+					data-menu="menu-navigation" data-icon-style="lines">
+
+					<li class="nav-item"><a href="#"><i
+							class="ficon bx bx-menu success" /><span class="menu-title">#{fbresource['List_Screens']}</span></a>
+						<ul class="menu-content">
+							<li><h:commandLink title="#{fbresource['Student_Home']}"
+									action="studentHomePageT3">
+									<i class="bx #{BookmarkIcons.getIcon('studentList')}" />
+									<span class="menu-item">#{fbresource['Student_Home']}</span>
+								</h:commandLink></li>
+							<li><h:commandLink title="#{fbresource['Exam_List']}"
+									action="studentExamListNew">
+									<i class="bx #{BookmarkIcons.getIcon('companyList')}" />
+									<span class="menu-item">#{fbresource['Exam_List']}</span>
+								</h:commandLink></li>
+							<li><h:commandLink title="#{fbresource['Result_List']}"
+									action="resultListNew">
+									<i class="bx #{BookmarkIcons.getIcon('collegeList')}" />
+									<span class="menu-item">#{fbresource['Result_List']}</span>
+								</h:commandLink></li>
+							<li><h:commandLink title="#{fbresource['Hall_Ticket']}"
+									action="downloadHallTicketListNew">
+									<i class="bx #{BookmarkIcons.getIcon('openningList')}" />
+									<span class="menu-item">#{fbresource['Hall_Ticket']}</span>
+								</h:commandLink></li>
+							<li><h:commandLink title="#{fbresource['Student_fee_list']}"
+									action="studentFeeListNew">
+									<i class="bx #{BookmarkIcons.getIcon('studentFeeList')}" />
+									<span class="menu-item">#{fbresource['Student_fee_list']}</span>
+								</h:commandLink></li>
+						</ul></li>
+					<li class="nav-item"><a href="#"><i
+							class="ficon bx bxs-id-card danger" /><span class="menu-title">#{fbresource['ThemeOrColor']}</span></a>
+						<ul class="menu-content">
+							<li><h:commandLink rendered="#{Student.theme ne 'T0'}"
+									action="#{Student.updateTheme('T0')}">
+									<i class="bx #{BookmarkIcons.getIcon('studentList')}" />
+									<span class="menu-item">#{fbresource['Theme1']}</span>
+								</h:commandLink></li>
+							<li><h:commandLink rendered="#{Student.theme ne 'T1'}"
+									action="#{Student.updateTheme('T1')}">
+									<i class="bx #{BookmarkIcons.getIcon('studentList')}" />
+									<span class="menu-item">#{fbresource['Theme2']}</span>
+								</h:commandLink></li>
+							<li><h:commandLink rendered="#{Student.theme ne 'T2'}"
+									action="#{Student.updateTheme('T2')}">
+									<i class="bx #{BookmarkIcons.getIcon('studentList')}" />
+									<span class="menu-item">#{fbresource['Theme3']}</span>
+								</h:commandLink></li>
+						</ul></li>
+				</ul>
+			</div>
+		</div>
+		
+
+		
+		<!-- END: Main Menu-->
+	</h:form>
+	<div class="modal fade text-left" id="changePassword" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel160" aria-hidden="true">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+			role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-primary">
+					<h5 class="modal-title white" id="myModalLabel160">#{fbresource['Change_Password']}</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<i class="bx bx-x" />
+					</button>
+				</div>
+				<div class="modal-body">
+					<h:form id="editPasswordForm" prependId="false">
+						<table width="300px">
+							<tr>
+								<td colspan="2" valign="top"><label for="oldPassword">
+										<p>
+											#{fbresource['Old_Password']}<font color="red">*</font>
+										</p>
+								</label></td>
+								<td><h:inputSecret immediate="true" redisplay="true"
+										maxlength="20" value="#{CommonDBBean.oldPassword}"
+										title="#{fbresource['Password_must_contains_one_lower_case_char']}"
+										id="oldPassword" required="true"
+										requiredMessage="#{fbresource['Please_enter']} #{fbresource['Old_Password']}">
+										<f:validator validatorId="PasswordValidator" />
+									</h:inputSecret> <o:floatingIconMessage style="border-color: red;"
+										for="oldPassword" showDetail="true" showSummary="false" /></td>
+							</tr>
+							<tr>
+								<td colspan="2" valign="top"><label for="newPassword">
+										<p>
+											#{fbresource['New_Password']}<font color="red">*</font>
+										</p>
+								</label></td>
+								<td><h:inputSecret immediate="true" redisplay="true"
+										maxlength="20" value="#{CommonDBBean.confirmPassword}"
+										title="#{fbresource['Password_must_contains_one_lower_case_char']}"
+										id="newPassword" required="true"
+										requiredMessage="#{fbresource['Please_enter']} #{fbresource['New_Password']}">
+										<f:validator validatorId="PasswordValidator" />
+									</h:inputSecret> <o:floatingIconMessage style="border-color: red;"
+										for="newPassword" showDetail="true" showSummary="false" /></td>
+							</tr>
+							<tr>
+								<td colspan="2" valign="top"><label for="confirmPassword">
+										<p>
+											#{fbresource['Confirm_Password']}<font color="red">*</font>
+										</p>
+								</label></td>
+								<td><h:inputSecret immediate="true" redisplay="true"
+										maxlength="20"
+										title="#{fbresource['Password_must_contains_one_lower_case_char']}"
+										id="confirmPassword" required="true"
+										requiredMessage="#{fbresource['Please_enter']} #{fbresource['Confirm_Password']}">
+										<f:validator validatorId="PasswordValidator" />
+										<o:validateEqual for="newPassword" />
+									</h:inputSecret> <o:floatingIconMessage style="border-color: red;"
+										for="confirmPassword" showDetail="true" showSummary="false" /></td>
+							</tr>
+							<tr>
+								<td><o:commandButton styleClass="btn btn-primary glow"
+										value="#{fbresource['Change_Password']}"
+										action="#{CommonDBBean.updatePassword}" /></td>
+							</tr>
+						</table>
+					</h:form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary glow"
+						data-dismiss="modal">
+						<i class="bx bx-x d-block d-sm-none" /> <span
+							class="d-none d-sm-block">#{fbresource['Close']}</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
+
+</ui:composition>
+</html>
+
+

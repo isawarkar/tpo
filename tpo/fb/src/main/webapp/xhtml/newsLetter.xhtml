@@ -1,0 +1,101 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<head>
+<!-- CSS Style -->
+<link rel="stylesheet" type="text/css"
+	href="/FB/feedback/stylesheet/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css"
+	href="/FB/feedback/stylesheet/font-awesome.css" media="all" />
+<link rel="stylesheet" type="text/css"
+	href="/FB/feedback/stylesheet/revslider.css" />
+<link rel="stylesheet" type="text/css"
+	href="/FB/feedback/stylesheet/owl.carousel.css" />
+<link rel="stylesheet" type="text/css"
+	href="/FB/feedback/stylesheet/owl.theme.css" />
+<link rel="stylesheet" type="text/css"
+	href="/FB/feedback/stylesheet/jquery.bxslider.css" />
+<link rel="stylesheet" type="text/css"
+	href="/FB/feedback/stylesheet/jquery.mobile-menu.css" />
+<link rel="stylesheet" type="text/css"
+	href="/FB/feedback/stylesheet/style.css" media="all" />
+<link rel="stylesheet" type="text/css"
+	href="/FB/feedback/stylesheet/responsive.css" media="all" />
+<link rel="stylesheet" type="text/css"
+	href="/FB/feedback/stylesheet/daily.css" media="all" />
+
+
+<!-- JavaScript -->
+<script type="text/javascript"
+	src="/FB/feedback/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/FB/feedback/js/revslider.js"></script>
+<script type="text/javascript" src="/FB/feedback/js/common.js"></script>
+<script type="text/javascript" src="/FB/feedback/js/countdown.js"></script>
+<script type="text/javascript"
+	src="/FB/feedback/js/jquery.bxslider.min.js"></script>
+<script type="text/javascript"
+	src="/FB/feedback/js/owl.carousel.min.js"></script>
+<script type="text/javascript"
+	src="/FB/feedback/js/jquery.mobile-menu.min.js"></script>
+</head>
+<div class="popup1">
+	<div class="newsletter-sign-box">
+		<div class="newsletter">
+			<img src="/FB/images/close-icon.png" alt="close" class="x1"
+				onClick="HideMe();" />
+			<h:form id="newsLetter">
+				<h3>#{fbresource['Newsletter_Sign_up']}</h3>
+
+				<h4>#{fbresource['news_letter']}</h4>
+				<div class="newsletter-form">
+					<div class="input-box">
+						<h:panelGroup id="news">
+							<h:inputText id="emailAddress" value="#{NewsLetterBean.email}"
+								required="true" maxlength="200"
+								requiredMessage="#{fbresource['Please_enter_email']}"
+								title="#{fbresource['Newsletter_Sign_up']}"
+								placeholder="#{fbresource['Please_enter_email']}"
+								class="input-text required-entry validate-email">
+								<f:validator validatorId="NewsLetterEmailValidator" />
+								<o:ajax render="news" />
+							</h:inputText>
+							<o:floatingIconMessage style="border-color: red;"
+								id="emailAddressError" for="emailAddress" showDetail="true"
+								showSummary="false" />
+							<h:commandButton style="display:none;"
+								value="#{fbresource['Subscribe']}" title="Subscribe"
+								id="Subscribe" class="button subscribe"
+								action="#{NewsLetterBean.addEmail}" />
+							<h:outputLabel style="display:none;"
+								value="#{fbresource['You_can_Subscribe_now']}" />
+						</h:panelGroup>
+					</div>
+				</div>
+				<label class="subscribe-bottom"><input type="checkbox"
+					onclick="doNotShowMe();" name="notshowpopup" id="notshowpopup" />#{fbresource['Dont_show_this_popup_again']}</label>
+			</h:form>
+		</div>
+		newsletter
+
+	</div>
+	newsletter-sign-box
+</div>
+<div id="fade"></div>
+<script type="text/javascript">
+	function doNotShowMe() {
+		$.cookie("doNotShowMeFB", "YES",{ expires: 1 });
+		HideMe();
+	}
+	var isVisited = $.cookie("doNotShowMeFB");
+	if (isVisited === 'YES') {
+		HideMe();
+	}
+	function HideMe() {
+		jQuery('.popup1').hide();
+		jQuery('#fade').hide();
+	}
+</script>
+</html>

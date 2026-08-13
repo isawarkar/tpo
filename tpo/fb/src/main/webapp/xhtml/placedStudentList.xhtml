@@ -1,0 +1,271 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<ui:composition template="/template/commonLayoutWithOutFooter.xhtml">
+	<ui:define name="content">
+		<h:form id="PlacedForm">
+			<div id="Global_Container">
+				<fieldset>
+					<legend>#{fbresource['Click_here_to']}</legend>
+					<TABLE style="margin-left: 20px;">
+						<tr>
+							<td>#{fbresource['Enrollment_No']}</td>
+							<td><h:inputText onclick="openIn();"
+									title="#{fbresource['Please_type_some_char_It_is_a_like_search']}"
+									value="#{PlacedStudentTableBean.rollNumber}" id="En_No" /></td>
+							<td>#{fbresource['College_Name']}</td>
+							<td><h:inputText
+									title="#{fbresource['Please_type_some_char_It_is_a_like_search']}"
+									value="#{PlacedStudentTableBean.collegeName}" id="collegeName" /></td>
+							<td>#{fbresource['Company_Name']}</td>
+							<td><h:inputText
+									title="#{fbresource['Please_type_some_char_It_is_a_like_search']}"
+									value="#{PlacedStudentTableBean.companyName}" id="companyName" /></td>
+							<td><h:commandButton
+									title="#{fbresource['Click_here_to']} #{fbresource['Search_Record']}"
+									action="#{PlacedStudentTableBean.searchRecord}"
+									value="#{fbresource['search']}" /></td>
+						</tr>
+					</TABLE>
+					<h:panelGroup id="paginationTableContainner">
+
+						<o:dataTable
+							rendered="#{not empty PlacedStudentTableBean.placedList}"
+							id="placedStudentTable" var="placed"
+							value="#{PlacedStudentTableBean.placedList}"
+							sortColumnId="rollnumber" sortAscending="true"
+							sortableHeaderRolloverStyle="background: #d4d4d4"
+							style="width: 1040px;margin-top: 10px; margin-left: 20px; line-height: 17px;"
+							styleClass="datatable" rolloverRowStyle="background: #f1f1f1;">
+							<o:columnReordering />
+							<f:facet name="columnMenu">
+								<o:columnMenu />
+							</f:facet>
+							<o:column header="#{fbresource['Photo']}"
+								sortingExpression="#{placed.rollnumber}"
+								style="width:50px; text-align: left;">
+								<o:commandLink
+									actionListener="#{PlacedStudentTableBean.setFileName}"
+									onajaxend="openStudentfullInfo();" render="studentfullInfo"
+									style="font-size:20px;color:blue;" id="studentRN">
+									<f:param name="rollnumber" value="#{placed.rollnumber}" />
+									<o:dynamicImage
+										data="#{CommonDBBean.getStudentProfilePic(placed.rollnumber)}"
+										alt="#{fbresource['Click_here_to']} #{fbresource['see_full_image_of']} #{placed.rollnumber}" />
+								</o:commandLink>
+							</o:column>
+
+							<o:column header="#{fbresource['Enrollment_No']}"
+								sortingExpression="#{placed.rollnumber}"
+								style="width: 100px; text-align: left;">
+								<h:outputLabel value="#{placed.rollnumber}" />
+							</o:column>
+
+							<o:column header="#{fbresource['Full_Name']}"
+								sortingExpression="#{placed.registration.firstName} #{placed.registration.lastName}"
+								style="width: 100px; text-align: left;">
+							#{placed.registration.firstName} #{placed.registration.lastName}
+						</o:column>
+							<o:column header="#{fbresource['Selected_IN']}"
+								sortingExpression="#{placed.companyName}"
+								style="width: 50px; text-align: left;color:blue;">
+								<o:commandLink style="color:blue;" id="companyName"
+									actionListener="#{PlacedStudentTableBean.setCompany}"
+									onajaxend="openCompany();" render="companyInfo"
+									value="#{fbresource['Click_here']}"
+									title="#{fbresource['Click_here_to_see_the_Company_Details']}">
+									<f:param value="#{placed.companyName}" />
+									#{fbresource['Click_here']}
+								</o:commandLink>
+
+							</o:column>
+							<o:column header="#{fbresource['Course']}"
+								sortingExpression="#{placed.course}"
+								style="width: 100px; text-align: left;">
+							#{placed.course}
+						</o:column>
+							<o:column header="#{fbresource['Branch']}"
+								sortingExpression="#{placed.branch}"
+								style="width: 100px; text-align: left;">
+							#{placed.branch}
+						</o:column>
+							<o:column header="#{fbresource['Semester']}"
+								sortingExpression="#{placed.semester}"
+								style="width: 50px; text-align: left;">
+							#{placed.semester}
+						</o:column>
+							<o:column header="#{fbresource['Year_of_Passing']}"
+								sortingExpression="#{placed.yearOfPassing}"
+								style="width: 50px; text-align: left;">
+							#{placed.yearOfPassing}
+						</o:column>
+							<o:column header="#{fbresource['College_Name']}"
+								sortingExpression="#{placed.registration.collegeName}"
+								style="width: 60px; text-align: left;color:blue;">
+								<o:commandLink style="color:blue;" id="collegeNameValue"
+									value="#{placed.registration.collegeName}"
+									title="#{fbresource['Click_here_to_see_the_College_Details']}"
+									actionListener="#{PlacedStudentTableBean.setCollege}"
+									onajaxend="openCollege();" render="collegeInfo">
+								</o:commandLink>
+							</o:column>
+							<f:event listener="#{PlacedStudentTableBean.inIt}"
+								type="preRenderView"></f:event>
+						</o:dataTable>
+						<table align="right" style="margin-right: 20px;">
+							<tr>
+								<td><ui:include src="/xhtml/pagination.xhtml" /></td>
+							</tr>
+						</table>
+					</h:panelGroup>
+				</fieldset>
+			</div>
+		</h:form>
+		<h:form id="fullImageForm">
+			<script>
+				$(function() {
+					$("#studentfullInfo").dialog({
+						autoOpen : false,
+						width : 500,
+						show : {
+							effect : "blind",
+							duration : 1000
+						},
+						hide : {
+							effect : "explode",
+							duration : 1000
+						}
+					});
+
+					$("#college").dialog({
+						autoOpen : false,
+						width : 500,
+						show : {
+							effect : "blind",
+							duration : 1000
+						},
+						hide : {
+							effect : "explode",
+							duration : 1000
+						}
+					});
+
+					$("#company").dialog({
+						autoOpen : false,
+						width : 1110,
+						height : 565,
+						show : {
+							effect : "blind",
+							duration : 1000
+						},
+						hide : {
+							effect : "explode",
+							duration : 1000
+						}
+					});
+				});
+
+				function openCollege() {
+					$("#college").dialog("open");
+				}
+				function openCompany() {
+					$("#company").dialog("open");
+				}
+				function closeCompany() {
+					$("#company").dialog("close");
+				}
+				function closeCollege() {
+					$("#college").dialog("close");
+				}
+				function openStudentfullInfo() {
+					$("#studentfullInfo").dialog("open");
+				}
+				function closeStudentfullInfo() {
+					$("#studentfullInfo").dialog("close");
+				}
+			</script>
+
+			<div id="studentfullInfo" title="#{fbresource['Large_Photo']}">
+				<h:panelGroup id="studentfullInfo">
+					<center>
+						<o:dynamicImage
+							rendered="#{PlacedStudentTableBean.fileName ne null}"
+							id="dynamicImage1" data="#{PlacedStudentTableBean.imageBytes}" />
+						<br /> #{PlacedStudentTableBean.fileName} <br /> <INPUT
+							title="#{fbresource['Please_click_here_to_close']}" type="button"
+							onclick="closeStudentfullInfo();" value="#{fbresource['Close']}" />
+					</center>
+				</h:panelGroup>
+			</div>
+
+			<div id="college" title="#{fbresource['College_Information']}"
+				style="width: 500px;">
+				<h:panelGroup id="collegeInfo">
+					<center>
+						<TABLE>
+							<tr>
+								<td><font color="geen" size="3">#{fbresource['College_Name']}</font></td>
+								<td><font color="blue" size="5">#{PlacedStudentTableBean.college.collegeFullName}</font></td>
+							</tr>
+							<tr>
+								<td><font color="geen" size="3">#{fbresource['City_Place']}
+								</font></td>
+								<td><font color="blue" size="3">#{PlacedStudentTableBean.college.place}</font></td>
+							</tr>
+							<tr>
+								<td><font color="geen" size="3">#{fbresource['Address']}</font></td>
+								<td><font color="blue" size="3"><h:outputText
+											escape="false"
+											value="#{PlacedStudentTableBean.college.address}" /></font></td>
+							</tr>
+							<tr>
+								<td><font color="geen" size="3">#{fbresource['E_mail']}</font></td>
+								<td><font color="blue" size="3">#{PlacedStudentTableBean.college.emailAddress}</font></td>
+							</tr>
+							<tr>
+								<td><font color="geen" size="3">#{fbresource['University']}</font></td>
+								<td><font color="blue" size="3">#{PlacedStudentTableBean.college.university}</font></td>
+							</tr>
+							<tr>
+								<td><font color="geen" size="3">#{fbresource['Date_Of_Opening']}</font></td>
+								<td><font color="blue" size="3">#{PlacedStudentTableBean.college.dateOfOpening}</font></td>
+							</tr>
+							<tr>
+								<td><font color="geen" size="3">#{fbresource['Website']}</font></td>
+								<td><font color="blue" size="5"><a
+										href="http://#{PlacedStudentTableBean.college.siteAddress}">#{PlacedStudentTableBean.college.siteAddress}</a></font></td>
+							</tr>
+						</TABLE>
+						<INPUT type="button" onclick="closeCollege();"
+							value="#{fbresource['Close']}"
+							title="#{fbresource['Please_click_here_to_close']}" />
+
+					</center>
+				</h:panelGroup>
+			</div>
+
+			<div id="company" title="#{fbresource['Company_Information']}"
+				style="width: 500px;">
+				<h:panelGroup id="companyInfo">
+					<center>
+						<f:verbatim
+							rendered="#{PlacedStudentTableBean.companyList.size() == 0}">
+							<font color="red">#{fbresource['Company_has_been_deleted']}</font>
+							<br />
+						</f:verbatim>
+						<o:forEach items="#{PlacedStudentTableBean.companyList}"
+							var="company">
+							<ui:include src="/xhtml/companyInfo.xhtml" />
+						</o:forEach>
+						<INPUT type="button" onclick="closeCompany();"
+							value="#{fbresource['Close']}"
+							title="#{fbresource['Please_click_here_to_close']}" />
+					</center>
+				</h:panelGroup>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

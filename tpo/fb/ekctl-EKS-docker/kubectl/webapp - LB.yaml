@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: indrajeet-lb-service
+spec:
+  selector:
+     app: indrajeet-deployment
+  ports:
+      # By default and for convenience, the `targetPort` is set to the same value as the `port` field.
+    - port: 8080
+      targetPort: 8080
+      # Optional field
+      # By default and for convenience, the Kubernetes control plane will allocate a port from a range (default: 30000-32767)
+      nodePort: 31998
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: indrajeet-deployment
+  labels:
+    app: indrajeet-deployment
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      app: indrajeet-deployment
+  template:
+    metadata:
+      labels:
+        app: indrajeet-deployment
+    spec:
+      containers:
+      - name: demo
+        image: indrajeetsawarkar/images:latest
+        ports:
+          - containerPort: 8080

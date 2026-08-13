@@ -1,0 +1,589 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<ui:composition template="/studentTemplate/studentHomeLayout.xhtml">
+	<ui:define name="content">
+		<ui:include src="/xhtml/collegeLookUp.xhtml" />
+		<script>
+			$(function() {
+				$("#noticeDialog").dialog({
+					autoOpen : false,
+					width : 800,
+					height : 500,
+					show : {
+						effect : "blind",
+						duration : 1000
+					},
+					hide : {
+						effect : "explode",
+						duration : 1000
+					}
+				});
+				$("#resume").dialog({
+					autoOpen : false,
+					width : 500,
+					show : {
+						effect : "blind",
+						duration : 1000
+					},
+					hide : {
+						effect : "explode",
+						duration : 1000
+					}
+				});
+				$("#image").dialog({
+					autoOpen : false,
+					width : 500,
+					show : {
+						effect : "blind",
+						duration : 1000
+					},
+					hide : {
+						effect : "explode",
+						duration : 1000
+					}
+				});
+
+				$("#fullImage").dialog({
+					autoOpen : false,
+					width : 500,
+					show : {
+						effect : "blind",
+						duration : 1000
+					},
+					hide : {
+						effect : "explode",
+						duration : 1000
+					}
+				});
+
+				$("#noticeList").dialog({
+					autoOpen : false,
+					width : 800,
+					height : 500,
+					show : {
+						effect : "blind",
+						duration : 1000
+					},
+					hide : {
+						effect : "explode",
+						duration : 1000
+					}
+				});
+				
+				$("#FileFullInformation").dialog({
+					autoOpen : false,
+					width : 500,
+					show : {
+						effect : "blind",
+						duration : 1000
+					},
+					hide : {
+						effect : "explode",
+						duration : 1000
+					}
+				});
+
+			});
+
+			function openIn() {
+				$("#noticeDialog").dialog("open");
+			}
+			function openResume() {
+				$("#resume").dialog("open");
+			}
+			function openImage() {
+				$("#image").dialog("open");
+			}
+			function closeIn() {
+				$("#noticeDialog").dialog("close");
+			}
+			function showFullImage() {
+				$("#fullImage").dialog("open");
+			}
+
+			function closeImage() {
+				$("#fullImage").dialog("close");
+			}
+			function showNotice() {
+				$("#noticeList").dialog("open");
+			}
+			function closeNotice() {
+				$("#noticeList").dialog("close");
+			}
+			function openFileFullInformation() {
+				$("#FileFullInformation").dialog("open");
+			}
+			function closeFileFullInformation() {
+				$("#FileFullInformation").dialog("close");
+			}
+		</script>
+		<h:form id="RegistationForm">
+			<ui:include src="/xhtml/webflow.xhtml" />
+			<FIELDSET>
+				<LEGEND>
+					<h:outputText
+						rendered="#{StudentRegistrationBean.currentMode eq 'Update'}"
+						value="#{fbresource['Last_Updated_on']} #{StudentRegistrationBean.registration.lastUpdated} #{fbresource['By']} #{StudentRegistrationBean.registration.lastUpdatedBy}"></h:outputText>
+				</LEGEND>
+				<table width="960px">
+					<tr>
+						<td><h:panelGrid id="ImagePanel">
+								<o:dynamicImage style="border: 2px solid red;cursor: auto;"
+									onclick="showFullImage();"
+									alt="#{fbresource['You_can_upload_your_photo_after_successfully_registration']}"
+									id="dynamicImage" width="150" height="180"
+									data="#{DynamicImageByteArrayBean.imageBytes}" />
+								<h:commandButton
+									title="#{fbresource['Please_click_here_to_upload_image']}"
+									rendered="#{StudentRegistrationBean.currentMode eq 'Update'}"
+									value="#{fbresource['Upload_Image']}" type="button"
+									onclick="openImage();" />
+								<h:commandButton
+									title="#{fbresource['Please_click_here_to_upload_resume']}"
+									rendered="#{StudentRegistrationBean.currentMode eq 'Update'}"
+									value="#{fbresource['Upload_Resume']}" type="button"
+									onclick="openResume();" />
+								<h:panelGrid columns="2">
+									<h:graphicImage styleClass="blinking"
+										title="#{fbresource['Your_account_is_verified']}" height="50"
+										width="50"
+										rendered="#{StudentRegistrationBean.registration.approved and StudentRegistrationBean.currentMode eq 'Update'}"
+										url="/images/verified.gif" />
+									<h:graphicImage styleClass="blinking"
+										title="#{fbresource['Your_account_is_pending']}" height="50"
+										width="50"
+										rendered="#{!StudentRegistrationBean.registration.approved and StudentRegistrationBean.currentMode eq 'Update'}"
+										url="/images/pending.gif" />
+									<h:commandButton style="height:40px;width:40px;"
+										rendered="#{StudentRegistrationBean.currentMode eq 'Update'}"
+										action="#{StudentRegistrationBean.printResume}"
+										title="#{fbresource['Please_click_hear_to_download_and_print_your_registration_form']}"
+										image="/images/pdf_button.png"></h:commandButton>
+								</h:panelGrid>
+							</h:panelGrid></td>
+						<td>
+							<table width="700px">
+								<tr>
+									<td><label for="En_No">
+												#{fbresource['Enrollment_No']}<font color="red">*</font>
+									</label></td>
+									<td><h:inputText disabled="true"
+											rendered="#{StudentRegistrationBean.currentMode eq 'Update'}"
+											value="#{StudentRegistrationBean.registration.rollnumber}" />
+										<h:inputText immediate="true" maxlength="14"
+											rendered="#{StudentRegistrationBean.currentMode eq 'Create'}"
+											value="#{StudentRegistrationBean.registration.rollnumber}"
+											id="En_No" required="true"
+											requiredMessage="#{fbresource['Please_enter']} #{fbresource['Enrollment_No']}">
+											<f:validator validatorId="EnrollmentNumberValidator" />
+											<o:ajax render="En_No En_No_msg" />
+										</h:inputText> <o:floatingIconMessage id="En_No_msg"
+											style="border-color: red;" for="En_No" showDetail="true"
+											showSummary="false" /></td>
+											<td><label for="status">
+												#{fbresource['Status']}
+										</label></td>
+										<td><h:outputText
+												rendered="#{StudentRegistrationBean.registration.approved}"
+												value="#{fbresource['Approved']}" /> <h:outputText
+												rendered="#{!StudentRegistrationBean.registration.approved}"
+												value="#{fbresource['Pending']}" /></td>
+								
+								</tr>
+								<tr>
+									<td><label for="First_Name">
+												#{fbresource['First_Name']}<font color="red">*</font>
+									</label></td>
+									<td><h:inputText immediate="true"
+											value="#{StudentRegistrationBean.registration.firstName}"
+											maxlength="50" id="First_Name" required="true"
+											requiredMessage="#{fbresource['Please_enter']} #{fbresource['First_Name']}">
+										</h:inputText> <o:floatingIconMessage style="border-color: red;"
+											for="First_Name" showDetail="true" showSummary="false" /></td>
+									<td><label for="Last_Name">
+												#{fbresource['Last_Name']}<font color="red">*</font>
+									</label></td>
+									<td><h:inputText immediate="true"
+											value="#{StudentRegistrationBean.registration.lastName}"
+											maxlength="50" id="Last_Name" required="true"
+											requiredMessage="#{fbresource['Please_enter']} #{fbresource['Last_Name']}">
+										</h:inputText> <o:floatingIconMessage style="border-color: red;"
+											for="Last_Name" showDetail="true" showSummary="false" /></td>
+								</tr>
+								<tr>
+									<td><label for="college_Code">
+												#{fbresource['Your_College_Code']}<font color="red">*</font>
+									</label></td>
+									<td><h:panelGroup id="collgeCode">
+											<h:panelGrid columns="2">
+												<h:inputText maxlength="100" required="true"
+													id="collegeCodeLookUpValue"
+													value="#{StudentRegistrationBean.registration.collegeName}"
+													immediate="true"
+													title="#{fbresource['Please_enter']} #{fbresource['Your_College_Code']}">
+													<f:validator validatorId="CollegeValidator" />
+													<o:ajax render="collegeCodeLookUpValue" />
+												</h:inputText>
+												<h:graphicImage url="/images/lookUp.png" height="20px;"
+													style="cursor:hand; margin-top:10px;"
+													title="#{fbresource['Please_click_here_to_find_College_Code']}"
+													onclick="O$('collegeLookUpForm:collegeLookUp').show();" />
+											</h:panelGrid>
+											<o:floatingIconMessage style="border-color: red;"
+												for="collegeCodeLookUpValue" showDetail="true"
+												showSummary="false" />
+										</h:panelGroup></td>
+									<td><label for="currentCourse">
+												#{fbresource['Highest_Education']}<font color="red">*</font>
+									</label></td>
+
+									<td><h:outputText
+											rendered="#{StudentRegistrationBean.currentMode eq 'Update'}"
+											value="#{StudentRegistrationBean.currentCourse}" /> <h:selectOneMenu
+											immediate="true"
+											rendered="#{StudentRegistrationBean.currentMode eq 'Create'}"
+											value="#{StudentRegistrationBean.currentCourse}"
+											id="currentCourse" required="true"
+											requiredMessage="#{fbresource['Please_select_course']}">
+											<f:selectItem itemValue="" itemLabel="" />
+											<f:selectItem itemValue="10"
+												itemLabel="#{fbresource['High_School_L']}" />
+											<f:selectItem itemValue="12"
+												itemLabel="#{fbresource['Higher_Secondary_L']}" />
+											<f:selectItem itemValue="Diploma"
+												itemLabel="#{fbresource['Diploma']}" />
+											<f:selectItem itemValue="Graduation"
+												itemLabel="#{fbresource['Graduation']}" />
+											<f:selectItem itemValue="Post Graduation"
+												itemLabel="#{fbresource['Post_Graduation']}" />
+										</h:selectOneMenu> <o:floatingIconMessage style="border-color: red;"
+											for="currentCourse" showDetail="true" showSummary="false" /></td>
+								</tr>
+								<h:panelGroup
+									rendered="#{StudentRegistrationBean.currentMode eq 'Update'}">
+									<tr>
+									<td><label for="currentCourse">
+												#{fbresource['Resume']}<font color="red">*</font>
+									</label></td>
+										<td ><h:graphicImage height="15px" width="15px"
+											rendered="#{StudentRegistrationBean.personalinfo.resumeType eq 'doc'and StudentRegistrationBean.personalinfo.resume != null and StudentRegistrationBean.personalinfo.resume != ''}"
+											url="/images/word.png" /> 
+											<h:graphicImage height="15px" width="15px"
+											rendered="#{StudentRegistrationBean.personalinfo.resumeType eq 'pdf'and StudentRegistrationBean.personalinfo.resume != null and StudentRegistrationBean.personalinfo.resume != ''}"
+											url="/images/pdf_button.png" /> 
+											<h:commandLink
+											rendered="#{StudentRegistrationBean.personalinfo.resume != null and StudentRegistrationBean.personalinfo.resume != ''}"
+											title="#{fbresource['Please_click_here_to_download_the_resume']}"
+											style="color:navy;"
+											actionListener="#{StudentRegistrationBean.renderResume}"
+											value="#{StudentRegistrationBean.registration.personalinfo.resume}" />
+									</td>
+										<td><label for="selectedIN">
+												#{fbresource['Selected_IN']}
+										</label></td>
+
+										<td><h:outputText
+												value="#{StudentRegistrationBean.personalinfo.companyName}" />
+
+										</td>
+									</tr>
+								</h:panelGroup>
+								<h:panelGroup
+									rendered="#{StudentRegistrationBean.currentMode eq 'Create'}">
+									<tr>
+										<td><label for="selectedIN">
+												<p>#{fbresource['Image_Text']}</p>
+										</label></td>
+										<ui:include src="/xhtml/imageText.xhtml" />
+									</tr>
+									<tr>
+										<td><label for="referral_en_no">
+												<p>
+													<h:outputText
+														rendered="#{StudentRegistrationBean.referralFlag}"
+														value="#{fbresource['referral_Enrollment_No']}" />
+												</p>
+										</label></td>
+										<td><h:inputText immediate="true" maxlength="14"
+												rendered="#{StudentRegistrationBean.referralFlag}"
+												value="#{StudentRegistrationBean.referralHistory.referredBY}"
+												id="referral_en_no">
+												<f:validator validatorId="EnrollmentNumberValidatorInvert" />
+												<o:ajax render="referral_en_no referral_en_no_msg" />
+											</h:inputText> <o:floatingIconMessage id="referral_en_no_msg"
+												style="border-color: red;" for="En_No" showDetail="true"
+												showSummary="false" /></td>
+									</tr>
+								</h:panelGroup>
+							</table>
+						</td>
+					</tr>
+				</table>
+				<table>
+					<tr>
+						<td><o:commandButton title="#{fbresource['Next_Page']}"
+								value="#{fbresource['Next']}" action="#{WebFlow.firstPage}" /></td>
+						<td><o:commandButton
+								rendered="#{StudentRegistrationBean.currentMode eq 'Update'}"
+								action="#{StudentRegistrationBean.updateMainSection}"
+								value="#{fbresource['Update_Main_Information']}" /></td>
+					</tr>
+				</table>
+				<f:verbatim
+					rendered="#{StudentRegistrationBean.currentMode eq 'Create'}">
+					<tr>
+						<td colspan="4"><font size="4" color="red">#{fbresource['Note_Default_College_code']}</font></td>
+					</tr>
+					<tr>
+						<td colspan="4"><br /> <font color="red">#{fbresource['Note_Submit_button']}</font></td>
+					</tr>
+				</f:verbatim>
+			</FIELDSET>
+			<h:panelGroup
+				rendered="#{StudentRegistrationBean.currentMode eq 'Update' and StudentNoticeBean.campusList.size() > 0}">
+				<div id="studentNewEvent">
+					<fieldset style="margin-right: 10px;">
+						<nav class="links">
+							<ul>
+								<li><div title="#{fbresource['Notifications']}"
+										style="border: 0px;" class="notificationIcon"></div>
+									<div class="blinking" title="#{fbresource['Notifications']}">#{fbresource['New_Campus_Events']}</div>
+									<span
+									title="#{StudentNoticeBean.campusList.size()} #{fbresource['Notifications']}"
+									class="num">#{StudentNoticeBean.campusList.size()}</span></li>
+								<li><marquee direction="right"
+										onmouseover="this.setAttribute('scrollamount', 0, 0);"
+										onmouseout="this.setAttribute('scrollamount', 6, 0);"
+										scrolldelay="200">
+										<o:forEach items="#{StudentNoticeBean.campusList}"
+											var="campus">
+											<h:outputText style="color:green;font-size: 15px;"
+												value="#{campus}" />
+											<font color="red" size="3">#{fbresource['Next_Event']}</font>
+										</o:forEach>
+									</marquee></li>
+							</ul>
+						</nav>
+					</fieldset>
+				</div>
+			</h:panelGroup>
+
+			<h:panelGroup
+				rendered="#{StudentRegistrationBean.currentMode eq 'Update' and StudentNoticeBean.noticeList.size() > 0}">
+				<div id="tnpMessage">
+					<fieldset>
+						<a href="#" onclick="showNotice();">
+							<nav class="links">
+								<ul>
+									<li><div title="#{fbresource['Messagess']}"
+											style="border: 0px;" class="messageIcon"></div>
+										<div class="blinking" title="#{fbresource['Messagess']}">#{fbresource['Message_From_TPO']}</div>
+										<span
+										title="#{StudentNoticeBean.noticeList.size()} #{fbresource['Messagess']}"
+										class="num">#{StudentNoticeBean.noticeList.size()}</span></li>
+								</ul>
+							</nav>
+						</a>
+					</fieldset>
+				</div>
+			</h:panelGroup>
+		</h:form>
+		<h:panelGroup
+			rendered="#{StudentRegistrationBean.currentMode eq 'Update' and StudentNoticeBean.noticeList.size() > 0}">
+			<div id="noticeList" title="#{fbresource['Notice_List']}"
+				style="width: 400px;">
+				<table>
+					<o:forEach items="#{StudentNoticeBean.noticeList}" var="campus">
+						<tr>
+							<td><a href="#"> <o:commandLink
+										title="#{fbresource['Click_here_to_See_Full_Message']}"
+										style="cursor:hand;color:red;font-size: 15px;"
+										value="#{campus}"
+										actionListener="#{StudentRegistrationBean.setNotice}"
+										onajaxend="openIn();" render="NoticeForm">
+									</o:commandLink><br />
+							</a></td>
+						</tr>
+					</o:forEach>
+				</table>
+				<center>
+					<input value="#{fbresource['Close_Me']}" type="button"
+						onclick="closeNotice();" />
+				</center>
+			</div>
+		</h:panelGroup>
+		<div id="fullImage" title="#{fbresource['Full_Image']}"
+			style="width: 400px;">
+			<o:dynamicImage width="400" height="400"
+				alt="#{fbresource['You_can_upload_your_photo_after_successfully_registration']}"
+				data="#{DynamicImageByteArrayBean.imageBytes}" />
+			<center>
+				<input value="#{fbresource['Close_Me']}" type="button"
+					onclick="closeImage();" />
+			</center>
+		</div>
+		<div id="image" title="#{fbresource['Upload_Image']}"
+			style="width: 500px;">
+			<h:form rendered="#{StudentRegistrationBean.currentMode eq 'Update'}"
+				id="uploadImageForm" prependId="false" enctype="multipart/form-data">
+				<table align="center" style="margin-top: 20px;" width="400px">
+					<tr>
+						<td colspan="2" valign="top"><label for="imageFile">
+								<p>
+									#{fbresource['Image']}<font color="red">*</font>
+								</p>
+						</label></td>
+						<td><h:inputFile required="true" id="imageFile"
+								value="#{DynamicImageByteArrayBean.file}">
+							</h:inputFile> <o:floatingIconMessage style="border-color: red;"
+								for="imageFile" showDetail="true" showSummary="false" /></td>
+						<td><o:commandButton value="#{fbresource['Upload_Image']}"
+								action="#{DynamicImageByteArrayBean.uploadFile}" /> <o:floatingIconMessage
+								style="border-color: red;" for="imageFile" showDetail="true"
+								showSummary="false" /></td>
+					</tr>
+				</table>
+				<font color="red">#{fbresource['document_Size_Type']}</font>
+				<div id="loadMessage" style="color: green; display: none;"></div>
+			</h:form>
+		</div>
+		<div id="noticeDialog" title="#{fbresource['Notice_Message']}"
+			style="width: 800px; height: 800px;">
+			<h:form rendered="#{StudentRegistrationBean.currentMode eq 'Update'}"
+				id="NoticeForm">
+				<font color='red'>#{fbresource['impTag']}:<b><h:outputText
+							rendered="#{StudentRegistrationBean.notice.impTag}"
+							value="#{fbresource['YES']}" /> <h:outputText
+							rendered="#{!StudentRegistrationBean.notice.impTag}"
+							value="#{fbresource['NO']}" /> </b></font>
+				<font color='red'>#{fbresource['studentSpecific']}:<b><h:outputText
+							rendered="#{StudentRegistrationBean.notice.studentSpecific}"
+							value="#{fbresource['YES']}" /> <h:outputText
+							rendered="#{!StudentRegistrationBean.notice.studentSpecific}"
+							value="#{fbresource['NO']}" /> </b></font>
+				<br />
+				<o:commandLink
+					rendered="#{StudentRegistrationBean.notice.fileName1 ne null}"
+					actionListener="#{StudentRegistrationBean.setFileName}"
+					onajaxend="openFileFullInformation();" render="fileFullInfo"
+					style="font-size:20px;color:blue;">
+					<f:param name="1"
+						value="#{StudentRegistrationBean.notice.fileName1}" />
+				#{StudentRegistrationBean.notice.fileName1}
+				</o:commandLink>
+				<f:verbatim
+					rendered="#{StudentRegistrationBean.notice.fileName1 ne null}">
+					<br />
+				</f:verbatim>
+				<o:commandLink
+					rendered="#{StudentRegistrationBean.notice.fileName2 ne null}"
+					actionListener="#{StudentRegistrationBean.setFileName}"
+					onajaxend="openFileFullInformation();" render="fileFullInfo"
+					style="font-size:20px;color:blue;">
+					<f:param name="2"
+						value="#{StudentRegistrationBean.notice.fileName2}" />
+				#{StudentRegistrationBean.notice.fileName2}
+				</o:commandLink>
+				<f:verbatim
+					rendered="#{StudentRegistrationBean.notice.fileName2 ne null}">
+					<br />
+				</f:verbatim>
+				<o:commandLink
+					rendered="#{StudentRegistrationBean.notice.fileName3 ne null}"
+					actionListener="#{StudentRegistrationBean.setFileName}"
+					onajaxend="openFileFullInformation();" render="fileFullInfo"
+					style="font-size:20px;color:blue;">
+					<f:param name="3"
+						value="#{StudentRegistrationBean.notice.fileName3}" />
+				#{StudentRegistrationBean.notice.fileName3}
+				</o:commandLink>
+				<f:verbatim
+					rendered="#{StudentRegistrationBean.notice.fileName3 ne null}">
+					<br />
+				</f:verbatim>
+				<o:commandLink
+					rendered="#{StudentRegistrationBean.notice.fileName4 ne null}"
+					actionListener="#{StudentRegistrationBean.setFileName}"
+					onajaxend="openFileFullInformation();" render="fileFullInfo"
+					style="font-size:20px;color:blue;">
+					<f:param name="4"
+						value="#{StudentRegistrationBean.notice.fileName4}" />
+				#{StudentRegistrationBean.notice.fileName4}
+				</o:commandLink>
+				<f:verbatim
+					rendered="#{StudentRegistrationBean.notice.fileName4 ne null}">
+					<br />
+				</f:verbatim>
+				<o:commandLink
+					rendered="#{StudentRegistrationBean.notice.fileName5 ne null}"
+					actionListener="#{StudentRegistrationBean.setFileName}"
+					onajaxend="openFileFullInformation();" render="fileFullInfo"
+					style="font-size:20px;color:blue;">
+					<f:param name="5"
+						value="#{StudentRegistrationBean.notice.fileName5}" />
+				#{StudentRegistrationBean.notice.fileName5}
+				</o:commandLink>
+				<f:verbatim
+					rendered="#{StudentRegistrationBean.notice.fileName5 ne null}">
+					<br />
+				</f:verbatim>
+				<h:outputText value="#{StudentRegistrationBean.notice.notice}"
+					escape="false" />
+				<center>
+					<input value="#{fbresource['Close_Me']}" type="button"
+						onclick="closeIn();" />
+				</center>
+			</h:form>
+		</div>
+		<div id="resume" title="#{fbresource['Upload_Resume']}"
+			style="width: 500px;">
+			<h:form rendered="#{StudentRegistrationBean.currentMode eq 'Update'}"
+				id="uploadResumeForm" prependId="false"
+				enctype="multipart/form-data">
+				<table style="margin-top: 20px;" width="400px">
+					<tr>
+						<td colspan="2" valign="top"><label for="resumeFile">
+								<p>
+									#{fbresource['Resume']}<font color="red">*</font>
+								</p>
+						</label></td>
+						<td><h:inputFile required="true" id="resumeFile"
+								value="#{DynamicImageByteArrayBean.resume}" /> <o:floatingIconMessage
+								style="border-color: red;" for="resumeFile" showDetail="true"
+								showSummary="false" /></td>
+						<td><o:commandButton value="#{fbresource['Upload_Resume']}"
+								action="#{DynamicImageByteArrayBean.uploadResumeFile}" /> <o:floatingIconMessage
+								style="border-color: red;" for="resumeFile" showDetail="true"
+								showSummary="false" /></td>
+					</tr>
+				</table>
+				<div id="loadMessage1" style="color: green; display: none;"></div>
+			</h:form>
+		</div>
+
+		<div id="FileFullInformation" title="#{fbresource['Large_Photo']}">
+			<h:form>
+				<h:panelGroup id="fileFullInfo">
+					<center>
+						<o:dynamicImage
+							rendered="#{StudentRegistrationBean.notice ne null and StudentRegistrationBean.fileName ne null}"
+							id="dynamicImage1"
+							data="#{StudentRegistrationBean.imageBytesAsImage}" />
+						<br /> #{StudentRegistrationBean.fileName} <br /> <INPUT
+							title="#{fbresource['Please_click_here_to_close']}" type="button"
+							onclick="closeFileFullInformation();"
+							value="#{fbresource['Close']}" />
+						<h:commandButton style="margin-left:30px;"
+							title="#{fbresource['Please_click_here_to_download_document']}"
+							action="#{StudentRegistrationBean.downloadDocument()}"
+							value="#{fbresource['download_Certificate']}" />
+					</center>
+				</h:panelGroup>
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

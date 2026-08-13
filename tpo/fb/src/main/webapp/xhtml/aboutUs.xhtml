@@ -1,0 +1,27 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<script type="text/javascript"
+	src="https://maps.googleapis.com/maps/api/js?sensor=true">
+	
+</script>
+<ui:composition template="/template/commonLayout.xhtml">
+	<ui:define name="content">
+		<h:form>
+			<font size="5"><b>What we do</b></font>
+			<br></br>
+Fresher budy is leading assessment and hiring platform. We run assessments to measure employability across all domains - from A to Z stream.Our vision is to ensure that every fresher in our country gets an equal opportunity to build there career. Fresher Buddy is a product of Uddanda Technologies.
+	<br></br>
+			<h:commandButton id="register" immediate="true"
+				title="#{fbresource['Please_click_here_for_Register_Free']}"
+				action="studentHomePage"
+				value="#{fbresource['Register_Free']}" />
+			<br></br>
+			<ui:include src="/xhtml/feedback.xhtml" />
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

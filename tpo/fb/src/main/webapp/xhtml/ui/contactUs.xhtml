@@ -1,0 +1,136 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+<ui:composition template="/templateNew/layout.xhtml">
+	<ui:define name="content">
+		<ui:include src="/xhtml/allPopUps.xhtml" />
+		<script src="/FB/ckeditor/ckeditor.js"></script>
+		<h:form id="contactUs">
+			<div class="page-content bg-white">
+				<!-- inner page banner -->
+				<div class="page-banner contact-page">
+					<div style="margin-left: 130px;" class="container-fuild">
+						<div class="row m-lr0">
+							<div class="col-lg-6 col-md-6 section-sp2 p-lr30">
+								<div class="heading-bx left p-r15">
+									<h2 class="title-head">
+										Get In <span>Touch</span>
+									</h2>
+								</div>
+								<div class="row placeani">
+									<table width="800px">
+										<tr>
+											<td>#{fbresource['Complaint_Number']}</td>
+											<td align="left"><h:inputText id="complaintNumber1"
+													maxlength="8" size="8"
+													value="#{FeedBackBean.complaint.complaintNumber}"
+													requiredMessage="#{fbresource['Please_enter']} #{fbresource['Complaint_Number']}">
+												</h:inputText> <o:floatingIconMessage style="border-color: red;"
+													for="complaintNumber" showDetail="true" showSummary="false" />
+												<o:commandButton style="margin-left:10px;"
+													styleClass="btn btn-primary glow"
+													value="#{fbresource['Check']}" id="check"
+													title="#{fbresource['Click_here_to']} #{fbresource['Check']}"
+													execute="complaintNumber1" render="contactUs errorPanel"
+													actionListener="#{FeedBackBean.setComplaint}" /></td>
+										</tr>
+										<tr>
+											<td><h:outputLabel
+													rendered="#{FeedBackBean.complaint.status ne null}"
+													value="#{fbresource['Status']}" /></td>
+											<td align="left"><h:outputLabel
+													style="color:red;font-size:20px;"
+													rendered="#{FeedBackBean.complaint.status eq false}"
+													value="#{fbresource['Open']}" /> <h:outputLabel
+													style="color:green;font-size:20px;"
+													rendered="#{FeedBackBean.complaint.status eq true}"
+													value="#{fbresource['Closed']}" /></td>
+
+										</tr>
+										<tr>
+											<td><font color="red">OR</font></td>
+										</tr>
+										<tr>
+											<td>#{fbresource['name']}<font color="red">*</font></td>
+											<td><h:inputText id="name" required="true"
+													maxlength="100" value="#{FeedBackBean.complaint.name}"
+													requiredMessage="#{fbresource['Please_enter']} #{fbresource['Name']}">
+												</h:inputText> <o:floatingIconMessage style="border-color: red;"
+													for="name" showDetail="true" showSummary="false" /></td>
+										</tr>
+										<tr>
+											<td>#{fbresource['Contact_Number']}<font color="red">*</font></td>
+											<td><h:inputText id="number" required="true"
+													maxlength="10"
+													value="#{FeedBackBean.complaint.contactNumber}"
+													requiredMessage="#{fbresource['Please_enter']} #{fbresource['Contact_Number']}">
+													<f:convertNumber />
+													<f:validateLength minimum="10" />
+													<f:ajax render="number" />
+												</h:inputText> <o:floatingIconMessage style="border-color: red;"
+													for="number" showDetail="true" showSummary="false" /></td>
+										</tr>
+										<tr>
+											<td>#{fbresource['E_mail']}<font color="red">*</font></td>
+											<td><h:inputText id="email" required="true"
+													value="#{FeedBackBean.complaint.email}" size="35"
+													maxlength="200"
+													requiredMessage="#{fbresource['Please_enter']} #{fbresource['E_mail']}">
+													<o:ajax render="email emailMessage" />
+													<f:validator validatorId="EmailValidator" />
+												</h:inputText> <o:floatingIconMessage id="emailMessage"
+													style="border-color: red;" for="email" showDetail="true"
+													showSummary="false" /></td>
+										</tr>
+
+										<tr>
+											<td>#{fbresource['Comment_Message']}<font color="red">*</font></td>
+										</tr>
+										<tr>
+											<td colspan="2"><h:inputTextarea
+													style="margin-top:50px;" id="message" rows="10" cols="30"
+													value="#{FeedBackBean.complaint.complaint}" required="true"
+													maxlength="1000"
+													requiredMessage="#{fbresource['Please_enter']} #{fbresource['Comment_Message']}">
+												</h:inputTextarea> <o:floatingIconMessage style="border-color: red;"
+													for="message" showDetail="true" showSummary="false" /></td>
+										</tr>
+									</table>
+									<table>
+										<tr>
+											<td colspan="2" align="center"><h:commandButton
+													styleClass="btn btn-primary glow"
+													value="#{fbresource['Send_Feedback']}"
+													action="#{FeedBackBean.sendFeedback}"
+													title="#{fbresource['Click_here_to']} #{fbresource['Send_Feedback']}" />
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+						</div>
+						<div class="row m-lr0">
+							<div class="col-lg-6 col-md-6 p-lr0 d-flex">
+								<iframe src="#{fbresource['mapURL']}"
+									class="align-self-stretch d-flex"
+									style="width: 100%; min-height: 300px;margin-bottom: 50px;"
+									allowfullscreen="true"></iframe>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- inner page banner END -->
+			</div>
+			<!-- Content END-->
+			<script>
+				CKEDITOR.replace('contactUs:message');
+			</script>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

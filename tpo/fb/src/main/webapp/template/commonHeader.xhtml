@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+
+<style type="text/css">
+.commandLink {
+	border-bottom: 1px dashed #007ECE;
+	text-decoration: none;
+	font-size: 0.9em;
+}
+
+.modalLayer {
+	filter: alpha(opacity =       75);
+	-moz-opacity: .75;
+	opacity: .75;
+	background: GhostWhite;
+}
+
+.modalLayerShade {
+	background: #B2B2B2;
+}
+
+.window {
+	border: 2px solid #BBBBBB;
+}
+
+.customButton {
+	vertical-align: top;
+	padding: 0;
+}
+
+.macButton {
+	padding: 2px;
+}
+
+.buttonRollover {
+	background: none;
+}
+
+.application {
+	margin: 10px 10px 0 10px;
+}
+
+div.img {
+	margin: 2px;
+	border: 1px solid #0000ff;
+	height: auto;
+	width: auto;
+	float: left;
+	text-align: center;
+}
+
+div.img img {
+	display: inline;
+	margin: 3px;
+	border: 1px solid #ffffff;
+}
+
+div.img a:hover img {
+	border: 1px solid #0000ff;
+}
+
+.browserCaption {
+	background: url('./images/mac_header.png') repeat;
+	text-align: center;
+	padding: 0;
+}
+
+.refresh a:link {
+	color: #9c9c9c;
+}
+
+.calculatorButtons td {
+	padding: 3px;
+}
+</style>
+
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<ui:composition>
+	<h:form id="contactUsForm">
+		<o:window id="contactUs" resizable="true" width="1100px"
+			height="500px" styleClass="window" style="margin-top:50px;"
+			caption="#{fbresource['Contact_US']}"
+			captionStyle="background: #bbbbbb;
+                            border-bottom: #e9e9e9 solid 1px;
+                            position: relative;
+                            padding: 0 0 0 6px;
+                            color: white;"
+			modal="true" modalLayerClass="modalLayer">
+			<o:captionArea>
+				<o:minimizeWindowButton minimizeImageUrl="/images/win_minimize.png"
+					restoreImageUrl="./images/win_restore.jpg"
+					styleClass="customButton" rolloverClass="buttonRollover" />
+				<o:maximizeWindowButton maximizeImageUrl="/images/win_maximize.png"
+					restoreImageUrl="images/win_restore.jpg" styleClass="customButton"
+					rolloverClass="buttonRollover" />
+				<o:closeWindowButton imageUrl="/images/win_close.png"
+					styleClass="customButton" rolloverClass="buttonRollover" />
+			</o:captionArea>
+			<ui:include src="/xhtml/errorPanel.xhtml" />
+
+			<table style="margin-top: 20px;" width="1100px">
+				<tr>
+					<td>#{fbresource['Complaint_Number']}</td>
+					<td align="left"><h:inputText id="complaintNumber"
+							maxlength="8" value="#{FeedBackBean.complaintNo}"
+							requiredMessage="#{fbresource['Please_enter']} #{fbresource['Complaint_Number']}">
+						</h:inputText> <o:floatingIconMessage style="border-color: red;"
+							for="complaintNumber" showDetail="true" showSummary="false" /> <o:commandButton
+							style="margin-left:10px;"
+							onajaxend="if(O$('contactUsForm:contactUs') != null){O$('contactUsForm:contactUs').show();}"
+							value="#{fbresource['Check']}" id="check"
+							title="#{fbresource['Click_here_to']} #{fbresource['Check']}"
+							execute="complaintNumber" render="contactUsForm"
+							actionListener="#{FeedBackBean.setComplaintFromPopup}" /></td>
+				</tr>
+				<tr>
+					<td><h:outputLabel
+							rendered="#{FeedBackBean.complaint.status ne null}"
+							value="#{fbresource['Status']}" /></td>
+					<td align="left"><h:outputLabel
+							style="color:red;font-size:20px;"
+							rendered="#{FeedBackBean.complaint.status eq false}"
+							value="#{fbresource['Open']}" /> <h:outputLabel
+							style="color:green;font-size:20px;"
+							rendered="#{FeedBackBean.complaint.status eq true}"
+							value="#{fbresource['Closed']}" /></td>
+
+				</tr>
+				<tr>
+					<td><font color="red">OR</font></td>
+				</tr>
+				<tr>
+					<td>#{fbresource['name']}<font color="red">*</font></td>
+					<td><h:inputText id="name" required="true" maxlength="100"
+							value="#{FeedBackBean.complaint.name}"
+							requiredMessage="#{fbresource['Please_enter']} #{fbresource['Name']}">
+						</h:inputText> <o:floatingIconMessage style="border-color: red;" for="name"
+							showDetail="true" showSummary="false" /></td>
+				</tr>
+				<tr>
+					<td>#{fbresource['Contact_Number']}<font color="red">*</font></td>
+					<td><h:panelGrid id="mobilePan">
+							<h:inputText style="margin-top:10px;" id="number" required="true"
+								maxlength="10" value="#{FeedBackBean.complaint.contactNumber}"
+								requiredMessage="#{fbresource['Please_enter']} #{fbresource['Contact_Number']}">
+								<f:convertNumber />
+								<f:validateLength minimum="10" />
+								<f:ajax event="blur" render="mobilePan" />
+							</h:inputText>
+							<o:floatingIconMessage style="border-color: red;" for="number"
+								showDetail="true" showSummary="false" />
+						</h:panelGrid></td>
+				</tr>
+				<tr>
+					<td>#{fbresource['E_mail']}<font color="red">*</font></td>
+					<td><h:inputText style="margin-top:10px;margin-bottom:10px;"
+							id="email" required="true"
+							value="#{FeedBackBean.complaint.email}" size="40" maxlength="200"
+							requiredMessage="#{fbresource['Please_enter']} #{fbresource['E_mail']}">
+							<o:ajax render="email emailMessage" />
+							<f:validator validatorId="EmailValidator" />
+						</h:inputText> <o:floatingIconMessage id="emailMessage"
+							style="border-color: red;" for="email" showDetail="true"
+							showSummary="false" /></td>
+				</tr>
+
+				<tr>
+					<td>#{fbresource['Comment_Message']}<font color="red">*</font></td>
+					<td><h:inputTextarea style="margin-top:50px;" id="message"
+							rows="10" cols="50" value="#{FeedBackBean.complaint.complaint}"
+							required="true" maxlength="1000"
+							requiredMessage="#{fbresource['Please_enter']} #{fbresource['Comment_Message']}">
+						</h:inputTextarea> <o:floatingIconMessage style="border-color: red;" for="message"
+							showDetail="true" showSummary="false" /></td>
+				</tr>
+			</table>
+			<table style="margin-top: 50px;" width="1100px">
+				<tr>
+					<td colspan="2" align="center"><h:commandButton
+							value="#{fbresource['Send_Feedback']}"
+							action="#{FeedBackBean.sendFeedback}"
+							title="#{fbresource['Click_here_to']} #{fbresource['Send_Feedback']}" />
+						<h:commandButton type="reset" style="margin-left: 50px;"
+							title="#{fbresource['Click_here_to']} #{fbresource['Reset']}"
+							value="#{fbresource['Reset']}" /></td>
+				</tr>
+			</table>
+			<br />
+		</o:window>
+		<script>
+			CKEDITOR.replace('contactUsForm:message');
+		</script>
+	</h:form>
+	<h:form id="forgotStudentPasswordForm">
+		<o:window id="forgotStudentPassword" resizable="true" width="550px"
+			height="240px" styleClass="window"
+			style="margin-top:300px;margin-left:300px;"
+			caption="#{fbresource['Forgot_Student_Password']}"
+			captionStyle="background: #bbbbbb;
+                            border-bottom: #e9e9e9 solid 1px;
+                            position: relative;
+                            padding: 0 0 0 6px;
+                            color: white;"
+			modal="true" modalLayerClass="modalLayer">
+
+			<o:captionArea>
+				<o:minimizeWindowButton minimizeImageUrl="/images/win_minimize.png"
+					restoreImageUrl="./images/win_restore.jpg"
+					styleClass="customButton" rolloverClass="buttonRollover" />
+				<o:maximizeWindowButton maximizeImageUrl="/images/win_maximize.png"
+					restoreImageUrl="images/win_restore.jpg" styleClass="customButton"
+					rolloverClass="buttonRollover" />
+				<o:closeWindowButton imageUrl="/images/win_close.png"
+					styleClass="customButton" rolloverClass="buttonRollover" />
+			</o:captionArea>
+			<ui:include src="/xhtml/errorPanel.xhtml" />
+
+			<table align="center" style="margin-top: 5px;" width="500px">
+				<tr>
+					<td colspan="2">#{fbresource['forgotPasswordMessage']}</td>
+				</tr>
+				<tr>
+					<td>#{fbresource['Enrollment_No']}<font color="red">*</font></td>
+					<td><h:inputText value="#{CCPLoginBean.enrollmentNo}"
+							id="studentEnrollmentNo" required="true" maxlength="14">
+						</h:inputText> <o:floatingIconMessage style="border-color: red;"
+							for="studentEnrollmentNo" showDetail="true" showSummary="false" /></td>
+				</tr>
+				<tr>
+					<td>#{fbresource['E_mail']}<font color="red">*</font></td>
+					<td><h:inputText style="margin-top:10px;" id="email"
+							required="true" value="#{CCPLoginBean.email}" size="40"
+							requiredMessage="#{fbresource['Please_enter_email']}">
+							<f:validator validatorId="EmailValidator" />
+						</h:inputText> <o:floatingIconMessage style="border-color: red;" for="email"
+							showDetail="true" showSummary="false" /></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center"><h:commandButton
+							value="#{fbresource['submit']}" style="margin-top:10px;"
+							action="#{CCPLoginBean.sendStudentPassword}"
+							title="#{fbresource['Please_click_here_to_reset_password']}" />
+						&nbsp;&nbsp;&nbsp;&nbsp; <h:commandButton type="button"
+							style="margin-top:10px;"
+							onclick="O$('forgotStudentPasswordForm:forgotStudentPassword').hide();"
+							title="#{fbresource['Please_click_here_to_close_this_window']}"
+							value="#{fbresource['Close']}" /></td>
+				</tr>
+				<tr>
+					<td colspan="2"><font color="red">#{fbresource['forgotPasswordMessage1']}
+							#{fbresource['fb_email']}</font></td>
+				</tr>
+			</table>
+		</o:window>
+	</h:form>
+
+	
+
+	<h:form>
+		<div class="productMenu">
+			<h:panelGroup rendered="#{Student.userName eq null}">
+				<ul class="kwicks horizontal" style="margin-bottom: 5px;">
+					<li id="kwick_1"><center>
+							<h:commandLink title="#{fbresource['Home']}" action="CCPHomePage">
+								<table>
+									<tr>
+										<td><img height="35px" src="/FB/images/home.png" /></td>
+										<td><font color="white">#{fbresource['Home']}</font></td>
+									</tr>
+								</table>
+							</h:commandLink>
+						</center></li>
+					<li id="kwick_2"><center>
+							<h:commandLink title="#{fbresource['Register_Free']}"
+								action="/xhtml/newStudent.xhtml">
+								<table>
+									<tr>
+										<td><img height="35px" src="/FB/images/link.png" /></td>
+										<td><font color="white">#{fbresource['Register_Free']}</font></td>
+									</tr>
+								</table>
+							</h:commandLink>
+						</center></li>
+					<li id="kwick_3"><center>
+							<h:commandLink title="#{fbresource['Online_Test']}"
+								action="/xhtml/onlineTest.xhtml">
+								<table>
+									<tr>
+										<td><img height="35px" src="/FB/images/history.png" /></td>
+										<td><font color="white">#{fbresource['Online_Test']}</font></td>
+									</tr>
+								</table>
+							</h:commandLink>
+						</center></li>
+					<li id="kwick_4"><center>
+							<h:commandLink title="#{fbresource['Placed_Students']}"
+								action="/xhtml/placedStudentList.xhtml">
+								<table>
+									<tr>
+										<td><img height="35px" src="/FB/images/calendar.png" /></td>
+										<td><font color="white">#{fbresource['Placed_Students']}</font></td>
+									</tr>
+								</table>
+							</h:commandLink>
+						</center></li>
+					<li id="kwick_5"><center>
+							<h:commandLink title="#{fbresource['About_Us']}"
+								action="/xhtml/aboutUs.xhtml">
+								<table>
+									<tr>
+										<td><img height="35px"
+											src="/FB/images/portfolio.png" /></td>
+										<td><font color="white">#{fbresource['About_Us']}</font></td>
+									</tr>
+								</table>
+							</h:commandLink>
+						</center></li>
+					<li id="kwick_6"><center>
+							<h:commandLink title="#{fbresource['Contact_US']}"
+								action="/xhtml/contactUs.xhtml">
+								<table>
+									<tr>
+										<td><img height="35px" src="/FB/images/email.png" /></td>
+										<td><font color="white">#{fbresource['Contact_US']}</font></td>
+									</tr>
+								</table>
+							</h:commandLink>
+						</center></li>
+				</ul>
+			</h:panelGroup>
+			<h:panelGrid columns="2" rendered="#{Student.userName ne null}">
+				<h:panelGroup>
+					<!-- Product Menu -->
+					<ul class="kwicks horizontal" style="margin-bottom: 5px;">
+						<li id="kwick_1">
+							<center>
+								<h:commandLink title="#{fbresource['Student_Home']}"
+									action="studentHomePageT0">
+									<table>
+										<tr>
+											<td><img height="35px"
+												src="/FB/images/house_blue.png" /></td>
+											<td><font color="white">#{fbresource['Student_Home']}</font></td>
+										</tr>
+									</table>
+								</h:commandLink>
+							</center>
+						</li>
+						<li id="kwick_2">
+							<center>
+								<h:commandLink title="#{fbresource['Exam_List']}"
+									action="studentExamList">
+									<table>
+										<tr>
+											<td><img height="35px" src="/FB/images/exam.png" /></td>
+											<td><font color="white">#{fbresource['Exam_List']}</font></td>
+										</tr>
+									</table>
+								</h:commandLink>
+							</center>
+						</li>
+						<li id="kwick_3">
+							<center>
+								<h:commandLink title="#{fbresource['Result_List']}"
+									action="resultList">
+									<table>
+										<tr>
+											<td><img height="35px" src="/FB/images/result.png" /></td>
+											<td><font color="white">#{fbresource['Result_List']}</font></td>
+										</tr>
+									</table>
+								</h:commandLink>
+							</center>
+						</li>
+						<li id="kwick_4">
+							<center>
+								<h:commandLink title="Download Hall Ticket"
+									action="hallTicketListdownload">
+									<table>
+										<tr>
+											<td><img height="35px"
+												src="/FB/images/pdf_button.png" /></td>
+											<td><font color="white">#{fbresource['Hall_Ticket']}</font></td>
+										</tr>
+									</table>
+								</h:commandLink>
+							</center>
+						</li>
+						<li id="kwick_5">
+							<center>
+								<h:commandLink title="#{fbresource['Student_fee_list']}"
+									action="feeListStudent">
+									<table>
+										<tr>
+											<td><img height="35px"
+												src="/FB/images/calendar_blue.png" /></td>
+											<td><font color="white">#{fbresource['Student_fee_list']}</font></td>
+										</tr>
+									</table>
+								</h:commandLink>
+							</center>
+						</li>
+						<li id="kwick_6">
+							<center>
+								<table>
+									<tr>
+										<td><h:commandLink rendered="#{Student.theme ne 'T0'}" title="#{fbresource['Click_here_to']} #{fbresource['Select']} #{fbresource['Theme1']}" value="#{fbresource['Theme1']}" style="color:white;"
+												class="dropdown-item waves-effect waves-light"
+												action="#{Student.updateTheme('T0')}">
+											</h:commandLink></td>
+										<td><h:commandLink rendered="#{Student.theme ne 'T1'}" title="#{fbresource['Click_here_to']} #{fbresource['Select']} #{fbresource['Theme2']}" value="#{fbresource['Theme2']}" style="color:white;"
+												class="dropdown-item waves-effect waves-light"
+												action="#{Student.updateTheme('T1')}">
+											</h:commandLink></td>
+										<td><h:commandLink rendered="#{Student.theme ne 'T2'}" title="#{fbresource['Click_here_to']} #{fbresource['Select']} #{fbresource['Theme3']}" value="#{fbresource['Theme3']}" style="color:white;"
+												class="dropdown-item waves-effect waves-light"
+												action="#{Student.updateTheme('T2')}">
+											</h:commandLink></td>
+									<td><h:commandLink rendered="#{Student.theme ne 'T3'}" title="#{fbresource['Click_here_to']} #{fbresource['Select']} #{fbresource['Theme4']}" value="#{fbresource['Theme4']}" style="color:white;"
+												class="dropdown-item waves-effect waves-light"
+												action="#{Student.updateTheme('T3')}">
+											</h:commandLink></td>
+									</tr>
+								</table>
+
+							</center>
+						</li>
+					</ul>
+				</h:panelGroup>
+			</h:panelGrid>
+		</div>
+		<div id="whyfb" title="#{fbresource['Why_to_join_Freshers_Buddy']}">
+			<ul class="ca-menu">
+				<li><a href="#"> <span class="ca-icon">F</span>
+						<div class="ca-content">
+							<h2 class="ca-main">
+								<font color="white">#{fbresource['Freshers']}</font>
+							</h2>
+						</div>
+				</a></li>
+				<li><a href="#"> <span class="ca-icon">C</span>
+						<div class="ca-content">
+							<h2 class="ca-main">
+								<font color="white">#{fbresource['Going_College']}</font>
+							</h2>
+						</div>
+				</a></li>
+				<li><a href="/FB/xhtml/newStudent.xhtml"> <span
+						class="ca-icon" id="heart">R</span>
+						<div class="ca-content">
+							<h2 class="ca-main">
+								<font color="white">#{fbresource['Register_with_Freshers_Buddy']}</font>
+							</h2>
+						</div>
+				</a></li>
+				<li><a href="#"> <span class="ca-icon">C</span>
+						<div class="ca-content">
+							<h2 class="ca-main">
+								<font color="white">#{fbresource['Campus_in_College']}</font>
+							</h2>
+						</div>
+				</a></li>
+				<li><a href="#"> <span class="ca-icon">S</span>
+						<div class="ca-content">
+							<h2 class="ca-main">
+								<font color="white">#{fbresource['Selected']}</font>
+							</h2>
+						</div>
+				</a></li>
+			</ul>
+		</div>
+		<script>
+			$(function() {
+				$("#whyfb").dialog({
+					autoOpen : false,
+					width : 1150,
+					height : 350,
+					show : {
+						effect : "blind",
+						duration : 1000
+					},
+					hide : {
+						effect : "explode",
+						duration : 1000
+					}
+				});
+			});
+
+			function openwhyfb() {
+				$("#whyfb").dialog("open");
+			}
+		</script>
+	</h:form>
+</ui:composition>
+</html>
+
+

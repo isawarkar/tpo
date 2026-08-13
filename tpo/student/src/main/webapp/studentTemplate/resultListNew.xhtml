@@ -1,0 +1,109 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<ui:composition template="/studentTemplate/studentHomeLayout.xhtml">
+	<ui:define name="content">
+		<h:form id="ResultForm">
+			<h1>#{fbresource['Student']} #{fbresource['Result_List']}</h1>
+			<h:panelGroup id="paginationTableContainner">
+				<o:dataTable id="bookMultipleSelection" var="result"
+					value="#{StudentTableBean.resultList}" sortColumnId="testName"
+					sortAscending="true"
+					sortableHeaderRolloverStyle="background: #d4d4d4"
+					style="width: 100%;margin-top: 10px; line-height: 17px;"
+					styleClass="datatable" rolloverRowStyle="background: #f1f1f1;">
+					<o:multipleRowSelection rowDatas="#{StudentTableBean.list}"
+						style="background: #a4aec5; color: white;" />
+					<o:columnReordering />
+					<f:facet name="columnMenu">
+						<o:columnMenu />
+					</f:facet>
+
+					<o:selectionColumn style="width: 6%;" sortable="true"
+						header="#{fbresource['Selection']}">
+						<f:facet name="header">
+							<o:selectAllCheckbox />
+						</f:facet>
+					</o:selectionColumn>
+
+					<o:column header="#{fbresource['Test_Name']}"
+						sortingExpression="#{result.testName}"
+						style="width: 50px; text-align: left;">
+						<h:outputText value="#{result.testName}" />
+					</o:column>
+					<o:column header="#{fbresource['Attempt']}"
+						sortingExpression="#{result.id.attempt}"
+						style="width: 50px; text-align: left;">
+						<h:outputText value="#{result.id.attempt}" />
+					</o:column>
+					<o:column header="#{fbresource['Percentage_No']}"
+						sortingExpression="#{result.totalnumbers}"
+						style="width: 58px; text-align: center;">
+						<h:outputText rendered="#{result.showResult}"
+							value="#{result.totalnumbers}" />
+						<h:outputText rendered="#{!result.showResult}" value="********" />
+					</o:column>
+					<o:column header="#{fbresource['Result']}"
+						sortingExpression="#{result.result}" headerClass="red"
+						style="width: 58px; text-align: center;">
+						<h:panelGroup rendered="#{result.showResult}">
+							<h:outputText rendered="#{result.result eq 'Qualified'}"
+								style="color:green;font-size:15px;" styleClass="blinking"
+								value="#{fbresource['Qualified']}" />
+							<h:outputText rendered="#{result.result eq 'Disqualified'}"
+								style="color:red;font-size:15px;" styleClass="blinking"
+								value="#{fbresource['DisQualified']}" />
+							<h:outputText
+								rendered="#{result.result eq 'Qualified in First Class'}"
+								style="color:cyan;font-size:15px;" styleClass="blinking"
+								value="#{fbresource['Qualified_in_First_Class']}" />
+							<h:outputText
+								rendered="#{result.result eq 'Qualified in Honours'}"
+								style="color:orange;font-size:15px;" styleClass="blinking"
+								value="#{fbresource['Qualified_In_Honors']}" />
+						</h:panelGroup>
+						<h:outputText rendered="#{!result.showResult}" value="********" />
+					</o:column>
+					<o:column header="#{fbresource['Date_of_Exam']}"
+						sortingExpression="#{result.dateTaken}"
+						style="width: 100px; text-align: center;">
+						<h:outputText value="#{result.dateTaken}" />
+					</o:column>
+					<o:column header="#{fbresource['Time_Was']}"
+						sortingExpression="#{result.totalTime}"
+						style="width: 58px; text-align: center;">
+						<h:outputText value="#{result.totalTime}" />
+					</o:column>
+					<o:column header="#{fbresource['Time_Taken']}"
+						sortingExpression="#{result.totalTimeTaken}"
+						style="width: 58px; text-align: center;">
+						<h:outputText value="#{result.totalTimeTaken}" />
+					</o:column>
+					<o:column header="#{fbresource['Questions']}"
+						sortingExpression="#{result.numberOfQuestion}"
+						style="width: 20px; text-align: center;">
+						<h:outputText value="#{result.numberOfQuestion}" />
+					</o:column>
+					<o:column header="#{fbresource['download_Certificate']}"
+						sortingExpression="#{result.numberOfQuestion}"
+						style="width: 20px; text-align: center;">
+						<h:commandButton rendered="#{result.certificateAvialable}"
+							action="#{StudentTableBean.downloadCertificate}"
+							image="/images/pdf_button.png" style="height:30px;width:25px;"
+							value="#{fbresource['download_Certificate']}">
+						</h:commandButton>
+					</o:column>
+					<f:event listener="#{StudentTableBean.inIt}" type="preRenderView" />
+				</o:dataTable>
+				<table align="right" style="margin-right: 20px;">
+					<tr>
+						<td><ui:include src="/xhtml/pagination.xhtml" /></td>
+					</tr>
+				</table>
+			</h:panelGroup>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

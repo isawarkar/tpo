@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:o="http://openfaces.org/">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<ui:composition>
+	<!-- Footer ==== -->
+	<footer> <h:form id="newsLetter">
+		<div class="footer-top">
+			<div class="pt-exebar">
+				<div class="container">
+					<div class="d-flex align-items-stretch">
+						<div class="pt-logo mr-auto">
+							<a href="/FB/index.faces"><img
+								src="/FB/images/FreshersBuddy.jpg" alt="" /></a>
+						</div>
+						<h:form>
+							<div class="pt-btn-join">
+								<h:selectOneMenu onchange="submit();"
+									valueChangeListener="#{LanguageLocaleBean.changeTheme}"
+									id="theme">
+									<f:selectItem itemValue="1" itemLabel="Theme1" />
+									<f:selectItem itemValue="2" itemLabel="Theme2" />
+									<f:selectItem itemValue="3" itemLabel="Theme3" />
+									<f:selectItem itemValue="4" itemLabel="Theme4" />
+								</h:selectOneMenu>
+							</div>
+						</h:form>
+						<div class="pt-btn-join">
+							<f:verbatim
+									rendered="#{parent.studentServiceUrl ne null}">
+									<a href="#{parent.studentServiceUrl}" target="_blank">
+										<button type="button" class="btn btn-primary glow">#{fbresource['Student_Login']}</button>
+									</a>
+								</f:verbatim> <f:verbatim rendered="#{parent.studentServiceUrl eq null}">
+									<button type="button" class="btn btn-primary glow"
+										data-dismiss="modal" style="margin-top: 10px;"
+										data-toggle="modal" data-target="#serviceDownForm">#{fbresource['Student_Login']}</button>
+								</f:verbatim> &nbsp; <a
+								class="btn btn-primary glow"
+								href="/FB/xhtml/ui/newStudent.xhtml">#{fbresource['Register_Free']}</a>
+						</div>
+						<div class="pt-social-link">
+							<ul class="list-inline m-a0">
+								<li><a href="https://www.facebook.com/freshersbudy/"
+									class="btn-link"><i class="fa fa-facebook"></i></a></li>
+								<li><a onclick="alert('Under Construction');" href="#" class="btn-link"><i
+										class="fa fa-twitter"></i></a></li>
+								<li><a onclick="alert('Under Construction');" href="#" class="btn-link"><i
+										class="fa fa-linkedin"></i></a></li>
+								<li><a onclick="alert('Under Construction');" href="#" class="btn-link"><i
+										class="fa fa-google-plus"></i></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-4 col-md-12 col-sm-12 footer-col-4">
+						<div class="widget">
+							<h5 class="footer-title">#{fbresource['Newsletter_Sign_up']}</h5>
+							<p class="text-capitalize m-b20">#{fbresource['news_letter']}</p>
+							<div class="subscribe-form m-b20">
+								<h:panelGroup id="news">
+									<h:inputText id="emailAddress" value="#{NewsLetterBean.email}"
+										required="true" maxlength="200"
+										requiredMessage="#{fbresource['Please_enter_email']}"
+										title="#{fbresource['Newsletter_Sign_up']}"
+										placeholder="#{fbresource['Please_enter_email']}"
+										class="btn btn-primary glow">
+										<f:validator validatorId="NewsLetterEmailValidator" />
+										<o:ajax render="news" />
+									</h:inputText>
+									<o:floatingIconMessage style="border-color: red;"
+										id="emailAddressError" for="emailAddress" showDetail="true"
+										showSummary="false" />
+									<h:commandButton style="display:none;" styleClass="btn btn-primary glow"
+										value="#{fbresource['Subscribe']}" title="Subscribe"
+										id="SubscribeButton" 
+										action="#{NewsLetterBean.addEmail}" />
+									<h:outputLabel style="display:none;"
+										value="#{fbresource['You_can_Subscribe_now']}" />
+								</h:panelGroup>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-lg-5 col-md-7 col-sm-12">
+						<div class="row">
+							<div class="col-4 col-lg-4 col-md-4 col-sm-4">
+								<div class="widget footer_widget">
+									<h5 class="footer-title">#{fbresource['company']}</h5>
+									<ul>
+										<li><a href="/FB/index.faces">#{fbresource['Home']}</a></li>
+										<li><a href="/FB/xhtml/ui/aboutUsNew.xhtml">#{fbresource['About_Us']}</a></li>
+										<li><a href="#">FAQs</a></li>
+										<li><a href="/FB/xhtml/ui/contactUs.xhtml">#{fbresource['Contact_US']}</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-lg-3 col-md-5 col-sm-12 footer-col-4">
+						<div class="widget widget_gallery gallery-grid-4">
+							<h5 class="footer-title">#{fbresource['gallery']}</h5>
+							<ul class="magnific-image">
+								<li><a href="/FB/theme/assets/images/gallery/pic1.jpg"
+									class="magnific-anchor"><img
+										src="/FB/theme/assets/images/gallery/pic1.jpg" alt="" /></a></li>
+								<li><a href="/FB/theme/assets/images/gallery/pic1.jpg"
+									class="magnific-anchor"><img
+										src="/FB/theme/assets/images/gallery/pic1.jpg" alt="" /></a></li>
+								<li><a href="/FB/theme/assets/images/gallery/pic1.jpg"
+									class="magnific-anchor"><img
+										src="/FB/theme/assets/images/gallery/pic1.jpg" alt="" /></a></li>
+								<li><a href="/FB/theme/assets/images/gallery/pic1.jpg"
+									class="magnific-anchor"><img
+										src="/FB/theme/assets/images/gallery/pic1.jpg" alt="" /></a></li>
+								<li><a href="/FB/theme/assets/images/gallery/pic1.jpg"
+									class="magnific-anchor"><img
+										src="/FB/theme/assets/images/gallery/pic1.jpg" alt="" /></a></li>
+								<li><a href="/FB/theme/assets/images/gallery/pic1.jpg"
+									class="magnific-anchor"><img
+										src="/FB/theme/assets/images/gallery/pic1.jpg" alt="" /></a></li>
+								<li><a href="/FB/theme/assets/images/gallery/pic1.jpg"
+									class="magnific-anchor"><img
+										src="/FB/theme/assets/images/gallery/pic1.jpg" alt="" /></a></li>
+								<li><a href="/FB/theme/assets/images/gallery/pic1.jpg"
+									class="magnific-anchor"><img
+										src="/FB/theme/assets/images/gallery/pic1.jpg" alt="" /></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer-bottom">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12 col-md-12 col-sm-12 text-center">
+						#{fbresource['Copyright']} © #{fbresource['copyrightYear']} <a
+							href="http://www.fresherbuddy.in"><span class="text-white">http://www.fresherbuddy.in</span></a>
+						#{fbresource['All_rights_reserved']}.
+					</div>
+				</div>
+			</div>
+		</div>
+	</h:form> </footer>
+	<!-- Footer END ==== -->
+</ui:composition>
+</html>

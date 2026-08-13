@@ -1,0 +1,437 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<ui:composition template="/templateNew/layoutWithOutFooter.xhtml">
+	<ui:define name="content">
+		<ui:include src="/xhtml/allPopUps.xhtml" />
+		<h:form>
+			<ui:include src="webflow.xhtml" />
+			<table style="margin-left: 130px; width: 1100px;">
+				<tr>
+					<h:panelGroup
+						rendered="#{StudentRegistrationBean.currentCourse eq 'Post Graduation'}">
+						<td>#{fbresource['Post_Graduation_percent']}<font color="red">*</font></td>
+						<td><h:inputText id="PGPercent" immediate="true"
+								requiredMessage="Please enter #{fbresource['Post_Graduation_percent']}"
+								required="#{StudentRegistrationBean.currentCourse eq 'Post Graduation'}"
+								size="3" maxlength="5"
+								value="#{StudentRegistrationBean.percentageinfo.meAverage}">
+								<f:validator validatorId="PercentValidator" />
+								<f:ajax render="@this" />
+							</h:inputText></td>
+					</h:panelGroup>
+					<h:panelGroup
+						rendered="#{StudentRegistrationBean.currentCourse eq 'Post Graduation' || StudentRegistrationBean.currentCourse eq 'Graduation'}">
+						<td>#{fbresource['Graduation_percent']} <font color="red">*</font>
+						</td>
+						<td><h:inputText immediate="true" id="GraduationPercent"
+								requiredMessage="Please enter Graduation(%)" required="true"
+								size="3" maxlength="5"
+								value="#{StudentRegistrationBean.percentageinfo.beAverege}">
+								<f:validator validatorId="PercentValidator" />
+								<f:ajax render="@this" />
+							</h:inputText> <o:floatingIconMessage style="border-color: red;"
+								for="GraduationPercent" showDetail="true" showSummary="false" />
+
+						</td>
+					</h:panelGroup>
+
+					<h:panelGroup
+						rendered="#{(StudentRegistrationBean.currentCourse eq 'Diploma' or StudentRegistrationBean.personalinfo.diploma ne '') and StudentRegistrationBean.currentCourse ne '10' and StudentRegistrationBean.currentCourse ne '12'}">
+						<td>#{fbresource['Diploma_percent']}<font color="red">*</font></td>
+						<td><h:inputText id="diplomaPercent"
+								requiredMessage="Please enter #{fbresource['Diploma_percent']}"
+								required="true" size="3" maxlength="5"
+								value="#{StudentRegistrationBean.percentageinfo.diplomaOthers}">
+								<f:validator validatorId="PercentValidator" />
+								<f:ajax render="@this" />
+							</h:inputText></td>
+					</h:panelGroup>
+
+				</tr>
+				<tr>
+					<td>#{fbresource['High_School']}<font color="red">*</font>
+
+					</td>
+					<td><h:inputText id="highSchoolPercent"
+							requiredMessage="Please enter High School(10th%)" required="true"
+							size="3" maxlength="5" immediate="true"
+							value="#{StudentRegistrationBean.percentageinfo.highSchoolPercent}">
+							<f:validator validatorId="PercentValidator" />
+							<f:ajax render="@this" />
+						</h:inputText> <o:floatingIconMessage style="border-color: red;"
+							for="highSchoolPercent" showDetail="true" showSummary="false" />
+					</td>
+					<td>#{fbresource['High_School_Board']}<font color="red">*</font>
+
+					</td>
+					<td><o:dropDownField id="highSchoolBoard" required="true"
+							immediate="true" style="width: 250px;"
+							listItemStyle="white-space: nowrap;" maxlength="100"
+							suggestionMode="stringStart" var="highSchoolBoard"
+							value="#{StudentRegistrationBean.percentageinfo.highSchoolBoard}"
+							suggestionMinChars="1">
+							<o:dropDownItems value="#{CommonDBBean.getCommonData('Board')}" />
+							<o:column>
+								<h:outputText value="#{highSchoolBoard}"
+									styleClass="dropDownValuesClass" />
+							</o:column>
+						</o:dropDownField> <o:floatingIconMessage style="border-color: red;"
+							for="highSchoolBoard" showDetail="true" showSummary="false" /></td>
+
+				</tr>
+
+				<tr>
+					<td>#{fbresource['High_School_Year_Of_Passing']}<font
+						color="red">*</font>
+
+					</td>
+					<td><o:dropDownField id="highSchoolPassing" required="true"
+							immediate="true" style="width: 90px;"
+							listItemStyle="white-space: nowrap;" maxlength="4"
+							suggestionMode="stringStart" var="highSchoolPassing"
+							value="#{StudentRegistrationBean.percentageinfo.highSchoolPassing}"
+							suggestionMinChars="1">
+							<o:dropDownItems
+								value="#{CommonDBBean.getCommonData('YearOfPassing')}" />
+							<o:column>
+								<h:outputText value="#{highSchoolPassing}"
+									styleClass="dropDownValuesClass" />
+							</o:column>
+						</o:dropDownField> <o:floatingIconMessage style="border-color: red;"
+							for="highSchoolPassing" showDetail="true" showSummary="false" /></td>
+				</tr>
+				<h:panelGroup id="higherSecondarypercentPanel"
+					rendered="#{StudentRegistrationBean.currentCourse ne '10'}">
+					<tr>
+						<td>#{fbresource['Higher_Secondary']} <f:verbatim
+								rendered="#{StudentRegistrationBean.personalinfo.diploma eq '' || StudentRegistrationBean.currentCourse eq '12'}">
+								<font color="red">*</font>
+							</f:verbatim>
+
+						</td>
+						<td><h:inputText id="higherSecondarypercent" immediate="true"
+								requiredMessageDetail="Please enter Higher Secondary(12th%)"
+								required="#{StudentRegistrationBean.personalinfo.diploma eq '' || StudentRegistrationBean.currentCourse eq '12'}"
+								size="3" maxlength="5"
+								value="#{StudentRegistrationBean.percentageinfo.higherSecondarypercent}">
+								<f:validator validatorId="PercentValidator" />
+								<f:ajax render="@this" />
+							</h:inputText> <o:floatingIconMessage style="border-color: red;"
+								for="higherSecondarypercent" showDetail="true"
+								showSummary="false" /></td>
+
+						<td>#{fbresource['Higher_Secondary_Board']} <f:verbatim
+								rendered="#{StudentRegistrationBean.personalinfo.diploma eq '' || StudentRegistrationBean.currentCourse eq '12'}">
+								<font color="red">*</font>
+							</f:verbatim>
+
+						</td>
+						<td><o:dropDownField id="higherSecondaryBoard"
+								maxlength="100"
+								required="#{StudentRegistrationBean.personalinfo.diploma eq '' || StudentRegistrationBean.currentCourse eq '12'}"
+								immediate="true" style="width: 250px;"
+								listItemStyle="white-space: nowrap;"
+								suggestionMode="stringStart" var="higherSecondaryBoard"
+								value="#{StudentRegistrationBean.percentageinfo.higherSecondaryBoard}"
+								suggestionMinChars="1">
+								<o:dropDownItems value="#{CommonDBBean.getCommonData('Board')}" />
+								<o:column>
+									<h:outputText value="#{higherSecondaryBoard}"
+										styleClass="dropDownValuesClass" />
+								</o:column>
+							</o:dropDownField> <o:floatingIconMessage style="border-color: red;"
+								for="higherSecondaryBoard" showDetail="true" showSummary="false" /></td>
+					</tr>
+
+					<tr>
+						<td>#{fbresource['Higher_Secondary_Year_Of_Passing']} <f:verbatim
+								rendered="#{StudentRegistrationBean.personalinfo.diploma eq '' || StudentRegistrationBean.currentCourse eq '12'}">
+								<font color="red">*</font>
+							</f:verbatim>
+
+						</td>
+						<td><o:dropDownField maxlength="4"
+								id="higherSecondaryPassing"
+								required="#{StudentRegistrationBean.personalinfo.diploma eq '' || StudentRegistrationBean.currentCourse eq '12'}"
+								immediate="true" style="width: 90px;"
+								listItemStyle="white-space: nowrap;"
+								suggestionMode="stringStart" var="higherSecondaryPassing"
+								value="#{StudentRegistrationBean.percentageinfo.higherSecondaryPassing}"
+								suggestionMinChars="1">
+								<o:dropDownItems
+									value="#{CommonDBBean.getCommonData('YearOfPassing')}" />
+								<o:column>
+									<h:outputText value="#{higherSecondaryPassing}"
+										styleClass="dropDownValuesClass" />
+								</o:column>
+							</o:dropDownField> <o:floatingIconMessage style="border-color: red;"
+								for="higherSecondaryPassing" showDetail="true"
+								showSummary="false" /></td>
+					</tr>
+				</h:panelGroup>
+
+				<h:panelGroup
+					rendered="#{StudentRegistrationBean.currentCourse eq 'Post Graduation' || StudentRegistrationBean.currentCourse eq 'Graduation'}">
+
+					<tr>
+						<td>#{fbresource['Graduation_1_Semester']}</td>
+						<td><h:inputText id="be1sem"
+								requiredMessage="#{fbresource['Please_enter']} #{fbresource['Graduation_1_Semester']}"
+								size="3" maxlength="5"
+								value="#{StudentRegistrationBean.percentageinfo.be1sem}">
+								<f:validator validatorId="PercentValidator" />
+								<o:ajax listener="#{StudentRegistrationBean.calculateBEPercent}"
+									execute="be1sem be2sem be3sem be4sem be5sem be6sem be7sem be8sem"
+									render="GraduationPercent be1sem be2sem be3sem be4sem be5sem be6sem be7sem be8sem" />
+							</h:inputText> <o:floatingIconMessage style="border-color: red;" for="be1sem"
+								showDetail="true" showSummary="false" /></td>
+
+						<td>#{fbresource['Graduation_2_Semester']}</td>
+						<td><h:inputText id="be2sem"
+								requiredMessage="#{fbresource['Please_enter']} #{fbresource['Graduation_2_Semester']}"
+								size="3" maxlength="5"
+								value="#{StudentRegistrationBean.percentageinfo.be2sem}">
+								<f:validator validatorId="PercentValidator" />
+								<o:ajax listener="#{StudentRegistrationBean.calculateBEPercent}"
+									execute="be1sem be2sem be3sem be4sem be5sem be6sem be7sem be8sem"
+									render="GraduationPercent be1sem be2sem be3sem be4sem be5sem be6sem be7sem be8sem" />
+							</h:inputText> <o:floatingIconMessage style="border-color: red;" for="be2sem"
+								showDetail="true" showSummary="false" /></td>
+					</tr>
+					<tr>
+						<td>#{fbresource['Graduation_3_Semester']}</td>
+						<td><h:inputText id="be3sem"
+								requiredMessage="#{fbresource['Please_enter']} #{fbresource['Graduation_3_Semester']}"
+								size="3" maxlength="5"
+								value="#{StudentRegistrationBean.percentageinfo.be3sem}">
+								<f:validator validatorId="PercentValidator" />
+								<o:ajax listener="#{StudentRegistrationBean.calculateBEPercent}"
+									execute="be1sem be2sem be3sem be4sem be5sem be6sem be7sem be8sem"
+									render="GraduationPercent be1sem be2sem be3sem be4sem be5sem be6sem be7sem be8sem" />
+							</h:inputText> <o:floatingIconMessage style="border-color: red;" for="be3sem"
+								showDetail="true" showSummary="false" /></td>
+						<td>#{fbresource['Graduation_4_Semester']}</td>
+						<td><h:inputText id="be4sem"
+								requiredMessage="#{fbresource['Please_enter']} #{fbresource['Graduation_4_Semester']}"
+								size="3" maxlength="5"
+								value="#{StudentRegistrationBean.percentageinfo.be4sem}">
+								<f:validator validatorId="PercentValidator" />
+								<o:ajax listener="#{StudentRegistrationBean.calculateBEPercent}"
+									execute="be1sem be2sem be3sem be4sem be5sem be6sem be7sem be8sem"
+									render="GraduationPercent be1sem be2sem be3sem be4sem be5sem be6sem be7sem be8sem" />
+							</h:inputText> <o:floatingIconMessage style="border-color: red;" for="be4sem"
+								showDetail="true" showSummary="false" /></td>
+					</tr>
+
+					<tr>
+						<td>#{fbresource['Graduation_5_Semester']}</td>
+						<td><h:inputText id="be5sem"
+								requiredMessage="#{fbresource['Please_enter']} #{fbresource['Graduation_5_Semester']}"
+								size="3" maxlength="5"
+								value="#{StudentRegistrationBean.percentageinfo.be5sem}">
+								<f:validator validatorId="PercentValidator" />
+								<o:ajax listener="#{StudentRegistrationBean.calculateBEPercent}"
+									execute="be1sem be2sem be3sem be4sem be5sem be6sem be7sem be8sem"
+									render="GraduationPercent be1sem be2sem be3sem be4sem be5sem be6sem be7sem be8sem" />
+							</h:inputText> <o:floatingIconMessage style="border-color: red;" for="be5sem"
+								showDetail="true" showSummary="false" /></td>
+						<td>#{fbresource['Graduation_6_Semester']}</td>
+						<td><h:inputText id="be6sem"
+								requiredMessage="#{fbresource['Please_enter']} #{fbresource['Graduation_6_Semester']}"
+								size="3" maxlength="5"
+								value="#{StudentRegistrationBean.percentageinfo.be6sem}">
+								<f:validator validatorId="PercentValidator" />
+								<o:ajax listener="#{StudentRegistrationBean.calculateBEPercent}"
+									execute="be1sem be2sem be3sem be4sem be5sem be6sem be7sem be8sem"
+									render="GraduationPercent be1sem be2sem be3sem be4sem be5sem be6sem be7sem be8sem" />
+							</h:inputText> <o:floatingIconMessage style="border-color: red;" for="be6sem"
+								showDetail="true" showSummary="false" /></td>
+					</tr>
+
+					<tr>
+						<td>#{fbresource['Graduation_7_Semester']}</td>
+						<td><h:inputText id="be7sem"
+								requiredMessage="#{fbresource['Please_enter']} #{fbresource['Graduation_7_Semester']}"
+								size="3" maxlength="5"
+								value="#{StudentRegistrationBean.percentageinfo.be7sem}">
+								<f:validator validatorId="PercentValidator" />
+								<o:ajax listener="#{StudentRegistrationBean.calculateBEPercent}"
+									execute="be1sem be2sem be3sem be4sem be5sem be6sem be7sem be8sem"
+									render="GraduationPercent be1sem be2sem be3sem be4sem be5sem be6sem be7sem be8sem" />
+							</h:inputText> <o:floatingIconMessage style="border-color: red;" for="be7sem"
+								showDetail="true" showSummary="false" /></td>
+						<td>#{fbresource['Graduation_8_Semester']}</td>
+						<td><h:inputText id="be8sem"
+								requiredMessage="#{fbresource['Please_enter']} #{fbresource['Graduation_8_Semester']}"
+								size="3" maxlength="5"
+								value="#{StudentRegistrationBean.percentageinfo.be8sem}">
+								<f:validator validatorId="PercentValidator" />
+								<o:ajax listener="#{StudentRegistrationBean.calculateBEPercent}"
+									execute="be1sem be2sem be3sem be4sem be5sem be6sem be7sem be8sem"
+									render="GraduationPercent be1sem be2sem be3sem be4sem be5sem be6sem be7sem be8sem" />
+							</h:inputText> <o:floatingIconMessage style="border-color: red;" for="be8sem"
+								showDetail="true" showSummary="false" /></td>
+					</tr>
+				</h:panelGroup>
+
+				<h:panelGroup
+					rendered="#{StudentRegistrationBean.currentCourse eq 'Post Graduation'}">
+
+					<tr>
+						<td>P#{fbresource['PG_1_Semester']}</td>
+						<td><h:inputText id="meBsc1sem"
+								requiredMessage="#{fbresource['Please_enter']} #{fbresource['PG_1_Semester']}"
+								size="3" maxlength="5"
+								value="#{StudentRegistrationBean.percentageinfo.meBsc1sem}">
+								<f:validator validatorId="PercentValidator" />
+								<o:ajax listener="#{StudentRegistrationBean.calculatePGPercent}"
+									execute="meBsc1sem meBsc2sem meBsc3sem meBsc4sem"
+									render="PGPercent meBsc1sem meBsc2sem meBsc3sem meBsc4sem" />
+							</h:inputText> <o:floatingIconMessage style="border-color: red;"
+								for="meBsc1sem" showDetail="true" showSummary="false" /></td>
+						<td>#{fbresource['PG_2_Semester']}</td>
+						<td><h:inputText id="meBsc2sem"
+								requiredMessage="#{fbresource['Please_enter']} #{fbresource['PG_2_Semester']}"
+								size="3" maxlength="5"
+								value="#{StudentRegistrationBean.percentageinfo.meBsc2sem}">
+								<f:validator validatorId="PercentValidator" />
+								<o:ajax listener="#{StudentRegistrationBean.calculatePGPercent}"
+									execute="meBsc1sem meBsc2sem meBsc3sem meBsc4sem"
+									render="PGPercent meBsc1sem meBsc2sem meBsc3sem meBsc4sem" />
+							</h:inputText> <o:floatingIconMessage style="border-color: red;"
+								for="meBsc2sem" showDetail="true" showSummary="false" /></td>
+					</tr>
+
+					<tr>
+						<td>#{fbresource['PG_3_Semester']}</td>
+						<td><h:inputText id="meBsc3sem"
+								requiredMessage="#{fbresource['Please_enter']} #{fbresource['PG_3_Semester']}"
+								size="3" maxlength="5"
+								value="#{StudentRegistrationBean.percentageinfo.meBsc3sem}">
+								<f:validator validatorId="PercentValidator" />
+								<o:ajax listener="#{StudentRegistrationBean.calculatePGPercent}"
+									execute="meBsc1sem meBsc2sem meBsc3sem meBsc4sem"
+									render="PGPercent meBsc1sem meBsc2sem meBsc3sem meBsc4sem" />
+							</h:inputText> <o:floatingIconMessage style="border-color: red;"
+								for="meBsc3sem" showDetail="true" showSummary="false" /></td>
+						<td>#{fbresource['PG_4_Semester']}</td>
+						<td><h:inputText id="meBsc4sem"
+								requiredMessage="#{fbresource['Please_enter']} #{fbresource['PG_4_Semester']}"
+								size="3" maxlength="5"
+								value="#{StudentRegistrationBean.percentageinfo.meBsc4sem}">
+								<f:validator validatorId="PercentValidator" />
+								<o:ajax listener="#{StudentRegistrationBean.calculatePGPercent}"
+									execute="meBsc1sem meBsc2sem meBsc3sem meBsc4sem"
+									render="PGPercent meBsc1sem meBsc2sem meBsc3sem meBsc4sem" />
+							</h:inputText> <o:floatingIconMessage style="border-color: red;"
+								for="meBsc4sem" showDetail="true" showSummary="false" /></td>
+					</tr>
+				</h:panelGroup>
+				<h:panelGroup
+					rendered="#{StudentRegistrationBean.personalinfo.diploma ne '' and StudentRegistrationBean.currentCourse ne '10' and StudentRegistrationBean.currentCourse ne '12'}">
+
+					<tr>
+						<td>#{fbresource['Diploma_1_Semester']}</td>
+						<td><h:inputText id="diploma1sem" immediate="true"
+								requiredMessage="#{fbresource['Please_enter']} #{fbresource['Diploma_1_Semester']}"
+								size="3" maxlength="5"
+								value="#{StudentRegistrationBean.percentageinfo.diploma1sem}">
+								<f:validator validatorId="PercentValidator" />
+								<o:ajax
+									listener="#{StudentRegistrationBean.calculateDiplomaPercent}"
+									execute="diploma1sem diploma2sem diploma3sem diploma4sem diploma5sem diploma6sem"
+									render="diploma1sem diplomaPercent diploma2sem diploma3sem diploma4sem diploma5sem diploma6sem diploma1semMsg " />
+							</h:inputText> <o:floatingIconMessage id="diploma1semMsg"
+								style="border-color: red;" for="diploma1sem" showDetail="true"
+								showSummary="false" /></td>
+						<td>#{fbresource['Diploma_2_Semester']}</td>
+						<td><h:inputText id="diploma2sem" immediate="true"
+								requiredMessage="#{fbresource['Please_enter']} #{fbresource['Diploma_2_Semester']}"
+								size="3" maxlength="5"
+								value="#{StudentRegistrationBean.percentageinfo.diploma2sem}">
+								<f:validator validatorId="PercentValidator" />
+								<o:ajax
+									listener="#{StudentRegistrationBean.calculateDiplomaPercent}"
+									execute="diploma1sem diploma2sem diploma3sem diploma4sem diploma5sem diploma6sem"
+									render="diploma1sem diplomaPercent diploma2sem diploma3sem diploma4sem diploma5sem diploma6sem " />
+							</h:inputText> <o:floatingIconMessage id="diploma2semMsg"
+								style="border-color: red;" for="diploma2sem" showDetail="true"
+								showSummary="false" /></td>
+					</tr>
+					<tr>
+						<td>#{fbresource['Diploma_3_Semester']}</td>
+						<td><h:inputText id="diploma3sem" immediate="true"
+								requiredMessage="#{fbresource['Please_enter']} #{fbresource['Diploma_3_Semester']}"
+								size="3" maxlength="5"
+								value="#{StudentRegistrationBean.percentageinfo.diploma3sem}">
+								<f:validator validatorId="PercentValidator" />
+								<o:ajax
+									listener="#{StudentRegistrationBean.calculateDiplomaPercent}"
+									execute="diploma1sem diploma2sem diploma3sem diploma4sem diploma5sem diploma6sem"
+									render=" diploma1sem diplomaPercent diploma2sem diploma3sem diploma4sem diploma5sem diploma6sem " />
+							</h:inputText> <o:floatingIconMessage id="diploma3semMsg"
+								style="border-color: red;" for="diploma3sem" showDetail="true"
+								showSummary="false" /></td>
+						<td>#{fbresource['Diploma_4_Semester']}</td>
+						<td><h:inputText id="diploma4sem" immediate="true"
+								requiredMessage="#{fbresource['Please_enter']} #{fbresource['Diploma_4_Semester']}"
+								size="3" maxlength="5"
+								value="#{StudentRegistrationBean.percentageinfo.diploma4sem}">
+								<f:validator validatorId="PercentValidator" />
+								<o:ajax
+									listener="#{StudentRegistrationBean.calculateDiplomaPercent}"
+									execute="diploma1sem diploma2sem diploma3sem diploma4sem diploma5sem diploma6sem"
+									render=" diploma1sem diplomaPercent diploma2sem diploma3sem diploma4sem diploma5sem diploma6sem " />
+							</h:inputText> <o:floatingIconMessage id="diploma4semMsg"
+								style="border-color: red;" for="diploma4sem" showDetail="true"
+								showSummary="false" /></td>
+					</tr>
+					<tr>
+						<td>#{fbresource['Diploma_5_Semester']}</td>
+						<td><h:inputText id="diploma5sem" immediate="true"
+								requiredMessage="#{fbresource['Please_enter']} #{fbresource['Diploma_5_Semester']}"
+								size="3" maxlength="5"
+								value="#{StudentRegistrationBean.percentageinfo.diploma5sem}">
+								<f:validator validatorId="PercentValidator" />
+								<o:ajax
+									listener="#{StudentRegistrationBean.calculateDiplomaPercent}"
+									execute="diploma1sem diploma2sem diploma3sem diploma4sem diploma5sem diploma6sem"
+									render="diploma1sem diplomaPercent diploma2sem diploma3sem diploma4sem diploma5sem diploma6sem " />
+							</h:inputText> <o:floatingIconMessage id="diploma5semMsg"
+								style="border-color: red;" for="diploma5sem" showDetail="true"
+								showSummary="false" /></td>
+						<td>#{fbresource['Diploma_6_Semester']}</td>
+						<td><h:inputText id="diploma6sem" immediate="true"
+								requiredMessage="#{fbresource['Please_enter']} #{fbresource['Diploma_6_Semester']}"
+								size="3" maxlength="5"
+								value="#{StudentRegistrationBean.percentageinfo.diploma6sem}">
+								<f:validator validatorId="PercentValidator" />
+								<o:ajax
+									listener="#{StudentRegistrationBean.calculateDiplomaPercent}"
+									execute="diploma1sem diploma2sem diploma3sem diploma4sem diploma5sem diploma6sem"
+									render="diploma1sem diplomaPercent diploma2sem diploma3sem diploma4sem diploma5sem diploma6sem" />
+							</h:inputText> <o:floatingIconMessage id="diploma6semMsg"
+								style="border-color: red;" for="diploma6sem" showDetail="true"
+								showSummary="false" /></td>
+					</tr>
+				</h:panelGroup>
+			</table>
+
+			<table style="margin-left: 130px; width: 150px;">
+				<tr>
+					<td><o:commandButton title="#{fbresource['Previous_Page']}"
+							styleClass="btn btn-primary glow"
+							value="#{fbresource['Previous']}" action="#{WebFlow.firstPage}" />
+					</td>
+					<td><o:commandButton title="#{fbresource['Next_Page']}"
+							styleClass="btn btn-primary glow"
+							value="#{fbresource['Next']}" action="#{WebFlow.thirdPage}" /></td>
+				</tr>
+			</table>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<title>#{fbresource['Freshers_Buddy']}</title>
+<center><div id="overlay"></div>
+<div id="LoaderX" class="LX">
+	<div style="color: green; font-size: 25px; margin-left: 50px;"
+		id="LoaderContainer">
+		<img src='/student/css/loading.gif' />
+	</div>
+</div></center>
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<ui:include src="/template/keywords.xhtml" />
+	<link rel="shortcut icon" type="image/png"
+		href="/student/images/favicon.ico" />
+	<link rel="shortcut icon" href="/student/images/favicon.ico"
+		type="image/x-icon" />
+	<link href="/student/login/css/ccpstudent.css" rel="stylesheet" type="text/css" />
+	<!-- Style -->
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="/student/login/css/all.css" />
+	<!-- Bootstrap core CSS -->
+	<link href="/student/login/css/bootstrap.min.css" rel="stylesheet" />
+	<!-- Material Design Bootstrap -->
+	<link href="/student/login/css/mdb.css" rel="stylesheet" />
+	<link href="/student/login/css/offcanvas.css" rel="stylesheet" />
+	<!-- Your custom styles (optional) -->
+	<link href="/student/login/css/style.css" rel="stylesheet" />
+	<link href="/student/css/StyleSheet.css" rel="stylesheet"
+		type="text/css" />
+	<link rel="stylesheet"
+		href="/student/css/start/jquery-ui-1.10.3.custom.css" />
+	<!-- Scripts -->
+	<script type="text/javascript" src="/student/js/jquery-1.9.1.js" />
+	<script type="text/javascript"	src="/student/js/jquery-ui-1.10.3.custom.js" />
+	<script type="text/javascript" src="/student/js/CCP.js"/>
+	<script src="/student/ckeditor/ckeditor.js"/>
+</h:head>
+<h:body onload="hidePleaseWait();">
+	<div id="wrapper" class="animate">
+		<f:view locale="#{LanguageLocaleBean.locale}">
+			<f:loadBundle var="fbresource" basename="com.student.fbresource" />
+			<ui:include src="/template/ajaxSetting.xhtml" />
+			<f:loadBundle var="fbresource" basename="com.student.fbresource" />
+			<ui:insert name="header">
+				<ui:include src="studentHeader.xhtml" />
+			</ui:insert>
+			<ui:insert name="message">
+				<Div style="margin-bottom: 50px;" />
+				<ui:include src="/xhtml/commonMessage.xhtml" />
+			</ui:insert>
+			<ui:insert name="content">
+			</ui:insert>
+			<ui:insert name="footer">
+				<ui:include src="studentFooter.xhtml" />
+			</ui:insert>
+		</f:view>
+	</div>
+</h:body>
+<script type="text/javascript" src="/student/login/js/bootstrap.min.js" />
+<script type="text/javascript" src="/student/login/js/leftMenu.js" />
+
+<script>
+	CKEDITOR.replace('contactAndAchivmentsForm:academic');
+	CKEDITOR.replace('contactAndAchivmentsForm:sports');
+	CKEDITOR.replace('contactAndAchivmentsForm:others');
+</script>
+</html>

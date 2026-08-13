@@ -1,0 +1,102 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<ui:composition template="/templateNew/layout.xhtml">
+	<ui:define name="content">
+	<ui:include src="/xhtml/allPopUps.xhtml" />
+		<h:form id="onlineTest">
+			<div class="account-form">
+				<div class="account-head"
+					style="background-image: url(/FB/images/online-test-series.jpg);">
+					<a href="/FB/index.faces"><img
+						src="/FB/images/FreshersBuddy.jpg" alt="" /></a>
+				</div>
+				<div class="account-form-inner">
+					<div class="account-container" style="margin-bottom: 300px;">
+						<div class="heading-bx left">
+							<h2 class="title-head">#{fbresource['Online_Test_Login']}</h2>
+							<p>
+								#{fbresource['dont_have_account']} <a
+									href="/FB/xhtml/ui/newStudent.xhtml">#{fbresource['Create_one_here']}</a>
+							</p>
+						</div>
+						<div>
+							<table>
+								<tr>
+									<td><label for="enrollmentNo">#{fbresource['Enrollment_No']}<font
+											color="red">*</font></label></td>
+									<td><h:inputText value="#{TestBean.enrollmentNo}"
+											id="enrollmentNo" required="true" maxlength="14">
+										</h:inputText> <o:floatingIconMessage style="border-color: red;"
+											for="enrollmentNo" showDetail="true" showSummary="true" /></td>
+								</tr>
+								<tr>
+									<td><label for="password">#{fbresource['Password']}<font
+											color="red">*</font></label></td>
+									<td><h:inputSecret value="#{TestBean.password}"
+											id="password" maxlength="20" required="true">
+										</h:inputSecret> <o:floatingIconMessage style="border-color: red;"
+											for="password" showDetail="true" showSummary="false" /></td>
+								</tr>
+								<tr>
+									<td><label for="testName">#{fbresource['Test_Name']}<font
+											color="red">*</font></label></td>
+									<td><o:dropDownField id="testName" maxlength="50"
+											required="true" immediate="true"
+											style="height:20px;width: 200px;"
+											listItemStyle="white-space: nowrap;"
+											suggestionMode="stringStart" var="testName"
+											value="#{TestBean.testName}" suggestionMinChars="1">
+											<o:dropDownItems value="#{CommonDBBean.testList}" />
+											<o:column>
+												<h:outputText value="#{testName}"
+													styleClass="dropDownValuesClass" />
+											</o:column>
+										</o:dropDownField> <o:floatingIconMessage style="border-color: red;"
+											for="password" showDetail="true" showSummary="false" /></td>
+								</tr>
+								<tr>
+									<td><o:dynamicImage id="imageText"
+											title="#{fbresource['Image_Text']}"
+											data="#{StudentRegistrationBean.textAsImage}"
+											style="border: 1px solid gray; " /><o:commandButton 
+											title="#{fbresource['Click_here_to_Generate_New_Image']}"
+											execute="@this"
+											style="border:0px;margin-right:20px;margin-left:20px;"
+											action="#{StudentRegistrationBean.refreshImage}"
+											render="imageText" image="/css/refresh_icon.png" /></td>
+									<td> <h:inputHidden
+											id="ImageText"
+											value="#{StudentRegistrationBean.verificationNumber}" /> <h:inputText
+											immediate="true" id="EnterImageText"
+											title="#{fbresource['Enter_above_Image_Text']}" maxlength="6"
+											size="6" required="true">
+											<f:validator validatorId="ChaptaValidator" />
+											<o:ajax render="EnterImageText" />
+										</h:inputText> <o:floatingIconMessage style="border-color: red;"
+											id="EnterImageTextIcon" for="EnterImageText"
+											showDetail="true" showSummary="false" /></td>
+								</tr>
+							</table>
+
+							<div class="col-lg-12 m-b30" style="margin-top: 20px;">
+								<h:commandButton id="login" styleClass="btn btn-primary glow"
+									style="margin-right:20px;" action="#{TestBean.validate}"
+									value="#{fbresource['submit']}" />
+
+								<h:commandButton type="reset" styleClass="btn btn-primary glow"
+									value="#{fbresource['Reset']}" />
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+</html>

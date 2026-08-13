@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style type="">
+ul#navigation {
+	position: fixed;
+	margin: 0px;
+	padding: 0px;
+	top: 10px;
+	left: 0px;
+	list-style: none;
+	z-index: 9999;
+}
+
+ul#navigation li {
+	width: 100px;
+}
+
+ul#navigation li a {
+	display: block;
+	margin-left: -2px;
+	width: 100px;
+	height: 70px;
+	background-color: Green;
+	background-repeat: no-repeat;
+	background-position: center center;
+	border: 1px solid #AFAFAF;
+	-moz-border-radius: 0px 10px 10px 0px;
+	-webkit-border-bottom-right-radius: 10px;
+	-webkit-border-top-right-radius: 10px;
+	-khtml-border-bottom-right-radius: 10px;
+	-khtml-border-top-right-radius: 10px;
+	/*-moz-box-shadow: 0px 4px 3px #000;
+
+    -webkit-box-shadow: 0px 4px 3px #000;
+
+    */
+	opacity: 0.6;
+	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=60 );
+}
+
+ul#navigation .facebook a {
+	background-image: url(/student/images/facebook_32.png);
+}
+
+ul#navigation .twiter a {
+	background-image: url(/student/images/twitter_32.png);
+}
+
+ul#navigation .linkedIn a {
+	background-image: url(/student/images/linkedin_32.png);
+}
+
+ul#navigation .youtube a {
+	background-image: url(/student/images/youtube_32.png);
+}
+
+ul#navigation .contact a {
+	background-image: url(/student/images/email_32.png);
+}
+</style>
+
+</head>
+		<ul id="navigation" >
+			<li class="facebook"><a target="_blank" href="https://www.facebook.com/freshersbudy/"
+				title="#{fbresource['Connect_with_us_on_FaceBook']}"></a></li>
+			<li class="twiter"><a href="#" title="#{fbresource['Follow_us_on_twtter']}"></a></li>
+			<li class="linkedIn"><a href="#" title="#{fbresource['Join_us_on_Linked_In']}"></a></li>
+			<li class="youtube"><a href="#"
+				title="#{fbresource['Watch_our_latest_video_on_youtube']}"></a></li>
+			<li class="contact"><a href="#"
+				onclick=" O$('contactUsForm:contactUs').show(); return false;"
+				title="#{fbresource['Send_an_Email']}"></a></li>
+		</ul>
+
+		<script type="text/javascript">
+            $(function() {
+                $('#navigation a').stop().animate({'marginLeft':'-85px'},1000);
+                $('#navigation > li').hover(
+                    function () {
+                        $('a',$(this)).stop().animate({'marginLeft':'-2px'},200);
+                    },
+                    function () {
+                        $('a',$(this)).stop().animate({'marginLeft':'-85px'},200);
+                    }
+                );
+            });
+        </script>
+</html>

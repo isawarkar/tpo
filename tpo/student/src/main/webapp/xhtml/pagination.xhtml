@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<h:panelGrid columns="11"
+		rendered="#{pagination.totalDisplayRecords gt 10}"
+		styleClass="pagination">
+		<h:outputText value="#{fbresource['PAGE_SIZE']}"/>
+		<h:selectOneMenu title="#{fbresource['no_of_record']}" value="#{pagination.pageSize}" id="pageSize">
+			<f:selectItem itemValue="10" itemLabel="#{fbresource['10']}" />
+			<f:selectItem itemValue="20" itemLabel="#{fbresource['20']}" />
+			<f:selectItem itemValue="30" itemLabel="#{fbresource['30']}" />
+			<f:selectItem itemValue="40" itemLabel="#{fbresource['40']}" />
+			<f:selectItem itemValue="50" itemLabel="#{fbresource['50']}" />
+			<f:selectItem itemValue="100" itemLabel="#{fbresource['100']}" />
+			<f:selectItem itemValue="200" itemLabel="#{fbresource['200']}" />
+			<f:selectItem itemValue="500" itemLabel="#{fbresource['500']}" />
+			<f:selectItem itemValue="1000" itemLabel="#{fbresource['1000']}" />
+			<f:selectItem itemValue="10000" itemLabel="#{fbresource['10000']}" />
+			<f:ajax execute="@form" render="paginationTableContainner" />
+		</h:selectOneMenu>
+		<h:commandButton  title="#{fbresource['First_Page']}"
+			image="/images/pagination/first.png"
+			action="#{pagination.firstPage}">
+			<f:ajax execute="@form" render="paginationTableContainner" />
+		</h:commandButton>
+		<h:commandButton rendered="#{pagination.previousLink}"
+			title="#{fbresource['Previous_Page']}"
+			image="/images/pagination/previous.png"
+			action="#{pagination.previousPage}">
+			<f:ajax execute="@form" render="paginationTableContainner" />
+		</h:commandButton>
+		<h:outputText styleClass="superheaderrow"
+			value="#{pagination.pageFirstRecord}" />
+		<h:outputText styleClass="superheaderrow" value=" #{fbresource['to']} " />
+		<h:outputText styleClass="superheaderrow"
+			value="#{pagination.pageLastRecord}" />
+		<h:outputText styleClass="superheaderrow" value=" #{fbresource['of']} " />
+		<h:outputText styleClass="superheaderrow"
+			value="#{pagination.totalDisplayRecords}" />
+		<h:commandButton rendered="#{pagination.nextLink}" title="#{fbresource['Next_Page']}"
+			image="/images/pagination/next.png"
+			action="#{pagination.nextPage}">
+			<f:ajax execute="@form" render="paginationTableContainner" />
+		</h:commandButton>
+		<h:commandButton title="#{fbresource['Last_Page']}"
+			image="/images/pagination/last.png"
+			action="#{pagination.lastPage}">
+			<f:ajax execute="@form" render="paginationTableContainner" />
+		</h:commandButton>
+	</h:panelGrid>
+</html>

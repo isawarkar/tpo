@@ -1,0 +1,80 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<ui:composition template="/studentTemplate/studentHomeLayout.xhtml">
+	<ui:define name="content">
+		<h:form id="ExamForm">
+			<h1>#{fbresource['Available']} #{fbresource['Exam_List']}</h1>
+			<table width="99%">
+				<tr>
+					<td>
+						<table inlineStyle="color:green;" halign="left" cellSpacing="5">
+							<tr>
+								<td><h:outputText value="#{fbresource['Exam_Name']}" /></td>
+								<td><h:inputText value="#{ExamTableBean.examName}"
+										id="rollNumber" columns="15" maximumLength="12">
+									</h:inputText></td>
+								<td><h:commandButton value="#{fbresource['search']}"
+										title="#{fbresource['Click_here_to']} #{fbresource['Search_Record']}"
+										action="#{ExamTableBean.searchRecord}" /></td>
+								<td><h:commandButton value="#{fbresource['Start_Exam']}"
+										title="#{fbresource['Start_Online_Test']}"
+										action="#{ExamTableBean.testStart}" /></td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+			<h:panelGroup id="paginationTableContainner">
+				<o:dataTable id="examListTable" var="exam"
+					value="#{ExamTableBean.examList}" sortAscending="true"
+					sortableHeaderRolloverStyle="background: #d4d4d4"
+					style="width: 100%;margin-top: 10px; line-height: 17px;"
+					styleClass="datatable" rolloverRowStyle="background: #f1f1f1;">
+					<o:multipleRowSelection
+						rowDatas="#{ExamTableBean.selectedExamList}"
+						style="background: #a4aec5; color: white;" />
+					<o:columnReordering />
+					<f:facet name="columnMenu">
+						<o:columnMenu />
+					</f:facet>
+					<o:selectionColumn style="width: 6%;" sortable="true"
+						header="#{fbresource['Selection']}">
+						<f:facet name="header">
+							<o:selectAllCheckbox />
+						</f:facet>
+					</o:selectionColumn>
+					<o:column header="#{fbresource['Exam_Name']}"
+						sortingExpression="#{exam.testname}" style="text-align: center;">
+						<h:outputText value="#{exam.testname}" />
+					</o:column>
+					<o:column header="#{fbresource['Passing_Criteria']}"
+						sortingExpression="#{exam.passingcriteria}"
+						style="text-align: center;">
+						<h:outputText value="#{exam.passingcriteria}" />
+					</o:column>
+					<o:column header="#{fbresource['No_Of_Questions']}"
+						sortingExpression="#{exam.noOfQuestions}"
+						style="text-align: center;">
+						<h:outputText value="#{exam.noOfQuestions}" />
+					</o:column>
+					<o:column header="#{fbresource['Time_MM']}"
+						sortingExpression="#{exam.minute}" style="text-align: center;">
+						<h:outputText value="#{exam.minute}" />
+					</o:column>
+					<f:event listener="#{ExamTableBean.inItStudent}"
+						type="preRenderView"></f:event>
+				</o:dataTable>
+				<table align="right" style="margin-right: 20px;">
+					<tr>
+						<td><ui:include src="/xhtml/pagination.xhtml" /></td>
+					</tr>
+				</table>
+			</h:panelGroup>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

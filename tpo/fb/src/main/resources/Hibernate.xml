@@ -1,0 +1,91 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.2.xsd 
+    http://www.springframework.org/schema/tx 
+    http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<!-- <context:component-scan base-package="com.byteslounge.spring.tx.dao.impl" 
+		/> <context:component-scan base-package="com.byteslounge.spring.tx.user.impl" 
+		/> -->
+
+	
+	
+	<!-- Hibernate session factory -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.connection.useUnicode">true</prop>
+				<prop key="hibernate.connection.characterEncoding">UTF-8</prop>
+				<prop key="hibernate.connection.charSet">UTF-8</prop>
+				<prop key="c3p0.acquire_increment">1</prop>
+				<prop key="c3p0.idle_test_period">100</prop>
+				<prop key="c3p0.max_size">100</prop>
+				<prop key="c3p0.max_statements">100</prop>
+				<prop key="c3p0.min_size">10</prop>
+				<prop key="c3p0.timeout">100</prop>
+			</props>
+		</property>
+
+		<property name="mappingResources">
+			<list>
+				<value>com/fb/hibernate/Contactinfo.hbm.xml</value>
+				<value>com/fb/hibernate/College.hbm.xml</value>
+				<value>com/fb/hibernate/Logindetails.hbm.xml</value>
+				<value>com/fb/hibernate/Shortlist.hbm.xml</value>
+				<value>com/fb/hibernate/Company.hbm.xml</value>
+				<value>com/fb/hibernate/Percentageinfo.hbm.xml</value>
+				<value>com/fb/hibernate/Backdetails.hbm.xml</value>
+				<value>com/fb/hibernate/Registration.hbm.xml</value>
+				<value>com/fb/hibernate/Userdetails.hbm.xml</value>
+				<value>com/fb/hibernate/Personalinfo.hbm.xml</value>
+				<value>com/fb/hibernate/Notice.hbm.xml</value>
+				<value>com/fb/hibernate/Exam.hbm.xml</value>
+				<value>com/fb/hibernate/Questions.hbm.xml</value>
+				<value>com/fb/hibernate/Result.hbm.xml</value>
+				<value>com/fb/hibernate/Achivements.hbm.xml</value>
+				<value>com/fb/hibernate/HallTicket.hbm.xml</value>
+				<value>com/fb/hibernate/HallTicketConnect.hbm.xml</value>
+				<value>com/fb/hibernate/EmployeeEfforts.hbm.xml</value>
+				<value>com/fb/hibernate/Project.hbm.xml</value>
+				<value>com/fb/hibernate/Module.hbm.xml</value>
+			</list>
+		</property>
+		<property name="annotatedClasses">
+			<list>
+				<value>tpo.hibernate.annotation.CollegeGroup</value>
+				<value>tpo.hibernate.annotation.NewsLetter</value>
+				<value>tpo.hibernate.annotation.CustomerReview</value>
+				<value>tpo.hibernate.annotation.StudentFeeDetails</value>
+				<value>tpo.hibernate.annotation.ReferralHistory</value>
+				<value>tpo.hibernate.annotation.Complaint</value>
+				<value>tpo.hibernate.annotation.BroadCastMessage</value>
+				<value>tpo.hibernate.annotation.DocumentList</value>
+				<value>tpo.hibernate.annotation.InvestmentDetail</value>
+				<value>tpo.hibernate.annotation.CommonData</value>
+				<value>tpo.hibernate.annotation.Bookmark</value>
+				<value>tpo.hibernate.annotation.Bookmark</value>
+				<value>tpo.hibernate.annotation.SessionData</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- <bean id="transactionManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager"
+		p:sessionFactory-ref="sessionFactory">
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<context:annotation-config /> -->
+
+
+</beans>    

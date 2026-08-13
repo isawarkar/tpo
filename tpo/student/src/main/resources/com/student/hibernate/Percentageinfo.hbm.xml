@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.hibernate.Percentageinfo" table="percentageinfo" >
+        <id name="rollnumber" type="java.lang.String">
+            <column name="rollnumber" length="14" />
+            <generator class="assigned" />
+        </id>
+        <one-to-one name="registration" class="com.hibernate.Registration" constrained="true"></one-to-one>
+        <property name="highSchoolPercent" type="java.lang.Double">
+            <column name="highSchoolPercent" precision="4" not-null="true" />
+        </property>
+        <property name="highSchoolPassing" type="java.lang.Integer">
+            <column name="highSchoolPassing" precision="4" scale="0" not-null="true" />
+        </property>
+        <property name="highSchoolBoard" type="java.lang.String">
+            <column name="highSchoolBoard" length="100" not-null="true" />
+        </property>
+        <property name="higherSecondarypercent" type="java.lang.Double">
+            <column name="higherSecondarypercent" precision="4"  />
+        </property>
+        <property name="higherSecondaryPassing" type="java.lang.Integer">
+            <column name="higherSecondaryPassing" precision="4" scale="0"  />
+        </property>
+        <property name="higherSecondaryBoard" type="java.lang.String">
+            <column name="higherSecondaryBoard" length="100" />
+        </property>
+        <property name="be1sem" type="java.lang.Double">
+            <column name="be1sem" precision="4" />
+        </property>
+        <property name="be2sem" type="java.lang.Double">
+            <column name="be2sem" precision="4" />
+        </property>
+        <property name="be3sem" type="java.lang.Double">
+            <column name="be3sem" precision="4" />
+        </property>
+        <property name="be4sem" type="java.lang.Double">
+            <column name="be4sem" precision="4" />
+        </property>
+        <property name="be5sem" type="java.lang.Double">
+            <column name="be5sem" precision="4" />
+        </property>
+        <property name="be6sem" type="java.lang.Double">
+            <column name="be6sem" precision="4" />
+        </property>
+        <property name="be7sem" type="java.lang.Double">
+            <column name="be7sem" precision="4" />
+        </property>
+        <property name="be8sem" type="java.lang.Double">
+            <column name="be8sem" precision="4" />
+        </property>
+        <property name="meBsc1sem" type="java.lang.Double">
+            <column name="meBsc1sem" precision="4" />
+        </property>
+        <property name="meBsc2sem" type="java.lang.Double">
+            <column name="meBsc2sem" precision="4" />
+        </property>
+        <property name="meBsc3sem" type="java.lang.Double">
+            <column name="meBsc3sem" precision="4" />
+        </property>
+        <property name="meBsc4sem" type="java.lang.Double">
+            <column name="meBsc4sem" precision="4" />
+        </property>
+        <property name="diplomaOthers" type="java.lang.Double">
+            <column name="diplomaOthers" precision="4" />
+        </property>
+        <property name="diplomaUniversity" type="java.lang.String">
+            <column name="diplomaUniversity" length="50" />
+        </property>
+        <property name="avgbe1year" type="java.lang.Double">
+            <column name="avgbe1year" precision="4" />
+        </property>
+        <property name="avgbe2year" type="java.lang.Double">
+            <column name="avgbe2year" precision="4" />
+        </property>
+        <property name="avgbe3year" type="java.lang.Double">
+            <column name="avgbe3year" precision="4" />
+        </property>
+        <property name="avgbe4year" type="java.lang.Double">
+            <column name="avgbe4year" precision="4" />
+        </property>
+        <property name="beAverege" type="java.lang.Double">
+            <column name="beAverege" precision="4" />
+        </property>
+        <property name="meAverage" type="java.lang.Double">
+            <column name="meAverage" precision="4" />
+        </property>
+        <property name="diploma1sem" type="java.lang.Double">
+            <column name="diploma1Sem" precision="4" />
+        </property>
+        <property name="diploma2sem" type="java.lang.Double">
+            <column name="diploma2Sem" precision="4" />
+        </property>
+        <property name="diploma3sem" type="java.lang.Double">
+            <column name="diploma3Sem" precision="4" />
+        </property>
+        <property name="diploma4sem" type="java.lang.Double">
+            <column name="diploma4Sem" precision="4" />
+        </property>
+        <property name="diploma5sem" type="java.lang.Double">
+            <column name="diploma5Sem" precision="4" />
+        </property>
+        <property name="diploma6sem" type="java.lang.Double">
+            <column name="diploma6Sem" precision="4" />
+        </property>
+        <property name="lastUpdated" type="java.util.Date">
+            <column name="lastUpdated" />
+        </property>
+        <property name="lastUpdatedBy" type="java.lang.String">
+            <column name="lastUpdatedBy" />
+        </property>
+    </class>
+</hibernate-mapping>

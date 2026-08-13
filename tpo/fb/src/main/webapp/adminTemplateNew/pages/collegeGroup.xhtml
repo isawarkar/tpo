@@ -1,0 +1,306 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<ui:composition template="adminLayoutNew.xhtml">
+	<ui:define name="content">
+		<section id="card-actions">
+			<!-- Info table about action starts -->
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-header">
+							<h4 class="card-title">#{fbresource['College_Group']}</h4>
+							<a class="heading-elements-toggle"> <i
+								class='bx bx-dots-vertical font-medium-3' /></a>
+							<div class="heading-elements">
+								<ul class="list-inline mb-0">
+									<li><h:form>
+											<h:panelGroup id="bookmarkButtonPanel">
+												<o:commandLink id="bookmarkButton" execute="bookmarkButton"
+													render="bookmarkButtonPanel bookmarkList errorPanel"
+													actionListener="#{BookmarkBean.setBookmark}">
+													<f:param name="bookmarkName" value="collegeGroup" />
+
+													<i title="#{fbresource['bookmarkToolTip']}"
+														class="ficon bx #{BookmarkBean.getIcon('collegeGroup')} warning" />
+												</o:commandLink>
+											</h:panelGroup>
+										</h:form></li>
+									<li><a data-action="collapse"> <i
+											class="bx bx-chevron-down" /></a></li>
+									<li><a data-action="expand"> <i
+											class="bx bx-fullscreen" /></a></li>
+									<li><a data-action="reload"> <i class="bx bx-revision" /></a></li>
+									<li><a data-action="close"> <i class="bx bx-x" /></a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="card-content collapse show">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="table-responsive">
+											<h:form>
+												<h:commandButton class="btn btn-primary glow"
+													title="#{fbresource['Click_here_to']} #{fbresource['Approve']}"
+													id="approve" value="#{fbresource['Approve']}"
+													action="#{CollegeGroupBean.changeStatus('A')}">
+													<o:confirmation id="buttonApproveConfirmation"
+														message="#{fbresource['collegeGroup_approve_message']}"
+														draggable="true" />
+												</h:commandButton>
+												<h:commandButton class="btn btn-primary glow"
+													style="margin-left:10px;"
+													title="#{fbresource['Click_here_to']} #{fbresource['Reject']}"
+													id="reject" value="#{fbresource['Reject']}"
+													action="#{CollegeGroupBean.changeStatus('R')}">
+													<o:confirmation id="buttonRejectConfirmation"
+														message="#{fbresource['collegeGroup_reject_message']}"
+														draggable="true" />
+												</h:commandButton>
+												<h:commandButton class="btn btn-primary glow"
+													style="margin-left:10px;"
+													title="#{fbresource['Click_here_to_send_request_for_selected_colleges']}"
+													id="sendRequest" value="#{fbresource['Send_Request']}"
+													action="#{CollegeGroupBean.sendRequest}" />
+												<h:commandButton class="btn btn-primary glow"
+													style="margin-left:10px;"
+													title="#{fbresource['Click_here_to']} #{fbresource['delete']}"
+													id="Delete" value="#{fbresource['delete']}"
+													action="#{CollegeGroupBean.deleteSelectedRequest}">
+													<o:confirmation id="buttonConfirmation"
+														message="#{fbresource['Are_you__sure_you_want_to_delete']}"
+														draggable="true" />
+												</h:commandButton>
+												<o:dataTable id="cg" var="cg"
+													value="#{CollegeGroupBean.collegeGroupList}"
+													sortAscending="true"
+													sortableHeaderRolloverStyle="background: #d4d4d4"
+													style="width:100%;margin-top: 10px; line-height: 17px;"
+													styleClass="datatable"
+													rolloverRowStyle="background: #f1f1f1;">
+													<o:multipleRowSelection
+														rowDatas="#{CollegeGroupBean.selectedCollegeGroupList}"
+														style="background: #a4aec5; color: white;" />
+													<o:columnReordering />
+													<f:facet name="columnMenu">
+														<o:columnMenu />
+													</f:facet>
+													<o:selectionColumn style="width: 6%;" sortable="true"
+														header="#{fbresource['Selection']}">
+														<f:facet name="header">
+															<o:selectAllCheckbox />
+														</f:facet>
+													</o:selectionColumn>
+													<o:column header="#{fbresource['group_ID']}"
+														sortingExpression="#{cg.id}" style="text-align: center;">
+														<h:outputLabel style="color:blue;" id="id"
+															value="#{cg.id}"></h:outputLabel>
+													</o:column>
+													<o:column header="#{fbresource['College_Code']}"
+														sortingExpression="#{cg.collegeName}"
+														style="text-align: center;">
+														<o:commandLink style="color:blue;" id="collegeNameValue"
+															value="#{cg.collegeName}"
+															title="#{fbresource['Click_here_to_see_the_College_Details']}"
+															actionListener="#{PlacedStudentTableBean.setCollege}"
+															onajaxend="document.getElementById('collegeButton').click();"
+															render="collegeInfo">
+														</o:commandLink>
+													</o:column>
+													<o:column header="#{fbresource['Request_Send_By']}"
+														sortingExpression="#{cg.userName}"
+														style="text-align: center;">
+														<o:commandLink style="color:blue;" id="userNameValue"
+															value="#{cg.userName}"
+															title="#{fbresource['Click_here_to_see_the_user_Details']}"
+															actionListener="#{UserTableBean.setUserObj}"
+															onajaxend="document.getElementById('userButton').click();"
+															render="userInfo">
+														</o:commandLink>
+													</o:column>
+													<o:column header="#{fbresource['Request_Type']}"
+														sortingExpression="#{cg.type}" style="text-align: center;">
+														<h:outputText style="color:red;"
+															rendered="#{cg.type eq 'S'}"
+															value="#{fbresource['sent']}" />
+														<h:outputText style="color:green;"
+															rendered="#{cg.type eq 'R'}"
+															value="#{fbresource['received']}" />
+														<h:outputText style="color:blue;"
+															rendered="#{cg.type eq 'N'}"
+															value="#{fbresource['Not_sent']}" />
+													</o:column>
+													<o:column header="#{fbresource['Status']}"
+														sortingExpression="#{cg.status}"
+														style="text-align: center;">
+														<h:outputText styleClass="blinking" style="color:green;"
+															rendered="#{cg.status eq 'A'}"
+															value="#{fbresource['Approved']}" />
+														<h:outputText styleClass="blinking" style="color:red;"
+															rendered="#{cg.status eq 'R'}"
+															value="#{fbresource['Rejected']}" />
+														<h:outputText styleClass="blinking" style="color:red;"
+															rendered="#{cg.status eq 'P'}"
+															value="#{fbresource['Pending']}" />
+														<h:outputText style="color:blue;"
+															rendered="#{cg.status eq null}"
+															value="#{fbresource['Not_sent']}" />
+													</o:column>
+													<o:column header="#{fbresource['Date']}"
+														sortingExpression="#{cg.date}" style="text-align: center;">
+														<h:outputText value="#{cg.date}">
+															<f:convertDateTime pattern="dd/MM/yyyy" />
+														</h:outputText>
+													</o:column>
+													<f:event listener="#{CollegeGroupBean.inIt}"
+														type="preRenderView"></f:event>
+												</o:dataTable>
+												<font color="red">#{fbresource['collegGroupNote']}</font>
+
+												<button style="display: none" id="collegeButton"
+													type="button" data-toggle="modal" data-target="#college" />
+												<div class="modal fade text-left" id="college" tabindex="-1"
+													role="dialog" aria-labelledby="myModalLabel160"
+													aria-hidden="true">
+													<div
+														class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+														role="document">
+														<div class="modal-content">
+															<div class="modal-header bg-primary">
+																<h5 class="modal-title white" id="myModalLabel160">#{fbresource['College_Information']}</h5>
+																<button type="button" class="close" data-dismiss="modal"
+																	aria-label="Close">
+																	<i class="bx bx-x"></i>
+																</button>
+															</div>
+															<div class="modal-body">
+																<h:panelGroup id="collegeInfo">
+																	<center>
+																		<TABLE>
+																			<tr>
+																				<td><font color="geen" size="3">#{fbresource['College_Name']}</font></td>
+																				<td><font color="blue" size="5">#{PlacedStudentTableBean.college.collegeFullName}</font></td>
+																			</tr>
+																			<tr>
+																				<td><font color="geen" size="3">#{fbresource['City_Place']}
+																				</font></td>
+																				<td><font color="blue" size="3">#{PlacedStudentTableBean.college.place}</font></td>
+																			</tr>
+																			<tr>
+																				<td><font color="geen" size="3">#{fbresource['Address']}</font></td>
+																				<td><font color="blue" size="3"><h:outputText
+																							escape="false"
+																							value="#{PlacedStudentTableBean.college.address}" /></font></td>
+																			</tr>
+																			<tr>
+																				<td><font color="geen" size="3">#{fbresource['E_mail']}</font></td>
+																				<td><font color="blue" size="3">#{PlacedStudentTableBean.college.emailAddress}</font></td>
+																			</tr>
+																			<tr>
+																				<td><font color="geen" size="3">#{fbresource['University']}</font></td>
+																				<td><font color="blue" size="3">#{PlacedStudentTableBean.college.university}</font></td>
+																			</tr>
+																			<tr>
+																				<td><font color="geen" size="3">#{fbresource['Date_Of_Opening']}</font></td>
+																				<td><font color="blue" size="3">#{PlacedStudentTableBean.college.dateOfOpening}</font></td>
+																			</tr>
+																			<tr>
+																				<td><font color="geen" size="3">#{fbresource['Website']}</font></td>
+																				<td><font color="blue" size="5"><a
+																						href="http://#{PlacedStudentTableBean.college.siteAddress}">#{PlacedStudentTableBean.college.siteAddress}</a></font></td>
+																			</tr>
+																		</TABLE>
+																	</center>
+																</h:panelGroup>
+															</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-light-secondary"
+																	data-dismiss="modal">
+																	<i class="bx bx-x d-block d-sm-none"></i> <span
+																		class="d-none d-sm-block">#{fbresource['Close']}</span>
+																</button>
+															</div>
+														</div>
+													</div>
+												</div>
+
+												<button style="display: none" id="userButton" type="button"
+													data-toggle="modal" data-target="#user" />
+												<div class="modal fade text-left" id="user" tabindex="-1"
+													role="dialog" aria-labelledby="myModalLabel160"
+													aria-hidden="true">
+													<div
+														class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+														role="document">
+														<div class="modal-content">
+															<div class="modal-header bg-primary">
+																<h5 class="modal-title white" id="myModalLabel160">#{fbresource['User_Information']}</h5>
+																<button type="button" class="close" data-dismiss="modal"
+																	aria-label="Close">
+																	<i class="bx bx-x"></i>
+																</button>
+															</div>
+															<div class="modal-body">
+																<h:panelGroup id="userInfo">
+																	<center>
+																		<TABLE>
+																			<tr>
+																				<td><font color="geen" size="3">#{fbresource['First_Name']}</font></td>
+																				<td><font color="blue" size="5">#{UserTableBean.user.userdetails.firstName}</font></td>
+																			</tr>
+
+																			<tr>
+																				<td><font color="geen" size="3">#{fbresource['Last_Name']}</font></td>
+																				<td><font color="blue" size="5">#{UserTableBean.user.userdetails.lastName}</font></td>
+																			</tr>
+																			<tr>
+																				<td><font color="geen" size="3">#{fbresource['Address']}</font></td>
+																				<td><font color="blue" size="3"><h:outputText
+																							escape="false"
+																							value="#{UserTableBean.user.userdetails.address}" /></font></td>
+																			</tr>
+																			<tr>
+																				<td><font color="geen" size="3">#{fbresource['E_mail']}</font></td>
+																				<td><font color="blue" size="3">#{UserTableBean.user.userdetails.email}</font></td>
+																			</tr>
+																			<tr>
+																				<td><font color="geen" size="3">#{fbresource['Mobile']}</font></td>
+																				<td><font color="blue" size="3">#{UserTableBean.user.userdetails.mobleNo}</font></td>
+																			</tr>
+
+																			<tr>
+																				<td><font color="geen" size="3">#{fbresource['Website']}</font></td>
+																				<td><font color="blue" size="5"><a
+																						href="http://#{UserTableBean.user.userdetails.website}">#{UserTableBean.user.userdetails.website}</a></font></td>
+																			</tr>
+																		</TABLE>
+																	</center>
+																</h:panelGroup>
+															</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-light-secondary"
+																	data-dismiss="modal">
+																	<i class="bx bx-x d-block d-sm-none"></i> <span
+																		class="d-none d-sm-block">#{fbresource['Close']}</span>
+																</button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</h:form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</ui:define>
+</ui:composition>
+</html>

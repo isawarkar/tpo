@@ -1,0 +1,294 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<ui:composition template="adminLayoutNew.xhtml">
+	<ui:define name="content">
+		<ui:include src="companyWindow.xhtml" />
+
+		<section id="card-actions">
+			<!-- Info table about action starts -->
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-header">
+							<h4 class="card-title">#{fbresource['Company_List']}</h4>
+							<a class="heading-elements-toggle"> <i
+								class='bx bx-dots-vertical font-medium-3' /></a>
+							<div class="heading-elements">
+								<ul class="list-inline mb-0">
+									<li><h:form>
+											<h:panelGroup id="bookmarkButtonPanel">
+												<o:commandLink id="bookmarkButton" execute="bookmarkButton"
+													render="bookmarkButtonPanel bookmarkList errorPanel"
+													actionListener="#{BookmarkBean.setBookmark}">
+													<f:param name="bookmarkName" value="companyList" />
+
+													<i title="#{fbresource['bookmarkToolTip']}"
+														class="ficon bx #{BookmarkBean.getIcon('companyList')} warning" />
+												</o:commandLink>
+											</h:panelGroup>
+										</h:form></li>
+									<li><a data-action="collapse"> <i
+											class="bx bx-chevron-down" /></a></li>
+									<li><a data-action="expand"> <i
+											class="bx bx-fullscreen" /></a></li>
+									<li><a data-action="reload"> <i class="bx bx-revision" /></a></li>
+									<li><a data-action="close"> <i class="bx bx-x" /></a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="card-content collapse show">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="table-responsive">
+											<h:form id="CompanytForm">
+												<table width="100%">
+													<tr>
+														<td>
+															<table inlineStyle="color:green;" halign="left"
+																cellSpacing="5">
+																<tr>
+																	<td><h:outputText
+																			value="#{fbresource['Company_ID']}" /></td>
+																	<td><o:dropDownField id="companyID"
+																			maxlength="150" style="width: 200px;"
+																			listItemStyle="white-space: nowrap;"
+																			suggestionMode="stringStart" var="companyID"
+																			value="#{CompanyTableBean.companyID}"
+																			suggestionMinChars="1">
+																			<o:dropDownItems
+																				value="#{CommonDBBean.companyIDList}" />
+																			<o:column>
+																				<h:outputText value="#{companyID}"
+																					styleClass="dropDownValuesClass" />
+																			</o:column>
+																		</o:dropDownField></td>
+																	<td><h:outputText
+																			value="#{fbresource['Company_Name']}" /></td>
+																	<td><o:dropDownField id="companyName"
+																			maxlength="150" style="width: 200px;"
+																			listItemStyle="white-space: nowrap;"
+																			suggestionMode="stringStart" var="companyName"
+																			value="#{CompanyTableBean.companyName}"
+																			suggestionMinChars="1">
+																			<o:dropDownItems value="#{CommonDBBean.companyList}" />
+																			<o:column>
+																				<h:outputText value="#{companyName}"
+																					styleClass="dropDownValuesClass" />
+																			</o:column>
+																		</o:dropDownField></td>
+																	<td><h:commandButton class="btn btn-primary glow"
+																			value="#{fbresource['search']}"
+																			title="#{fbresource['Click_here_to']} #{fbresource['Search_Record']}"
+																			action="#{CompanyTableBean.searchRecord}" /></td>
+																	<td><o:commandButton
+																			styleClass="btn btn-primary glow"
+																			value="#{fbresource['View']}" id="VIEW"
+																			title="#{fbresource['Click_here_to']} #{fbresource['View']}"
+																			onajaxend="if(O$('companyWindowForm:company') != null){O$('companyWindowForm:company').show();}"
+																			execute="comapanyListTable"
+																			render="companyWindowForm errorPanel"
+																			actionListener="#{CompanyTableBean.setCompanyToView}" /></td>
+
+																	<td><o:commandButton
+																			styleClass="btn btn-primary glow"
+																			value="#{fbresource['add']}" id="addCompany"
+																			title="#{fbresource['Click_here_to']} #{fbresource['add']}"
+																			onajaxend="if(O$('companyWindowForm:company') != null){O$('companyWindowForm:company').show();}"
+																			render="companyWindowForm"
+																			actionListener="#{CompanyTableBean.setCompanyToAdd}" /></td>
+																	<td><o:commandButton
+																			styleClass="btn btn-primary glow"
+																			value="#{fbresource['update']}" id="update"
+																			title="#{fbresource['Click_here_to']} #{fbresource['update']}"
+																			onajaxend="if(O$('companyWindowForm:company') != null){O$('companyWindowForm:company').show();}"
+																			execute="comapanyListTable"
+																			render="companyWindowForm errorPanel"
+																			actionListener="#{CompanyTableBean.setCompany}" /></td>
+																	<td><h:commandButton class="btn btn-primary glow"
+																			value="#{fbresource['delete']}"
+																			id="deleteButtonAction"
+																			title="#{fbresource['Click_here_to']} #{fbresource['delete']}"
+																			action="#{CompanyTableBean.deleteSeletedRecord}">
+																			<o:confirmation id="buttonConfirmation"
+																				message="#{fbresource['Are_you__sure_you_want_to_delete']}"
+																				draggable="true" />
+																		</h:commandButton></td>
+																	<td><input type="button"
+																		value="#{fbresource['Print']}"
+																		class="btn btn-primary glow"
+																		title="#{fbresource['Click_here_to']} #{fbresource['Print']}"
+																		onClick="window.print()" /></td>
+																	<td><h:commandButton
+																			title="#{fbresource['Generate']} #{fbresource['Excel_report']}"
+																			value="#{fbresource['Excel_report']}"
+																			image="/images/excel_button.png"
+																			style="height:40px;width:40px;" id="generateXls"
+																			action="#{CompanyTableBean.generateXls}" /></td>
+																	<td><h:commandButton
+																			title="#{fbresource['Generate']} #{fbresource['PDF_report']}"
+																			value="#{fbresource['PDF_report']}"
+																			image="/images/pdf_button.png"
+																			style="height:40px;width:40px;"
+																			action="#{CompanyTableBean.generatePdfReport}" /></td>
+
+																</tr>
+															</table>
+														</td>
+													</tr>
+												</table>
+												<h:panelGroup id="paginationTableContainner">
+													<o:dataTable
+														rendered="#{not empty CompanyTableBean.companyList}"
+														id="comapanyListTable" var="company"
+														value="#{CompanyTableBean.companyList}"
+														sortColumnId="rollnumber" sortAscending="true"
+														sortableHeaderRolloverStyle="background: #d4d4d4"
+														style="width: 100%; line-height: 17px;"
+														styleClass="datatable"
+														rolloverRowStyle="background: #f1f1f1;">
+														<o:multipleRowSelection 
+															rowDatas="#{CompanyTableBean.selectedList}"
+															style="background: #a4aec5; color: white;" />
+														<o:columnReordering />
+														<f:facet name="columnMenu">
+															<o:columnMenu />
+														</f:facet>
+														<o:selectionColumn style="width: 6%;" sortable="true"
+															header="#{fbresource['Selection']}">
+															<f:facet name="header">
+																<o:selectAllCheckbox
+																	rendered="#{company.companyID ne 1}" />
+															</f:facet>
+														</o:selectionColumn>
+														<o:column header="#{fbresource['Company_ID']}"
+															sortingExpression="#{company.companyID}"
+															style="text-align: center;">
+															<o:commandLink rendered="#{company.companyID ne 1}"
+																actionListener="#{CompanyTableBean.setLogo}"
+																onajaxend="document.getElementById('compnayLogoeButton').click();"
+																render="compnayLogoForm" id="companyID">
+																<f:param name="logo" value="#{company.companyID}" />
+																<h:outputText 
+																value="#{company.companyID}" />
+
+															</o:commandLink>
+														</o:column>
+													
+
+														<o:column header="#{fbresource['Company_Name']}"
+															sortingExpression="#{company.companyname}"
+															style="text-align: center;">
+															<o:hintLabel hintStyle="color:blue;font-size:15px;"
+																hint="#{company.companyname}"
+																value="#{company.companyname.length() gt 15 ? company.companyname.substring(0,15).concat('...') : company.companyname}" />
+														</o:column>
+														<o:column header="#{fbresource['Date_Of_Visit']}"
+															sortingExpression="#{company.dateofvisit}"
+															style="text-align: center;">
+															<h:outputText value="#{company.dateofvisit}">
+																<f:convertDateTime pattern="dd/MM/yyyy" />
+															</h:outputText>
+														</o:column>
+														<o:column header="#{fbresource['E_mail']}"
+															sortingExpression="#{company.email}"
+															style="text-align: center;">
+															<o:hintLabel hintStyle="color:blue;font-size:15px;"
+																hint="#{company.email}"
+																value="#{company.email.length() gt 15 ? company.email.substring(0,15).concat('...') : company.email}" />
+														</o:column>
+														<o:column header="#{fbresource['Package_Offering']}"
+															sortingExpression="#{company.packageOffering}"
+															style="text-align: center;">
+															<h:outputText value="#{company.packageOffering}" />
+														</o:column>
+														<o:column header="#{fbresource['Domain']}"
+															sortingExpression="#{company.domain}"
+															style="text-align: center;">
+															<h:outputText value="#{company.domain}" />
+														</o:column>
+														<o:column header="#{fbresource['Website']}"
+															sortingExpression="#{company.website}"
+															style="text-align: center;">
+															<h:outputText value="#{company.website}" />
+														</o:column>
+														<o:column header="#{fbresource['Total']}"
+															sortingExpression="#{company.total}"
+															style="text-align: center;">
+															<h:commandLink rendered="#{company.companyID ne 1}"
+																style="cursor:hand;color:blue;"
+																action="#{CompanyTableBean.showInfo}"
+																value="#{company.total}"
+																title="#{fbresource['Please_click_here_to_see_full_information']}"></h:commandLink>
+															<h:outputText style="color:green;font-size:15px;"
+																rendered="#{company.companyID eq 1}"
+																value="#{company.total}" />
+														</o:column>
+														<o:column header="#{fbresource['created_By']}"
+															sortingExpression="#{company.createdBy}"
+															style="text-align: center;">
+															<h:outputText value="#{company.createdBy}" />
+														</o:column>
+														<f:event listener="#{CompanyTableBean.inIt}"
+															type="preRenderView" />
+													</o:dataTable>
+													<table align="right">
+														<tr>
+															<td><ui:include src="/xhtml/pagination.xhtml" /></td>
+														</tr>
+													</table>
+												</h:panelGroup>
+											</h:form>
+											<h:form id="compnayLogoForm">
+												<button style="display: none" id="compnayLogoeButton"
+													type="button" data-toggle="modal"
+													data-target="#compnayLogo" />
+												<div class="modal fade text-left" id="compnayLogo"
+													tabindex="-1" role="dialog"
+													aria-labelledby="myModalLabel160" aria-hidden="true">
+													<div
+														class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+														role="document">
+														<div class="modal-content">
+															<div class="modal-header bg-primary">
+																<h5 class="modal-title white" id="myModalLabel160">#{fbresource['Photo_Logo']}</h5>
+																<button type="button" class="close" data-dismiss="modal"
+																	aria-label="Close">
+																	<i class="bx bx-x"></i>
+																</button>
+															</div>
+															<div class="modal-body">
+																<h:panelGroup id="logoPanel">
+																	<center>
+																		<img
+																			src="#{parent.imageServiceUrl}/download/company/#{CompanyTableBean.companyID}.png" />
+																	</center>
+																</h:panelGroup>
+															</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-light-secondary"
+																	data-dismiss="modal">
+																	<i class="bx bx-x d-block d-sm-none"></i> <span
+																		class="d-none d-sm-block">#{fbresource['Close']}</span>
+																</button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</h:form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</ui:define>
+</ui:composition>
+</html>

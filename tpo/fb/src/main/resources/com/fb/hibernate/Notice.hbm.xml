@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="tpo.hibernate.Notice" table="notice" >
+		<composite-id>
+			<key-property name="noticeName" column="noticeName" length="100"/>
+			<key-property name="createdBy" column="createdBy" length="20" />
+		</composite-id>
+		<property name="notice" type="java.lang.String">
+			<column name="notice" length="5000" not-null="true" />
+		</property>
+		<property name="active" type="java.lang.Boolean">
+			<column name="active" not-null="true" />
+		</property>
+		<property name="expiryDate" type="java.util.Date">
+			<column name="expiry" not-null="true" />
+		</property>
+		<property name="impTag" type="java.lang.Boolean">
+			<column name="impTag" />
+		</property>
+		<property name="studentSpecific" type="java.lang.Boolean">
+			<column name="studentSpecific" />
+		</property>
+		
+		<property name="fileName1" type="java.lang.String">
+			<column name="fileName1" />
+		</property>
+		<property name="fileName2" type="java.lang.String">
+			<column name="fileName2" />
+		</property>
+		<property name="fileName3" type="java.lang.String">
+			<column name="fileName3" />
+		</property>
+		<property name="fileName4" type="java.lang.String">
+			<column name="fileName4" />
+		</property>
+		<property name="fileName5" type="java.lang.String">
+			<column name="fileName5" />
+		</property>
+		
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<title>#{fbresource['Freshers_Buddy']}</title>
+<center>
+	<div id="overlay"></div>
+	<div id="LoaderX" class="LX">
+		<div style="color: green; font-size: 25px; margin-left: 50px;"
+			id="LoaderContainer">
+			<img src='/FB/css/loading.gif' />
+		</div>
+	</div>
+</center>
+<h:head>
+	<script data-ad-client="ca-pub-2495720134180716" async="true" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	
+	<ui:include src="/template/keywords.xhtml" />
+	<link rel="shortcut icon" type="image/png" href="/FB/favicon.png" />
+	<link rel="shortcut icon" href="/FB/favicon.ico"
+		type="image/x-icon" />
+	<!--[if lt IE 9]>
+	<script src="/FB/theme/assets/js/html5shiv.min.js"/>
+	<script src="/FB/theme/assets/js/respond.min.js"/>
+	<![endif]-->
+	<!-- All PLUGINS CSS ============================================= -->
+	<link rel="stylesheet" type="text/css"
+		href="/FB/theme/assets/css/assets.css" />
+
+	<!-- SHORTCODES ============================================= -->
+	<link rel="stylesheet" type="text/css"
+		href="/FB/theme/assets/css/shortcodes/shortcodes.css" />
+
+
+	<!-- STYLESHEETS ============================================= -->
+	<link rel="stylesheet" type="text/css"
+		href="/FB/theme/assets/css/style.css" />
+	<link class="skin" rel="stylesheet" type="text/css"
+		href="/FB/theme/assets/css/color/color-#{LanguageLocaleBean.colorCode}.css" />
+
+	<link rel="stylesheet" type="text/css"
+		href="/FB/adminTemplateNew/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css"
+		href="/FB/adminTemplateNew/css/bootstrap-extended.min.css" />
+	<script type="text/javascript" src="/FB/js/CCP.js"/>
+	<link rel="stylesheet" type="text/css"
+		href="/FB/adminTemplateNew/vendors/css/vendors.min.css" />
+	<link rel="stylesheet" type="text/css"
+		href="/FB/adminTemplateNew/css/fbadmin.css" />
+	<link rel="stylesheet" type="text/css" href="/FB/css/noLine.css" />
+</h:head>
+<h:body id="bg" onload="hidePleaseWait();">
+	<div class="page-wraper" style="width:100%">
+		<div id="loading-icon-bx"></div>
+		<f:view locale="#{LanguageLocaleBean.locale}">
+			<f:loadBundle var="fbresource" basename="com.fb.fbresource" />
+			<ui:include src="/template/ajaxSetting.xhtml" />
+			<f:loadBundle var="fbresource" basename="com.fb.fbresource" />
+			<ui:insert name="header">
+				<ui:include src="header.xhtml" />
+			</ui:insert>
+			<div class="page-content bg-white">
+				<ui:insert name="message">
+					<ui:include src="commonMessage.xhtml" />
+				</ui:insert>
+
+				<ui:insert name="content" />
+			</div>
+			<ui:insert name="footer">
+				<ui:include src="footer.xhtml" />
+			</ui:insert>
+		</f:view>
+		<button class="back-to-top fa fa-chevron-up"></button>
+	</div>
+	<!-- External JavaScripts -->
+	<script src="/FB/theme/assets/js/jquery.min.js"/>
+	<script src="/FB/theme/assets/vendors/bootstrap/js/popper.min.js"/>
+	<script
+		src="/FB/theme/assets/vendors/bootstrap/js/bootstrap.min.js"/>
+	<script
+		src="/FB/theme/assets/vendors/bootstrap-select/bootstrap-select.min.js"/>
+	<script
+		src="/FB/theme/assets/vendors/bootstrap-touchspin/jquery.bootstrap-touchspin.js"/>
+	<script
+		src="/FB/theme/assets/vendors/magnific-popup/magnific-popup.js"/>
+	<script src="/FB/theme/assets/vendors/counter/waypoints-min.js"/>
+	<script src="/FB/theme/assets/vendors/counter/counterup.min.js"/>
+	<script
+		src="/FB/theme/assets/vendors/imagesloaded/imagesloaded.js"/>
+	<script src="/FB/theme/assets/vendors/masonry/masonry.js"/>
+	<script src="/FB/theme/assets/vendors/masonry/filter.js"/>
+	<script
+		src="/FB/theme/assets/vendors/owl-carousel/owl.carousel.js"/>
+	<script src="/FB/theme/assets/js/functions.js"/>
+	<script src="/FB/theme/assets/js/contact.js"/>
+	<!-- Revolution JavaScripts Files -->
+	<script
+		src="/FB/theme/assets/vendors/revolution/js/jquery.themepunch.tools.min.js"/>
+	<script
+		src="/FB/theme/assets/vendors/revolution/js/jquery.themepunch.revolution.min.js"/>
+	<!-- Slider revolution 5.0 Extensions  (Load Extensions only on Local File Systems !  The following part can be removed on Server for On Demand Loading) -->
+	<script
+		src="/FB/theme/assets/vendors/revolution/js/extensions/revolution.extension.actions.min.js"/>
+	<script
+		src="/FB/theme/assets/vendors/revolution/js/extensions/revolution.extension.carousel.min.js"/>
+	<script
+		src="/FB/theme/assets/vendors/revolution/js/extensions/revolution.extension.kenburn.min.js"/>
+	<script
+		src="/FB/theme/assets/vendors/revolution/js/extensions/revolution.extension.layeranimation.min.js"/>
+	<script
+		src="/FB/theme/assets/vendors/revolution/js/extensions/revolution.extension.migration.min.js"/>
+	<script
+		src="/FB/theme/assets/vendors/revolution/js/extensions/revolution.extension.navigation.min.js"/>
+	<script
+		src="/FB/theme/assets/vendors/revolution/js/extensions/revolution.extension.parallax.min.js"/>
+	<script
+		src="/FB/theme/assets/vendors/revolution/js/extensions/revolution.extension.slideanims.min.js"/>
+	<script
+		src="/FB/theme/assets/vendors/revolution/js/extensions/revolution.extension.video.min.js"/>
+	<script>
+		jQuery(document)
+				.ready(
+						function() {
+							var ttrevapi;
+							var tpj = jQuery;
+							if (tpj("#rev_slider_486_1").revolution == undefined) {
+								revslider_showDoubleJqueryError("#rev_slider_486_1");
+							} else {
+								ttrevapi = tpj("#rev_slider_486_1")
+										.show()
+										.revolution(
+												{
+													sliderType : "standard",
+													jsFileLocation : "//www.fresherbuddy.in/FB/theme/assets/vendors/revolution/js/",
+													sliderLayout : "fullwidth",
+													dottedOverlay : "none",
+													delay : 9000,
+													navigation : {
+														keyboardNavigation : "on",
+														keyboard_direction : "horizontal",
+														mouseScrollNavigation : "off",
+														mouseScrollReverse : "default",
+														onHoverStop : "on",
+														touch : {
+															touchenabled : "on",
+															swipe_threshold : 75,
+															swipe_min_touches : 1,
+															swipe_direction : "horizontal",
+															drag_block_vertical : false
+														},
+														arrows : {
+															style : "uranus",
+															enable : true,
+															hide_onmobile : false,
+															hide_onleave : false,
+															tmp : '',
+															left : {
+																h_align : "left",
+																v_align : "center",
+																h_offset : 10,
+																v_offset : 0
+															},
+															right : {
+																h_align : "right",
+																v_align : "center",
+																h_offset : 10,
+																v_offset : 0
+															}
+														},
+
+													},
+													viewPort : {
+														enable : true,
+														outof : "pause",
+														visible_area : "80%",
+														presize : false
+													},
+													responsiveLevels : [ 1240,
+															1024, 778, 480 ],
+													visibilityLevels : [ 1240,
+															1024, 778, 480 ],
+													gridwidth : [ 1240, 1024,
+															778, 480 ],
+													gridheight : [ 768, 600,
+															600, 600 ],
+													lazyType : "none",
+													parallax : {
+														type : "scroll",
+														origo : "enterpoint",
+														speed : 400,
+														levels : [ 5, 10, 15,
+																20, 25, 30, 35,
+																40, 45, 50, 46,
+																47, 48, 49, 50,
+																55 ],
+														type : "scroll",
+													},
+													shadow : 0,
+													spinner : "off",
+													stopLoop : "off",
+													stopAfterLoops : -1,
+													stopAtSlide : -1,
+													shuffle : "off",
+													autoHeight : "off",
+													hideThumbsOnMobile : "off",
+													hideSliderAtLimit : 0,
+													hideCaptionAtLimit : 0,
+													hideAllCaptionAtLilmit : 0,
+													debugMode : false,
+													fallbacks : {
+														simplifyAll : "off",
+														nextSlideOnWindowFocus : "off",
+														disableFocusListener : false,
+													}
+												});
+							}
+						});
+	</script>
+</h:body>
+</html>

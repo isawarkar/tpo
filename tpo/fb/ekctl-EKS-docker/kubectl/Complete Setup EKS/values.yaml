@@ -1,0 +1,38 @@
+grafana:
+  enabled: true
+
+  admin:
+    existingSecret: grafana-admin-secret
+    userKey: admin-user
+    passwordKey: admin-password
+
+  service:
+    type: ClusterIP
+    port: 80
+    targetPort: 3000
+
+  sidecar:
+    dashboards:
+      enabled: true
+      label: grafana_dashboard
+    datasources:
+      enabled: true
+
+  resources:
+    requests:
+      cpu: 500m
+      memory: 512Mi
+    limits:
+      cpu: "1"
+      memory: 1Gi
+
+prometheus:
+  enabled: true
+  prometheusSpec:
+    resources:
+      requests:
+        cpu: 750m
+        memory: 1Gi
+      limits:
+        cpu: "1.5"
+        memory: 2Gi

@@ -1,0 +1,282 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<ui:composition template="adminLayoutNew.xhtml">
+	<ui:define name="content">
+		<ui:include src="/xhtml/allPopUps.xhtml" />
+		<section id="card-actions">
+			<!-- Info table about action starts -->
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-header">
+							<h4 class="card-title">#{fbresource['Opening_List']}</h4>
+							<a class="heading-elements-toggle"> <i
+								class='bx bx-dots-vertical font-medium-3' /></a>
+							<div class="heading-elements">
+								<ul class="list-inline mb-0">
+									<li><h:form>
+											<h:panelGroup id="bookmarkButtonPanel">
+												<o:commandLink id="bookmarkButton" execute="bookmarkButton"
+													render="bookmarkButtonPanel bookmarkList errorPanel"
+													actionListener="#{BookmarkBean.setBookmark}">
+													<f:param name="bookmarkName" value="openningList" />
+													
+													<i title="#{fbresource['bookmarkToolTip']}"
+														class="ficon bx #{BookmarkBean.getIcon('openningList')} warning" />
+												</o:commandLink>
+											</h:panelGroup>
+										</h:form></li>
+									<li><a data-action="collapse"> <i
+											class="bx bx-chevron-down" /></a></li>
+									<li><a data-action="expand"> <i
+											class="bx bx-fullscreen" /></a></li>
+									<li><a data-action="reload"> <i class="bx bx-revision" /></a></li>
+									<li><a data-action="close"> <i class="bx bx-x" /></a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="card-content collapse show">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="table-responsive">
+											<ui:include src="oppeningChartWindow.xhtml" />
+											<h:form id="OpenningListForm">
+												<table>
+													<tr>
+														<td>#{fbresource['Company_Name']}</td>
+														<td><o:dropDownField id="companyName" maxlength="150"
+																style="width: 200px;"
+																listItemStyle="white-space: nowrap;"
+																suggestionMode="stringStart" var="companyName"
+																value="#{OpenningListTableBean.companyName}"
+																suggestionMinChars="1">
+																<o:dropDownItems
+																	value="#{CommonDBBean.companyListByUserName}" />
+																<o:column>
+																	<h:outputText value="#{companyName}"
+																		styleClass="dropDownValuesClass" />
+																</o:column>
+															</o:dropDownField></td>
+														<td><h:commandButton class="btn btn-primary glow"
+																value="#{fbresource['search']}" id="searchButtonAction"
+																title="#{fbresource['Click_here_to']} Search"
+																action="#{OpenningListTableBean.search}">
+															</h:commandButton></td>
+														<td><h:commandButton class="btn btn-primary glow"
+																value="#{fbresource['delete']}" id="deleteButtonAction"
+																title="#{fbresource['Click_here_to']} #{fbresource['delete']}"
+																action="#{OpenningListTableBean.deleteSeletedRecord}">
+																<o:confirmation id="buttonConfirmation"
+																	message="#{fbresource['Are_you__sure_you_want_to_delete']}"
+																	draggable="true" />
+															</h:commandButton></td>
+														<td><o:commandButton
+																styleClass="btn btn-primary glow"
+																value="#{fbresource['update']}" id="update"
+																title="#{fbresource['Click_here_to']} #{fbresource['update']}"
+																onajaxend="showNotice('updateOpenningButton');" execute="OpenningListTable"
+																render="updateOpenningForm errorPanel"
+																actionListener="#{OpenningListTableBean.setOpenning}" /></td>
+														<td><h:commandButton class="btn btn-primary glow"
+																value="#{fbresource['Active']}"
+																id="changeStatusToActive"
+																title="#{fbresource['Click_here_to']} #{fbresource['Active']}"
+																action="#{OpenningListTableBean.changeStatusToActive}">
+																<o:confirmation
+																	id="changeStatusToActivebuttonConfirmation"
+																	message="Are you  sure you want to Active?"
+																	draggable="true" />
+															</h:commandButton></td>
+														<td><h:commandButton class="btn btn-primary glow"
+																value="#{fbresource['InActive']}"
+																id="changeStatusToInActive"
+																title="#{fbresource['Click_here_to']} #{fbresource['InActive']}"
+																action="#{OpenningListTableBean.changeStatusToInActive}">
+																<o:confirmation
+																	id="changeStatusToInActivebuttonConfirmation"
+																	message="#{fbresource['Are_you__sure_you_want_to_InActive']}"
+																	draggable="true" />
+															</h:commandButton></td>
+														<td><input type="button"
+															value="#{fbresource['Print']}"
+															class="btn btn-primary glow"
+															title="#{fbresource['Click_here_to']} #{fbresource['Print']}"
+															onClick="window.print()" /></td>
+														<td><h:commandButton
+																title="#{fbresource['Generate']} #{fbresource['Excel_report']}"
+																value="#{fbresource['Excel_report']}"
+																image="/images/excel_button.png"
+																style="height:40px;width:40px;" id="generateXls"
+																action="#{OpenningListTableBean.generateXls}" /></td>
+														<td><h:commandButton
+																title="#{fbresource['Generate']} #{fbresource['PDF_report']}"
+																value="#{fbresource['PDF_report']}"
+																image="/images/pdf_button.png"
+																style="height:40px;width:40px;"
+																action="#{OpenningListTableBean.generatePdfReport}" /></td>
+
+													</tr>
+												</table>
+												<h:panelGroup id="paginationTableContainner">
+													<o:dataTable id="OpenningListTable" var="openning"
+														value="#{OpenningListTableBean.hallTicketList}"
+														sortColumnId="hallTicketId" sortAscending="true"
+														sortableHeaderRolloverStyle="background: #d4d4d4"
+														style="width: 100%; line-height: 17px;"
+														styleClass="datatable"
+														rolloverRowStyle="background: #f1f1f1;">
+														<o:multipleRowSelection
+															rowDatas="#{OpenningListTableBean.selectedList}"
+															style="background: #a4aec5; color: white;" />
+														<o:columnReordering />
+														<f:facet name="columnMenu">
+															<o:columnMenu />
+														</f:facet>
+														<o:selectionColumn style="width: 2%;" sortable="true"
+															header="#{fbresource['Selection']}">
+															<f:facet name="header">
+																<o:selectAllCheckbox />
+															</f:facet>
+														</o:selectionColumn>
+														<o:column header="#{fbresource['HallTicket_ID']}"
+															sortingExpression="#{openning.hallTicketId}"
+															style="text-align: center;">
+															<h:commandLink style="cursor:hand;color:blue;"
+																action="#{OpenningListTableBean.showEligibleList}"
+																value="#{openning.hallTicketId}"
+																title="Select row and click on '#{fbresource['HallTicket_ID']}' to see eligible student list"></h:commandLink>
+														</o:column>
+														
+														<o:column header="#{fbresource['Company_ID']}"
+															sortingExpression="#{openning.companyID}"
+															style="text-align: center;">
+															<h:commandLink style="cursor:hand;color:blue;"
+																action="#{OpenningListTableBean.showCompanyList}"
+																value="#{openning.companyID}"
+																title="Select row and click on '#{fbresource['Company_ID']}' to see company details"></h:commandLink>
+														</o:column>
+														<o:column header="#{fbresource['Company_Name']}"
+															sortingExpression="#{openning.companyName}"
+															style="text-align: center;">
+															<o:hintLabel hintStyle="color:blue;font-size:15px;"
+																hint="#{openning.companyName.length() gt 20 ? openning.companyName : ''}"
+																value="#{openning.companyName.length() gt 20 ? openning.companyName.substring(0,20).concat('...') : openning.companyName}" />
+														</o:column>
+														<o:column header="#{fbresource['Date_Of_Visit']}"
+															sortingExpression="#{openning.date}"
+															style="text-align: center;">
+															<h:outputText value="#{openning.date}">
+																<f:convertDateTime pattern="dd/MM/yyyy" />
+															</h:outputText>
+														</o:column>
+														<o:column header="#{fbresource['lastDate']}"
+															sortingExpression="#{openning.lastDateToApply}"
+															style="text-align: center;">
+															<h:outputText value="#{openning.lastDateToApply}">
+																<f:convertDateTime pattern="dd/MM/yyyy" />
+															</h:outputText>
+														</o:column>
+														<o:column header="#{fbresource['Time']}"
+															sortingExpression="#{openning.time}"
+															style="text-align: center;">
+															<h:outputText value="#{openning.time}" />
+														</o:column>
+														<o:column header="#{fbresource['Package_Offering']}"
+															sortingExpression="#{openning.packageOffering}"
+															style="text-align: center;">
+															<h:outputText value="#{openning.packageOffering}" />
+														</o:column>
+														<o:column header="#{fbresource['Status']}"
+															sortingExpression="#{openning.isActive}"
+															style="text-align: center;">
+															<h:outputText rendered="#{openning.isActive eq true}"
+																value="#{fbresource['Active']}" />
+															<h:outputText rendered="#{openning.isActive eq false}"
+																value="#{fbresource['InActive']}" />
+														</o:column>
+														<o:column header="#{fbresource['Criteria']}"
+															sortingExpression="#{openning.hallTicketId}"
+															style="width: 50px; text-align: left;color:blue;">
+															<o:commandLink style="color:blue;" id="Criteria"
+																actionListener="#{OpenningListTableBean.setCritera}"
+																onajaxend="document.getElementById('criteriaInfoButton').click();"
+																render="criteriaInfoPabel"
+																value="#{fbresource['Click_here']}"
+																title="#{fbresource['Click_here_to_see_the_Criteria_Details']}">
+																<f:param value="#{openning.criteria}" />
+									#{fbresource['Click_here']}
+								</o:commandLink>
+
+														</o:column>
+														<o:column header="#{fbresource['interviewLocation']}"
+															sortingExpression="#{openning.interviewLocation}"
+															style="text-align: center;">
+															<h:outputText value="#{openning.interviewLocation}" />
+														</o:column>
+														<o:column header="#{fbresource['postingLocation']}"
+															sortingExpression="#{openning.postingLocation}"
+															style="text-align: center;">
+															<h:outputText value="#{openning.postingLocation}" />
+														</o:column>
+														<o:column header="#{fbresource['Role']}"
+															sortingExpression="#{openning.role}"
+															style="text-align: center;">
+															<h:outputText value="#{openning.role}" />
+														</o:column>
+														<o:column header="#{fbresource['created_By']}"
+															sortingExpression="#{openning.userName}"
+															style="text-align: center;">
+															<h:outputText value="#{openning.userName}" />
+														</o:column>
+														<o:column header="#{fbresource['Excel']}"
+															sortingExpression="#{openning.hallTicketId}"
+															style="text-align: center;">
+															<h:commandLink 
+																id="fileName"
+																style="font-family: arial, helvetica, verdana, sans-serif;color: blue;font-size: 15px;"
+																action="#{OpenningListTableBean.renderShortReport}">
+																<h:graphicImage url="/images/xls-icon.gif"
+																	title="#{fbresource['Please_click_here_to_download_file']}" />
+																	</h:commandLink>
+														</o:column>
+														<o:column style="width: 3%;text-align: center;">
+															<o:commandLink style="color:blue;" id="campusAnalysis"
+																title="#{fbresource['Click_here_to_see_the_Campus_Analysis']}"
+																actionListener="#{OpenningListTableBean.setOpenningResult}"
+																onajaxend="if(O$('ChartWindowForm:Chart') != null){O$('ChartWindowForm:Chart').show();}"
+																render="ChartWindowForm errorPanel">
+																<h:graphicImage
+																	title="#{fbresource['Click_here_to_see_the_Campus_Analysis']}"
+																	url="/images/chart.jpg" />
+																<h:inputHidden value="#{openning.hallTicketId}" />
+																<h:inputHidden value="#{openning.companyName}" />
+															</o:commandLink>
+														</o:column>
+														<f:event listener="#{OpenningListTableBean.inIt}"
+															type="preRenderView" />
+													</o:dataTable>
+													<table align="right">
+														<tr>
+															<td><ui:include src="/xhtml/pagination.xhtml" /></td>
+														</tr>
+													</table>
+												</h:panelGroup>
+												<font style="margin-left: 20px;" color="red">#{fbresource['Note_Select_row_and_click_on_Company_ID_to_see_eligible_student_list']}</font>
+											</h:form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</ui:define>
+</ui:composition>
+</html>

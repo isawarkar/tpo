@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+
+<button style="display: none" id="projectButton" type="button"
+	data-toggle="modal" data-target="#project" />
+<div class="modal fade text-left" id="project" tabindex="-1"
+	role="dialog" aria-labelledby="myModalLabel160" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+		role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-primary">
+				<h5 class="modal-title white" id="myModalLabel160">#{fbresource['Project_Information']}</h5>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<i class="bx bx-x"></i>
+				</button>
+			</div>
+			<div class="modal-body">
+				<h:panelGroup id="projectInfo">
+					<center>
+						<f:verbatim rendered="#{EffortTableBean.project == null}">
+							<font color="red">#{fbresource['Project_has_been_deleted']}</font>
+							<br />
+						</f:verbatim>
+
+						<o:forEach items="#{EffortTableBean.project}" var="project">
+							<TABLE>
+								<tr>
+									<td><font color="geen" size="3">#{fbresource['Project_ID']}</font></td>
+									<td><font color="blue" size="5">#{project.projectid}</font></td>
+								</tr>
+								<tr>
+									<td><font color="geen" size="3">#{fbresource['project_name']}</font></td>
+									<td><font color="blue" size="5">#{project.projectname}</font></td>
+								</tr>
+								<tr>
+									<td><font color="geen" size="3">#{fbresource['Status']}</font></td>
+									<td><font color="blue" size="5">#{project.status}</font></td>
+								</tr>
+								<tr>
+									<td><font color="geen" size="3">#{fbresource['created_By']}</font></td>
+									<td><font color="blue" size="5">#{project.createdBy}</font></td>
+								</tr>
+
+
+							</TABLE>
+							<br />
+							<br />
+						</o:forEach>
+					</center>
+				</h:panelGroup>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-light-secondary"
+					data-dismiss="modal">
+					<i class="bx bx-x d-block d-sm-none"></i> <span
+						class="d-none d-sm-block">#{fbresource['Close']}</span>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<button style="display: none" id="moduleButton" type="button"
+	data-toggle="modal" data-target="#module" />
+<div class="modal fade text-left" id="module" tabindex="-1"
+	role="dialog" aria-labelledby="myModalLabel160" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+		role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-primary">
+				<h5 class="modal-title white" id="myModalLabel160">#{fbresource['Module_Information']}</h5>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<i class="bx bx-x"></i>
+				</button>
+			</div>
+			<div class="modal-body">
+				<h:panelGroup id="moduleInfo">
+					<center>
+						<f:verbatim rendered="#{EffortTableBean.module == null}">
+							<font color="red">#{fbresource['Project_has_been_deleted']}</font>
+							<br />
+						</f:verbatim>
+
+						<o:forEach items="#{EffortTableBean.module}" var="module">
+							<TABLE>
+								<tr>
+									<td><font color="geen" size="3">#{fbresource['Module_id']}</font></td>
+									<td><font color="blue" size="5">#{module.moduleid}</font></td>
+								</tr>
+								<tr>
+									<td><font color="geen" size="3">#{fbresource['Module_Name']}</font></td>
+									<td><font color="blue" size="5">#{module.modulename}</font></td>
+								</tr>
+								<tr>
+									<td><font color="geen" size="3">#{fbresource['Status']}</font></td>
+									<td><font color="blue" size="5">#{module.status}</font></td>
+								</tr>
+								<tr>
+									<td><font color="geen" size="3">#{fbresource['created_By']}</font></td>
+									<td><font color="blue" size="5">#{module.createdBy}</font></td>
+								</tr>
+							</TABLE>
+							<br />
+							<br />
+						</o:forEach>
+					</center>
+				</h:panelGroup>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-light-secondary"
+					data-dismiss="modal">
+					<i class="bx bx-x d-block d-sm-none"></i> <span
+						class="d-none d-sm-block">#{fbresource['Close']}</span>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+</html>

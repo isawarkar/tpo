@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="tpo.hibernate.Questions" table="questions" >
+        <composite-id name="id" class="tpo.hibernate.QuestionsId">
+            <key-property name="qno" type="java.lang.Integer">
+                <column name="qno" />
+            </key-property>
+            <key-property name="qtype" type="java.lang.String">
+                <column name="qtype" length="15" />
+            </key-property>
+        </composite-id>
+        <property name="question" type="java.lang.String">
+            <column name="question" length="4000" />
+        </property>
+        <property name="optiona" type="java.lang.String">
+            <column name="optiona" length="1000" />
+        </property>
+        <property name="optionb" type="java.lang.String">
+            <column name="optionb" length="1000" />
+        </property>
+        <property name="optionc" type="java.lang.String">
+            <column name="optionc" length="1000" />
+        </property>
+        <property name="optiond" type="java.lang.String">
+            <column name="optiond" length="1000" />
+        </property>
+        <property name="answer" type="java.lang.String">
+            <column name="answer" length="10" />
+        </property>
+        <property name="isImage" type="java.lang.Boolean">
+            <column name="isImage" />
+        </property>
+        <property name="questionType" type="java.lang.String">
+            <column name="questionType" length="10" />
+        </property>
+         <property name="assignedNo" type="java.lang.Double">
+            <column name="assignedNo" />
+        </property>
+         <property name="image" type="java.sql.Blob">
+            <column name="image" />
+        </property>
+    </class>
+</hibernate-mapping>

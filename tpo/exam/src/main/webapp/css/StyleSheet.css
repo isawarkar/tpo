@@ -1,0 +1,155 @@
+body { font-family: 'Cabin', Helvetica, Arial, sans-serif; margin:0; padding:0; }
+#Wrap { width:1100px; margin:0 auto; padding:0; }
+#top_bg { width:100%; background-color:#333; position:absolute; margin:0; padding:0; height:50px; z-index:-9999; }
+
+/* Top Of Website */
+#Top {  width:1100px; height:55px; float:left; }
+#Top_login { float:right; padding:10px 0 0 0; }
+#basket { float:right; }
+       #cssdropdown { margin-top:15px; padding:0; }
+       li.headlink { background-color:#333; width:200px; margin-left:-1px; text-align:center; }
+       li.headlink ul { display: none; }
+       li.headlink:hover ul { display:block; padding:10px; }
+       li.headlink a { color:#ccc; }
+       li.headlink p { color:#ccc; text-align:center; }
+#Menu { float:left; }
+#Memu ul { }
+#Menu ul li { list-style-type:none; display:inline; padding:0 25px 0 0; }
+#Menu ul li a { color:#fff; font-size:14px; }
+#Menu ul li a:hover { color:#ccc; }
+
+/* Styles for bullets with hover effect */
+ul.bullet_style {  list-style-image:url(images/bullet.png); }
+ul.bullet_style li:hover { list-style-image:url(images/bullet_hover.png); }
+
+/* Banner/Slider */
+.slideBtn {position: absolute; width: 29px; height: 42px; top: 20px; right: -29px; display: block; background-color:#ccc; }
+.open { background-position: top left; }
+.close { background-position: bottom left; }
+
+/* Product Sidebar */
+#ProductSidebar { float:left; width:1100px; background-color:green; margin: 5px 0 5px 10px; padding:0 0 0 0; }
+#ProductSidebar ul { margin:0; padding:0 0 12px 0; }
+#ProductSidebar ul li a:hover { text-decoration:underline; }
+#ProductsOverview { float:left; width:800px; margin:5px 0 0 0; }
+#screenshot{position:absolute; border:1px solid #ccc; background:#333; padding:5px; display:none; color:#fff;}
+/* CSS3 Boxes */
+ul.box { overflow: hidden; list-style: none; margin: 0; padding: 0; z-index:-9999; }
+ul.box li { position: relative; float: right; width: 255px; height: 155px; padding: 0; border: 1px solid #efefef; margin: 0 0 10px 5px; background: #ccc;´-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset; -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset;  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset; }
+ul.box li:before, ul.box li:after { content: ''; z-index: -1; position: absolute; left: 10px; bottom: 10px; width: 70%; max-width: 300px; /* avoid rotation causing ugly appearance at large container widths */ max-height: 100px; height: 55%; -webkit-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); -moz-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); -webkit-transform: skew(-15deg) rotate(-6deg); -moz-transform: skew(-15deg) rotate(-6deg); -ms-transform: skew(-15deg) rotate(-6deg); -o-transform: skew(-15deg) rotate(-6deg); transform: skew(-15deg) rotate(-6deg); }
+ul.box li:after { left: auto; right: 10px; -webkit-transform: skew(15deg) rotate(6deg); -moz-transform: skew(15deg) rotate(6deg); -ms-transform: skew(15deg) rotate(6deg); -o-transform: skew(15deg) rotate(6deg); transform: skew(15deg) rotate(6deg); }
+
+/* Product/middle Menu */
+.productMenu { float: left; width:1100px; margin: 0 0 0 0;z-index: 100; } 
+
+/* Store Page */
+.Store_Product { float:left; width:250px; height:100%; margin: 0 5px 35px 5px; }
+.Store_Product img { border:3px solid white; }
+.Store_Product h3 { letter-spacing:5px; margin:0; text-align:center; } 
+span.price { color:#333; font-size:14px; text-align:left; float:left; padding-top:5px; font-family: 'Cabin', Helvetica, Arial, sans-serif; letter-spacing:3px; font-weight:bold;}
+.details { width:70px; padding:5px; text-align:center; float:right;
+           /* Rounded */
+	-moz-border-radius: 4px; /* FireFox 1+ */
+	-webkit-border-radius: 4px; /* Safari 3+, Chrome */
+	 border-radius: 4px; /* Opera 10.5, IE 9 */
+          /* Gradient */
+	background-image: -moz-linear-gradient(top, #ffffff, #cccccc);
+	/* Safari4+, Chrome */
+	background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #ffffff),color-stop(1, #cccccc));
+	/* IE6,IE7 */
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#cccccc');
+	/* IE8 */
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#cccccc')";
+         /* Shadow */
+	-moz-box-shadow: 1px 1px 2px #333333; /* Firefox F3.5+ */
+	-webkit-box-shadow: 1px 1px 2px #333333; /* Safari3.0+, Chrome */
+	 box-shadow: 1px 1px 2px #333333; /* Opera 10.5, IE 9.0 */
+	 filter:  progid:DXImageTransform.Microsoft.dropshadow(OffX=0px, OffY=0px, Color='#333333'); /* IE6, IE7 */
+	-ms-filter: "progid:DXImageTransform.Microsoft.dropshadow(OffX=0px, OffY=0px, Color='#333333')"; /* IE8 */
+}
+
+.details:hover { /* Gradient */ background-image: -moz-linear-gradient(top, #cccccc, #ffffff);  /* Safari4+, Chrome */ background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #cccccc),color-stop(1, #ffffff)); /* IE6,IE7 */
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#cccccc', endColorstr='#ffffff');
+	/* IE8 */-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#cccccc', endColorstr='#ffffff')"; }
+ 
+/* Footer / Bottom */
+#footer { float:left; background-color:#333; height:30px; width:100%; margin:400px 0 0 0; clear:both; text-align:center; color:#e0e0e0;} 
+#front_bottom_container { width:1100px; height:100%; margin:0; padding:5px; float:left; background-color:#ccc; text-align:center; }
+#quote { float:left; width:1100px; height:20px; margin-top:30px; text-align:center; color:#c3c3c3; font-style:italic; }
+/*Opera Fix*/
+body:before { content:""; height:100%; float:left; width:0; margin-top:-32767px;/ }
+
+/* ETC */
+p { font-family: 'Cabin', Helvetica, Arial, sans-serif; font-size: 13px; line-height: 20px; text-align:left; color:#333; }
+a { font-family: 'Cabin', Helvetica, Arial, sans-serif; text-decoration:none; font-size:13px; color:#333; }
+a:hover { text-decoration:underline; }
+a:visited { color:#333;}
+a:selected { color:#333; }
+ul { list-style: none; padding:0 0 0 5px; }
+h1 { font-family: 'Lobster', Georgia, Times, serif; font-size:40px; color:#333; margin:0px; padding:0px; }
+h2 { font-family: 'Lobster', Georgia, Times, serif; font-size: 22px; color:#333; margin:10px; padding:0; }
+h3 { font-family: 'Lobster', Georgia, Times, serif; font-size: 18px; color:#333; margin:10px 0 10px 0; padding:0; }
+.Title { width:1100px; float:left;  padding:10px 0 10px 0; }
+li { list-style-type:none; margin:0; padding:0; }
+
+
+/* Global Info Container */
+#Global_Container { float:left; width:1100px; background-color:white; min-height:200px; height:100%; margin:5px 0 0 0; padding:0; }
+.Global_DividerTwo { width:1100px float:left; padding:0 0 20px 10px; }
+hr { width:100%; }
+/* Input */
+input { border:1px solid #a9a9a9; padding: 3px 3px 3px 3px; }
+input[type="text"] { border:1px solid gray; padding:3px 3px 3px 3px; }
+input[type="button"] { border:1px solid gray; padding:3px 3px 3px 3px; }
+
+/* FAQ Expander */
+.FaqGroup { float:left; }
+.expand_wrapper { float:left; margin-top:20px; }
+h2.expand_heading { padding:0; margin:5px 0 0 0; width: 380px; font-weight: normal; float: left;}
+.expand_all{cursor:default;}
+h2.expand_heading a { color: #333; text-decoration: none; display: block;}
+h2.expand_heading a:hover { color: #333; text-decoration:underline;}
+.toggle_container { margin: 0 0 5px; padding:10px 0 0 0; overflow: hidden; width: 380px; clear: both;}
+.toggle_container .box {}
+.toggle_container .box p { padding: 5px 0; margin: 5px 0;  color:#6a6a6a;}
+.toggle_container h3 { margin: 0 0 5px; padding: 0 0 5px 0; color:#333; border-bottom: 1px dotted #ccc; }
+.expand_all { width:80px; height:29px; float:left; cursor: pointer; }
+.expanded { background-position:bottom left; }
+
+
+ /* --- Viewport Frontpage / Product Overview --- */
+        .viewport { border: 3px solid #eee;  float: left;height: 150px; margin: 0 9px 9px 0; overflow: hidden; position: relative;width: 250px; }
+        /* This is so that the 2nd thumbnail in each row fits snugly. You will want to add a similar
+           class to the last thumbnail in each row to get rid of the margin-right. */
+        .no-margin { margin-right: 0; }
+        /* --- Link configuration that contains the image and label ----------------------------- */
+        .viewport a {display: block;position: relative;
+        }
+
+        .viewport a img {height: 150px; position: relative; width: 250px;
+        }
+
+        /* --- Label configuration -------------------------------------------------------------- */
+        .viewport a span { display: none; font-size: 2.0em; font-weight: bold; height: 150px;  padding-top: 20px;position: absolute;  text-align: center; text-decoration: none; width: 250px; z-index: 100;}
+            .viewport a span em { display: block; font-size: 0.45em; font-weight: normal; }
+
+        /* --- Dark hover background ------------------------------------------------------------ */
+        .dark-background { background-color: rgba(15, 15, 15, 0.6); color: #fff;text-shadow: #000 0px 0px 20px;}
+            .dark-background em { color: #ccc; }
+
+        /* --- Light hover background ----------------------------------------------------------- */
+        .light-background { background-color: rgba(255, 255, 255, 0.6);color: #333;text-shadow: #fff 0px 0px 20px; }
+            .light-background em { color: #707070; }
+
+
+/* Product Page */
+        ul.box_product { list-style: none; margin: 0; padding: 0; z-index:-9999; }
+        ul.box_product li { position: relative; float: left; width: 800px; height: 360px; padding:0; border: 1px solid #efefef; margin: 0 0 8px 5px; background: #ccc;-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset; -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset;  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.06) inset; }
+        ul.box_product li:before, ul.box li:after { content: ''; z-index: -1; position: absolute; left: 10px; bottom: 10px; width: 70%; max-width: 230px; /* avoid rotation causing ugly appearance at large container widths */ max-height: 100px; height: 55%; -webkit-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); -moz-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); -webkit-transform: skew(-15deg) rotate(-6deg); -moz-transform: skew(-15deg) rotate(-6deg); -ms-transform: skew(-15deg) rotate(-6deg); -o-transform: skew(-15deg) rotate(-6deg); transform: skew(-15deg) rotate(-6deg); }
+        ul.box_product li:after { left: auto; right: 10px; -webkit-transform: skew(15deg) rotate(6deg); -moz-transform: skew(15deg) rotate(6deg); -ms-transform: skew(15deg) rotate(6deg); -o-transform: skew(15deg) rotate(6deg); transform: skew(15deg) rotate(6deg); }
+    .Product_details { float:left; width:300px; margin:10px; }
+    
+  .foldingPanelStyle{
+  background: #ccc;
+  }  
+    

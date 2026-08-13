@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.hibernate.College" table="college" >
+        <id name="collegeName" type="java.lang.String">
+            <column name="CollegeName" length="20" />
+            <generator class="assigned" />
+        </id>
+         <property name="collegeFullName" type="java.lang.String">
+            <column name="collegeFullName" length="200" not-null="true" />
+        </property>
+        <property name="place" type="java.lang.String">
+            <column name="place" length="100" not-null="true" />
+        </property>
+        <property name="university" type="java.lang.String">
+            <column name="university" length="100" not-null="true" />
+        </property>
+        <property name="dateOfOpening" type="java.util.Date">
+            <column name="dateOfOpening" length="19" not-null="true" />
+        </property>
+        <property name="emailAddress" type="java.lang.String">
+            <column name="emailAddress" length="100" not-null="true" />
+        </property>
+        <property name="siteAddress" type="java.lang.String">
+            <column name="siteAddress" length="100" />
+        </property>
+        <property name="address" type="java.lang.String">
+            <column name="address" length="500" not-null="true" />
+        </property>
+         <many-to-one name="logindetails" class="com.hibernate.Logindetails" fetch="select">
+            <column name="userName" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

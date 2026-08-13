@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="HallTicket">HallTicket</string>
+    <string name="UploadImage">Upload Image</string>
+    <string name="SeeFullImage">See Full Image</string>
+    <string name="Share">Share</string>
+    <string name="Apply">Apply</string>
+    <string name="Denay">Denay</string>
+    <string name="Delete">Delete</string>
+    <string name="ShowDetails">Details</string>
+    <string name="Read">Read</string>
+    <string name="app_name">Fresher Buddy</string>
+    <string name="versionNo">versionNo</string>
+    <string name="Need_Permission">Need permission to read phone?</string>
+    <string name="New_Opening">New Opening found</string>
+    <string name="Old_Opening">Old Opening found</string>
+    <string name="Show_List">Show List</string>
+    <string name="Internet_is_not_available">Internet is not available.</string>
+    <string name="Internet_is_not_available_full">Internet is not available.Please enable internet.</string>
+    <string name="FBN_Syn_Started">FBN Syn Started</string>
+    <string name="FBN_Syn_Completed">FBN Syn Completed</string>
+    <string name="login">Login</string>
+    <string name="logout">Logout</string>
+    <string name="home">Home</string>
+    <string name="setting">Settings</string>
+    <string name="eligible_Openings">  You are eligible in Openings</string>
+    <string name="downloadedHl">Downloaded Docs</string>
+    <string name="List_of_the_Downloaded_Docs">List of the downloaded Docs</string>
+    <string name="about">About</string>
+    <string name="developedBy">Developed By:</string>
+    <string name="uddanda">Uddanda Technologies(Indrajeet)</string>
+    <string name="address">Address</string>
+    <string name="addressdetails">Copyright © 2020 www.fresherbuddy.com, All rights reserved</string>
+    <string name="ok">Home</string>
+    <string name="oldOpenings">Old Openings List</string>
+    <string name="New_Notice">New Notice</string>
+    <string name="oldNotices">Old Notice List</string>
+    <string name="submit">Submit</string>
+    <string name="Clear">Clear</string>
+    <string name="new_result_count">Result List</string>
+    <string name="document_list">Document List</string>
+    <string name="New_FEE_REMINDER">New Fee Reminder</string>
+
+</resources>

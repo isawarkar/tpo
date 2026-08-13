@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd"
+	version="2.1">
+	<application>
+		<el-resolver>
+			org.springframework.web.jsf.el.SpringBeanFacesELResolver
+		</el-resolver>
+		<locale-config>
+			<default-locale>en</default-locale>
+			<supported-locale>de</supported-locale>
+			<supported-locale>fr</supported-locale>
+			<supported-locale>es</supported-locale>
+			<supported-locale>ru</supported-locale>
+		</locale-config>
+	</application>
+	
+	<validator>
+		<validator-id>EmailValidator</validator-id>
+		<validator-class>com.validator.EmailValidator</validator-class>
+	</validator>
+	
+	<validator>
+		<validator-id>ChaptaValidator</validator-id>
+		<validator-class>com.validator.ChaptaValidator
+		</validator-class>
+	</validator>
+	
+	<validator>
+		<validator-id>PasswordValidator</validator-id>
+		<validator-class>com.validator.PasswordValidator</validator-class>
+	</validator>
+
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>sessionExpiredAction</from-outcome>
+			<to-view-id>/sessionInvalidated.xhtml</to-view-id>
+			<redirect></redirect>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>finishExam</from-outcome>
+			<to-view-id>/result.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>mainTestNewWindow</from-outcome>
+			<to-view-id>/login/testOpener.jsp</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>mainTest</from-outcome>
+			<to-view-id>/login/mainTest.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+</faces-config>

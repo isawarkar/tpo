@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html class="loading" data-textdirection="ltr"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<title>#{fbresource['Freshers_Buddy']}</title>
+<center>
+<div id="overlay"></div>
+<div id="LoaderX" class="LX">
+	<div
+		style="color: green; font-size: 25px; margin-left: 300px; margin-top: 50px;"
+		id="LoaderContainer">
+		<img src='/FB/css/loading.gif' />
+	</div>
+</div>
+</center>
+<!-- BEGIN: Head-->
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="shortcut icon" type="image/x-icon"
+		href="/FB/favicon.ico" />
+	<link
+		href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,600%7CIBM+Plex+Sans:300,400,500,600,700"
+		rel="stylesheet" />
+
+	<link rel="stylesheet" type="text/css"
+		href="/FB/adminTemplateNew/css/fbadmin.css" />
+
+	<!-- BEGIN: Vendor CSS-->
+	<link rel="stylesheet" type="text/css"
+		href="/FB/adminTemplateNew/vendors/css/vendors.min.css" />
+	<link rel="stylesheet" type="text/css"
+		href="/FB/adminTemplateNew/vendors/css/animate/animate.css" />
+	<!-- <link rel="stylesheet" type="text/css"
+		href="/FB/adminTemplateNew/vendors/css/extensions/sweetalert2.min.css" /> -->
+	<link rel="stylesheet" type="text/css"
+		href="/FB/adminTemplateNew/vendors/css/extensions/toastr.css" />
+	<!-- END: Vendor CSS-->
+
+	<!-- BEGIN: Theme CSS-->
+	<link rel="stylesheet" type="text/css"
+		href="/FB/adminTemplateNew/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css"
+		href="/FB/adminTemplateNew/css/bootstrap-extended.min.css" />
+	<link rel="stylesheet" type="text/css"
+		href="/FB/adminTemplateNew/css/colors.min.css" />
+	<link rel="stylesheet" type="text/css"
+		href="/FB/adminTemplateNew/css/components.min.css" />
+	<link rel="stylesheet" type="text/css"
+		href="/FB/adminTemplateNew/css/themes/dark-layout.min.css" />
+	<link rel="stylesheet" type="text/css"
+		href="/FB/adminTemplateNew/css/themes/semi-dark-layout.min.css" />
+	<!-- END: Theme CSS-->
+
+	<!-- BEGIN: Page CSS-->
+	<link rel="stylesheet" type="text/css"
+		href="/FB/adminTemplateNew/css/core/menu/menu-types/vertical-menu.min.css" />
+	<link rel="stylesheet" type="text/css"
+		href="/FB/adminTemplateNew/css/pages/dashboard-ecommerce.min.css" />
+	<link rel="stylesheet" type="text/css"
+		href="/FB/adminTemplateNew/css/plugins/extensions/toastr.min.css" />
+	<!-- END: Page CSS-->
+
+	<!-- BEGIN: Custom CSS-->
+	<link rel="stylesheet" type="text/css"
+		href="/FB/adminTemplateNew/css/style.css" />
+	<!-- END: Custom CSS-->
+
+	<script src="/FB/ckeditor/ckeditor.js" />
+	<script src="/FB/js/CCP.js" />
+
+	<script>
+		pleaseWaitLoading();
+	</script>
+</h:head>
+<!-- END: Head-->
+<h:body
+	class="vertical-layout vertical-menu-modern 2-columns  navbar-sticky footer-static  "
+	data-open="click" data-menu="vertical-menu-modern" data-col="2-columns"
+	onload="hidePleaseWait();">
+	<f:view locale="#{LanguageLocaleBean.locale}">
+		<ui:include src="/template/ajaxSetting.xhtml" />
+		<f:loadBundle var="fbresource" basename="com.fb.fbresource" />
+		<ui:insert name="header">
+			<ui:include src="adminHeaderNew.xhtml" />
+		</ui:insert>
+		<div class="app-content content">
+			<div class="content-overlay"></div>
+			<div class="content-wrapper">
+				<div class="content-header row"></div>
+				<ui:include src="/xhtml/commonMessage.xhtml" />
+				<div class="content-body">
+					<ui:insert name="content" />
+				</div>
+			</div>
+		</div>
+		<ui:insert name="customizer">
+			<ui:include src="/adminTemplateNew/adminCustomizer.xhtml" />
+		</ui:insert>
+		<div class="sidenav-overlay"></div>
+		<div class="drag-target"></div>
+		<ui:insert name="footer">
+			<ui:include src="/adminTemplateNew/adminFooterNew.xhtml" />
+		</ui:insert>
+	</f:view>
+</h:body>
+<!-- BEGIN: Vendor JS-->
+<script src="/FB/adminTemplateNew/vendors/js/vendors.min.js" />
+<script
+	src="/FB/adminTemplateNew/fonts/LivIconsEvo/js/LivIconsEvo.tools.min.js" />
+<script
+	src="/FB/adminTemplateNew/fonts/LivIconsEvo/js/LivIconsEvo.defaults.min.js" />
+<script
+	src="/FB/adminTemplateNew/fonts/LivIconsEvo/js/LivIconsEvo.min.js" />
+<!-- BEGIN Vendor JS-->
+
+<!-- BEGIN: Page Vendor JS-->
+<script
+	src="/FB/adminTemplateNew/vendors/js/extensions/swiper.min.js" />
+<script
+	src="/FB/adminTemplateNew/vendors/js/extensions/sweetalert2.all.min.js" />
+<script
+	src="/FB/adminTemplateNew/vendors/js/extensions/polyfill.min.js" />
+<script
+	src="/FB/adminTemplateNew/vendors/js/extensions/toastr.min.js" />
+	 <script src="/FB/adminTemplateNew/vendors/js/ui/blockUI.min.js"></script>
+<!-- END: Page Vendor JS-->
+
+<!-- BEGIN: Theme JS-->
+<script
+	src="/FB/adminTemplateNew/js/scripts/configs/vertical-menu-light.min.js" />
+<script src="/FB/adminTemplateNew/js/core/app-menu.min.js" />
+<script src="/FB/adminTemplateNew/js/core/app.min.js" />
+<script src="/FB/adminTemplateNew/js/scripts/components.min.js" />
+<script src="/FB/adminTemplateNew/js/scripts/footer.min.js" />
+<script src="/FB/adminTemplateNew/js/scripts/customizer.min.js" />
+<!-- END: Theme JS-->
+
+<!-- BEGIN: Page JS-->
+<!-- <script
+	src="/FB/adminTemplateNew/js/scripts/pages/dashboard-ecommerce.min.js" />
+ -->
+<!-- <script
+	src="/FB/adminTemplateNew/js/scripts/extensions/sweet-alerts.min.js" /> -->
+<script
+	src="/FB/adminTemplateNew/js/scripts/extensions/toastr.min.js"></script>
+	<script src="/FB/adminTemplateNew/js/scripts/extensions/ext-component-block-ui.js"></script>
+<!-- END: Page JS-->
+</html>

@@ -1,0 +1,23 @@
+version: 0.2
+
+env:
+  shell: bash
+phases:
+  install:
+    runtime-versions:
+      java: corretto11
+    commands:
+      - source installjar.sh
+    pre_build:
+    commands:
+      - echo Build started on `date`
+  build:
+    commands:
+      - echo Build started on `date`
+      - mvn install
+  post_build:
+    commands:
+      - echo Build completed on `date`
+artifacts:
+  files:
+    - target/FB.war

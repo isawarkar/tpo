@@ -1,0 +1,433 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<ui:composition
+	template="/studentTemplateTheme3/studentHomeLayout.xhtml">
+	<ui:define name="content">
+		<!-- <ui:include src="/xhtml/allPopUps.xhtml" /> -->
+		<h:form id="contactAndAchivmentsForm">
+			<section id="card-actions">
+				<!-- Info table about action starts -->
+				<div class="row">
+					<div class="col-12">
+						<div class="card">
+							<div class="card-header">
+								<h4 class="card-title">
+									<h:outputText
+										value="#{fbresource['Last_Updated_on']} #{StudentRegistrationBean.contactinfo.lastUpdated} #{fbresource['By']} #{StudentRegistrationBean.contactinfo.lastUpdatedBy}"></h:outputText>
+								</h4>
+								<a class="heading-elements-toggle"> <i
+									class='bx bx-dots-vertical font-medium-3'></i>
+								</a>
+								<div class="heading-elements">
+									<ul class="list-inline mb-0">
+										<li><a data-action="collapse"> <i
+												class="bx bx-chevron-down"></i>
+										</a></li>
+										<li><a data-action="expand"> <i
+												class="bx bx-fullscreen"></i>
+										</a></li>
+										<li><a data-action="reload"> <i
+												class="bx bx-revision"></i>
+										</a></li>
+										<li><a data-action="close"> <i class="bx bx-x"></i>
+										</a></li>
+									</ul>
+								</div>
+							</div>
+							<div class="card-content collapse show">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-sm-12">
+											<div class="table-responsive">
+												<section id="dashboard-ecommerce">
+													<ui:include src="webflow.xhtml" />
+													<table style="width: 100%;">
+														<tr>
+															<td><label for="phoneNumber">
+																	#{fbresource['Phone_Number']} </label></td>
+															<td><h:inputText maxlength="20"
+																	value="#{StudentRegistrationBean.contactinfo.phoneNumber}"
+																	id="phoneNumber" /> <o:floatingIconMessage
+																	style="border-color: red;" for="phoneNumber"
+																	showDetail="true" showSummary="false" /></td>
+															<td><label for="mobileNumber">
+																	#{fbresource['Mobile']}<font color="red">*</font>
+
+															</label></td>
+															<td><h:inputText
+																	title="#{StudentRegistrationBean.contactinfo.numberVerified eq true ? 'This is not a verified mobile number.':'Please enter mobile number.'}"
+																	style="#{StudentRegistrationBean.contactinfo.numberVerified eq true ? 'background:green;':'background:red;'}"
+																	required="true" maxlength="10" immediate="true"
+																	size="10"
+																	value="#{StudentRegistrationBean.contactinfo.mobileNumber}"
+																	id="mobileNumber">
+																	<f:validateLength minimum="10" />
+																</h:inputText> <o:floatingIconMessage style="border-color: red;"
+																	for="mobileNumber" showDetail="true"
+																	showSummary="false" /> <h:graphicImage
+																	rendered="#{StudentRegistrationBean.contactinfo.numberVerified eq true}"
+																	title="#{fbresource['Verified_Mobile_Number']}"
+																	height="15px;" width="15px;" url="/css/success.png" />
+																<h:graphicImage styleClass="blinking"
+																	rendered="#{StudentRegistrationBean.contactinfo.numberVerified eq false}"
+																	title="#{fbresource['Mobile_Number_is_not_verified']}"
+																	height="15px;" width="15px;" url="/css/error.png" /> 
+																	<button style="margin-right: 5px;"
+																title="#{fbresource['Click_here_to_edit_number']}"
+																 id="editStudentNumber" class="btn btn-primary glow"
+																type="button" data-toggle="modal"
+																data-target="#editStudentNumber">#{fbresource['Edit']}</button>
+																	<o:commandButton
+																	styleClass="btn btn-primary glow"
+																	action="#{StudentRegistrationBean.verifieNumber}"
+																	title="#{fbresource['Your_number_is_not_verified']}"
+																	rendered="#{StudentRegistrationBean.contactinfo.numberVerified eq false and StudentRegistrationBean.isSmsEnabled eq 'YES'}"
+																	value="#{fbresource['Verify']}">
+																</o:commandButton></td>
+														</tr>
+
+														<tr>
+															<td><label for="email">
+																	#{fbresource['Email_ID']}<font color="red">*</font>
+
+															</label></td>
+															<td><h:inputText
+																	style="#{StudentRegistrationBean.registration.emailVarified eq true ? 'background:green;':'background:red;'}"
+																	readonly="true" size="20"
+																	title="#{StudentRegistrationBean.registration.emailVarified eq true ?'Verified E-mail Address':'E-mail Address is not verified.It is important to add valid E-mail.It is required for all the communication.'}"
+																	value="#{StudentRegistrationBean.registration.email}" />
+																<h:graphicImage
+																	rendered="#{StudentRegistrationBean.registration.emailVarified eq true}"
+																	title="Verified E-mail Address" height="15px;"
+																	width="15px;" url="/css/success.png" /> <h:graphicImage
+																	rendered="#{StudentRegistrationBean.registration.emailVarified eq false}"
+																	title="#{fbresource['Email_Address_is_not_verified']}"
+																	height="15px;" width="15px;" url="/css/error.png" /></td>
+															<td>
+															<button style="margin-right: 2px;"
+																title="#{fbresource['Click_here_to_edit_email']}"
+																 id="editStudentEmail"
+																type="button" data-toggle="modal"
+																data-target="#editStudentEmail">#{fbresource['Edit']}</button>
+																<o:commandButton execute="@this"
+																	title="#{fbresource['Your_Email_is_not_verified']}"
+																	rendered="#{!StudentRegistrationBean.registration.emailVarified}"
+																	value="#{fbresource['Verify']}"
+																	action="#{StudentRegistrationBean.sendEmail}"
+																	onajaxend="alert('Verification E-mail sent. ');"
+																	render="errorPanel">
+																</o:commandButton></td>
+															<td><label> <font color="red">#{fbresource['It_is_important_to_add_valid_Email']}</font>
+
+															</label></td>
+
+														</tr>
+
+														<tr>
+															<td><label for="hieght">
+																	#{fbresource['Height']}<font color="red">*</font>
+
+															</label></td>
+															<td><h:inputText immediate="true" size="2"
+																	maxlength="3"
+																	title="cm = (feet * 30.48) + (inches * 2.54)"
+																	value="#{StudentRegistrationBean.contactinfo.hieght}"
+																	id="height" required="true"
+																	requiredMessage="#{fbresource['Please_enter']} #{fbresource['Height']}">
+																</h:inputText> <o:floatingIconMessage style="border-color: red;"
+																	for="height" showDetail="true" showSummary="false" />
+																<font color="red">#{fbresource['cm_hint']}</font></td>
+
+															<td><label for="postGraduationBranch">
+
+																	#{fbresource['Weight']}<font color="red">*</font>
+
+															</label></td>
+															<td><h:inputText immediate="true" size="2"
+																	maxlength="3"
+																	value="#{StudentRegistrationBean.contactinfo.weight}"
+																	id="weight" required="true"
+																	requiredMessage="#{fbresource['Please_enter']} #{fbresource['Weight']}">
+																</h:inputText> <o:floatingIconMessage style="border-color: red;"
+																	for="weight" showDetail="true" showSummary="false" /></td>
+														</tr>
+														<tr>
+															<td><label for="glassPowerLeft">
+
+																	#{fbresource['Glass_Power_L']}<font color="red">*</font>
+
+															</label></td>
+															<td><o:dropDownField id="glassPowerLeft"
+																	maxlength="6"
+																	title="#{fbresource['Please_select_6by6_If_not_applicable']}"
+																	required="true" immediate="true" style="width: 80px;"
+																	listItemStyle="white-space: nowrap;"
+																	suggestionMode="stringStart" var="glassPowerLeft"
+																	value="#{StudentRegistrationBean.contactinfo.glassPowerLeft}"
+																	suggestionMinChars="1">
+																	<o:dropDownItems
+																		value="#{CommonDBBean.getCommonData('GlassPower')}" />
+																	<o:column>
+																		<h:outputText value="#{glassPowerLeft}"
+																			styleClass="dropDownValuesClass" />
+																	</o:column>
+																</o:dropDownField> <o:floatingIconMessage style="border-color: red;"
+																	for="glassPowerLeft" showDetail="true"
+																	showSummary="false" /> <font color="red">#{fbresource['Please_select_6by6_If_not_applicable']}</font></td>
+
+															<td><label for="glassPowerRight">
+
+																	#{fbresource['Glass_Power_R']}<font color="red">*</font>
+
+															</label></td>
+															<td><o:dropDownField id="glassPowerRight"
+																	maxlength="6"
+																	title="#{fbresource['Please_select_6by6_If_not_applicable']}"
+																	required="true" immediate="true" style="width: 80px;"
+																	listItemStyle="white-space: nowrap;"
+																	suggestionMode="stringStart" var="glassPowerRight"
+																	value="#{StudentRegistrationBean.contactinfo.glassPowerRight}"
+																	suggestionMinChars="1">
+																	<o:dropDownItems
+																		value="#{CommonDBBean.getCommonData('GlassPower')}" />
+																	<o:column>
+																		<h:outputText value="#{glassPowerRight}"
+																			styleClass="dropDownValuesClass" />
+																	</o:column>
+																</o:dropDownField> <o:floatingIconMessage style="border-color: red;"
+																	for="glassPowerRight" showDetail="true"
+																	showSummary="false" /> <font color="red">#{fbresource['Please_select_6by6_If_not_applicable']}</font></td>
+														</tr>
+
+														<tr>
+															<td><label for="presentAddress">
+
+																	#{fbresource['Present_Address']}<font color="red">*</font>
+
+															</label></td>
+															<td><h:inputTextarea rows="2" immediate="true"
+																	value="#{StudentRegistrationBean.contactinfo.presentAddress}"
+																	maxlength="100" id="presentAddress" required="true"
+																	requiredMessage="#{fbresource['Please_enter']} #{fbresource['Present_Address']}">
+																</h:inputTextarea> <o:floatingIconMessage style="border-color: red;"
+																	for="presentAddress" showDetail="true"
+																	showSummary="false" /></td>
+															<td><label for="permanentAddress">
+
+																	#{fbresource['Permanent_Address']}<font color="red">*</font>
+
+															</label></td>
+															<td><h:inputTextarea rows="2" immediate="true"
+																	value="#{StudentRegistrationBean.contactinfo.permanentAddress}"
+																	maxlength="100" id="permanentAddress" required="true"
+																	requiredMessage="#{fbresource['Please_enter']} #{fbresource['Permanent_Address']}">
+																</h:inputTextarea> <o:floatingIconMessage style="border-color: red;"
+																	for="permanentAddress" showDetail="true"
+																	showSummary="false" /></td>
+														</tr>
+
+														<tr>
+															<td><label for="presentCity">
+
+																	#{fbresource['Present_City']}<font color="red">*</font>
+
+															</label></td>
+															<td><h:inputText immediate="true"
+																	value="#{StudentRegistrationBean.contactinfo.presentCity}"
+																	maxlength="50" id="presentCity" required="true"
+																	requiredMessage="#{fbresource['Please_enter']} #{fbresource['Present_City']}">
+																</h:inputText> <o:floatingIconMessage style="border-color: red;"
+																	for="presentCity" showDetail="true" showSummary="false" /></td>
+															<td><label for="permanentCity">
+
+																	#{fbresource['Permanent_City']}<font color="red">*</font>
+
+															</label></td>
+															<td><h:inputText immediate="true"
+																	value="#{StudentRegistrationBean.contactinfo.permanentCity}"
+																	maxlength="50" id="permanentCity" required="true"
+																	requiredMessage="#{fbresource['Please_enter']} #{fbresource['Permanent_City']}">
+																</h:inputText> <o:floatingIconMessage style="border-color: red;"
+																	for="permanentCity" showDetail="true"
+																	showSummary="false" /></td>
+														</tr>
+														<tr>
+															<td><label for="presentState">
+
+																	#{fbresource['Present_State']}<font color="red">*</font>
+
+															</label></td>
+															<td><o:dropDownField id="presentState"
+																	maxlength="50" required="true" immediate="true"
+																	style="width: 200px;"
+																	listItemStyle="white-space: nowrap;"
+																	suggestionMode="stringStart" var="presentState"
+																	value="#{StudentRegistrationBean.contactinfo.presentState}"
+																	suggestionMinChars="1">
+																	<o:dropDownItems
+																		value="#{CommonDBBean.getCommonData('State')}" />
+																	<o:column>
+																		<h:outputText value="#{presentState}"
+																			styleClass="dropDownValuesClass" />
+																	</o:column>
+																</o:dropDownField> <o:floatingIconMessage style="border-color: red;"
+																	for="presentState" showDetail="true"
+																	showSummary="false" /></td>
+															<td><label for="permanentState">
+
+																	#{fbresource['Permanent_State']}<font color="red">*</font>
+
+															</label></td>
+															<td><o:dropDownField id="permanentState"
+																	required="true" immediate="true" style="width: 200px;"
+																	listItemStyle="white-space: nowrap;" maxlength="50"
+																	suggestionMode="stringStart" var="permanentState"
+																	value="#{StudentRegistrationBean.contactinfo.permanentState}"
+																	suggestionMinChars="1">
+																	<o:dropDownItems
+																		value="#{CommonDBBean.getCommonData('State')}" />
+																	<o:column>
+																		<h:outputText value="#{permanentState}"
+																			styleClass="dropDownValuesClass" />
+																	</o:column>
+																</o:dropDownField> <o:floatingIconMessage style="border-color: red;"
+																	for="permanentState" showDetail="true"
+																	showSummary="false" /></td>
+														</tr>
+													</table>
+													<table>
+														<tr>
+															<td><o:commandButton
+																	styleClass="btn btn-primary glow"
+																	action="#{StudentRegistrationBean.updateContactInformation}"
+																	value="#{fbresource['Update_Contact_Information']}" /></td>
+														</tr>
+													</table>
+												</section>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section id="card-actions">
+				<!-- Info table about action starts -->
+				<div class="row">
+					<div class="col-12">
+						<div class="card">
+							<div class="card-header">
+								<h4 class="card-title">
+									<h:outputText
+										value="#{fbresource['Last_Updated_on']} #{StudentRegistrationBean.achivements.lastUpdated} #{fbresource['By']} #{StudentRegistrationBean.achivements.lastUpdatedBy}"></h:outputText>
+								</h4>
+								<a class="heading-elements-toggle"> <i
+									class='bx bx-dots-vertical font-medium-3'></i>
+								</a>
+								<div class="heading-elements">
+									<ul class="list-inline mb-0">
+										<li><a data-action="collapse"> <i
+												class="bx bx-chevron-down"></i>
+										</a></li>
+										<li><a data-action="expand"> <i
+												class="bx bx-fullscreen"></i>
+										</a></li>
+										<li><a data-action="reload"> <i
+												class="bx bx-revision"></i>
+										</a></li>
+										<li><a data-action="close"> <i class="bx bx-x"></i>
+										</a></li>
+									</ul>
+								</div>
+							</div>
+							<div class="card-content collapse show">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-sm-12">
+											<div class="table-responsive">
+												<section id="dashboard-ecommerce">
+													<table style="width: 100%;">
+														<tr>
+															<td><label for="academic">
+																	#{fbresource['Academic']} </label></td>
+														</tr>
+														<tr>
+															<td><h:panelGrid width="900px">
+																	<h:inputTextarea rows="5" cols="80" immediate="true"
+																		value="#{StudentRegistrationBean.achivements.acedamic}"
+																		maxlength="1000" id="academic">
+																	</h:inputTextarea>
+																</h:panelGrid></td>
+														</tr>
+														<tr>
+															<td><label for="sports">
+																	#{fbresource['Sports']} </label></td>
+														</tr>
+														<tr>
+															<td><h:panelGrid width="900px">
+																	<h:inputTextarea rows="5" cols="80" immediate="true"
+																		value="#{StudentRegistrationBean.achivements.sports}"
+																		maxlength="1000" id="sports">
+																	</h:inputTextarea>
+																</h:panelGrid></td>
+														</tr>
+														<tr>
+															<td><label for="others">
+																	#{fbresource['Others']} </label></td>
+														</tr>
+														<tr>
+															<td><h:panelGrid width="900px">
+																	<h:inputTextarea rows="5" cols="80" immediate="true"
+																		value="#{StudentRegistrationBean.achivements.others}"
+																		maxlength="1000" id="others">
+																	</h:inputTextarea>
+																</h:panelGrid></td>
+														</tr>
+
+													</table>
+													<table style="width: 110px;">
+														<tr>
+															<td><o:commandButton
+																	title="#{fbresource['Previous_Page']}"
+																	value="#{fbresource['Previous_Page']}"
+																	styleClass="btn btn-primary glow"
+																	action="#{WebFlow.thirdPagePrevius}" /></td>
+															<td><o:commandButton
+																	title="#{fbresource['Next_Page']}"
+																	value="#{fbresource['Next_Page']}"
+																	styleClass="btn btn-primary glow"
+																	action="#{WebFlow.allDocumentPageForStudent}" /></td>
+															<td><o:commandButton
+																	styleClass="btn btn-primary glow"
+																	action="#{StudentRegistrationBean.updateAchivementsInformation}"
+																	value="#{fbresource['Update_Achievement_Information']}" /></td>
+
+														</tr>
+													</table>
+
+												</section>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+		</h:form>
+		<script>
+			CKEDITOR.replace('contactAndAchivmentsForm:academic');
+			CKEDITOR.replace('contactAndAchivmentsForm:sports');
+			CKEDITOR.replace('contactAndAchivmentsForm:others');
+		</script>
+
+	</ui:define>
+</ui:composition>
+</html>

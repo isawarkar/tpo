@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd  http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.2.xsd ">
+
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:system.properties</value>
+			</list>
+		</property>
+		<property name="ignoreUnresolvablePlaceholders" value="true"/>
+	</bean>
+
+	<!-- Database Configuration -->
+	<import resource="DataSource.xml" />
+	<import resource="Hibernate.xml" />
+
+	<!-- Auto scan the components <context:component-scan base-package="hibernate" 
+		/> -->
+		<context:component-scan
+		base-package="tpo.admin.beans" />
+	<context:component-scan
+		base-package="tpo.ets.beans" />
+	<context:component-scan base-package="tpo.email" />
+	<context:component-scan base-package="tpo.dao" />
+	<context:component-scan base-package="tpo.beans" />
+	<context:component-scan
+		base-package="tpo.locale" />
+	<context:component-scan
+		base-package="tpo.admin.backup" />
+	<context:component-scan
+		base-package="tpo.admin.excel" />
+	<context:component-scan
+		base-package="com.fb.controller" />
+	<context:component-scan
+		base-package="tpo.imageservice.client" />
+	<context:component-scan
+		base-package="tpo.pdf.generator" />
+	<!-- Others beans -->
+	<bean scope="request" id="UIBackingBean"
+		class="tpo.beans.UIBackingBean" />
+
+	<!-- <import resource="backupContext.xml" /> 
+	     <import resource="dataLoaderContext.xml"/>
+	     <import resource="jms-config.xml" /> 
+	-->
+</beans>

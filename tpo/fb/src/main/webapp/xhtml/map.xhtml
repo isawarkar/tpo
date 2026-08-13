@@ -1,0 +1,49 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=620, initial-scale=1, maximum-scale=1" />
+<title>jQuery gMap - Examples</title>
+<link href='http://fonts.googleapis.com/css?family=Lato:bolditalic'
+	rel='stylesheet' type='text/css' />
+</head>
+<style>
+.map {
+	width: 1050px;
+	height: 500px;
+	border: 1px solid #000;
+	margin-bottom: 20px;
+}
+
+.map p {
+	margin: 10px;
+	color: #333;
+}
+</style>
+<FIELDSET>
+	<LEGEND>#{fbresource['Address_Map']}</LEGEND>
+	<div id="map_addresses" class="map"></div>
+</FIELDSET>
+
+<script type="text/javascript"
+	src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript" src="/FB/js/jquery.gmap.js"></script>
+<script type="text/javascript" charset="utf-8">
+	$(function() {
+		$('#map_addresses').gMap({
+			address : "Quito, Ecuador",
+			zoom : 15,
+			markers : [ {
+				latitude : 23.230440023157634,
+				longitude : 77.43486195802689,
+				html : "#{fbresource['address_map_cont']}",
+				popup : true
+			} ]
+		});
+	});
+</script>
+</html>

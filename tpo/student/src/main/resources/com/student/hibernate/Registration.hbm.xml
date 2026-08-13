@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.hibernate.Registration" table="registration" >
+        <id name="rollnumber" type="java.lang.String">
+            <column name="rollnumber" length="14" />
+            <generator class="assigned" />
+        </id>
+        <property name="firstName" type="java.lang.String">
+            <column name="firstName" length="50" />
+        </property>
+        <property name="lastName" type="java.lang.String">
+            <column name="lastName" length="50" />
+        </property>
+        <property name="emailVarified" type="java.lang.Boolean">
+            <column name="emailVerified" not-null="true" />
+        </property>
+        <property name="email" type="java.lang.String">
+            <column name="email" length="100" not-null="true"/>
+        </property>
+        <property name="password" type="java.lang.String">
+            <column name="password" length="300" not-null="true" />
+        </property>
+        <property name="approved" type="java.lang.Boolean">
+            <column name="approved" not-null="true" />
+        </property>
+         <property name="collegeName" type="java.lang.String">
+            <column name="collegeName" length="200" not-null="true" />
+        </property>
+        <property name="lastUpdated" type="java.util.Date">
+            <column name="lastUpdated" />
+        </property>
+        <property name="lastUpdatedBy" type="java.lang.String">
+            <column name="lastUpdatedBy" />
+        </property>
+      
+		 <property name="status" type="java.lang.Boolean">
+            <column name="status" not-null="true" />
+        </property>
+         <property name="theme" type="java.lang.String">
+            <column name="theme" not-null="true" />
+        </property>
+         <property name="color" type="java.lang.Integer">
+            <column name="color" not-null="true" />
+        </property>
+        <one-to-one cascade="delete-orphan" name="percentageinfo" class="com.hibernate.Percentageinfo"></one-to-one>
+        <one-to-one cascade="delete-orphan" name="contactinfo" class="com.hibernate.Contactinfo"></one-to-one>
+        <one-to-one cascade="delete-orphan" name="backdetails" class="com.hibernate.Backdetails"></one-to-one>
+        <one-to-one cascade="delete-orphan" name="personalinfo" class="com.hibernate.Personalinfo"></one-to-one>
+        <one-to-one cascade="delete-orphan" name="achivements" class="com.hibernate.Achivements"></one-to-one>
+    </class>
+</hibernate-mapping>

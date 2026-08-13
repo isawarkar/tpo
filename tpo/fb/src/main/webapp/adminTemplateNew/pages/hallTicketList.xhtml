@@ -1,0 +1,251 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<ui:composition template="adminLayoutNew.xhtml">
+	<ui:define name="content">
+		<section id="card-actions">
+			<!-- Info table about action starts -->
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-header">
+							<h4 class="card-title">#{fbresource['Hall_Ticket_List']}</h4>
+							<a class="heading-elements-toggle"> <i
+								class='bx bx-dots-vertical font-medium-3' /></a>
+							<div class="heading-elements">
+								<ul class="list-inline mb-0">
+									<li><h:form>
+											<h:panelGroup id="bookmarkButtonPanel">
+												<o:commandLink id="bookmarkButton" execute="bookmarkButton"
+													render="bookmarkButtonPanel bookmarkList errorPanel"
+													actionListener="#{BookmarkBean.setBookmark}">
+													<f:param name="bookmarkName" value="hallTicketList" />
+
+													<i title="#{fbresource['bookmarkToolTip']}"
+														class="ficon bx #{BookmarkBean.getIcon('hallTicketList')} warning" />
+												</o:commandLink>
+											</h:panelGroup>
+										</h:form></li>
+									<li><a data-action="collapse"> <i
+											class="bx bx-chevron-down" /></a></li>
+									<li><a data-action="expand"> <i
+											class="bx bx-fullscreen" /></a></li>
+									<li><a data-action="reload"> <i class="bx bx-revision" /></a></li>
+									<li><a data-action="close"> <i class="bx bx-x" /></a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="card-content collapse show">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="table-responsive">
+											<h:form>
+												<table width="99%">
+													<tr>
+														<td>
+															<table inlineStyle="color:green;" halign="left"
+																cellSpacing="5">
+																<tr>
+																	<td>#{fbresource['HallTicket_ID']}<FONT
+																		color="red">*</FONT></td>
+																	<td><o:dropDownField id="companyName"
+																			maxlength="14" style="width: 200px;"
+																			listItemStyle="white-space: nowrap;"
+																			suggestionMode="stringStart" var="companyName"
+																			value="#{OpenningListTableBean.hallTicketIdString}"
+																			suggestionMinChars="1">
+																			<o:dropDownItems
+																				value="#{CommonDBBean.companyListWithIDByUserName}" />
+																			<o:column>
+																				<h:outputText value="#{companyName}"
+																					styleClass="dropDownValuesClass" />
+																			</o:column>
+																		</o:dropDownField></td>
+																	<td>#{fbresource['Enrollment_No']}</td>
+																	<td><h:inputText
+																			title="Please enter Enrollment No."
+																			value="#{OpenningListTableBean.rollnumber}"
+																			id="rollnumber" size="12" maxlength="14" /></td>
+																	<td>#{fbresource['Applied']}</td>
+																	<td><h:selectOneMenu
+																			value="#{OpenningListTableBean.applied}">
+																			<f:selectItem itemLabel="" itemValue="" />
+																			<f:selectItem itemLabel="#{fbresource['YES']}"
+																				itemValue="true" />
+																			<f:selectItem itemLabel="#{fbresource['NO']}"
+																				itemValue="false" />
+																		</h:selectOneMenu></td>
+																	<td>#{fbresource['Approved']}</td>
+																	<td><h:selectOneMenu
+																			value="#{OpenningListTableBean.approved}">
+																			<f:selectItem itemLabel="" itemValue="" />
+																			<f:selectItem itemLabel="#{fbresource['YES']}"
+																				itemValue="true" />
+																			<f:selectItem itemLabel="#{fbresource['NO']}"
+																				itemValue="false" />
+																		</h:selectOneMenu></td>
+
+																	<td><h:commandButton class="btn btn-primary glow"
+																			value="#{fbresource['search']}" id="Search"
+																			title="#{fbresource['Click_here_to']} #{fbresource['Search_Record']}"
+																			action="#{OpenningListTableBean.search}">
+																		</h:commandButton></td>
+																	<td><h:commandButton class="btn btn-primary glow"
+																			value="#{fbresource['Approve']}" id="Approve"
+																			title="#{fbresource['Click_here_to']} #{fbresource['Approve']}"
+																			action="#{OpenningListTableBean.approve}">
+																		</h:commandButton></td>
+																	<td><h:commandButton class="btn btn-primary glow"
+																			value="#{fbresource['Reject']}" id="disApprove"
+																			title="#{fbresource['Click_here_to']} #{fbresource['Reject']}"
+																			action="#{OpenningListTableBean.reject}">
+																		</h:commandButton></td>
+																	<td><h:commandButton class="btn btn-primary glow"
+																			value="#{fbresource['Generate_Hall_Ticket']}"
+																			title="#{fbresource['Click_here_to']} #{fbresource['Generate_Hall_Ticket']}"
+																			action="#{OpenningListTableBean.generateHallTicket}" /></td>
+																	<td><input type="button"
+																		value="#{fbresource['Print']}"
+																		class="btn btn-primary glow"
+																		title="#{fbresource['Click_here_to']} #{fbresource['Print']}"
+																		onClick="window.print()" /></td>
+																	<td><h:commandButton
+																			title="#{fbresource['Generate']} #{fbresource['Excel_report']}"
+																			value="#{fbresource['Excel_report']}"
+																			image="/images/excel_button.png"
+																			style="height:40px;width:40px;" id="generateXls"
+																			action="#{OpenningListTableBean.generateHallTicketXls}" /></td>
+																	<td><h:commandButton
+																			title="#{fbresource['Generate']} #{fbresource['PDF_report']}"
+																			value="#{fbresource['PDF_report']}"
+																			image="/images/pdf_button.png"
+																			style="height:40px;width:40px;"
+																			action="#{OpenningListTableBean.generateHallTicketPdfReport}" /></td>
+
+																</tr>
+															</table>
+														</td>
+													</tr>
+												</table>
+												<h:panelGroup id="paginationTableContainner">
+													<o:dataTable id="HALLTICKET" var="hallTicket"
+														value="#{OpenningListTableBean.hallTicketConnectList}"
+														sortColumnId="hallTicketId" sortAscending="true"
+														sortableHeaderRolloverStyle="background: #d4d4d4"
+														style="width: 100%; line-height: 17px;"
+														styleClass="datatable"
+														rolloverRowStyle="background: #f1f1f1;">
+														<o:multipleRowSelection
+															rowDatas="#{OpenningListTableBean.hallTicketConnectSelectedList}"
+															style="background: #a4aec5; color: white;" />
+														<o:columnReordering />
+														<f:facet name="columnMenu">
+															<o:columnMenu />
+														</f:facet>
+														<o:selectionColumn sortable="true"
+															header="#{fbresource['Selection']}">
+															<f:facet name="header">
+																<o:selectAllCheckbox />
+															</f:facet>
+														</o:selectionColumn>
+														<o:column header="#{fbresource['Enrollment_No']}"
+															sortingExpression="#{hallTicket.id.rollnumber}"
+															style="text-align: center;">
+															<h:commandLink style="cursor:hand;color:blue;"
+																action="#{OpenningListTableBean.showInfo}"
+																value="#{hallTicket.id.rollnumber}"
+																title="#{fbresource['Click_here_to']} see full information"></h:commandLink>
+														</o:column>
+														<o:column header="#{fbresource['HallTicket_ID']}"
+															sortingExpression="#{hallTicket.id.hallTicket.hallTicketId}"
+															style="text-align: center;">
+															<h:outputText
+																value="#{hallTicket.id.hallTicket.hallTicketId}" />
+														</o:column>
+														<o:column header="#{fbresource['Company_Name']}"
+															sortingExpression="#{hallTicket.id.hallTicket.companyName}"
+															style="text-align: center;">
+															<o:hintLabel hintStyle="color:blue;font-size:15px;"
+																hint="#{hallTicket.id.hallTicket.companyName}"
+																value="#{hallTicket.id.hallTicket.companyName.length() gt 20 ? hallTicket.id.hallTicket.companyName.substring(0,20).concat('...') : hallTicket.id.hallTicket.companyName}" />
+														</o:column>
+														<o:column header="#{fbresource['Applied']}"
+															sortingExpression="#{hallTicket.isApplied}"
+															style="text-align: center;">
+															<h:outputText rendered="#{hallTicket.isApplied eq true}"
+																value="#{fbresource['YES']}" />
+															<h:outputText rendered="#{hallTicket.isApplied eq false}"
+																value="#{fbresource['NO']}" />
+														</o:column>
+
+														<o:column header="#{fbresource['Applied_On']}"
+															sortingExpression="#{hallTicket.appliedOn}"
+															style="text-align: center;">
+															<h:outputText value="#{hallTicket.appliedOn}">
+																<f:convertDateTime pattern="dd/MM/yyyy hh:mm:ss a" />
+															</h:outputText>
+														</o:column>
+
+														<o:column header="#{fbresource['Approved']}"
+															sortingExpression="#{hallTicket.isApproved}"
+															style="text-align: center;">
+															<h:outputText rendered="#{hallTicket.isApproved eq true}"
+																value="#{fbresource['YES']}" />
+															<h:outputText
+																rendered="#{hallTicket.isApproved eq false}"
+																value="#{fbresource['NO']}" />
+														</o:column>
+
+														<o:column header="#{fbresource['Approved_ON']}"
+															sortingExpression="#{hallTicket.approvedOn}"
+															style="text-align: center;">
+															<h:outputText value="#{hallTicket.approvedOn}">
+																<f:convertDateTime pattern="dd/MM/yyyy hh:mm:ss a" />
+															</h:outputText>
+														</o:column>
+
+														<o:column header="#{fbresource['Arrived']}"
+															sortingExpression="#{hallTicket.arrived}"
+															style="text-align: center;">
+															<h:outputText rendered="#{hallTicket.arrived eq true}"
+																value="#{fbresource['YES']}" />
+															<h:outputText rendered="#{hallTicket.arrived eq false}"
+																value="#{fbresource['NO']}" />
+														</o:column>
+
+														<o:column header="#{fbresource['Status']}"
+															sortingExpression="#{hallTicket.id.hallTicket.isActive}"
+															style="text-align: center;">
+															<h:outputText
+																rendered="#{hallTicket.id.hallTicket.isActive eq true}"
+																value="#{fbresource['Active']}" />
+															<h:outputText
+																rendered="#{hallTicket.id.hallTicket.isActive eq false}"
+																value="#{fbresource['InActive']}" />
+														</o:column>
+														<f:event listener="#{OpenningListTableBean.inItHall}"
+															type="preRenderView" />
+													</o:dataTable>
+													<table align="right">
+														<tr>
+															<td><ui:include src="/xhtml/pagination.xhtml" /></td>
+														</tr>
+													</table>
+												</h:panelGroup>
+												<font style="margin-left: 20px;" color="red">#{fbresource['Note_Select_row_and_click_on']}</font>
+											</h:form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</ui:define>
+</ui:composition>
+</html>

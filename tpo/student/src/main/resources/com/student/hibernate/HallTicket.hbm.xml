@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.hibernate.HallTicket" table="hallticket">
+		<id name="hallTicketId" type="java.lang.Integer">
+			<column name="hallTicketId" />
+			<generator class="assigned" />
+		</id>
+		<property name="companyID" type="java.lang.Integer">
+			<column name="companyID" length="6" not-null="true" />
+		</property>
+		<property name="companyName" type="java.lang.String">
+			<column name="companyname" length="150" />
+		</property>
+		<property name="userName" type="java.lang.String">
+			<column name="userName" length="20" not-null="true" />
+		</property>
+		<property name="date" type="java.util.Date">
+			<column name="date" length="19" not-null="true" />
+		</property>
+		<property name="time" type="java.lang.String">
+			<column name="time" length="10" not-null="true" />
+		</property>
+		<property name="isActive" type="java.lang.Boolean">
+			<column name="isActive" not-null="true" />
+		</property>
+		<property name="packageOffering" type="java.lang.String">
+			<column name="package" length="10" not-null="true" />
+		</property>
+		<property name="lastDateToApply" type="java.util.Date">
+			<column name="lastDateToApply" length="19" not-null="true" />
+		</property>
+		<property name="criteria" type="java.lang.String">
+			<column name="criteria" not-null="true" />
+		</property>
+		<property name="allowDigitalSignature"
+			type="java.lang.Boolean">
+			<column name="allowDigitalSignature" not-null="true" />
+		</property>
+		<property name="digitalSignature" type="java.lang.String">
+			<column name="digitalSignature" />
+		</property>
+		<property name="interviewLocation" type="java.lang.String">
+			<column name="interviewLocation"/>
+		</property>
+		<property name="postingLocation" type="java.lang.String">
+			<column name="postingLocation"/>
+		</property>
+		<property name="role" type="java.lang.String">
+			<column name="role"/>
+		</property>
+		<set name="hallTicketConnect" inverse="true">
+			<key>
+				<column name="hallTicketId" not-null="true" />
+			</key>
+			<one-to-many class="com.hibernate.HallTicketConnect" />
+		</set>
+	</class>
+</hibernate-mapping>

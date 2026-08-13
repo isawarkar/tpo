@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<ui:composition template="/templateNew/layoutWithOutFooter.xhtml">
+	<ui:define name="content">
+		<ui:include src="collegeLookUp.xhtml" />
+		<ui:include src="/xhtml/allPopUps.xhtml" />
+		<h:form id="RegistationForm">
+			<ui:include src="webflow.xhtml" />
+			<div class="content-block">
+				<table style="margin-left: 130px; width: 1100px;">
+					<tr>
+						<td>#{fbresource['Enrollment_No']}<font color="red">*</font>
+						</td>
+						<td>
+						<h:panelGroup id="enrollmentNoPanel">
+						<h:inputText immediate="true" maxlength="14" redisplay="true" 
+								value="#{StudentRegistrationBean.registration.rollnumber}"
+								id="En_No" required="true" style="margin-bottom: 10px;"
+								requiredMessage="#{fbresource['Please_enter']} #{fbresource['Enrollment_No']}">
+								<f:validator validatorId="EnrollmentNumberValidator" />
+								<o:ajax render="enrollmentNoPanel" />
+							</h:inputText> <o:floatingIconMessage id="En_No_msg" style="border-color: red;"
+								for="En_No" showDetail="true" showSummary="false" />
+								</h:panelGroup></td>
+						<td>#{fbresource['Password']}<font color="red">*</font>
+						</td>
+						<td><h:inputSecret immediate="true" redisplay="true"
+								maxlength="20" style="margin-bottom: 10px;"
+								value="#{StudentRegistrationBean.registration.password}"
+								title="#{fbresource['Password_must_contains_one_lower_case_char']}"
+								id="password" required="true"
+								requiredMessage="#{fbresource['Please_enter']} #{fbresource['Password']}">
+								<f:validator validatorId="PasswordValidator" />
+								<f:ajax render="password" />
+							</h:inputSecret> <o:floatingIconMessage style="border-color: red;" for="password"
+								showDetail="true" showSummary="false" /></td>
+					</tr>
+					<tr>
+						<td>#{fbresource['First_Name']}<font color="red">*</font>
+						</td>
+						<td><h:inputText immediate="true"  style="margin-bottom: 10px;"
+								value="#{StudentRegistrationBean.registration.firstName}"
+								maxlength="50" id="First_Name" required="true"
+								requiredMessage="#{fbresource['Please_enter']} #{fbresource['First_Name']}">
+							</h:inputText> <o:floatingIconMessage style="border-color: red;"
+								for="First_Name" showDetail="true" showSummary="false" /></td>
+						<td>#{fbresource['Last_Name']}<font color="red">*</font>
+						</td>
+						<td><h:inputText immediate="true"
+								value="#{StudentRegistrationBean.registration.lastName}"
+								maxlength="50" id="Last_Name" required="true"
+								requiredMessage="#{fbresource['Please_enter']} #{fbresource['Last_Name']}">
+							</h:inputText> <o:floatingIconMessage style="border-color: red;"
+								for="Last_Name" showDetail="true" showSummary="false" /></td>
+					</tr>
+					<tr>
+						<td>#{fbresource['Your_College_Code']}<font color="red">*</font>
+						</td>
+						<td><h:panelGroup id="collgeCode">
+								<h:inputText maxlength="100" required="true"
+									id="collegeCodeLookUpValue" style="margin-bottom: 10px;"
+									value="#{StudentRegistrationBean.registration.collegeName}"
+									immediate="true"
+									title="#{fbresource['Please_enter']} #{fbresource['Your_College_Code']}">
+									<f:validator validatorId="CollegeValidator" />
+									<o:ajax render="collegeCodeLookUpValue" />
+								</h:inputText>
+								<h:graphicImage url="/images/lookUp.png" height="20px;"
+									style="cursor:hand;"
+									title="#{fbresource['Please_click_here_to_find_College_Code']}"
+									onclick="document.getElementById('collegeCodeButton').click();" />
+								<o:floatingIconMessage style="border-color: red;"
+									for="collegeCodeLookUpValue" showDetail="true"
+									showSummary="false" />
+							</h:panelGroup></td>
+						<td>#{fbresource['Highest_Education']}<font color="red">*</font>
+						</td>
+
+						<td><o:dropDownField
+								value="#{StudentRegistrationBean.currentCourse}"
+								id="currentCourse" required="true"
+								requiredMessage="#{fbresource['Please_select_course']}">
+								<f:selectItem itemValue="" itemLabel="" />
+								<f:selectItem itemValue="10"
+									itemLabel="#{fbresource['High_School_L']}" />
+								<f:selectItem itemValue="12"
+									itemLabel="#{fbresource['Higher_Secondary_L']}" />
+								<f:selectItem itemValue="Diploma"
+									itemLabel="#{fbresource['Diploma']}" />
+								<f:selectItem itemValue="Graduation"
+									itemLabel="#{fbresource['Graduation']}" />
+								<f:selectItem itemValue="Post Graduation"
+									itemLabel="#{fbresource['Post_Graduation']}" />
+							</o:dropDownField> <o:floatingIconMessage style="border-color: red;"
+								for="currentCourse" showDetail="true" showSummary="false" /></td>
+					</tr>
+
+					<tr>
+						<td><h:outputText
+								rendered="#{StudentRegistrationBean.referralFlag}"
+								value="#{fbresource['referral_Enrollment_No']}" /></td>
+						<td><h:inputText immediate="true" maxlength="14"
+								rendered="#{StudentRegistrationBean.referralFlag}"
+								value="#{StudentRegistrationBean.referralHistory.referredBY}"
+								id="referral_en_no">
+								<f:validator validatorId="EnrollmentNumberValidatorInvert" />
+								<o:ajax render="referral_en_no referral_en_no_msg" />
+							</h:inputText> <o:floatingIconMessage id="referral_en_no_msg"
+								style="border-color: red;" for="En_No" showDetail="true"
+								showSummary="false" /></td>
+
+						
+					</tr>
+					<tr>
+						<td colspan="4"><o:commandButton
+								styleClass="btn btn-primary glow"
+								title="#{fbresource['Next_Page']}" value="#{fbresource['Next']}"
+								action="#{WebFlow.firstPage}" /></td>
+
+					</tr>
+					<tr>
+						<td colspan="4"><font size="4" color="red">#{fbresource['Note_Default_College_code']}#{fbresource['Note_Submit_button']}</font></td>
+					</tr>
+					<tr>
+						<td colspan="4"><a style="margin-bottom: 100px; color: blue;"
+											href="#" data-toggle="modal" data-dismiss="modal"
+											data-target="#termsAndConditions">#{fbresource['termsAndConditions']}</a></td>
+					</tr>
+					</table>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

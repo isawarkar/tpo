@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<ui:composition>
+	<!-- Students Count -->
+	<div class="section-area section-sp1 ovpr-dark bg-fix online-cours">
+		<div class="container">
+			<div class="mw800 m-auto">
+				<div class="row">
+					<div class="col-md-4 col-sm-6">
+						<div class="cours-search-bx m-b30">
+							<div class="icon-box">
+								<h3>
+									<i class="ti-user"></i><span class="counter">#{CommonDBBean.studentCount
+										}</span>+
+								</h3>
+							</div>
+							<span class="cours-search-text">#{fbresource['morethan']}
+								#{CommonDBBean.studentCount}+
+								#{fbresource['Students_connected']}</span>
+						</div>
+					</div>
+					<div class="col-md-4 col-sm-6">
+						<div class="cours-search-bx m-b30">
+							<div class="icon-box">
+								<h3>
+									<i class="ti-crown"></i><span class="counter">#{CommonDBBean.companyCount
+										}</span>+
+								</h3>
+							</div>
+							<span class="cours-search-text">#{fbresource['morethan']}
+								#{CommonDBBean.companyCount}+ #{fbresource['Company_connected']}</span>
+						</div>
+					</div>
+					<div class="col-md-4 col-sm-12">
+						<div class="cours-search-bx m-b30">
+							<div class="icon-box">
+								<h3>
+									<i class="ti-star"></i><span class="counter">#{CommonDBBean.collegeCount
+										}</span>+
+								</h3>
+							</div>
+							<span class="cours-search-text">#{fbresource['morethan']}
+								#{CommonDBBean.collegeCount}+ #{fbresource['College_connected']}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Students END -->
+</ui:composition>
+</html>
+
+

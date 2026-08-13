@@ -1,0 +1,132 @@
+.links {
+	float: left;
+}
+
+.links ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	float: left;
+}
+
+.links li {
+	float: left;
+	margin: 0 3px 0 0;
+	position: relative;
+}
+
+.links div {
+	float: left;
+	border: 1px solid red;
+	background: #fff;
+	-webkit-border-radius: 1px 1px 0 0;
+	-moz-border-radius: 1px 1px 0 0;
+	border-radius: 1px 1px 0 0;
+	color: #1f252a;
+	font-size: 13px;
+	line-height: 15px;
+	height: 28px;
+	text-decoration: none;
+	padding: 9px 19px 0 5px;
+}
+
+.links div:hover {
+	text-decoration: underline;
+}
+
+.links a:hover {
+	text-decoration: underline;
+	color: blue;
+}
+
+.links .num {
+	position: absolute;
+	right: -3px;
+	top: -8px;
+	color: #fff;
+	font: bold 10px/18px Arial, Helvetica, sans-serif;
+	width: 20px;
+	height: 20px;
+	background: red;
+	background:
+		url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzRjOTVjZCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMzYzc4YmEiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+	background: -moz-linear-gradient(top, red 0%, red 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, red),
+		color-stop(100%, red));
+	background: -webkit-linear-gradient(top, red 0%, red 100%);
+	background: -o-linear-gradient(top, red 0%, red 100%);
+	background: -ms-linear-gradient(top, red 0%, red 100%);
+	background: linear-gradient(to bottom, red 0%, red 100%);
+	text-align: center;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+}
+
+.links .messageIcon {
+	background: #fff url(../../images/sprite.png) no-repeat 0px -445px;
+}
+
+.links .notificationIcon {
+	background: #fff url(../../images/sprite.png) no-repeat 0px -526px;
+}
+
+.links .ico3 {
+	background: #fff url(../../images/sprite.png) no-repeat 14px -637px;
+}
+
+#studentNewEvent {
+	position: absolute;
+	top: 140px;
+	display: block;
+	z-index: 29;
+	width: 240px;
+	margin-left: 1000px;
+}
+
+#tnpMessage {
+	position: absolute;
+	top: 200px;
+	display: block;
+	z-index: 29;
+	width: 240px;
+	margin-left: 1000px;
+}
+
+#ccpMessage {
+	position: absolute;
+	top: 130px;
+	right: 120px;
+	display: block;
+	z-index: 29;
+	width: 240px;
+}
+
+.infoMessage, .successMessage, .isa_warning, .errorMessage {
+border: 1px solid;
+margin: 10px 0px;
+padding:15px 10px 15px 50px;
+background-repeat: no-repeat;
+background-position: 10px center;
+width: 1100px;
+}
+.infoMessage {
+    color: #00529B;
+    background-color: #BDE5F8;
+    background-image: url('../../css/info.png');
+}
+.successMessage {
+    color: #4F8A10;
+    background-color: #DFF2BF;
+    background-image:url('../../css/success.png');
+}
+.isa_warning {
+    color: #9F6000;
+    background-color: #FEEFB3;
+    background-image: url('../../css/warning.png');
+}
+.errorMessage {
+    color: #D8000C;
+    background-color: #FFBABA;
+    background-image: url('../../css/error.png');
+}

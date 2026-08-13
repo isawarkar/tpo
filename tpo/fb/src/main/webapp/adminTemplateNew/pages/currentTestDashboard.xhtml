@@ -1,0 +1,233 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<ui:composition template="adminLayoutNew.xhtml">
+	<ui:define name="content">
+		<section id="card-actions">
+			<!-- Info table about action starts -->
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-header">
+							<h4 class="card-title">
+								<h:outputLabel style="font-weight:bold; font-size:15pt;"
+									id="noOfStudent"
+									value="#{fbresource['List_of_Student_Giving_Test']}(#{StudentTableBean.studentPojos.size()})" />
+							</h4>
+							<a class="heading-elements-toggle"> <i
+								class='bx bx-dots-vertical font-medium-3' /></a>
+							<div class="heading-elements">
+								<ul class="list-inline mb-0">
+									<li><h:form>
+											<h:panelGroup id="bookmarkButtonPanel">
+												<o:commandLink id="bookmarkButton" execute="bookmarkButton"
+													render="bookmarkButtonPanel bookmarkList errorPanel"
+													actionListener="#{BookmarkBean.setBookmark}">
+													<f:param name="bookmarkName" value="currentTestDashboard" />
+													
+													<i title="#{fbresource['bookmarkToolTip']}"
+														class="ficon bx #{BookmarkBean.getIcon('currentTestDashboard')} warning" />
+												</o:commandLink>
+											</h:panelGroup>
+										</h:form></li>
+									<li><a data-action="collapse"> <i
+											class="bx bx-chevron-down" /></a></li>
+									<li><a data-action="expand"> <i
+											class="bx bx-fullscreen" /></a></li>
+									<li><a data-action="reload"> <i class="bx bx-revision" /></a></li>
+									<li><a data-action="close"> <i class="bx bx-x" /></a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="card-content collapse show">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="table-responsive">
+											<h:form id="currentTestDashboardForm">
+												<table>
+													<tr>
+														<td><o:commandButton
+																styleClass="btn btn-primary glow"
+																value="#{fbresource['refresh']}" id="refreshButton"
+																title="#{fbresource['Click_here_to']} #{fbresource['refresh']}"
+																onajaxend=""
+																render="studentPojosTableContainner noOfStudent"
+																actionListener="#{StudentTableBean.refreshResult}" /></td>
+														<TD><o:commandButton
+																styleClass="btn btn-primary glow"
+																execute="studentPojosTableContainner" onajaxend=""
+																render="studentPojosTableContainner noOfStudent"
+																actionListener="#{StudentTableBean.deleteSelectedPojo}"
+																value="#{fbresource['delete']}">
+															</o:commandButton></TD>
+														<td><o:commandButton
+																styleClass="btn btn-primary glow"
+																value="#{fbresource['Reset']}" id="ResetButton"
+																title="#{fbresource['Click_here_to']} #{fbresource['Reset']}"
+																onajaxend=""
+																render="studentPojosTableContainner noOfStudent"
+																actionListener="#{StudentTableBean.resetResult}" /></td>
+
+														<td><o:commandButton
+																styleClass="btn btn-primary glow"
+																value="#{fbresource['Reset_All']}" id="ResetAllbutton"
+																rendered="#{AdminUser.role eq 'Super User'}"
+																title="#{fbresource['Click_here_to']} #{fbresource['Reset_All']}"
+																render="studentPojosTableContainner noOfStudent"
+																actionListener="#{StudentTableBean.clearAll}" /></td>
+													</tr>
+												</table>
+												<h:panelGroup id="studentPojosTableContainner">
+													<o:dataTable id="studentPojosTable" var="studentPojo"
+														value="#{StudentTableBean.studentPojos}"
+														sortColumnId="testName" sortAscending="true"
+														bodySectionStyle="background-color:white;font-weight:bold; font-size:15pt;"
+														noDataRowStyle="color:red; font-weight:bold; font-size:20pt"
+														sortableHeaderRolloverStyle="background: #d4d4d4"
+														style="width: 100%;margin-top: 10px; line-height: 17px;"
+														styleClass="datatable"
+														rolloverRowStyle="background: white;">
+														<o:multipleRowSelection
+															rowDatas="#{StudentTableBean.studentPojosList}"
+															style="background: white;" />
+														<o:columnReordering />
+														<f:facet name="columnMenu">
+															<o:columnMenu />
+														</f:facet>
+														<f:facet name="noDataMessage">
+															<h:outputText value="#{fbresource['no_data']}" />
+														</f:facet>
+														<o:selectionColumn style="width: 6%;" sortable="true"
+															header="#{fbresource['Selection']}">
+															<f:facet name="header">
+																<o:selectAllCheckbox />
+															</f:facet>
+														</o:selectionColumn>
+
+														<o:column header="#{fbresource['Enrollment_No']}"
+															sortingExpression="#{studentPojo.enrollmentNumber}"
+															style="cursor:hand; width: 50px; text-align: center;;color:blue;">
+															<h:commandLink style="cursor:hand;color:blue;"
+																action="#{StudentTableBean.showStudentInfo}"
+																value="#{studentPojo.enrollmentNumber}"
+																title="#{fbresource['Please_click_here_to_see_full_information']}" />
+														</o:column>
+
+														<o:column header="#{fbresource['Attempt']}"
+															sortingExpression="#{result.id.attempt}"
+															style="cursor:hand; width: 50px; text-align: center;;color:orange;">
+								#{studentPojo.attempt}
+							</o:column>
+
+														<o:column header="#{fbresource['Time_Left']}"
+															sortingExpression="#{studentPojo.timeLeft}"
+															style="cursor:hand; width: 50px; text-align: center;;color:green;">
+															<h:outputText rendered="#{studentPojo.timeLeft le 5}"
+																style="color:red;font-size:20px;" styleClass="blinking"
+																value="#{studentPojo.timeLeft}" />
+															<h:outputText rendered="#{studentPojo.timeLeft gt 5}"
+																style="color:green;font-size:20px;"
+																styleClass="blinking" value="#{studentPojo.timeLeft}" />
+														</o:column>
+
+														<o:column header="#{fbresource['No_of_Questions']}"
+															sortingExpression="#{studentPojo.totalQuestions}"
+															style="cursor:hand; width: 50px; text-align: center;;color:grey;">
+								#{studentPojo.totalQuestions}
+								</o:column>
+
+														<o:column header="#{fbresource['Answers_Submitted']}"
+															sortingExpression="#{studentPojo.answersSubmitted}"
+															style="cursor:hand; width: 50px; text-align: center;;color:purple;">
+								#{studentPojo.answersSubmitted}
+								</o:column>
+
+														<o:column header="#{fbresource['Correct_Ans']}"
+															sortingExpression="#{studentPojo.correctAns}"
+															style="cursor:hand; width: 50px; text-align: center;;color:green;">
+								#{studentPojo.correctAns}
+								</o:column>
+
+														<o:column header="#{fbresource['Percentage_No']}"
+															sortingExpression="#{studentPojo.result}"
+															style="cursor:hand; width: 50px; text-align: left;">
+															<h:outputText style="color:red;font-size:10px;"
+																styleClass="blinking"
+																rendered="#{studentPojo.result eq 'Disqualified'}"
+																value="#{studentPojo.percentageOrNumber}" />
+															<h:outputText style="color:green;font-size:15px;"
+																styleClass="blinking"
+																rendered="#{studentPojo.result eq 'Qualified'}"
+																value="#{studentPojo.percentageOrNumber}" />
+															<h:outputText style="color:green;font-size:20px;"
+																styleClass="blinking"
+																rendered="#{studentPojo.result eq 'Qualified in First Class'}"
+																value="#{studentPojo.percentageOrNumber}" />
+															<h:outputText style="color:green;font-size:20px;"
+																styleClass="blinking"
+																rendered="#{studentPojo.result eq 'Qualified in Honours'}"
+																value="#{studentPojo.percentageOrNumber}" />
+
+														</o:column>
+
+														<o:column header="#{fbresource['Result']}"
+															sortingExpression="#{studentPojo.result}"
+															style="cursor:hand; width: 50px; text-align: center;;color:red;">
+															<h:outputText style="color:green;font-size:15px;"
+																styleClass="blinking"
+																rendered="#{studentPojo.result eq 'Qualified'}"
+																value="#{fbresource['Qualified']}" />
+															<h:outputText style="color:red;font-size:15px;"
+																styleClass="blinking"
+																rendered="#{studentPojo.result eq 'Disqualified'}"
+																value="#{fbresource['DisQualified']}" />
+															<h:outputText style="color:cyan;font-size:15px;"
+																styleClass="blinking"
+																rendered="#{studentPojo.result eq 'Qualified in First Class'}"
+																value="#{fbresource['Qualified_in_First_Class']}" />
+															<h:outputText style="color:orange;font-size:15px;"
+																styleClass="blinking"
+																rendered="#{studentPojo.result eq 'Qualified in Honours'}"
+																value="#{fbresource['Qualified_In_Honors']}" />
+														</o:column>
+													</o:dataTable>
+													<h:panelGrid columns="2">
+														<o:chart height="300" width="500"
+															rendered="#{StudentTableBean.resultAnalysis ne null}"
+															model="#{StudentTableBean.resultAnalysis}"
+															titleText="#{fbresource['Result_Analysis']} #{fbresource['of']} #{StudentTableBean.totalResultCount}">
+															<o:pieChartView colors="cyan,orange,red,green"
+																labelsVisible="true"
+																tooltip="#{sector.key} - #{sector.value}" />
+														</o:chart>
+														<o:chart
+															rendered="#{StudentTableBean.resultBarAnalysis ne null}"
+															model="#{StudentTableBean.resultBarAnalysis}"
+															style="marging-left:1000px;" height="300" width="500"
+															view="bar"
+															titleText="#{fbresource['Result_Analysis']} #{fbresource['of']} #{StudentTableBean.totalResultCount}">
+															<o:barChartView colors="green,cyan,orange,red"
+																labelsVisible="true" enable3D="true" shadowColor="green" />
+														</o:chart>
+													</h:panelGrid>
+												</h:panelGroup>
+												<script>
+													setInterval(refreshResult,
+															60000);
+												</script>
+											</h:form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</ui:define>
+</ui:composition>
+</html>

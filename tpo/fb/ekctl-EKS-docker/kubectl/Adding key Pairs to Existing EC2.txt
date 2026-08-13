@@ -1,0 +1,10 @@
+1 ) ssh-keygen -y -f indrajeet-tech.pem
+
+If the command fails, run the following command to ensure that you've changed the permissions on your private key pair file so that only you can view it.
+
+chmod 400 my-key-pair.pem
+ then run 
+ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCiQapM9rHRu46aeKg9ifvurUOMXDZQsSoYtWqneuUYV+dUvxKOwXj+UzxdGgBxo0gBR+acV4HmnZNhWCi3pMCyLBA1+SdOQ+IynVia+msUzob1YlZE7VFQaftdknxp1ykJO5c2P8urX6XG2GihJdeMPFFaU5v9ySUNjth/47xjNFEz4/Rm/b4aSkCd6+wWYt8xg9YXRsFkmKsJkMNvDuiT2M93TvrHAvCsJGQdr0Jw9Vz+IKbx0ET+3xEwiLYVk1jjT3qZC4yjMwQR/5ITixo2fz61DdnTiYKyIT1Bz1ul+k/eftJ6jam3cZKtGhuGvm9KhUCzBpGqo0Ueoz139GjJ
+2 ) open the file .ssh/authorized_key on ec2 instance and paste the key output
+
+do remote login

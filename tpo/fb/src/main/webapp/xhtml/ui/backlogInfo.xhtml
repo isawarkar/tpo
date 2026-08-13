@@ -1,0 +1,154 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<ui:composition template="/templateNew/layoutWithOutFooter.xhtml">
+	<ui:define name="content">
+		<ui:include src="/xhtml/allPopUps.xhtml" />
+		<h:form>
+			<ui:include src="webflow.xhtml" />
+			<table style="margin-left: 130px; width: 700px;">
+				<tr>
+					<td>#{fbresource['Present_Backlog']}<font color="red">*</font>
+
+					</td>
+					<td><h:panelGrid columns="3">
+							<o:dropDownField style="width:40px;" immediate="true"
+								tip="0=No Backlog,1-Backlog"
+								value="#{StudentRegistrationBean.backdetails.backLog}"
+								id="backLog" required="true"
+								requiredMessage="#{fbresource['Please_select_Present_Backlog']}">
+								<f:selectItem itemValue="" itemLabel="" />
+								<f:selectItem itemValue="0" itemLabel="#{fbresource['NO']}" />
+								<f:selectItem itemValue="1" itemLabel="#{fbresource['YES']}" />
+								<o:ajax event="change" render="backDetails" execute="backLog"
+									delay="500" />
+							</o:dropDownField>
+							<o:floatingIconMessage style="border-color: red;" for="backLog"
+								showDetail="true" showSummary="false" />
+							<h:outputText style="color:red;" value="0=No,1-Yes" />
+						</h:panelGrid></td>
+				</tr>
+				
+				<tr>
+					<td>#{fbresource['Are_you_in_BA_group_Year_or_Sem_back']}<font
+						color="red">*</font>
+
+					</td>
+					<td><h:panelGrid columns="3">
+							<o:dropDownField style="width:40px;" immediate="true"
+								tip="0=NO,1-YES"
+								value="#{StudentRegistrationBean.backdetails.baGroup}"
+								id="baGroup" required="true"
+								requiredMessage="#{fbresource['Please_select_baGroup']}">
+								<f:selectItem itemValue="" itemLabel="" />
+								<f:selectItem itemValue="0" itemLabel="#{fbresource['NO']}" />
+								<f:selectItem itemValue="1" itemLabel="#{fbresource['YES']}" />
+								<o:ajax event="change" render="backDetails" execute="baGroup"
+									delay="500" />
+							</o:dropDownField>
+							<o:floatingIconMessage style="border-color: red;" for="baGroup"
+								showDetail="true" showSummary="false" />
+							<h:outputText style="color:red;" value="0=No,1-Yes" />
+						</h:panelGrid></td>
+				</tr>
+				
+				<tr>
+					<td>#{fbresource['Any_semester_passed_in_more_than_one_attempt']}<font
+						color="red">*</font>
+
+					</td>
+					<td><h:panelGrid columns="3">
+							<o:dropDownField style="width:40px;" immediate="true"
+								tip="0=NO,1-YES"
+								value="#{StudentRegistrationBean.backdetails.passMoreThenOneAttempt}"
+								id="passMoreThenOneAttempt" required="true"
+								requiredMessage="#{fbresource['Any_semester_passed_in_more_than_one_attempt']}">
+								<f:selectItem itemValue="" itemLabel="" />
+								<f:selectItem itemValue="0" itemLabel="#{fbresource['NO']}" />
+								<f:selectItem itemValue="1" itemLabel="#{fbresource['YES']}" />
+								<o:ajax event="change" render="backDetails"
+									execute="passMoreThenOneAttempt" delay="500" />
+							</o:dropDownField>
+							<o:floatingIconMessage style="border-color: red;"
+								for="passMoreThenOneAttempt" showDetail="true"
+								showSummary="false" />
+							<h:outputText style="color:red;" value="0=No,1-Yes" />
+						</h:panelGrid></td>
+				</tr>
+				
+				<tr>
+					<td>#{fbresource['Number_of_Backlog']}<font color="red">*</font>
+
+					</td>
+					<td><o:dropDownField style="width:40px;" immediate="true"
+							value="#{StudentRegistrationBean.backdetails.numberOfBacklogs}"
+							id="numberOfBacklogs" required="true"
+							requiredMessage="#{fbresource['Please_select_numberOfBacklogs']}">
+							<f:selectItem itemValue="" itemLabel="" />
+							<f:selectItem itemValue="0" itemLabel="0" />
+							<f:selectItem itemValue="1" itemLabel="1" />
+							<f:selectItem itemValue="2" itemLabel="2" />
+							<f:selectItem itemValue="3" itemLabel="3" />
+							<f:selectItem itemValue="4" itemLabel="4" />
+							<f:selectItem itemValue="5" itemLabel="5" />
+							<f:selectItem itemValue="6" itemLabel="6" />
+							<f:selectItem itemValue="7" itemLabel="7" />
+							<f:selectItem itemValue="8" itemLabel="8" />
+							<f:selectItem itemValue="9" itemLabel="9" />
+							<f:selectItem itemValue="10" itemLabel="10" />
+							<o:ajax event="change" render="backDetails"
+								execute="numberOfBacklogs" delay="500" />
+						</o:dropDownField> <o:floatingIconMessage style="border-color: red;"
+							for="numberOfBacklogs" showDetail="true" showSummary="false" /></td>
+				</tr>
+				<tr>
+
+					<td>#{fbresource['Education_Gap_in_Years']}<font color="red">*</font>
+
+					</td>
+					<td><o:dropDownField style="width:40px;" immediate="true"
+							value="#{StudentRegistrationBean.backdetails.educationGap}"
+							id="educationGap" required="true"
+							requiredMessage="#{fbresource['Please_select_educationGap']}">
+							<f:selectItem itemValue="" itemLabel="" />
+							<f:selectItem itemValue="0" itemLabel="0" />
+							<f:selectItem itemValue="1" itemLabel="1" />
+							<f:selectItem itemValue="2" itemLabel="2" />
+							<f:selectItem itemValue="3" itemLabel="3" />
+							<f:selectItem itemValue="4" itemLabel="4" />
+							<f:selectItem itemValue="5" itemLabel="5" />
+							<f:selectItem itemValue="6" itemLabel="6" />
+						</o:dropDownField> <o:floatingIconMessage style="border-color: red;"
+							for="educationGap" showDetail="true" showSummary="false" /></td>
+				</tr>
+				
+				<tr>
+
+					<td>#{fbresource['Details_of_Backlog']}</td>
+					<td><h:inputText maxlength="50"
+							alt="#{fbresource['Enter_NA_if_not_applicable']}"
+							required="#{StudentRegistrationBean.backdetails.backLog eq '1' || StudentRegistrationBean.backdetails.baGroup eq '1' || StudentRegistrationBean.backdetails.passMoreThenOneAttempt eq '1' || StudentRegistrationBean.backdetails.numberOfBacklogs > '0'}"
+							title="#{fbresource['It_is_required_if']}"
+							value="#{StudentRegistrationBean.backdetails.backDetails}"
+							id="backDetails" /> <o:floatingIconMessage
+							style="border-color: red;" for="backDetails" showDetail="true"
+							showSummary="false" /></td>
+				</tr>
+			</table>
+			<table style="margin-left: 130px; width: 150px;">
+				<tr>
+					<td><o:commandButton title="#{fbresource['Previous_Page']}"
+							value="#{fbresource['Previous_Page']}"
+							styleClass="btn btn-primary glow" action="#{WebFlow.secondPage}" /></td>
+					<td><o:commandButton title="#{fbresource['Next_Page']}"
+							styleClass="btn btn-primary glow"
+							value="#{fbresource['Next_Page']}"
+							action="#{WebFlow.contactPage}" /></td>
+				</tr>
+			</table>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

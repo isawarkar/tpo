@@ -1,0 +1,565 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<ui:composition template="/template/commonLayoutWithOutFooter.xhtml">
+	<ui:define name="content">
+		<h:form>
+			<h:panelGroup id="PersonalPanel">
+				<div id="Global_Container">
+					<ui:include src="webflow.xhtml" />
+					<div class="Global_DividerTwo">
+						<FIELDSET>
+							<LEGEND>
+								<h:outputText
+									rendered="#{StudentRegistrationBean.currentMode eq 'Update'}"
+									value="#{fbresource['Last_Updated_on']} #{StudentRegistrationBean.personalinfo.lastUpdated} #{fbresource['By']} #{StudentRegistrationBean.personalinfo.lastUpdatedBy}"></h:outputText>
+							</LEGEND>
+							<h:panelGroup id="personalInfoNotEditable"
+								rendered="#{StudentRegistrationBean.currentMode eq 'Update' and !StudentRegistrationBean.isEditable}">
+								<table width="960px">
+									<tr>
+										<td><label for="gender">
+												<p>#{fbresource['Gender']}</p>
+										</label></td>
+										<td><h:outputText
+												rendered="#{StudentRegistrationBean.personalinfo.gender eq 'M'}"
+												value="#{fbresource['Male']}" /> <h:outputText
+												rendered="#{StudentRegistrationBean.personalinfo.gender eq 'F'}"
+												value="#{fbresource['Female']}" /></td>
+										<td><label for="dob">
+												<p>#{fbresource['Date_of_Birth']}</p>
+										</label></td>
+										<td><h:outputText
+												value="#{StudentRegistrationBean.personalinfo.dob}" /></td>
+									</tr>
+									<tr>
+										<td><label for="handicapped">
+												<p>#{fbresource['Handicapped_Details']}</p>
+										</label></td>
+										<td><h:outputText
+												value="#{StudentRegistrationBean.personalinfo.handicapped}" />
+										</td>
+
+										<td><label for="bloodGroup">
+												<p>#{fbresource['Blood_Group']}</p>
+										</label></td>
+										<td><h:outputText
+												value="#{StudentRegistrationBean.personalinfo.bloodGroup}" />
+										</td>
+									</tr>
+									<h:panelGroup id="diplomaPanelRead"
+										rendered="#{StudentRegistrationBean.currentCourse eq 'Diploma' || StudentRegistrationBean.currentCourse eq 'Graduation' || StudentRegistrationBean.currentCourse eq 'Post Graduation'}">
+										<tr>
+											<td><label for="diploma">
+													<p>#{fbresource['Diploma']}</p>
+											</label></td>
+											<td><h:outputText
+													value="#{StudentRegistrationBean.personalinfo.diploma}" /></td>
+
+											<td><label for="diplomaYearOfPassing">
+													<p>#{fbresource['Diploma_Year_Of_Passing']}</p>
+											</label></td>
+											<td><h:outputText
+													value="#{StudentRegistrationBean.personalinfo.diplomaYearOfPassing}" />
+											</td>
+										</tr>
+										<tr>
+											<td><label for="dipUni">
+													<p>#{fbresource['Diploma_University_Board']}</p>
+											</label></td>
+											<td><h:outputText
+													value="#{StudentRegistrationBean.personalinfo.diplomaUniversity}" />
+											</td>
+
+											<td><label for="diplomaBranch">
+													<p>#{fbresource['Diploma_Branch']}</p>
+											</label></td>
+											<td><h:outputText
+													value="#{StudentRegistrationBean.personalinfo.diplomaBranch}" />
+											</td>
+										</tr>
+									</h:panelGroup>
+									<h:panelGroup id="graduationPanelNotEditable"
+										rendered="#{StudentRegistrationBean.currentCourse eq 'Graduation' || StudentRegistrationBean.currentCourse eq 'Post Graduation'}">
+										<tr>
+											<td><label for="course">
+													<p>#{fbresource['Graduation_Degree']}</p>
+											</label></td>
+											<td><h:outputText
+													value="#{StudentRegistrationBean.personalinfo.course}" /></td>
+
+											<td><label for="yearOfPassing">
+													<p>#{fbresource['Graduation_Degree_Year_of_Passing']}</p>
+											</label></td>
+											<td><h:outputText
+													value="#{StudentRegistrationBean.personalinfo.yearOfPassing}" />
+											</td>
+										</tr>
+										<tr>
+											<td><label for="graduationUniversity">
+													<p>#{fbresource['Graduation_Degree_University']}</p>
+											</label></td>
+											<td><h:outputText
+													value="#{StudentRegistrationBean.personalinfo.graduationUniversity}" />
+											</td>
+
+											<td><label for="branch">
+													<p>#{fbresource['Graduation_Degree_Branch']}</p>
+											</label></td>
+											<td><h:outputText
+													value="#{StudentRegistrationBean.personalinfo.branch}" /></td>
+										</tr>
+									</h:panelGroup>
+									<h:panelGroup id="postGraduationPanelNotEditable"
+										rendered="#{StudentRegistrationBean.currentCourse eq 'Post Graduation'}">
+
+										<tr>
+											<td><label for="postGraduationCourse">
+													<p>#{fbresource['PG_Degree']}</p>
+											</label></td>
+											<td><h:outputText
+													value="#{StudentRegistrationBean.personalinfo.postGraduationCourse}" />
+											</td>
+
+											<td><label for="pgYearOfPassing">
+													<p>#{fbresource['PG_Degree_Year_of_Passing']}</p>
+											</label></td>
+											<td><h:outputText
+													value="#{StudentRegistrationBean.personalinfo.pgYearOfPassing}" />
+											</td>
+										</tr>
+										<tr>
+											<td><label for="postGraduationUniversity">
+													<p>#{fbresource['PG_Degree_University']}</p>
+											</label></td>
+											<td><h:outputText
+													value="#{StudentRegistrationBean.personalinfo.postGraduationUniversity}" />
+											</td>
+
+											<td><label for="postGraduationBranch">
+													<p>#{fbresource['PG_Degree_Branch']}</p>
+											</label></td>
+											<td><h:outputText
+													value="#{StudentRegistrationBean.personalinfo.postGraduationBranch}" />
+											</td>
+										</tr>
+									</h:panelGroup>
+									<h:panelGroup id="specializationPanelRead"
+										rendered="#{StudentRegistrationBean.currentCourse eq 'Diploma' || StudentRegistrationBean.currentCourse eq 'Graduation' || StudentRegistrationBean.currentCourse eq 'Post Graduation'}">
+
+										<tr>
+											<td><label for="specialization">
+													<p>#{fbresource['Specialization']}</p>
+											</label></td>
+											<td><h:outputText
+													value="#{StudentRegistrationBean.personalinfo.specialization}" />
+											</td>
+
+											<td><label for="Semester">
+													<p>#{fbresource['Semester']}</p>
+											</label></td>
+											<td><h:outputText
+													value="#{StudentRegistrationBean.personalinfo.semester}" />
+											</td>
+										</tr>
+									</h:panelGroup>
+								</table>
+							</h:panelGroup>
+
+							<h:panelGroup id="personalInfoEditable"
+								rendered="#{StudentRegistrationBean.currentMode eq 'Create' || StudentRegistrationBean.isEditable}">
+								<table width="960px">
+									<tr>
+										<td><label for="gender">
+												<p>
+													#{fbresource['Gender']}<font color="red">*</font>
+												</p>
+										</label></td>
+										<td><h:selectOneMenu immediate="true"
+												value="#{StudentRegistrationBean.personalinfo.gender}"
+												id="gender" required="true"
+												requiredMessage="Please select gender">
+												<f:selectItem itemValue="" itemLabel="" />
+												<f:selectItem id="Male" itemValue="M"
+													itemLabel="#{fbresource['Male']}" />
+												<f:selectItem id="Female" itemValue="F"
+													itemLabel="#{fbresource['Female']}" />
+											</h:selectOneMenu> <o:floatingIconMessage style="border-color: red;"
+												for="gender" showDetail="true" showSummary="false" /></td>
+										<td><label for="dob">
+												<p>
+													#{fbresource['Date_of_Birth']}<font color="red">*</font>
+												</p>
+										</label></td>
+										<td><o:dateChooser pattern="dd/MM/yyyy"
+												buttonImageUrl="/images/calendar.gif" immediate="true"
+												value="#{StudentRegistrationBean.personalinfo.dob}" id="dob"
+												required="true">
+
+											</o:dateChooser> <o:floatingIconMessage style="border-color: red;" for="dob"
+												showDetail="true" showSummary="false" /></td>
+									</tr>
+									<tr>
+										<td><label for="handicapped">
+												<p>#{fbresource['Handicapped_Details']}</p>
+										</label></td>
+										<td><h:inputText immediate="true" maxlength="100"
+												value="#{StudentRegistrationBean.personalinfo.handicapped}"
+												id="handicapped">
+											</h:inputText></td>
+
+										<td><label for="bloodGroup">
+												<p>#{fbresource['Blood_Group']}</p>
+										</label></td>
+										<td><h:inputText immediate="true" maxlength="4"
+												value="#{StudentRegistrationBean.personalinfo.bloodGroup}"
+												id="bloodGroup">
+											</h:inputText></td>
+									</tr>
+									<h:panelGroup id="diplomaPanel"
+										rendered="#{StudentRegistrationBean.currentCourse eq 'Diploma' || StudentRegistrationBean.currentCourse eq 'Graduation' || StudentRegistrationBean.currentCourse eq 'Post Graduation'}">
+										<tr>
+											<td><label for="diploma">
+													<p>
+														#{fbresource['Diploma']}
+														<f:verbatim
+															rendered="#{StudentRegistrationBean.currentCourse eq 'Diploma'}">
+															<font color="red">*</font>
+														</f:verbatim>
+													</p>
+											</label></td>
+											<td><o:dropDownField id="diploma"
+													suggestionMode="stringStart" autoComplete="true"
+													customValueAllowed="false" maxlength="100"
+													listItemStyle="white-space: nowrap;"
+													required="#{StudentRegistrationBean.currentCourse eq 'Diploma'}"
+													immediate="true" style="width: 250px;" var="diploma"
+													value="#{StudentRegistrationBean.personalinfo.diploma}">
+													<o:dropDownItems value="#{CommonDBBean.getCommonData('Diploma')}" />
+													<o:column>
+														<h:outputText value="#{diploma}"
+															styleClass="dropDownValuesClass" />
+													</o:column>
+												</o:dropDownField> <o:floatingIconMessage style="border-color: red;"
+													for="diploma" showDetail="true" showSummary="false" /></td>
+
+											<td><label for="diplomaYearOfPassing">
+													<p>
+														#{fbresource['Diploma_Year_Of_Passing']}
+														<f:verbatim
+															rendered="#{StudentRegistrationBean.currentCourse eq 'Diploma' || (StudentRegistrationBean.personalinfo.diploma ne null and StudentRegistrationBean.personalinfo.diploma ne '')}">
+															<font color="red">*</font>
+														</f:verbatim>
+													</p>
+											</label></td>
+											<td><o:dropDownField id="diplomaYearOfPassing"
+													required="#{StudentRegistrationBean.currentCourse eq 'Diploma' || (StudentRegistrationBean.personalinfo.diploma ne null and StudentRegistrationBean.personalinfo.diploma ne '')}"
+													immediate="true" style="width: 70px;" maxlength="4"
+													listItemStyle="white-space: nowrap;"
+													suggestionMode="stringStart" var="year"
+													value="#{StudentRegistrationBean.personalinfo.diplomaYearOfPassing}"
+													suggestionMinChars="1">
+													<o:dropDownItems value="#{CommonDBBean.getCommonData('YearOfPassing')}" />
+													<o:column>
+														<h:outputText value="#{year}"
+															styleClass="dropDownValuesClass" />
+													</o:column>
+												</o:dropDownField> <o:floatingIconMessage style="border-color: red;"
+													for="diplomaYearOfPassing" showDetail="true"
+													showSummary="false" /></td>
+										</tr>
+										<tr>
+											<td><label for="dipUni">
+													<p>
+														#{fbresource['Diploma_University_Board']}
+														<f:verbatim
+															rendered="#{StudentRegistrationBean.currentCourse eq 'Diploma' || (StudentRegistrationBean.personalinfo.diploma ne null and StudentRegistrationBean.personalinfo.diploma ne '')}">
+															<font color="red">*</font>
+														</f:verbatim>
+													</p>
+											</label></td>
+											<td><o:dropDownField id="diplomaUniversity"
+													maxlength="100"
+													required="#{StudentRegistrationBean.currentCourse eq 'Diploma' || (StudentRegistrationBean.personalinfo.diploma ne null and StudentRegistrationBean.personalinfo.diploma ne '')}"
+													immediate="true" style="width: 250px;"
+													listItemStyle="white-space: nowrap;"
+													suggestionMode="stringStart" var="diplomaUniversity"
+													value="#{StudentRegistrationBean.personalinfo.diplomaUniversity}"
+													suggestionMinChars="1">
+													<o:dropDownItems value="#{CommonDBBean.getCommonData('Board')}" />
+													<o:column>
+														<h:outputText value="#{diplomaUniversity}"
+															styleClass="dropDownValuesClass" />
+													</o:column>
+												</o:dropDownField> <o:floatingIconMessage style="border-color: red;"
+													for="diplomaUniversity" showDetail="true"
+													showSummary="false" /></td>
+
+											<td><label for="diplomaBranch">
+													<p>
+														#{fbresource['Diploma_Branch']}
+														<f:verbatim
+															rendered="#{StudentRegistrationBean.currentCourse eq 'Diploma' || (StudentRegistrationBean.personalinfo.diploma ne null and StudentRegistrationBean.personalinfo.diploma ne '')}">
+															<font color="red">*</font>
+														</f:verbatim>
+													</p>
+											</label></td>
+											<td><o:dropDownField id="diplomaBranch" maxlength="100"
+													required="#{StudentRegistrationBean.currentCourse eq 'Diploma' || (StudentRegistrationBean.personalinfo.diploma ne null and StudentRegistrationBean.personalinfo.diploma ne '')}"
+													immediate="true" style="width: 300px;"
+													listItemStyle="white-space: nowrap;"
+													suggestionMode="stringStart" var="diplomaBranch"
+													value="#{StudentRegistrationBean.personalinfo.diplomaBranch}"
+													suggestionMinChars="1">
+													<o:dropDownItems value="#{CommonDBBean.getCommonData('Branch')}" />
+													<o:column>
+														<h:outputText value="#{diplomaBranch}"
+															styleClass="dropDownValuesClass" />
+													</o:column>
+												</o:dropDownField> <o:floatingIconMessage style="border-color: red;"
+													for="diplomaBranch" showDetail="true" showSummary="false" /></td>
+										</tr>
+									</h:panelGroup>
+									<h:panelGroup id="graduationPanel"
+										rendered="#{StudentRegistrationBean.currentCourse eq 'Graduation' || StudentRegistrationBean.currentCourse eq 'Post Graduation'}">
+										<tr>
+											<td><label for="course">
+													<p>
+														#{fbresource['Graduation_Degree']}<font color="red">*</font>
+													</p>
+											</label></td>
+											<td><o:dropDownField id="course" maxlength="100"
+													required="true" immediate="true" style="width: 250px;"
+													listItemStyle="white-space: nowrap;"
+													suggestionMode="stringStart" var="course"
+													value="#{StudentRegistrationBean.personalinfo.course}"
+													suggestionMinChars="1">
+													<o:dropDownItems value="#{CommonDBBean.getCommonData('Course')}" />
+													<o:column>
+														<h:outputText value="#{course}"
+															styleClass="dropDownValuesClass" />
+													</o:column>
+												</o:dropDownField> <o:floatingIconMessage style="border-color: red;"
+													for="course" showDetail="true" showSummary="false" /></td>
+
+											<td><label for="yearOfPassing">
+													<p>
+														#{fbresource['Graduation_Degree_Year_of_Passing']}<font
+															color="red">*</font>
+													</p>
+											</label></td>
+											<td><o:dropDownField id="yearOfPassing" maxlength="4"
+													required="true" immediate="true" style="width: 70px;"
+													listItemStyle="white-space: nowrap;"
+													suggestionMode="stringStart" var="year"
+													value="#{StudentRegistrationBean.personalinfo.yearOfPassing}"
+													suggestionMinChars="1">
+													<o:dropDownItems value="#{CommonDBBean.getCommonData('YearOfPassing')}" />
+													<o:column>
+														<h:outputText value="#{year}"
+															styleClass="dropDownValuesClass" />
+													</o:column>
+												</o:dropDownField> <o:floatingIconMessage style="border-color: red;"
+													for="yearOfPassing" showDetail="true" showSummary="false" /></td>
+										</tr>
+										<tr>
+											<td><label for="graduationUniversity">
+													<p>
+														#{fbresource['Graduation_Degree_University']}<font
+															color="red">*</font>
+													</p>
+											</label></td>
+											<td><o:dropDownField maxlength="100"
+													id="graduationUniversity" required="true" immediate="true"
+													style="width: 250px;" listItemStyle="white-space: nowrap;"
+													suggestionMode="stringStart" var="graduationUniversity"
+													value="#{StudentRegistrationBean.personalinfo.graduationUniversity}"
+													suggestionMinChars="1">
+													<o:dropDownItems value="#{CommonDBBean.getCommonData('Board')}" />
+													<o:column>
+														<h:outputText value="#{graduationUniversity}"
+															styleClass="dropDownValuesClass" />
+													</o:column>
+												</o:dropDownField> <o:floatingIconMessage style="border-color: red;"
+													for="graduationUniversity" showDetail="true"
+													showSummary="false" /></td>
+
+											<td><label for="branch">
+													<p>
+														#{fbresource['Graduation_Degree_Branch']}<font color="red">*</font>
+													</p>
+											</label></td>
+											<td><o:dropDownField id="branch" maxlength="100"
+													required="true" immediate="true" style="width: 300px;"
+													listItemStyle="white-space: nowrap;"
+													suggestionMode="stringStart" var="branch"
+													value="#{StudentRegistrationBean.personalinfo.branch}"
+													suggestionMinChars="1">
+													<o:dropDownItems value="#{CommonDBBean.getCommonData('Branch')}" />
+													<o:column>
+														<h:outputText value="#{branch}"
+															styleClass="dropDownValuesClass" />
+													</o:column>
+												</o:dropDownField> <o:floatingIconMessage style="border-color: red;"
+													for="branch" showDetail="true" showSummary="false" /></td>
+										</tr>
+									</h:panelGroup>
+									<h:panelGroup id="postGraduationPanel"
+										rendered="#{StudentRegistrationBean.currentCourse eq 'Post Graduation'}">
+
+										<tr>
+											<td><label for="postGraduationCourse">
+													<p>
+														#{fbresource['PG_Degree']}<font color="red">*</font>
+													</p>
+											</label></td>
+											<td><o:dropDownField maxlength="100"
+													id="postGraduationCourse" required="true" immediate="true"
+													style="width: 250px;" listItemStyle="white-space: nowrap;"
+													suggestionMode="stringStart" var="postGraduationCourse"
+													value="#{StudentRegistrationBean.personalinfo.postGraduationCourse}"
+													suggestionMinChars="1">
+													<o:dropDownItems value="#{CommonDBBean.getCommonData('Post GraduationCourse')}" />
+													<o:column>
+														<h:outputText value="#{postGraduationCourse}"
+															styleClass="dropDownValuesClass" />
+													</o:column>
+												</o:dropDownField> <o:floatingIconMessage style="border-color: red;"
+													for="postGraduationCourse" showDetail="true"
+													showSummary="false" /></td>
+
+											<td><label for="pgYearOfPassing">
+													<p>
+														#{fbresource['PG_Degree_Year_of_Passing']}<font
+															color="red">*</font>
+													</p>
+											</label></td>
+											<td><o:dropDownField id="pgYearOfPassing" maxlength="4"
+													required="true" immediate="true" style="width: 70px;"
+													listItemStyle="white-space: nowrap;"
+													suggestionMode="stringStart" var="year"
+													value="#{StudentRegistrationBean.personalinfo.pgYearOfPassing}"
+													suggestionMinChars="1">
+													<o:dropDownItems value="#{CommonDBBean.getCommonData('YearOfPassing')}" />
+													<o:column>
+														<h:outputText value="#{year}"
+															styleClass="dropDownValuesClass" />
+													</o:column>
+												</o:dropDownField> <o:floatingIconMessage style="border-color: red;"
+													for="pgYearOfPassing" showDetail="true" showSummary="false" /></td>
+										</tr>
+										<tr>
+											<td><label for="postGraduationUniversity">
+													<p>
+														#{fbresource['PG_Degree_University']}<font color="red">*</font>
+													</p>
+											</label></td>
+											<td><o:dropDownField maxlength="100"
+													id="postGraduationUniversity" required="true"
+													immediate="true" style="width: 250px;"
+													listItemStyle="white-space: nowrap;"
+													suggestionMode="stringStart" var="postGraduationUniversity"
+													value="#{StudentRegistrationBean.personalinfo.postGraduationUniversity}"
+													suggestionMinChars="1">
+													<o:dropDownItems value="#{CommonDBBean.getCommonData('Board')}" />
+													<o:column>
+														<h:outputText value="#{postGraduationUniversity}"
+															styleClass="dropDownValuesClass" />
+													</o:column>
+												</o:dropDownField> <o:floatingIconMessage style="border-color: red;"
+													for="postGraduationUniversity" showDetail="true"
+													showSummary="false" /></td>
+
+											<td><label for="postGraduationBranch">
+													<p>
+														#{fbresource['PG_Degree_Branch']}<font color="red">*</font>
+													</p>
+											</label></td>
+											<td><o:dropDownField maxlength="100"
+													id="postGraduationBranch" required="true" immediate="true"
+													style="width: 300px;" listItemStyle="white-space: nowrap;"
+													suggestionMode="stringStart" var="branch"
+													value="#{StudentRegistrationBean.personalinfo.postGraduationBranch}"
+													suggestionMinChars="1">
+													<o:dropDownItems value="#{CommonDBBean.getCommonData('Branch')}" />
+													<o:column>
+														<h:outputText value="#{branch}"
+															styleClass="dropDownValuesClass" />
+													</o:column>
+												</o:dropDownField> <o:floatingIconMessage style="border-color: red;"
+													for="postGraduationBranch" showDetail="true"
+													showSummary="false" /></td>
+										</tr>
+									</h:panelGroup>
+									<h:panelGroup id="specializationPanel"
+										rendered="#{StudentRegistrationBean.currentCourse eq 'Diploma' || StudentRegistrationBean.currentCourse eq 'Graduation' || StudentRegistrationBean.currentCourse eq 'Post Graduation'}">
+
+										<tr>
+											<td><label for="specialization">
+													<p>#{fbresource['Specialization']}</p>
+											</label></td>
+											<td><o:dropDownField id="specialization"
+													immediate="true" style="width: 200px;"
+													listItemStyle="white-space: nowrap;" maxlength="50"
+													suggestionMode="stringStart" var="specialization"
+													value="#{StudentRegistrationBean.personalinfo.specialization}"
+													suggestionMinChars="1">
+													<o:dropDownItems value="#{CommonDBBean.getCommonData('specialization')}" />
+													<o:column>
+														<h:outputText value="#{specialization}"
+															styleClass="dropDownValuesClass" />
+													</o:column>
+												</o:dropDownField> <o:floatingIconMessage style="border-color: red;"
+													for="specialization" showDetail="true" showSummary="false" /></td>
+
+											<td><label for="Semester">
+													<p>
+														#{fbresource['Semester']}<font color="red">*</font>
+													</p>
+											</label></td>
+											<td><o:dropDownField id="Semester" maxlength="10"
+													required="true" immediate="true" style="width: 140px;"
+													listItemStyle="white-space: nowrap;"
+													suggestionMode="stringStart" var="semester"
+													value="#{StudentRegistrationBean.personalinfo.semester}"
+													suggestionMinChars="1">
+													<o:dropDownItems value="#{CommonDBBean.getCommonData('Semester')}" />
+													<o:column>
+														<h:outputText value="#{semester}"
+															styleClass="dropDownValuesClass" />
+													</o:column>
+												</o:dropDownField> <o:floatingIconMessage style="border-color: red;"
+													for="Semester" showDetail="true" showSummary="false" /></td>
+
+
+										</tr>
+									</h:panelGroup>
+								</table>
+							</h:panelGroup>
+							<table>
+								<tr>
+									<td><o:commandButton
+											title="#{fbresource['Previous_Page']}"
+											value="#{fbresource['Previous']}"
+											action="#{WebFlow.mainPage}" /></td>
+									<td><o:commandButton title="#{fbresource['Next_Page']}"
+											value="#{fbresource['Next']}" action="#{WebFlow.secondPage}" /></td>
+									<td><o:commandButton value="#{fbresource['Edit']}"
+											rendered="#{StudentRegistrationBean.currentMode eq 'Update' and !StudentRegistrationBean.isEditable}"
+											action="#{StudentRegistrationBean.edit}" /></td>
+									<td><o:commandButton
+											rendered="#{StudentRegistrationBean.currentMode eq 'Update'}"
+											action="#{StudentRegistrationBean.updatePersonalSection}"
+											value="#{fbresource['Update_Personal_Information']}" /></td>
+								</tr>
+							</table>
+						</FIELDSET>
+					</div>
+				</div>
+			</h:panelGroup>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

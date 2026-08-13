@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<ui:composition>
+	<!-- what people Say -->
+	<div class="section-area section-sp2 bg-fix ovpr-dark">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 text-white heading-bx left">
+					<h2 class="title-head text-uppercase">
+						what people <span>say</span>
+					</h2>
+					<!-- <p>It is a long established fact that a reader will be
+									distracted by the readable content of a page</p> -->
+				</div>
+			</div>
+			<div class="testimonial-carousel owl-carousel owl-btn-1 col-12 p-lr0">
+
+				<c:forEach items="#{CommonDBBean.reviewList}" var="customerReview">
+					<div class="item">
+						<div class="testimonial-bx">
+							<div class="testimonial-thumb">
+								<o:dynamicImage
+									rendered="#{CommonDBBean.envirnment eq 'SERVER'}"
+									style="height:60px;width:75px;"
+									data="#{CommonDBBean.getUserProfilePic(customerReview.userName)}" />
+								<f:verbatim rendered="#{CommonDBBean.envirnment eq 'LOCAL'}">
+									<img style="height: 60px; width: 75px;"
+										src="/FB/images/user.png" />
+								</f:verbatim>
+							</div>
+							<div class="testimonial-info">
+								<h5 class="name">#{customerReview.fullName}</h5>
+							</div>
+							<div class="testimonial-content">
+								<p>#{customerReview.comment}</p>
+							</div>
+							<div class="cours-more-info">
+								<div class="review">
+									<span>#{customerReview.starRating} starRating</span>
+									<ul class="cours-star">
+										<li class="#{customerReview.starRating >0 ? 'active':''}"><i
+											class="fa fa-star"></i></li>
+										<li class="#{customerReview.starRating >1 ? 'active':''}"><i
+											class="fa fa-star"></i></li>
+										<li class="#{customerReview.starRating >2 ? 'active':''}"><i
+											class="fa fa-star"></i></li>
+										<li class="#{customerReview.starRating >3 ? 'active':''}"><i
+											class="fa fa-star"></i></li>
+										<li class="#{customerReview.starRating >4 ? 'active':''}"><i
+											class="fa fa-star"></i></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</c:forEach>
+			</div>
+		</div>
+	</div>
+	<!--  what people Say END -->
+</ui:composition>
+</html>
+
+

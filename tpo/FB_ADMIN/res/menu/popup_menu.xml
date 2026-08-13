@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<menu xmlns:android="http://schemas.android.com/apk/res/android">  
+  <!--   <item 
+        android:icon="@drawable/pdf"
+        android:id="@+id/downloadOrignalResume"  
+        android:title="Download Orignal Resume" />  
+    <item  
+        android:id="@+id/downloadRegistrationForm"  
+        android:title="Download Registration Form"
+        android:icon="@drawable/pdf"/>  
+   -->  <item  
+        android:id="@+id/changePassword"  
+        android:title="Change Password"/> 
+</menu>  

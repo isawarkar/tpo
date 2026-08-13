@@ -1,0 +1,138 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<ui:composition
+	template="/studentTemplateTheme2/studentHomeLayout.xhtml">
+	<ui:define name="content">
+		<h:form>
+			<ui:include src="webflow.xhtml" />
+			<h:outputText
+				value="#{fbresource['Last_Updated_on']} #{StudentRegistrationBean.backdetails.lastUpdated} #{fbresource['By']} #{StudentRegistrationBean.backdetails.lastUpdatedBy}"></h:outputText>
+			<table style="width: 100%;">
+				<tr>
+					<td><label for="backLog">
+
+							#{fbresource['Present_Backlog']}<font color="red">*</font>
+
+					</label></td>
+					<td><h:selectOneMenu immediate="true"
+							value="#{StudentRegistrationBean.backdetails.backLog}"
+							id="backLog" required="true"
+							requiredMessage="#{fbresource['Please_select_Present_Backlog']}">
+							<f:selectItem itemValue="" itemLabel="" />
+							<f:selectItem itemValue="0" itemLabel="#{fbresource['NO']}" />
+							<f:selectItem itemValue="1" itemLabel="#{fbresource['YES']}" />
+							<o:ajax event="change" render="backDetails" execute="backLog"
+								delay="500" />
+						</h:selectOneMenu> <o:floatingIconMessage style="border-color: red;" for="backLog"
+							showDetail="true" showSummary="false" /></td>
+					<td><label for="backDetails">
+							#{fbresource['Details_of_Backlog']} </label></td>
+					<td><h:inputText maxlength="50"
+							alt="#{fbresource['Enter_NA_if_not_applicable']}"
+							required="#{StudentRegistrationBean.backdetails.backLog eq '1' || StudentRegistrationBean.backdetails.baGroup eq '1' || StudentRegistrationBean.backdetails.passMoreThenOneAttempt eq '1' || StudentRegistrationBean.backdetails.numberOfBacklogs > '0'}"
+							title="#{fbresource['It_is_required_if']}"
+							value="#{StudentRegistrationBean.backdetails.backDetails}"
+							id="backDetails" /> <o:floatingIconMessage
+							style="border-color: red;" for="backDetails" showDetail="true"
+							showSummary="false" /></td>
+				</tr>
+				<tr>
+					<td><label for="baGroup">
+
+							#{fbresource['Are_you_in_BA_group_Year_or_Sem_back']}<font
+							color="red">*</font>
+
+					</label></td>
+					<td><h:selectOneMenu immediate="true"
+							value="#{StudentRegistrationBean.backdetails.baGroup}"
+							id="baGroup" required="true"
+							requiredMessage="#{fbresource['Please_select_baGroup']}">
+							<f:selectItem itemValue="" itemLabel="" />
+							<f:selectItem itemValue="0" itemLabel="#{fbresource['NO']}" />
+							<f:selectItem itemValue="1" itemLabel="#{fbresource['YES']}" />
+							<o:ajax event="change" render="backDetails" execute="baGroup"
+								delay="500" />
+						</h:selectOneMenu> <o:floatingIconMessage style="border-color: red;" for="baGroup"
+							showDetail="true" showSummary="false" /></td>
+					<td><label for="passMoreThenOneAttempt">
+
+							#{fbresource['Any_semester_passed_in_more_than_one_attempt']}<font
+							color="red">*</font>
+
+					</label></td>
+					<td><h:selectOneMenu immediate="true"
+							value="#{StudentRegistrationBean.backdetails.passMoreThenOneAttempt}"
+							id="passMoreThenOneAttempt" required="true"
+							requiredMessage="#{fbresource['Any_semester_passed_in_more_than_one_attempt']}">
+							<f:selectItem itemValue="" itemLabel="" />
+							<f:selectItem itemValue="0" itemLabel="#{fbresource['NO']}" />
+							<f:selectItem itemValue="1" itemLabel="#{fbresource['YES']}" />
+							<o:ajax event="change" render="backDetails"
+								execute="passMoreThenOneAttempt" delay="500" />
+						</h:selectOneMenu> <o:floatingIconMessage style="border-color: red;"
+							for="passMoreThenOneAttempt" showDetail="true"
+							showSummary="false" /></td>
+				</tr>
+				<tr>
+					<td><label for="educationGap">
+
+							#{fbresource['Education_Gap_in_Years']}<font color="red">*</font>
+
+					</label></td>
+					<td><h:selectOneMenu immediate="true"
+							value="#{StudentRegistrationBean.backdetails.educationGap}"
+							id="educationGap" required="true"
+							requiredMessage="#{fbresource['Please_select_educationGap']}">
+							<f:selectItem itemValue="" itemLabel="" />
+							<f:selectItem itemValue="0" itemLabel="0" />
+							<f:selectItem itemValue="1" itemLabel="1" />
+							<f:selectItem itemValue="2" itemLabel="2" />
+							<f:selectItem itemValue="3" itemLabel="3" />
+							<f:selectItem itemValue="4" itemLabel="4" />
+							<f:selectItem itemValue="5" itemLabel="5" />
+							<f:selectItem itemValue="6" itemLabel="6" />
+						</h:selectOneMenu> <o:floatingIconMessage style="border-color: red;"
+							for="educationGap" showDetail="true" showSummary="false" /></td>
+					<td><label for="numberOfBacklogs">
+
+							#{fbresource['Number_of_Backlog']}<font color="red">*</font>
+
+					</label></td>
+					<td><h:selectOneMenu immediate="true"
+							value="#{StudentRegistrationBean.backdetails.numberOfBacklogs}"
+							id="numberOfBacklogs" required="true"
+							requiredMessage="#{fbresource['Please_select_numberOfBacklogs']}">
+							<f:selectItem itemValue="" itemLabel="" />
+							<f:selectItem itemValue="0" itemLabel="0" />
+							<f:selectItem itemValue="1" itemLabel="1" />
+							<f:selectItem itemValue="2" itemLabel="2" />
+							<f:selectItem itemValue="3" itemLabel="3" />
+							<f:selectItem itemValue="4" itemLabel="4" />
+							<f:selectItem itemValue="5" itemLabel="5" />
+							<f:selectItem itemValue="6" itemLabel="6" />
+							<o:ajax event="change" render="backDetails"
+								execute="numberOfBacklogs" delay="500" />
+						</h:selectOneMenu> <o:floatingIconMessage style="border-color: red;"
+							for="numberOfBacklogs" showDetail="true" showSummary="false" /></td>
+				</tr>
+			</table>
+			<table style="width: 110px;">
+				<tr>
+					<td><o:commandButton title="#{fbresource['Previous_Page']}" styleClass="btn btn-primary glow" 
+							value="#{fbresource['Previous_Page']}"
+							action="#{WebFlow.secondPage}" /></td>
+					<td><o:commandButton title="#{fbresource['Next_Page']}" styleClass="btn btn-primary glow" 
+							value="#{fbresource['Next_Page']}"
+							action="#{WebFlow.contactPage}" /></td>
+					<td><o:commandButton styleClass="btn btn-primary glow" 
+							action="#{StudentRegistrationBean.updateBackLogSection}"
+							value="#{fbresource['Update_Backlog_Information']}" /></td>
+				</tr>
+			</table>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

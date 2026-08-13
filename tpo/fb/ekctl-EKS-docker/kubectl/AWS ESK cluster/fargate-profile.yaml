@@ -1,0 +1,13 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+  name: eks-fb-fresher-buddy
+  region: us-east-1
+fargateProfiles:
+  - name: fb-fresher-buddy
+    selectors:
+      - namespace: monitoring
+      - namespace: amazon-cloudwatch
+      - namespace: fb-fresher-buddy
+      - namespace: kube-system
+    podExecutionRoleARN: arn:aws:iam::542115677157:role/EKSFargatePodExecutionRole

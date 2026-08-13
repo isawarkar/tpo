@@ -1,0 +1,168 @@
+Installing tomcat
+sudo apt update
+sudo apt install openjdk-11-jre openjdk-11-jdk
+sudo useradd -m -U -d /opt/tomcat -s /bin/false tomcat
+
+VERSION=10.1.28
+wget https://dlcdn.apache.org/tomcat/tomcat-10/v${VERSION}/bin/apache-tomcat-${VERSION}.tar.gz -P /home/ubuntu
+sudo tar -xf apache-tomcat-${VERSION}.tar.gz -C /opt/tomcat/
+sudo ln -s /opt/tomcat/apache-tomcat-${VERSION} /opt/tomcat/latest
+sudo chown -R tomcat: /opt/tomcat
+sudo sh -c 'chmod +x /opt/tomcat/latest/bin/*.sh'
+sudo vi /etc/systemd/system/tomcat.service
+
+##########Paste the following configuration######################
+[Unit]
+Description=Tomcat 9 servlet container
+After=network.target
+
+[Service]
+Type=forking
+
+User=tomcat
+Group=tomcat
+
+Environment="JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64"
+Environment="JAVA_OPTS=-Djava.security.egd=file:///dev/urandom -Djava.awt.headless=true"
+
+Environment="CATALINA_BASE=/opt/tomcat/latest"
+Environment="CATALINA_HOME=/opt/tomcat/latest"
+Environment="CATALINA_PID=/opt/tomcat/latest/temp/tomcat.pid"
+Environment="CATALINA_OPTS=-Xms512M -Xmx1024M -server -XX:+UseParallelGC"
+
+ExecStart=/opt/tomcat/latest/bin/startup.sh
+ExecStop=/opt/tomcat/latest/bin/shutdown.sh
+
+[Install]
+WantedBy=multi-user.target
+####################################
+
+sudo systemctl daemon-reload
+sudo systemctl enable --now tomcat
+
+sudo vi/etc/systemd/system/tomcat.service
+NOte:make sure you change the port from 8080 to 80 in conf/server.xml
+
+
+Runnung tomcat on port 80 and 443(https)
+Step 1 : Install certbot
+$ sudo su
+# sudo apt-get install software-properties-common
+# sudo add-apt-repository ppa:certbot/certbot
+# apt-get update
+# apt-get install certbot
+
+Step 2:  Create the SSL certificate for yourdomain.com.
+certbot certonly --dry-run --standalone -d student.fresherbuddy.in#######Commond to test if runs successfull
+Note:Make sure certbot is installed on machine which is pointed by domain
+# certbot certonly --standalone -d student.fresherbuddy.in
+# ls /etc/letsencrypt/live/www.fresherbuddy.in/
+# cd /etc/letsencrypt/live/www.fresherbuddy.in
+# cp cert.pem /{tomcat-home}/conf
+# cp chain.pem /{tomcat-home}/conf
+# cp privkey.pem /{tomcat-home}/conf
+
+Step 3:Don’t forget to set the permissions.
+# chown tomcat:tomcat *.pem
+Set all the permision
+
+Step 4:Make sure you allow 80 and 443
+sudo ufw allow 80
+sudo ufw allow 443
+sudo ufw allow http
+sudo ufw allow https
+To Check
+ufw enable 
+sudo ufw status
+
+Make sure it shows below output
+ubuntu@ip-172-31-38-54:~$ sudo ufw status
+Status: active
+
+To                         Action      From
+--                         ------      ----
+80/tcp                     ALLOW       Anywhere
+22/tcp                     ALLOW       Anywhere
+433                        ALLOW       Anywhere
+443/tcp                    ALLOW       Anywhere
+80                         ALLOW       Anywhere
+443                        ALLOW       Anywhere
+80/tcp (v6)                ALLOW       Anywhere (v6)
+22/tcp (v6)                ALLOW       Anywhere (v6)
+433 (v6)                   ALLOW       Anywhere (v6)
+443/tcp (v6)               ALLOW       Anywhere (v6)
+80 (v6)                    ALLOW       Anywhere (v6)
+443 (v6)                   ALLOW       Anywhere (v6)
+
+
+Step5:
+sudo iptables -t nat -I PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
+sudo iptables -A INPUT -p tcp -m multiport --dports 80,443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+sudo iptables -A OUTPUT -p tcp -m multiport --dports 80,443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+sudo iptables -t nat --line-numbers -n -L
+
+Make sure it shows below output
+ubuntu@ip-172-31-38-54:~$ sudo iptables -t nat --line-numbers -n -L
+Chain PREROUTING (policy ACCEPT)
+num  target     prot opt source               destination
+
+Chain INPUT (policy ACCEPT)
+num  target     prot opt source               destination
+
+Chain OUTPUT (policy ACCEPT)
+num  target     prot opt source               destination
+
+Chain POSTROUTING (policy ACCEPT)
+num  target     prot opt source               destination
+
+
+sudo apt install authbind
+sudo touch /etc/authbind/byport/80
+sudo chown tomcat /etc/authbind/byport/80
+sudo touch /etc/authbind/byport/443
+sudo chown tomcat /etc/authbind/byport/443
+
+Last but not least, we need to configure Tomcat to use "authbind" 
+when we start it up. To do that we edit the /opt/lucee/tomcat/bin/startup.sh file. 
+At the bottom of the file we need to change this:
+
+exec "$PRGDIR"/"$EXECUTABLE" start "$@"
+to this:
+exec authbind --deep "$PRGDIR"/"$EXECUTABLE" start "$@"
+Now restart Tomcat:
+/opt/lucee/lucee_ctl restart
+
+Step 5:The last step is to edit server.xml 
+<Connector port="443" protocol="org.apache.coyote.http11.Http11NioProtocol"
+maxThreads="150" SSLEnabled="true">
+  <SSLHostConfig>
+    <Certificate certificateFile="conf/cert.pem"
+                 certificateKeyFile="conf/privkey.pem"
+                 certificateChainFile="conf/chain.pem" />
+  </SSLHostConfig>
+</Connector>
+
+install CodeDeploye Agent for code deploy
+https://docs.aws.amazon.com/codedeploy/latest/userguide/codedeploy-agent-operations-install-ubuntu.html
+https://docs.aws.amazon.com/codedeploy/latest/userguide/codedeploy-agent-operations-uninstall.html
+
+wget https://aws-codedeploy-us-east-2.s3.us-east-2.amazonaws.com/latest/install
+
+sudo systemctl start tomcat
+sudo systemctl stop tomcat
+sudo systemctl restart tomcat
+sudo systemctl status tomcat
+
+sh stop.sh
+sudo -s
+rm -r /opt/tomcat/apache-tomcat-9.0.54/webapps/cgi-bin.war
+aws s3 cp s3://elasticbeanstalk-us-east-2-208404693155/fb/target/cgi-bin.war .
+mv cgi-bin.war /opt/tomcat/apache-tomcat-9.0.54/webapps/
+sh start.sh
+
+/opt/codedeploy-agent/deployment-root/2030849f-24d4-445e-8c83-340144013e91
+
+sudo apt-get purge openjdk-11-jdk
+
+to check unused jars
+java -Xmx512m -jar D:\BloodBank\tattletale-1.1.2.Final\tattletale.jar D:\cgi-bin\cgi-bin D:\report

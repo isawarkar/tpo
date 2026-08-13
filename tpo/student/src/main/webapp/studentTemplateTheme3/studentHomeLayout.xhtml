@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<title>#{fbresource['Freshers_Buddy']}</title>
+<center>
+	<div id="overlay"></div>
+	<div id="LoaderX" class="LX">
+		<div
+			style="color: green; font-size: 25px; margin-left: 300px; margin-top: 50px;"
+			id="LoaderContainer">
+			<img src='/student/css/loading.gif' />
+		</div>
+	</div>
+</center>
+<!-- BEGIN: Head-->
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<link rel="shortcut icon" type="image/x-icon"
+		href="/student/favicon.ico" />
+	<link
+		href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,600%7CIBM+Plex+Sans:300,400,500,600,700"
+		rel="stylesheet" />
+
+	<link rel="stylesheet" type="text/css"
+		href="/student/studentTemplateTheme3/css/fbadmin.css" />
+
+	<!-- BEGIN: Vendor CSS-->
+	<link rel="stylesheet" type="text/css"
+		href="/student/studentTemplateTheme3/vendors/css/vendors.min.css" />
+	<link rel="stylesheet" type="text/css"
+		href="/student/studentTemplateTheme3/vendors/css/animate/animate.css" />
+	<!-- <link rel="stylesheet" type="text/css"
+		href="/student/studentTemplateTheme3/vendors/css/extensions/sweetalert2.min.css" /> -->
+	<link rel="stylesheet" type="text/css"
+		href="/student/studentTemplateTheme3/vendors/css/extensions/toastr.css" />
+	<!-- END: Vendor CSS-->
+
+	<!-- BEGIN: Theme CSS-->
+	<link rel="stylesheet" type="text/css"
+		href="/student/studentTemplateTheme3/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css"
+		href="/student/studentTemplateTheme3/css/bootstrap-extended.min.css" />
+	<link rel="stylesheet" type="text/css"
+		href="/student/studentTemplateTheme3/css/colors.min.css" />
+	<link rel="stylesheet" type="text/css"
+		href="/student/studentTemplateTheme3/css/components.min.css" />
+	<link rel="stylesheet" type="text/css"
+		href="/student/studentTemplateTheme3/css/themes/dark-layout.min.css" />
+	<link rel="stylesheet" type="text/css"
+		href="/student/studentTemplateTheme3/css/themes/semi-dark-layout.min.css" />
+	<!-- END: Theme CSS-->
+
+	<!-- BEGIN: Page CSS-->
+	<link rel="stylesheet" type="text/css"
+		href="/student/studentTemplateTheme3/css/core/menu/menu-types/vertical-menu.min.css" />
+	<link rel="stylesheet" type="text/css"
+		href="/student/studentTemplateTheme3/css/pages/dashboard-ecommerce.min.css" />
+	<link rel="stylesheet" type="text/css"
+		href="/student/studentTemplateTheme3/css/plugins/extensions/toastr.min.css" />
+	<!-- END: Page CSS-->
+
+	<!-- BEGIN: Custom CSS-->
+	<link rel="stylesheet" type="text/css"
+		href="/student/studentTemplateTheme3/css/style.css" />
+	<!-- END: Custom CSS-->
+
+	<script src="/student/ckeditor/ckeditor.js" />
+	<script src="/student/js/CCP.js" />
+
+	<script>
+		pleaseWaitLoading();
+	</script>
+</h:head>
+<!-- END: Head-->
+<h:body
+	class="vertical-layout vertical-menu-modern 2-columns  navbar-sticky footer-static  "
+	data-open="click" data-menu="vertical-menu-modern" data-col="2-columns"
+	onload="hidePleaseWait();">
+	<f:view locale="#{LanguageLocaleBean.locale}">
+		<f:loadBundle var="fbresource" basename="com.student.fbresource" />
+		<ui:include src="/template/ajaxSetting.xhtml" />
+		<f:loadBundle var="fbresource" basename="com.student.fbresource" />
+		<ui:insert name="header">
+			<ui:include src="studentHeader.xhtml" />
+		</ui:insert>
+		
+		<div class="app-content content">
+			<div class="content-overlay"></div>
+			<div class="content-wrapper">
+				<div class="content-header row"></div>
+				<ui:include src="/xhtml/commonMessage.xhtml" />
+				<div class="content-body">
+					<ui:insert name="content" />
+				</div>
+			</div>
+		</div>
+		<ui:insert name="customizer">
+			<ui:include src="/studentTemplateTheme3/adminCustomizer.xhtml" />
+		</ui:insert>
+		<div class="sidenav-overlay"></div>
+		<div class="drag-target"></div>
+		<ui:insert name="footer">
+			<ui:include src="/studentTemplateTheme3/adminFooterNew.xhtml" />
+		</ui:insert>
+	</f:view>
+</h:body>
+<!-- BEGIN: Vendor JS-->
+<script src="/student/studentTemplateTheme3/vendors/js/vendors.min.js" />
+<script
+	src="/student/studentTemplateTheme3/fonts/LivIconsEvo/js/LivIconsEvo.tools.min.js" />
+<script
+	src="/student/studentTemplateTheme3/fonts/LivIconsEvo/js/LivIconsEvo.defaults.min.js" />
+<script
+	src="/student/studentTemplateTheme3/fonts/LivIconsEvo/js/LivIconsEvo.min.js" />
+<!-- BEGIN Vendor JS-->
+
+<!-- BEGIN: Page Vendor JS-->
+<script
+	src="/student/studentTemplateTheme3/vendors/js/extensions/swiper.min.js" />
+<script
+	src="/student/studentTemplateTheme3/vendors/js/extensions/sweetalert2.all.min.js" />
+<script
+	src="/student/studentTemplateTheme3/vendors/js/extensions/polyfill.min.js" />
+<script
+	src="/student/studentTemplateTheme3/vendors/js/extensions/toastr.min.js" />
+<script src="/student/studentTemplateTheme3/vendors/js/ui/blockUI.min.js"></script>
+<!-- END: Page Vendor JS-->
+
+<!-- BEGIN: Theme JS-->
+<script
+	src="/student/studentTemplateTheme3/js/scripts/configs/vertical-menu-light.min.js" />
+<script src="/student/studentTemplateTheme3/js/core/app-menu.min.js" />
+<script src="/student/studentTemplateTheme3/js/core/app.min.js" />
+<script src="/student/studentTemplateTheme3/js/scripts/components.min.js" />
+<script src="/student/studentTemplateTheme3/js/scripts/footer.min.js" />
+<script src="/student/studentTemplateTheme3/js/scripts/customizer.min.js" />
+<!-- END: Theme JS-->
+
+<!-- BEGIN: Page JS-->
+<!-- <script
+	src="/student/studentTemplateTheme3/js/scripts/pages/dashboard-ecommerce.min.js" />
+ -->
+<!-- <script
+	src="/student/studentTemplateTheme3/js/scripts/extensions/sweet-alerts.min.js" /> -->
+<script
+	src="/student/studentTemplateTheme3/js/scripts/extensions/toastr.min.js"></script>
+<script
+	src="/student/studentTemplateTheme3/js/scripts/extensions/ext-component-block-ui.js"></script>
+<!-- END: Page JS-->
+</html>

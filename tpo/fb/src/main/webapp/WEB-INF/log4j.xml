@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/"><!--
+ 
+    <appender name="ConsoleAppender" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d (%F:%L) %-5p %c - %m%n"/>
+        </layout>
+    </appender>
+    
+    <appender name="FileAppender" class="org.apache.log4j.RollingFileAppender">
+        <param name="File" value="logs/connect.log"/>
+        <param name="MaxFileSize" value="9048576"/>
+        <param name="MaxBackupIndex" value="10"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d (%F:%L) %-5p %c - %m%n"/>
+        </layout>
+    </appender>
+	
+	 --><appender name="MailAppender" class="org.apache.log4j.net.SMTPAppender">
+        <param name="To" value="indrajeet.sawarkar@gmail.com"/>
+        <param name="From" value="fresherbuddy.yourtruefriend@gmail.com"/>
+        <param name="Subject" value="URGENT Fatal Error encountered"/>
+        <param name="SMTPHost" value="localhost"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %-5p [%t] %C [%F:%L] %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="ERROR"/>
+            <param name="LevelMax" value="ERROR"/>          
+            <param name="AcceptOnMatch" value="true"/>
+        </filter>
+    </appender>
+    
+	<appender name="console" class="org.apache.log4j.ConsoleAppender">
+        <param name="target" value="System.err"/>
+        <param name="immediateFlush" value="false"/>
+        <param name="encoding" value="UTF-8"/>
+        <param name="threshold" value="fatal"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="conversionPattern" value="%d [%t] %-5p %c - %m%n"/>
+        </layout>
+    </appender>
+    
+
+    <category name="org.springframework.beans">
+        <priority value="ERROR" />
+    </category>
+    
+    <logger name="tpo.admin.backup" >
+		<level value="ERROR"/>
+		<appender-ref ref="console"/>		
+	</logger> -->
+    
+    <root>
+        <level value="ERROR"/>
+        <appender-ref ref="MailAppender"/>
+         <appender-ref ref="console"/>
+      <!--  <appender-ref ref="FileAppender"/>
+        <appender-ref ref="ConsoleAppender"/>
+    --></root>
+ 
+</log4j:configuration>
+

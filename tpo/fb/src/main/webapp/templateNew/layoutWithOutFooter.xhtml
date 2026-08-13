@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<title>#{fbresource['Freshers_Buddy']}</title>
+<center>
+<div id="overlay"></div>
+<div style="margin-top: 50px;"  id="LoaderX" class="LX">
+	<div style="color: green; font-size: 25px; margin-left: 50px;"
+		id="LoaderContainer">
+		<img src='/FB/css/loading.gif' />
+	</div>
+</div>
+</center>
+<h:head>
+<script data-ad-client="ca-pub-2495720134180716" async="true" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<ui:include src="/template/keywords.xhtml" />
+	<link rel="shortcut icon" type="image/png" href="/FB/favicon.png" />
+	<link rel="shortcut icon" href="/FB/favicon.ico"
+		type="image/x-icon" />
+	<!--[if lt IE 9]>
+	<script src="/FB/theme/assets/js/html5shiv.min.js"></script>
+	<script src="/FB/theme/assets/js/respond.min.js"></script>
+	<![endif]-->
+	<!-- All PLUGINS CSS ============================================= -->
+	<link rel="stylesheet" type="text/css"
+		href="/FB/theme/assets/css/assets.css" />
+
+	
+
+	<!-- SHORTCODES ============================================= -->
+	<link rel="stylesheet" type="text/css"
+		href="/FB/theme/assets/css/shortcodes/shortcodes.css" />
+	
+	<!-- STYLESHEETS ============================================= -->
+	<link rel="stylesheet" type="text/css"
+		href="/FB/theme/assets/css/style.css" />
+	<link class="skin" rel="stylesheet" type="text/css"
+		href="/FB/theme/assets/css/color/color-#{LanguageLocaleBean.colorCode}.css" />
+
+	<!-- END: Page JS-->
+	<link rel="stylesheet" type="text/css"
+		href="/FB/adminTemplateNew/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css"
+		href="/FB/adminTemplateNew/css/bootstrap-extended.min.css" />
+	<script type="text/javascript" src="/FB/js/CCP.js"></script>
+	<link rel="stylesheet" type="text/css"
+		href="/FB/adminTemplateNew/vendors/css/vendors.min.css" />
+	<link rel="stylesheet" type="text/css"
+		href="/FB/adminTemplateNew/css/fbadmin.css" />
+	<link rel="stylesheet" type="text/css"
+		href="/FB/css/noLine.css" />
+</h:head>
+<h:body style="background:white;" id="bg" onload="hidePleaseWait();" >
+	<div class="page-wraper">
+		<div id="loading-icon-bx"></div>
+		<f:view locale="#{LanguageLocaleBean.locale}">
+			<f:loadBundle var="fbresource" basename="com.fb.fbresource" />
+			<ui:include src="/template/ajaxSetting.xhtml" />
+			<f:loadBundle var="fbresource" basename="com.fb.fbresource" />
+			<ui:insert name="header">
+				<ui:include src="header.xhtml" />
+			</ui:insert>
+			<div class="page-content bg-white" >
+				<ui:insert name="message">
+					<ui:include src="commonMessage.xhtml" />
+				</ui:insert>
+				<ui:insert name="content" />
+			</div>
+		</f:view>
+		<button class="back-to-top fa fa-chevron-up"></button>
+	</div>
+</h:body>
+<script src="/FB/theme/assets/js/jquery.min.js" />
+<script
+	src="/FB/theme/assets/vendors/bootstrap/js/bootstrap.min.js" />
+<script
+	src="/FB/theme/assets/vendors/bootstrap-select/bootstrap-select.min.js" />
+<script src="/FB/theme/assets/js/functions.js" />
+
+</html>

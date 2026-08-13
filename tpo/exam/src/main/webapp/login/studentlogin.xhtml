@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:o="http://openfaces.org/"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<center>
+	<div id="overlay"></div>
+	<div id="LoaderX" class="LX">
+		<div style="color: green; font-size: 25px; margin-left: 50px;"
+			id="LoaderContainer">
+			<img src='/exam/css/loading.gif' />
+		</div>
+	</div>
+</center>
+<h:head>
+	<meta charset="utf-8" />
+	<meta http-equiv="x-ua-compatible" content="ie=edge" />
+	<title>#{fbresource['Online_Test_Login']}</title>
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="css/all.css" />
+	<!-- Bootstrap core CSS -->
+	<link href="css/bootstrap.min.css" rel="stylesheet" />
+	<!-- Material Design Bootstrap -->
+	<link href="css/mdb.min.css" rel="stylesheet" />
+	<!-- Your custom styles (optional) -->
+	<link href="css/style.css" rel="stylesheet" />
+	<link rel="shortcut icon" type="image/png" href="img/favicon.ico" />
+
+	<!-- SCRIPTS -->
+	<script type="text/javascript" src="/exam/js/CCP.js"></script>
+	<!-- JQuery -->
+	<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+	<!-- Bootstrap tooltips -->
+	<script type="text/javascript" src="js/popper.min.js"></script>
+	<!-- Bootstrap core JavaScript -->
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<!-- MDB core JavaScript -->
+	<script type="text/javascript" src="js/mdb.js"></script>
+</h:head>
+
+<h:body class="login">
+	<f:view locale="#{LanguageLocaleBean.locale}">
+		<f:loadBundle var="fbresource" basename="com.exam.fbresource" />
+		<!-- Start your project here-->
+		<div style="height: 80vh">
+			<div class="flex-right flex-column">
+				<h:form>
+					<table>
+						<tr>
+							<td><label><font color="white" size="3">#{fbresource['language']}</font></label></td>
+							<td><h:selectOneMenu onchange="submit();"
+									valueChangeListener="#{LanguageLocaleBean.countryLocaleCodeChanged}"
+									id="locale">
+									<f:selectItem itemValue="" itemLabel="" />
+									<f:selectItem itemValue="en" itemLabel="English" />
+									<f:selectItem itemValue="in" itemLabel="हिंदी " />
+								</h:selectOneMenu></td>
+						</tr>
+					</table>
+				</h:form>
+				<!-- Material form login -->
+				<div class="card" style="margin-bottom: 150px;">
+					<div class="card-header">#{fbresource['Online_Test_Login']}</div>
+					<div class="d-flex justify-content-center">
+						<div class="brand_logo_container">
+							<a href="#{parent.FBServiceUrl}/index.faces" target="_blank"><img
+								src="/exam/images/FreshersBuddy.jpg" border="0"
+								style="margin-top: 30px;"
+								title="#{fbresource['Freshers_Buddy']} logo" /></a>
+						</div>
+					</div>
+					<!--Card content-->
+					<div class="card-body px-lg-4 pt-0">
+						<h:panelGroup id="errorPanel">
+							<f:verbatim
+								rendered="#{UIBackingBean.successMessageBool || UIBackingBean.infoMessageBool || UIBackingBean.errorMessageBool}">
+								<br />
+							</f:verbatim>
+							<h:outputLabel title="#{fbresource['Success_Message']}"
+								rendered="#{UIBackingBean.successMessageBool}"
+								styleClass="alert alert-success"
+								value="#{UIBackingBean.successMessage}" />
+							<h:outputLabel title="#{fbresource['Info_Message']}"
+								rendered="#{UIBackingBean.infoMessageBool}"
+								styleClass="infoMessage" value="#{UIBackingBean.infoMessage}" />
+							<h:outputLabel title="#{fbresource['Error_Message']}"
+								rendered="#{UIBackingBean.errorMessageBool}"
+								styleClass="alert alert-danger"
+								value="#{UIBackingBean.errorMessage}" />
+							<f:verbatim
+								rendered="#{UIBackingBean.successMessageBool || UIBackingBean.infoMessageBool || UIBackingBean.errorMessageBool}">
+								<br />
+							</f:verbatim>
+						</h:panelGroup>
+
+						<!-- Form -->
+						<h:form id="LoginForm" class="text-left" style="color: #333333;">
+
+							<!-- Email -->
+							<div class="md-form">
+								<i class="fas fa-user prefix"></i>
+
+								<h:inputText title="#{fbresource['Please_enter_Enrollment_No']}"
+									value="#{LoginBean.enrollmentNo}" id="enrollmentNo"
+									immediate="true" required="true" maxlength="14"
+									class="form-control"
+									requiredMessage="#{fbresource['Please_enter_Enrollment_No']}">
+								</h:inputText>
+								<o:floatingIconMessage style="border-color: red;"
+									id="enrollmentNoError" for="enrollmentNo" showDetail="true"
+									showSummary="false" />
+								<label for="enrollmentNo">
+									#{fbresource['Enrollment_No']}<font color="red">*</font>
+								</label>
+							</div>
+
+							<!-- Password -->
+							<div class="md-form">
+								<i class="fas fa-lock prefix"></i> <label for="password">
+									#{fbresource['Password']}<font color="red">*</font>
+								</label>
+								<h:inputSecret required="true" redisplay="true" immediate="true"
+									onclick="showPassword('LoginForm','password');"
+									title="#{fbresource['Text_Field_is_disabled_Please_enter_enrollment_number_first']}"
+									value="#{LoginBean.password}" id="password" maxlength="20"
+									requiredMessage="#{fbresource['Please_enter_Password']}">
+								</h:inputSecret>
+								<o:floatingIconMessage style="border-color: red;" for="password"
+									showDetail="true" showSummary="false" />
+							</div>
+
+							<div class="md-form">
+								<i class="fas fa-calendar-day prefix"></i> <label for="testName">
+									#{fbresource['Test_Name']}<font color="red">*</font>
+								</label>
+								<o:dropDownField id="testName" maxlength="50" required="true"
+									immediate="true" style="width: 200px;margin-left:120px;"
+									listItemStyle="white-space: nowrap;"
+									suggestionMode="stringStart" var="testName"
+									value="#{LoginBean.testName}" suggestionMinChars="1">
+									<o:dropDownItems value="#{LoginBean.testList}" />
+									<o:column>
+										<h:outputText value="#{testName}"
+											styleClass="dropDownValuesClass" />
+									</o:column>
+								</o:dropDownField>
+								<o:floatingIconMessage style="border-color: red;" for="testName"
+									showDetail="true" showSummary="false" />
+							</div>
+
+							<div class="md-form">
+								<i class="fas fa-book-open prefix"></i> <label for="testName">
+									#{fbresource['captcha']}<font color="red">*</font>
+								</label>
+								<ui:include src="imageText.xhtml" />
+							</div>
+
+
+							<!-- <div class="md-form">
+								<i class="fas fa-user prefix"></i>
+
+								<h:inputText immediate="true" 
+												value="#{LoginBean.firstName}" maxlength="50" id="First_Name"
+												title="#{fbresource['Please_enter']} #{fbresource['First_Name']}">
+											</h:inputText> 
+								<label for="First_Name">
+									#{fbresource['First_Name']}
+								</label>
+							</div>
+							
+							<div class="md-form">
+								<i class="fas fa-user prefix"></i>
+
+								<h:inputText immediate="true" 
+												value="#{LoginBean.lastName}" maxlength="50" id="Last_Name"
+												title="#{fbresource['Please_enter']} #{fbresource['Last_Name']}">
+											</h:inputText> 
+								<label for="Last_Name">
+									#{fbresource['Last_Name']}
+								</label>
+							</div>
+							
+							<div class="md-form">
+								<i class="fas fa-mail-bulk prefix"></i>
+
+								<h:inputText immediate="true" 
+												value="#{LoginBean.email}" maxlength="50" id="Email_ID"
+												title="#{fbresource['Please_enter']} #{fbresource['Email_ID']}">
+											</h:inputText> 
+								<label for="Email_ID">
+									#{fbresource['Email_ID']}
+								</label>
+							</div> -->
+
+
+
+							<div class="row">
+								<div class="col-md-6 text-left">
+									<!-- Remember me -->
+									<div class="custom-control custom-checkbox">
+										<input type="checkbox" class="custom-control-input"
+											id="RememberMe" /> <label class="custom-control-label"
+											for="RememberMe">#{fbresource['Remember_me']}</label>
+									</div>
+								</div>
+								<div class="col-md-6 text-right">
+									<!-- Forgot password -->
+									<a href="#" data-toggle="modal"
+										data-target="#forgotpasswordModal">#{fbresource['Forgot_password']}</a>
+
+								</div>
+							</div>
+
+							<!-- Sign in button -->
+							<o:commandButton id="login"
+								styleClass="primarybtn mediumbtn waves-effect waves-light"
+								render="errorPanel LoginForm" execute="LoginForm"
+								action="#{LoginBean.validateStudentLogin}"
+								title="#{fbresource['Click_here_to']} #{fbresource['Sign_In']}."
+								onajaxend="submitUserForm('LoginForm:hiddenLogin');"
+								value="#{fbresource['Sign_In']}" />
+							<h:commandButton type="reset"
+								styleClass="primarybtn mediumbtn waves-effect waves-light"
+								value="Reset" />
+							<h:commandButton value="#{fbresource['Successfully_Logged_in']}"
+								rendered="#{Student.rollNumber ne null}" style="display:none"
+								id="hiddenLogin" action="#{LoginBean.goToStudentHomePage}" />
+
+						</h:form>
+						<!-- Form -->
+
+					</div>
+
+				</div>
+				<!-- Material form login -->
+				<!-- Footer -->
+				<footer class="page-footer font-small pt-4"> <!-- Copyright -->
+
+				<div class="footer-copyright text-center py-3">
+					<font color="white"> © #{fbresource['copyrightYear']}
+						#{fbresource['Copyright']}: <a
+						href="http://#{fbresource['uddandatechnologies']}" target="_blank"><font
+							color="white"> #{fbresource['uddandatechnologies']}</font></a>
+					</font>
+				</div>
+
+				<!-- Copyright --> </footer>
+				<!-- Footer -->
+			</div>
+		</div>
+		<!-- /Start your project here-->
+		<h:form id="ForgotEmail">
+			<!-- Modal HTML -->
+			<div class="modal fade" id="forgotpasswordModal" tabindex="-1"
+				role="dialog" aria-labelledby="forgotpasswordModalLabel">
+				<div class="modal-dialog modal-md modal-dialog-centered"
+					role="document">
+					<div class="modal-content">
+						<div class="modal-header text-center">
+							<h4 class="modal-title w-100 font-weight-bold">#{fbresource['Forgot_password']}</h4>
+						</div>
+						<div class="modal-body">
+							<p>#{fbresource['forgotPasswordMessage']}</p>
+							<div class="md-form">
+								<h:inputText value="#{LoginBean.enrollmentNo}"
+									styleClass="form-control" id="studentEnrollmentNo"
+									required="true" maxlength="14">
+								</h:inputText>
+								<o:floatingIconMessage style="border-color: red;"
+									for="studentEnrollmentNo" showDetail="true" showSummary="false" />
+								<label for="studentEnrollmentNo">#{fbresource['Enrollment_No']}<font
+									color="red">*</font></label>
+							</div>
+							<div class="md-form">
+								<h:inputText style="margin-top:10px;" id="email" required="true"
+									value="#{LoginBean.email}" styleClass="form-control"
+									requiredMessage="#{fbresource['Please_enter_email']}">
+									<f:validator validatorId="EmailValidator" />
+								</h:inputText>
+								<o:floatingIconMessage style="border-color: red;" for="email"
+									showDetail="true" showSummary="false" />
+								<label for="email">#{fbresource['E_mail']}<font
+									color="red">*</font></label>
+							</div>
+						</div>
+						<div class="modal-footer d-flex justify-content-center">
+							<button class="secondarybtn mediumbtn  waves-effect waves-light"
+								data-dismiss="modal" aria-label="Close">#{fbresource['Cancel']}</button>
+
+							<h:commandButton
+								styleClass="primarybtn mediumbtn waves-effect waves-light"
+								value="#{fbresource['submit']}" style="margin-top:10px;"
+								action="#{LoginBean.sendStudentPassword}"
+								title="#{fbresource['Please_click_here_to_reset_password']}" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- / Modal HTML -->
+		</h:form>
+	</f:view>
+</h:body>
+</html>

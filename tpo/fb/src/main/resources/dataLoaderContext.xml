@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<bean id="dataLoaderUP"  class="tpo.admin.backup.DataLoader">
+	   <property name="commonDBBean" ref="CommonDBBean" /> 
+	</bean>
+	<bean id="dataLoaderJob"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+
+		<property name="targetObject" ref="dataLoaderUP" />
+		<property name="targetMethod" value="loadData" />
+
+	</bean>
+
+	<!-- Cron Trigger -->
+	<bean id="cronTriggerDay" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="dataLoaderJob" />
+		<property name="cronExpression" value="${dataLoaderExpression}" />
+	</bean>
+	
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="jobDetails">
+			<list>
+				<ref bean="dataLoaderJob" />
+			</list>
+		</property>
+
+		<property name="triggers">
+			<list>
+			    <ref bean="cronTriggerDay" />
+			</list>
+		</property>
+	</bean>
+</beans>

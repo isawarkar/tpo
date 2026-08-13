@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<ui:composition template="adminLayoutNew.xhtml">
+	<ui:define name="content">
+		<ui:include src="/xhtml/allPopUps.xhtml" />
+		<section id="card-actions"> <!-- Info table about action starts -->
+		<div class="row">
+			<div class="col-12">
+				<div class="card">
+					<div class="card-header">
+						<h4 class="card-title">#{fbresource['Admin_DashBoard']}</h4>
+						<a class="heading-elements-toggle"> <i
+							class='bx bx-dots-vertical font-medium-3'></i>
+						</a>
+						<div class="heading-elements">
+							<ul class="list-inline mb-0">
+								<li>
+									<div title="Click here to show Chart's" data-toggle="tooltip"
+										data-placement="bottom"
+										class="checkbox checkbox-success checkbox-icon">
+										<input
+											onclick="document.getElementById('dashBoardForm:addvance').click();"
+											type="checkbox" id="checkboxIcon1" /> <label
+											for="checkboxIcon1">Show Chart<i
+											class="bx bxs-pie-chart-alt-2" /></label>
+									</div>
+								</li>
+								<li><a data-action="collapse"> <i
+										class="bx bx-chevron-down"></i>
+								</a></li>
+								<li><a data-action="expand"> <i
+										class="bx bx-fullscreen"></i>
+								</a></li>
+								<li><a data-action="reload"> <i class="bx bx-revision"></i>
+								</a></li>
+								<li><a data-action="close"> <i class="bx bx-x"></i>
+								</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="card-content collapse show">
+						<div class="card-body">
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="table-responsive">
+										<h:form id="dashBoardForm">
+											<section id="dashboard-ecommerce">
+											<div class="row">
+												<table style="margin-bottom: 5px;">
+													<tr>
+														<td><o:commandButton
+																value="#{fbresource['Notice_Board']}" execute="@this"
+																styleClass="btn btn-primary glow"
+																title="#{fbresource['Please_click_here_to_open_Notice_Board_Window']}"
+																onajaxend="document.getElementById('ShowNoticeButton1').click();"
+																render="NoticeBoardForm"
+																actionListener="#{NoticeTableBean.setNoticeToAdd}" /></td>
+														<td>
+															<button
+																title="#{fbresource['Please_click_here_to_open_Import_Export_Students_Window']}"
+																class="btn btn-primary glow" id="importStudent"
+																type="button" data-toggle="modal"
+																data-target="#importStudent">
+																#{fbresource['Import_Export_Students']}</button>
+														</td>
+														<td>
+															<button
+																title="#{fbresource['Please_click_here_to_open_Import_Export_Exam_Window']}"
+																class="btn btn-primary glow" id="importExam"
+																type="button" data-toggle="modal"
+																data-target="#importExam">
+																#{fbresource['Import_Export_Exam']}</button> </td>
+														<td><h:selectBooleanCheckbox id="addvance"
+																style="display:none"
+																title="#{fbresource['Please_check_to_show_Advance_Search_fields']}">
+																<o:ajax event="change" execute="addvance"
+																	render="advParent" />
+															</h:selectBooleanCheckbox></td>
+													</tr>
+												</table>
+											</div>
+											<div class="row">
+											<h:panelGroup rendered="#{AdminUser.role eq 'Super User' || AdminUser.role eq 'Admin'}">
+											<!-- Greetings Content Starts -->
+												<div
+													style="height:50px;width: 305px; margin-right: 20px; margin-top: 15px;"
+													class="card">
+													<h:commandLink class="btn btn-success glow"
+														title="#{fbresource['Please_click_here_to_see_the_list']}"
+														action="#{AdminMenu.goToPage('studentList')}">
+														<table>
+															<tr>
+																<td>
+																	<div style="margin-top: 30px;"
+																		class="col-md-4 col-sm-6 col-12 fonticon-container">
+																		<div class="fonticon-wrap">
+																			<i class="bx bxs-user-badge" />
+																		</div>
+																	</div>
+																</td>
+																
+																<td>
+																	<h3 style="color: cyan;"
+																		class="greeting-text">#{DashBoardBean.totalStudent} &nbsp; #{fbresource['Total_Students']} </h3>
+																</td>
+																
+															
+															</tr>
+														</table>
+													</h:commandLink>
+												</div>
+												<div
+													style="width: 305px; margin-right: 20px; margin-top: 15px;"
+													class="card">
+													<h:commandLink class="btn btn-success glow"
+														title="#{fbresource['Please_click_here_to_see_the_list']}"
+														action="#{AdminMenu.goToPage('selectedStudentList')}">
+														<table>
+															<tr>
+																<td>
+																	<div style="margin-top: 30px;"
+																		class="col-md-4 col-sm-6 col-12 fonticon-container">
+																		<div class="fonticon-wrap">
+																			<i class="bx bxs-user-circle" />
+																		</div>
+																	</div>
+																</td>
+																<td><h4 style="color: cyan;" class="greeting-text">
+																		#{DashBoardBean.totalSelected} &nbsp; #{fbresource['Total_Selected_Students']}</h4></td>
+															
+															</tr>
+														</table>
+													</h:commandLink>
+												</div>
+												<div
+													style="width: 305px; margin-right: 20px; margin-top: 15px;"
+													class="card">
+													<h:commandLink class="btn btn-success glow"
+														title="#{fbresource['Please_click_here_to_see_the_list']}"
+														action="#{AdminMenu.goToPage('userList')}">
+														<table>
+															<tr>
+																<td>
+																	<div style="margin-top: 30px;"
+																		class="col-md-4 col-sm-6 col-12 fonticon-container">
+																		<div class="fonticon-wrap">
+																			<i class="bx bx-group" />
+																		</div>
+																	</div>
+																</td>
+																<td><h4 style="color: cyan;" class="greeting-text">
+																		#{DashBoardBean.totalClients} &nbsp; #{fbresource['Total_Users']}</h4></td>
+																
+															</tr>
+														</table>
+													</h:commandLink>
+												</div>
+												<div style="width: 305px; margin-right: 20px;" class="card">
+													<h:commandLink class="btn btn-primary glow"
+														title="#{fbresource['Please_click_here_to_see_the_list']}"
+														action="#{AdminMenu.goToPage('examList')}">
+														<table>
+															<tr>
+																<td>
+																	<div style="margin-top: 30px;"
+																		class="col-md-4 col-sm-6 col-12 fonticon-container">
+																		<div class="fonticon-wrap">
+																			<i class="bx bx-paint" />
+																		</div>
+																	</div>
+																</td>
+																<td><h4 style="color: cyan;" class="greeting-text">
+																		#{DashBoardBean.totalExam} &nbsp; #{fbresource['Total_Exams']}</h4></td>
+																
+															</tr>
+														</table>
+													</h:commandLink>
+												</div>
+												<div style="width: 305px; margin-right: 20px;" class="card">
+													<h:commandLink class="btn btn-primary glow"
+														title="#{fbresource['Please_click_here_to_see_the_list']}"
+														action="#{AdminMenu.goToPage('companyList')}">
+														<table>
+															<tr>
+																<td>
+																	<div style="margin-top: 30px;"
+																		class="col-md-4 col-sm-6 col-12 fonticon-container">
+																		<div class="fonticon-wrap">
+																			<i class="bx bx-building-house" />
+																		</div>
+																	</div>
+																</td>
+																<td><h4 style="color: cyan;" class="greeting-text">
+																		#{DashBoardBean.totalCompany} &nbsp; #{fbresource['Total_Companies']}</h4></td>
+															
+															</tr>
+														</table>
+													</h:commandLink>
+												</div>
+												<div style="width: 305px; margin-right: 20px;" class="card">
+													<h:commandLink class="btn btn-primary glow"
+														title="#{fbresource['Please_click_here_to_see_the_list']}"
+														action="#{AdminMenu.goToPage('collegeList')}">
+														<table>
+															<tr>
+																<td>
+																	<div style="margin-top: 30px;"
+																		class="col-md-4 col-sm-6 col-12 fonticon-container">
+																		<div class="fonticon-wrap">
+																			<i class="bx bxs-school" />
+																		</div>
+																	</div>
+																</td>
+																<td><h4 style="color: cyan;" class="greeting-text">
+																		#{DashBoardBean.totalCollege} &nbsp; #{fbresource['Total_Colleges']}</h4></td>
+															
+															</tr>
+														</table>
+													</h:commandLink>
+												</div>
+												<div style="width: 305px; margin-right: 20px;" class="card">
+													<h:commandLink class="btn btn-warning glow"
+														title="#{fbresource['Please_click_here_to_see_the_list']}"
+														action="#{AdminMenu.goToPage('noticeList')}">
+														<table>
+															<tr>
+																<td>
+																	<div style="margin-top: 30px;"
+																		class="col-md-4 col-sm-6 col-12 fonticon-container">
+																		<div class="fonticon-wrap">
+																			<i class="bx bxs-collection" />
+																		</div>
+																	</div>
+																</td>
+																<td><h4 style="color: cyan;" class="greeting-text">
+																		#{DashBoardBean.totalNotices} &nbsp; #{fbresource['Total_Notices']}</h4></td>
+																
+															</tr>
+														</table>
+													</h:commandLink>
+												</div>
+												<div style="width: 305px; margin-right: 20px;" class="card">
+													<h:commandLink class="btn btn-warning glow"
+														title="#{fbresource['Please_click_here_to_see_the_list']}"
+														action="#{AdminMenu.goToPage('openningList')}">
+														<table>
+															<tr>
+																<td>
+																	<div style="margin-top: 30px;"
+																		class="col-md-4 col-sm-6 col-12 fonticon-container">
+																		<div class="fonticon-wrap">
+																			<i class="bx bxs-search" />
+																		</div>
+																	</div>
+																</td>
+																<td><h4 style="color: cyan;" class="greeting-text">
+																		#{DashBoardBean.totalOpenings} &nbsp; #{fbresource['Total_Openings']}</h4></td>
+																
+															</tr>
+														</table>
+													</h:commandLink>
+												</div>
+												<div style="width: 305px; margin-right: 20px;" class="card">
+													<h:commandLink class="btn btn-warning glow"
+														title="#{fbresource['Please_click_here_to_see_the_list']}"
+														action="#{AdminMenu.goToPage('complaintList')}">
+														<table>
+															<tr>
+																<td>
+																	<div style="margin-top: 30px;"
+																		class="col-md-4 col-sm-6 col-12 fonticon-container">
+																		<div class="fonticon-wrap">
+																			<i class="bx bx-user-x" />
+																		</div>
+																	</div>
+																</td>
+																<td><h4 style="color: cyan;" class="greeting-text">
+																		 #{DashBoardBean.totalComplaints} &nbsp; #{fbresource['Total_Complaint']}</h4></td>
+															</tr>
+														</table>
+													</h:commandLink>
+												</div>
+											</h:panelGroup>
+											
+											<h:panelGroup rendered="#{AdminUser.role eq 'Company User'}">
+												<!-- Greetings Content Starts -->
+												<div
+													style="height:50px;width: 305px; margin-right: 20px; margin-top: 15px;"
+													class="card">
+													<h:commandLink class="btn btn-success glow"
+														title="#{fbresource['Please_click_here_to_see_the_list']}"
+														action="#{AdminMenu.goToPage('studentList')}">
+														<table>
+															<tr>
+																<td>
+																	<div style="margin-top: 30px;"
+																		class="col-md-4 col-sm-6 col-12 fonticon-container">
+																		<div class="fonticon-wrap">
+																			<i class="bx bxs-user-badge" />
+																		</div>
+																	</div>
+																</td>
+																<td><h4 style="color: cyan;" class="greeting-text">
+																		#{fbresource['Total_Students']}</h4></td>
+																<td>
+																	<h3 style="color: cyan;"
+																		class="font-large-1 text-bold-500">#{DashBoardBean.totalStudent}</h3>
+																</td>
+															</tr>
+														</table>
+													</h:commandLink>
+												</div>
+												<div
+													style="width: 305px; margin-right: 20px; margin-top: 15px;"
+													class="card">
+													<h:commandLink class="btn btn-success glow"
+														title="#{fbresource['Please_click_here_to_see_the_list']}"
+														action="#{AdminMenu.goToPage('studentList')}">
+														<table>
+															<tr>
+																<td>
+																	<div style="margin-top: 30px;"
+																		class="col-md-4 col-sm-6 col-12 fonticon-container">
+																		<div class="fonticon-wrap">
+																			<i class="bx bxs-user-circle" />
+																		</div>
+																	</div>
+																</td>
+																<td><h4 style="color: cyan;" class="greeting-text">
+																		#{fbresource['Total_Selected_Students']}</h4></td>
+																<td>
+																	<h3 style="color: cyan;"
+																		class="font-large-1 text-bold-500">#{DashBoardBean.totalSelected}</h3>
+																</td>
+															</tr>
+														</table>
+													</h:commandLink>
+												</div>
+												
+												<div style="width: 305px; margin-right: 20px; margin-top: 15px;" class="card">
+													<h:commandLink class="btn btn-success glow"
+														title="#{fbresource['Please_click_here_to_see_the_list']}"
+														action="#{AdminMenu.goToPage('examList')}">
+														<table>
+															<tr>
+																<td>
+																	<div style="margin-top: 30px;"
+																		class="col-md-4 col-sm-6 col-12 fonticon-container">
+																		<div class="fonticon-wrap">
+																			<i class="bx bx-paint" />
+																		</div>
+																	</div>
+																</td>
+																<td><h4 style="color: cyan;" class="greeting-text">
+																		#{fbresource['Total_Exams']}</h4></td>
+																<td>
+																	<h3 style="color: cyan;"
+																		class="font-large-1 text-bold-500">#{DashBoardBean.totalExam}</h3>
+																</td>
+															</tr>
+														</table>
+													</h:commandLink>
+												</div>
+												<div style="width: 305px; margin-right: 20px;" class="card">
+													<h:commandLink class="btn btn-warning glow"
+														title="#{fbresource['Please_click_here_to_see_the_list']}"
+														action="#{AdminMenu.goToPage('companyList')}">
+														<table>
+															<tr>
+																<td>
+																	<div style="margin-top: 30px;"
+																		class="col-md-4 col-sm-6 col-12 fonticon-container">
+																		<div class="fonticon-wrap">
+																			<i class="bx bx-building-house" />
+																		</div>
+																	</div>
+																</td>
+																<td><h4 style="color: cyan;" class="greeting-text">
+																		#{fbresource['Total_Companies']}</h4></td>
+																<td>
+																	<h3 style="color: cyan;"
+																		class="font-large-1 text-bold-500">#{DashBoardBean.totalCompany}</h3>
+																</td>
+															</tr>
+														</table>
+													</h:commandLink>
+												</div>
+												
+												<div style="width: 305px; margin-right: 20px;" class="card">
+													<h:commandLink class="btn btn-warning glow"
+														title="#{fbresource['Please_click_here_to_see_the_list']}"
+														action="#{AdminMenu.goToPage('noticeList')}">
+														<table>
+															<tr>
+																<td>
+																	<div style="margin-top: 30px;"
+																		class="col-md-4 col-sm-6 col-12 fonticon-container">
+																		<div class="fonticon-wrap">
+																			<i class="bx bxs-collection" />
+																		</div>
+																	</div>
+																</td>
+																<td><h4 style="color: cyan;" class="greeting-text">
+																		#{fbresource['Total_Notices']}</h4></td>
+																<td>
+																	<h3 style="color: cyan;"
+																		class="font-large-1 text-bold-500">#{DashBoardBean.totalNotices}</h3>
+																</td>
+															</tr>
+														</table>
+													</h:commandLink>
+												</div>
+												<div style="width: 305px; margin-right: 20px;" class="card">
+													<h:commandLink class="btn btn-warning glow"
+														title="#{fbresource['Please_click_here_to_see_the_list']}"
+														action="#{AdminMenu.goToPage('openningList')}">
+														<table>
+															<tr>
+																<td>
+																	<div style="margin-top: 30px;"
+																		class="col-md-4 col-sm-6 col-12 fonticon-container">
+																		<div class="fonticon-wrap">
+																			<i class="bx bxs-search" />
+																		</div>
+																	</div>
+																</td>
+																<td><h4 style="color: cyan;" class="greeting-text">
+																		#{fbresource['Total_Openings']}</h4></td>
+																<td>
+																	<h3 style="color: cyan;"
+																		class="font-large-1 text-bold-500">#{DashBoardBean.totalOpenings}</h3>
+																</td>
+															</tr>
+														</table>
+													</h:commandLink>
+												</div>
+											</h:panelGroup>
+											</div>
+											<h:panelGroup id="advParent">
+												<h:panelGroup id="chartGroup"
+													rendered="#{param['dashBoardForm:addvance'] eq 'on'}">
+													<section id="card-actions">
+													<div class="row">
+														<div class="col-12">
+															<div class="card">
+																<div class="card-header">
+																	<h4 class="card-title">Charts</h4>
+																	<a class="heading-elements-toggle"> <i
+																		class='bx bx-dots-vertical font-medium-3'></i>
+																	</a>
+																</div>
+																<div class="card-content collapse show">
+																	<div class="card-body">
+																		<div class="row">
+																			<div class="col-sm-12">
+																				<div class="table-responsive">
+																					<TABLE cellpadding="10" width="800">
+																						<tr>
+																							<td><o:chart height="300" width="400"
+																									rendered="#{ChartBean.studentChart ne null}"
+																									model="#{ChartBean.studentChart}"
+																									titleText="#{fbresource['Status_of_all_the_students']}">
+																									<o:pieChartView labelsVisible="true"
+																										binding="#{ChartBean.studentChartView}"
+																										tooltip="#{sector.key} - #{sector.value}" />
+																									<o:chartSelection
+																										action="#{ChartBean.goToStudentList}" />
+																								</o:chart></td>
+																							<td colspan="2"><o:chart height="300"
+																									width="400"
+																									rendered="#{ChartBean.resultAnalysis ne null}"
+																									model="#{ChartBean.resultAnalysis}"
+																									titleText="#{fbresource['Result_Analysis']} #{fbresource['of']} #{ChartBean.totalResultCount}">
+																									<o:pieChartView colors="cyan,orange,red,green"
+																										labelsVisible="true"
+																										binding="#{ChartBean.resultChartView}"
+																										tooltip="#{sector.key} - #{sector.value}" />
+																									<o:chartSelection
+																										action="#{ChartBean.goToResultList}" />
+																								</o:chart></td>
+																						</tr>
+																						<tr>
+																							<td align="left"><o:chart
+																									rendered="#{ChartBean.selectedIn ne null}"
+																									style="marging-right:1000px;"
+																									id="selectedInCompany" height="300" width="400"
+																									model="#{ChartBean.selectedIn}"
+																									titleText="#{fbresource['selected_students_as_per_company']}">
+																									<o:pieChartView labelsVisible="true"
+																										binding="#{ChartBean.studentSelectedChartView}"
+																										tooltip="#{sector.key} - #{sector.value}" />
+																									<o:chartSelection
+																										action="#{ChartBean.goToSelectedStudentList}" />
+																								</o:chart></td>
+																							<td><o:chart height="300" width="400"
+																									rendered="#{ChartBean.companyChart ne null}"
+																									model="#{ChartBean.companyChart}"
+																									titleText="#{fbresource['Top_10_companies_Package']}">
+																									<o:pieChartView labelsVisible="true"
+																										binding="#{ChartBean.companyChartView}"
+																										tooltip="#{sector.key} - #{sector.value}" />
+																									<o:chartSelection
+																										action="#{ChartBean.companyStatusAction}" />
+																								</o:chart></td>
+																						</tr>
+																						<tr>
+																							<td align="left"><o:chart
+																									rendered="#{ChartBean.openningStatus ne null}"
+																									style="marging-right:1000px;"
+																									id="openningStatus" height="300" width="400"
+																									model="#{ChartBean.openningStatus}"
+																									titleText="#{fbresource['Status_of_all_Openings']}">
+																									<o:pieChartView labelsVisible="true"
+																										binding="#{ChartBean.pieChartView}"
+																										tooltip="#{sector.key} - #{sector.value}" />
+																									<o:chartSelection
+																										item="#{OpenningListTableBean.pieSelectedCategory}"
+																										render="resultPieAnalysisPieChartGroup" />
+																								</o:chart></td>
+																							<td align="left"><h:panelGroup
+																									id="resultPieAnalysisPieChartGroup">
+																									<o:chart id="resultPieAnalysisPieChart"
+																										rendered="#{OpenningListTableBean.pieSelectedCategory ne null}"
+																										height="300" width="400"
+																										model="#{OpenningListTableBean.resultPieAnalysis}"
+																										view="pie"
+																										titleText="#{fbresource['Campus_Analysis']}(#{OpenningListTableBean.hallTicketId} - #{OpenningListTableBean.chartCompanyName})">
+																										<o:chartSelection
+																											item="#{OpenningListTableBean.pieSelectedCategoryChild}"
+																											action="#{OpenningListTableBean.goToHallTicketAction}" />
+																										<o:pieChartView colors="orange,green,cyan"
+																											labelsVisible="true"
+																											tooltip="#{sector.key} - #{sector.value}" />
+																									</o:chart>
+																								</h:panelGroup></td>
+																						</tr>
+																					</TABLE>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													</section>
+													<!-- Info table about action Ends -->
+												</h:panelGroup>
+											</h:panelGroup> </section>
+										</h:form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</section>
+	</ui:define>
+</ui:composition>
+</html>

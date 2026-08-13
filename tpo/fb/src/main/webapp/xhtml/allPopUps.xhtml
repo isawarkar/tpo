@@ -1,0 +1,2158 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:o="http://openfaces.org/">
+
+
+<h:form prependId="false">
+	<button style="display: none" id="documentFullInformationButton"
+		type="button" data-toggle="modal"
+		data-target="#documentFullInformation" />
+	<div class="modal fade text-left" id="documentFullInformation"
+		tabindex="-1" role="dialog" aria-labelledby="myModalLabel160"
+		aria-hidden="true">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+			role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-primary">
+					<h5 class="modal-title white" id="myModalLabel160">#{fbresource['Large_Photo']}</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<i class="bx bx-x"></i>
+					</button>
+				</div>
+				<div class="modal-body">
+					<h:panelGroup id="documentFullInfo">
+						<center>
+							<o:dynamicImage rendered="#{DocumentUploadBean.fileName ne null}"
+								id="fileName" data="#{DocumentUploadBean.imageBytesAsImage}" />
+							<br /> #{DocumentUploadBean.fileName} <br />
+							<h:commandButton style="margin-left:30px;"
+								styleClass="btn btn-primary glow"
+								title="#{fbresource['Please_click_here_to_download_document']}"
+								action="#{DocumentUploadBean.downloadDocument()}"
+								value="#{fbresource['download_Certificate']}" />
+						</center>
+					</h:panelGroup>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary glow"
+						data-dismiss="modal">
+						<i class="bx bx-x d-block d-sm-none"></i> <span
+							class="d-none d-sm-block">#{fbresource['Close']}</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</h:form>
+
+<h:form id="uploadDocumetForm" prependId="false"
+	enctype="multipart/form-data">
+	<button style="display: none" id="uploadButton" type="button"
+		data-toggle="modal" data-target="#upload" />
+	<div class="modal fade text-left" id="upload" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel160" aria-hidden="true">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+			role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-primary">
+					<h5 class="modal-title white" id="myModalLabel160">#{fbresource['Upload_Document']}</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<i class="bx bx-x"></i>
+					</button>
+				</div>
+				<div class="modal-body">
+					<table align="center" style="margin-top: 20px;" width="400px">
+						<tr>
+							<td colspan="2" valign="top"><label for="imageFile">
+									<p>
+										#{fbresource['Document_Name']}<font color="red">*</font>
+									</p>
+							</label></td>
+							<td><h:selectOneMenu immediate="true"
+									value="#{DocumentUploadBean.documentName}" id="documentName"
+									required="true"
+									requiredMessage="#{fbresource['Please_select']} #{fbresource['Document_Name']}">
+									<f:selectItem itemValue="" itemLabel="" />
+									<f:selectItem itemValue="High_School"
+										itemLabel="#{fbresource['High_School']}" />
+									<f:selectItem itemValue="Higher_Secondary"
+										itemLabel="#{fbresource['Higher_Secondary']}" />
+									<f:selectItem itemValue="Diploma"
+										itemLabel="#{fbresource['Diploma']}" />
+									<f:selectItem itemValue="Diploma_1_Semester"
+										itemLabel="#{fbresource['Diploma_1_Semester']}" />
+									<f:selectItem itemValue="Diploma_2_Semester"
+										itemLabel="#{fbresource['Diploma_2_Semester']}" />
+									<f:selectItem itemValue="Diploma_3_Semester"
+										itemLabel="#{fbresource['Diploma_3_Semester']}" />
+									<f:selectItem itemValue="Diploma_4_Semester"
+										itemLabel="#{fbresource['Diploma_4_Semester']}" />
+									<f:selectItem itemValue="Diploma_5_Semester"
+										itemLabel="#{fbresource['Diploma_5_Semester']}" />
+									<f:selectItem itemValue="Diploma_6_Semester"
+										itemLabel="#{fbresource['Diploma_6_Semester']}" />
+
+									<f:selectItem itemValue="Graduation"
+										itemLabel="#{fbresource['Graduation']}" />
+									<f:selectItem itemValue="Graduation_1_Semester"
+										itemLabel="#{fbresource['Graduation_1_Semester']}" />
+									<f:selectItem itemValue="Graduation_2_Semester"
+										itemLabel="#{fbresource['Graduation_2_Semester']}" />
+									<f:selectItem itemValue="Graduation_3_Semester"
+										itemLabel="#{fbresource['Graduation_3_Semester']}" />
+									<f:selectItem itemValue="Graduation_4_Semester"
+										itemLabel="#{fbresource['Graduation_4_Semester']}" />
+									<f:selectItem itemValue="Graduation_5_Semester"
+										itemLabel="#{fbresource['Graduation_5_Semester']}" />
+									<f:selectItem itemValue="Graduation_6_Semester"
+										itemLabel="#{fbresource['Graduation_6_Semester']}" />
+									<f:selectItem itemValue="Graduation_7_Semester"
+										itemLabel="#{fbresource['Graduation_7_Semester']}" />
+									<f:selectItem itemValue="Graduation_8_Semester"
+										itemLabel="#{fbresource['Graduation_8_Semester']}" />
+
+									<f:selectItem itemValue="Post_Graduation"
+										itemLabel="#{fbresource['Post_Graduation']}" />
+									<f:selectItem itemValue="PG_1_Semester"
+										itemLabel="#{fbresource['PG_1_Semester']}" />
+									<f:selectItem itemValue="PG_2_Semester"
+										itemLabel="#{fbresource['PG_2_Semester']}" />
+									<f:selectItem itemValue="PG_3_Semester"
+										itemLabel="#{fbresource['PG_3_Semester']}" />
+									<f:selectItem itemValue="PG_4_Semester"
+										itemLabel="#{fbresource['PG_4_Semester']}" />
+									<f:selectItem itemValue="Other_Document"
+										itemLabel="#{fbresource['Other_Document']}" />
+								</h:selectOneMenu> <o:floatingIconMessage style="border-color: red;"
+									for="currentCourse" showDetail="true" showSummary="false" /></td>
+						</tr>
+						<tr>
+							<td colspan="2" valign="top"><label for="Other_Document">
+									<p>#{fbresource['Other_Document']}</p>
+							</label></td>
+							<td><h:inputText id="Other_Document"
+									required="#{DocumentUploadBean.documnet eq 'Other_Document'}"
+									value="#{DocumentUploadBean.documentNameOther}">
+								</h:inputText> <o:floatingIconMessage style="border-color: red;"
+									for="Other_Document" showDetail="true" showSummary="false" /></td>
+						</tr>
+						<tr>
+							<td colspan="2" valign="top"><label for="imageFile">
+									<p>
+										#{fbresource['Document']}<font color="red">*</font>
+									</p>
+							</label></td>
+							<td><h:inputFile required="true" id="documnetFile"
+									value="#{DocumentUploadBean.documnet}">
+								</h:inputFile> <o:floatingIconMessage style="border-color: red;"
+									for="imageFile" showDetail="true" showSummary="false" /></td>
+						</tr>
+						<tr>
+							<td><o:commandButton styleClass="btn btn-primary glow"
+									value="#{fbresource['Upload_Document']}" id="uploadDocument"
+									action="#{DocumentUploadBean.uploadDocument}" /></td>
+							<td></td>
+						</tr>
+					</table>
+					<font color="red">#{fbresource['document_Size_Type']}</font>
+					<div id="loadMessage" style="color: green; display: none;"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary glow"
+						data-dismiss="modal">
+						<i class="bx bx-x d-block d-sm-none"></i> <span
+							class="d-none d-sm-block">#{fbresource['Close']}</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</h:form>
+
+<h:form>
+	<button style="display: none" id="criteriaInfoButton" type="button"
+		data-toggle="modal" data-target="#criteriaInfo" />
+	<div class="modal fade text-left" id="criteriaInfo" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel160" aria-hidden="true">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+			role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-primary">
+					<h5 class="modal-title white" id="myModalLabel160">#{fbresource['Criteria']}</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<i class="bx bx-x"></i>
+					</button>
+				</div>
+				<div class="modal-body">
+					<h:panelGroup id="criteriaInfoPabel">
+						<center>
+							<h:outputText escape="false"
+								value="#{OpenningListTableBean.criteria}" />
+						</center>
+					</h:panelGroup>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-light-secondary"
+						data-dismiss="modal">
+						<i class="bx bx-x d-block d-sm-none"></i> <span
+							class="d-none d-sm-block">#{fbresource['Close']}</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</h:form>
+
+<h:form>
+	<button style="display: none" id="companyButton" type="button"
+		data-backdrop="false" data-toggle="modal" data-target="#company" />
+	<div class="modal fade text-left" id="company" tabindex="-1"
+		style="margin-top: 120px;" role="dialog"
+		aria-labelledby="myModalLabel160" aria-hidden="true">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl"
+			role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-warning">
+					<h5 class="modal-title white" id="myModalLabel160">#{fbresource['Company_Information']}</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<i class="bx bx-x"></i>
+					</button>
+				</div>
+				<div class="modal-body">
+					<h:panelGroup id="companyInfo">
+						<center>
+							<f:verbatim rendered="#{CommonDBBean.cList.size() == 0}">
+								<font color="red">#{fbresource['Company_has_been_deleted']}</font>
+								<br />
+							</f:verbatim>
+							<o:forEach items="#{CommonDBBean.cList}" var="company">
+								<ui:include src="/xhtml/companyInfo.xhtml" />
+							</o:forEach>
+						</center>
+					</h:panelGroup>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-light-secondary"
+						data-dismiss="modal">
+						<i class="bx bx-x d-block d-sm-none"></i> <span
+							class="d-none d-sm-block">#{fbresource['Close']}</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</h:form>
+
+<h:form>
+	<button style="display: none" id="collegeButton" type="button"
+		data-toggle="modal" data-target="#college" />
+	<div class="modal fade text-left" id="college" tabindex="-1"
+		style="margin-top: 120px;" role="dialog"
+		aria-labelledby="myModalLabel160" aria-hidden="true">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl"
+			role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-warning">
+					<h5 class="modal-title white" id="myModalLabel160">#{fbresource['College_Information']}</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<i class="bx bx-x"></i>
+					</button>
+				</div>
+				<div class="modal-body">
+					<h:panelGroup id="collegeInfo">
+						<center>
+							<TABLE>
+								<tr>
+									<td><font color="geen" size="3">#{fbresource['College_Name']}</font></td>
+									<td><font color="blue" size="5">#{PlacedStudentTableBean.college.collegeFullName}</font></td>
+								</tr>
+								<tr>
+									<td><font color="geen" size="3">#{fbresource['City_Place']}
+									</font></td>
+									<td><font color="blue" size="3">#{PlacedStudentTableBean.college.place}</font></td>
+								</tr>
+								<tr>
+									<td><font color="geen" size="3">#{fbresource['Address']}</font></td>
+									<td><font color="blue" size="3"><h:outputText
+												escape="false"
+												value="#{PlacedStudentTableBean.college.address}" /></font></td>
+								</tr>
+								<tr>
+									<td><font color="geen" size="3">#{fbresource['E_mail']}</font></td>
+									<td><font color="blue" size="3">#{PlacedStudentTableBean.college.emailAddress}</font></td>
+								</tr>
+								<tr>
+									<td><font color="geen" size="3">#{fbresource['University']}</font></td>
+									<td><font color="blue" size="3">#{PlacedStudentTableBean.college.university}</font></td>
+								</tr>
+								<tr>
+									<td><font color="geen" size="3">#{fbresource['Date_Of_Opening']}</font></td>
+									<td><font color="blue" size="3">#{PlacedStudentTableBean.college.dateOfOpening}</font></td>
+								</tr>
+								<tr>
+									<td><font color="geen" size="3">#{fbresource['Website']}</font></td>
+									<td><font color="blue" size="5"><a
+											href="http://#{PlacedStudentTableBean.college.siteAddress}">#{PlacedStudentTableBean.college.siteAddress}</a></font></td>
+								</tr>
+							</TABLE>
+						</center>
+					</h:panelGroup>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-light-secondary"
+						data-dismiss="modal">
+						<i class="bx bx-x d-block d-sm-none"></i> <span
+							class="d-none d-sm-block">#{fbresource['Close']}</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</h:form>
+
+<h:form>
+	<button style="display: none" id="fullImageButton" type="button"
+		data-toggle="modal" data-target="#fullImage" />
+	<div class="modal fade text-left" id="fullImage" tabindex="-1"
+		style="margin-top: 120px;" role="dialog"
+		aria-labelledby="myModalLabel160" aria-hidden="true">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl"
+			role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-warning">
+					<h5 class="modal-title white" id="myModalLabel160">#{fbresource['Large_Photo']}</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<i class="bx bx-x"></i>
+					</button>
+				</div>
+				<div class="modal-body">
+					<h:panelGroup id="studentfullInfo">
+						<center>
+							<o:dynamicImage
+								rendered="#{PlacedStudentTableBean.fileName ne null}"
+								id="dynamicImage1" data="#{PlacedStudentTableBean.imageBytes}" />
+							<br /> #{PlacedStudentTableBean.fileName} <br />
+						</center>
+					</h:panelGroup>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-light-secondary"
+						data-dismiss="modal">
+						<i class="bx bx-x d-block d-sm-none"></i> <span
+							class="d-none d-sm-block">#{fbresource['Close']}</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</h:form>
+
+<h:form id="NoticeBoardForm" enctype="multipart/form-data">
+	<button style="display: none" id="ShowNoticeButton1" type="button"
+		data-toggle="modal" data-target="#noticeMessage1" />
+	<div class="modal fade text-left" id="noticeMessage1" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel160" aria-hidden="true">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl"
+			role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-primary">
+					<h5 class="modal-title white" id="myModalLabel160">#{fbresource['Notice_Board']}
+						#{fbresource['ADD_OR_UPDATE']}</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<i class="bx bx-x"></i>
+					</button>
+				</div>
+				<div class="modal-body">
+					<ui:include src="/xhtml/errorPanel.xhtml" />
+					<h:panelGroup id="NoticePanel"
+						rendered="#{Noticeboard.notice ne null}">
+						<table align="center" styleClass="registration_table"
+							cellPadding="2">
+							<tr>
+								<td><h:panelGrid columns="5">
+							#{fbresource['Notice_Name']}
+							<h:inputText size="30" value="#{Noticeboard.notice.noticeName}"
+											id="testType" required="true">
+										</h:inputText>
+
+										<o:floatingIconMessage style="border-color: red;"
+											for="testType" showDetail="true" showSummary="false" />
+									</h:panelGrid></td>
+							</tr>
+							<tr>
+								<td><h:panelGrid columns="4">#{fbresource['Expiry']}<font
+											color="red">*</font>
+										<o:dateChooser pattern="dd/MM/yyyy hh:mm:ss"
+											buttonImageUrl="/images/calendar.gif" immediate="true"
+											value="#{Noticeboard.notice.expiryDate}" id="expiryDate"
+											required="true">
+
+										</o:dateChooser>
+										<o:floatingIconMessage style="border-color: red;"
+											for="expiryDate" showDetail="true" showSummary="false" />
+									</h:panelGrid></td>
+							</tr>
+							<tr>
+								<td><font color='red'>#{fbresource['check_if_want_to_show_important_tags']}
+										<h:selectBooleanCheckbox id="impTag"
+											value="#{Noticeboard.notice.impTag}"
+											title="#{fbresource['check_if_want_to_show_important_tags']}" />
+								</font></td>
+							</tr>
+							<h:panelGroup
+								rendered="#{Noticeboard.currentDocMode eq 'Create'}">
+								<tr>
+									<td><font color='red'>#{fbresource['Please_select_if_student_specific']}</font></td>
+								</tr>
+								<tr>
+									<td><o:twoListSelection style="width: 40%;"
+											leftListboxHeader="#{fbresource['Student_List']}"
+											rightListboxHeader="#{fbresource['Student_List']}"
+											value="#{Noticeboard.selectedStudentList}"
+											reorderingAllowed="false" sortingAllowed="false">
+											<c:forEach items="#{Noticeboard.studentRollnumberList}"
+												var="rno">
+												<f:selectItem itemLabel="#{rno}" itemValue="#{rno}" />
+											</c:forEach>
+
+										</o:twoListSelection></td>
+								</tr>
+								<tr>
+									<td><font color='red'>#{fbresource['selectAttachment']}#{fbresource['Not_specific']}</font>
+									</td>
+								</tr>
+								<tr>
+									<td>#{fbresource['selectAttachment']} 1<h:inputFile
+											id="file1" value="#{Noticeboard.file1}" /></td>
+								</tr>
+								<tr>
+									<td>#{fbresource['selectAttachment']} 2<h:inputFile
+											id="file2" value="#{Noticeboard.file2}" /></td>
+								</tr>
+								<tr>
+									<td>#{fbresource['selectAttachment']} 3<h:inputFile
+											id="file3" value="#{Noticeboard.file3}" /></td>
+								</tr>
+								<tr>
+									<td>#{fbresource['selectAttachment']} 4<h:inputFile
+											id="file4" value="#{Noticeboard.file4}" /></td>
+								</tr>
+								<tr>
+									<td>#{fbresource['selectAttachment']} 5<h:inputFile
+											id="file5" value="#{Noticeboard.file5}" /></td>
+								</tr>
+							</h:panelGroup>
+
+							<tr>
+								<td><h:inputTextarea required="true"
+										value="#{Noticeboard.notice.notice}" id="htmlEditor1"
+										width="1200" height="270" /></td>
+							</tr>
+
+							<tr>
+								<td><h:commandButton class="btn btn-primary glow"
+										rendered="#{Noticeboard.currentDocMode ne null}"
+										title="#{fbresource['Click_here_to']} #{fbresource['submit']}"
+										value="#{fbresource['submit']}"
+										action="#{Noticeboard.saveNotice}" /></td>
+							</tr>
+
+						</table>
+						<script>
+							CKEDITOR.replace('NoticeBoardForm:htmlEditor1');
+						</script>
+					</h:panelGroup>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-light-secondary"
+						data-dismiss="modal">
+						<i class="bx bx-x d-block d-sm-none"></i> <span
+							class="d-none d-sm-block">#{fbresource['Close']}</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</h:form>
+
+<h:form rendered="#{AdminUser.role ne null}" id="importStudentForm"
+	prependId="false" enctype="multipart/form-data">
+	<div class="modal fade text-left" id="importStudent" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel20" aria-hidden="true">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg"
+			role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-primary">
+					<h5 class="modal-title white" id="myModalLabel160">#{fbresource['Import_Export_Student']}</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<i class="bx bx-x"></i>
+					</button>
+				</div>
+				<div class="modal-body">
+					<table align="center" style="margin-top: 10px;">
+						<tr>
+							<td>#{fbresource['Select_File_to_Import']}</td>
+
+							<td><h:inputFile id="studentFile"
+									value="#{UploadProgress.file}" /></td>
+						</tr>
+						<tr>
+							<td><h:commandButton class="btn btn-primary glow"
+									title="#{fbresource['Please_click_here_to_Import']}"
+									id="importStudent" value="#{fbresource['Import']}"
+									action="#{UploadProgress.importFile}" /></td>
+							<td><h:graphicImage style="cursor::pointer;" height="25px;"
+									url="/images/excel_button.png" /> <h:commandButton
+									class="btn btn-primary glow"
+									title="#{fbresource['Please_click_here_to_Export']}"
+									id="exportStudent" value="#{fbresource['Export_to_Excel']}"
+									immediate="true" action="#{UploadProgress.exportFile}" /> <h:graphicImage
+									style="margin-left:30px;" height="20px;"
+									url="/images/pdf_button.png" /> <h:commandButton
+									class="btn btn-primary glow"
+									title="#{fbresource['Please_click_here_to_Export']}"
+									id="exportToPdfFileStudent"
+									value="#{fbresource['Export_to_PDF']}" immediate="true"
+									action="#{UploadProgress.exportToPdfFile}" /></td>
+
+						</tr>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-light-secondary"
+						data-dismiss="modal">
+						<i class="bx bx-x d-block d-sm-none"></i> <span
+							class="d-none d-sm-block">Close</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</h:form>
+
+<h:form rendered="#{AdminUser.role ne null}" id="importExamForm"
+	enctype="multipart/form-data">
+	<div class="modal fade text-left" id="importExam" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel20" aria-hidden="true">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg"
+			role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-primary">
+					<h5 class="modal-title white" id="myModalLabel160">#{fbresource['Import_Export_Exam']}</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<i class="bx bx-x"></i>
+					</button>
+				</div>
+				<div class="modal-body">
+					<table align="center">
+						<tr>
+							<td>#{fbresource['Select_File_to_Import']}</td>
+
+							<td><h:inputFile id="examFile"
+									value="#{UploadQuestions.file}" /></td>
+						</tr>
+						<tr>
+							<td>#{fbresource['Exam_Name']}</td>
+
+							<td><h:selectOneMenu value="#{UploadQuestions.examName}"
+									title="#{fbresource['Please_select_exam_name']}" id="examName">
+									<f:selectItem itemLabel="" itemValue="" />
+									<c:forEach items="#{UploadQuestions.examList}" var="exam">
+										<f:selectItem itemLabel="#{exam}" itemValue="#{exam}" />
+									</c:forEach>
+								</h:selectOneMenu></td>
+						</tr>
+						<tr width="400px">
+							<td><h:commandButton class="btn btn-primary glow"
+									title="#{fbresource['Please_click_here_to_Import']}"
+									id="importExam" value="#{fbresource['Import']}"
+									action="#{UploadQuestions.importFile}" /></td>
+							<td><h:commandButton class="btn btn-primary glow"
+									title="#{fbresource['Please_click_here_to_Export']}"
+									id="exportExam" value="#{fbresource['Export']}"
+									action="#{UploadQuestions.exportFile}" /></td>
+						</tr>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-light-secondary"
+						data-dismiss="modal">
+						<i class="bx bx-x d-block d-sm-none"></i> <span
+							class="d-none d-sm-block">Close</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</h:form>
+
+
+
+<!-- Service is Down -->
+<div class="modal fade text-left" id="serviceDownForm" tabindex="-1"
+	style="margin-top: 90px;" role="dialog"
+	aria-labelledby="myModalLabel33" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+		role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-danger">
+				<h4 class="modal-title" id="myModalLabel33">#{fbresource['student_service_down']}</h4>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<i class="bx bx-x" />
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="d-flex justify-content-center">
+					<h:outputLabel style="align:center;" title="#{fbresource['Error_Message']}"
+						styleClass="alert alert-danger"
+						value="#{fbresource['student_service_down']}" />
+				</div>
+					
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Exam Service is Down -->
+<div class="modal fade text-left" id="examServiceDownForm" tabindex="-1"
+	style="margin-top: 90px;" role="dialog"
+	aria-labelledby="myModalLabel33" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+		role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-danger">
+				<h4 class="modal-title" id="myModalLabel33">#{fbresource['exam_service_down']}</h4>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<i class="bx bx-x" />
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="d-flex justify-content-center">
+					<h:outputLabel style="align:center;" title="#{fbresource['Error_Message']}"
+						styleClass="alert alert-danger"
+						value="#{fbresource['exam_service_down']}" />
+				</div>
+					
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<!-- Modal HTML -->
+<div class="modal fade" id="forgotUserPasswordModal" tabindex="-1"
+	style="margin-top: 90px;" role="dialog"
+	aria-labelledby="forgotUserPasswordModal">
+	<div class="modal-dialog modal-md modal-dialog-centered"
+		role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-primary">
+				<h4 class="modal-title w-100 font-weight-bold">#{fbresource['Forgot_password']}</h4>
+			</div>
+			<h:form id="forgotUserPassword">
+				<div class="modal-body">
+					<h:panelGroup id="errorPanel3">
+						<h:outputLabel title="#{fbresource['Success_Message']}"
+							rendered="#{UIBackingBean.successMessageBool}"
+							styleClass="alert alert-success"
+							value="#{UIBackingBean.successMessage}" />
+						<h:outputLabel title="#{fbresource['Info_Message']}"
+							rendered="#{UIBackingBean.infoMessageBool}"
+							styleClass="infoMessage" value="#{UIBackingBean.infoMessage}" />
+						<h:outputLabel title="#{fbresource['Error_Message']}"
+							rendered="#{UIBackingBean.errorMessageBool}"
+							styleClass="alert alert-danger"
+							value="#{UIBackingBean.errorMessage}" />
+					</h:panelGroup>
+					<p>#{fbresource['forgotPasswordMessage']}</p>
+					<div class="md-form">
+						<h:inputText value="#{CCPLoginBean.enrollmentNo}"
+							styleClass="form-control" id="studentEnrollmentNo"
+							required="true" maxlength="14">
+						</h:inputText>
+						<o:floatingIconMessage style="border-color: red;"
+							for="studentEnrollmentNo" showDetail="true" showSummary="false" />
+						<label for="studentEnrollmentNo">#{fbresource['Enrollment_No']}<font
+							color="red">*</font></label>
+					</div>
+					<div class="md-form">
+						<h:inputText style="margin-top:10px;" id="email" required="true"
+							value="#{CCPLoginBean.email}" styleClass="form-control"
+							requiredMessage="#{fbresource['Please_enter_email']}">
+							<f:validator validatorId="EmailValidator" />
+						</h:inputText>
+						<o:floatingIconMessage style="border-color: red;" for="email"
+							showDetail="true" showSummary="false" />
+						<label for="email">#{fbresource['E_mail']}<font
+							color="red">*</font></label>
+					</div>
+				</div>
+				<div class="modal-footer d-flex justify-content-center">
+					<button id="cancel" class="btn btn-primary glow"
+						data-dismiss="modal" aria-label="Close">#{fbresource['Cancel']}</button>
+					<o:commandButton id="submit" style="marfin-right:20px;"
+						styleClass="btn btn-primary glow" render="forgotUserPassword"
+						execute="forgotUserPassword"
+						action="#{CCPLoginBean.sendStudentPassword}"
+						title="#{fbresource['Click_here_to']} #{fbresource['submit']}."
+						value="#{fbresource['submit']}" />
+
+				</div>
+			</h:form>
+		</div>
+	</div>
+</div>
+<!-- / Modal HTML -->
+
+
+<!-- admin login form Modal -->
+<div class="modal fade text-left" id="adminLoginForm" tabindex="-1"
+	style="margin-top: 90px;" role="dialog"
+	aria-labelledby="myModalLabel33" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+		role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-success">
+				<h4 class="modal-title" id="myModalLabel33">#{fbresource['Admin_Login']}</h4>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<i class="bx bx-x" />
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="d-flex justify-content-center">
+					<div class="brand_logo_container">
+						<a href="/FB/index.faces"><img style="height: 40px;"
+							src="/FB/images/FreshersBuddy.jpg" border="0"
+							title="#{fbresource['Freshers_Buddy']} logo" /></a>
+					</div>
+				</div>
+				<h:panelGroup id="errorPanel2">
+					<h:outputLabel title="#{fbresource['Success_Message']}"
+						rendered="#{UIBackingBean.successMessageBool}"
+						styleClass="alert alert-success"
+						value="#{UIBackingBean.successMessage}" />
+					<h:outputLabel title="#{fbresource['Info_Message']}"
+						rendered="#{UIBackingBean.infoMessageBool}"
+						styleClass="infoMessage" value="#{UIBackingBean.infoMessage}" />
+					<h:outputLabel title="#{fbresource['Error_Message']}"
+						rendered="#{UIBackingBean.errorMessageBool}"
+						styleClass="alert alert-danger"
+						value="#{UIBackingBean.errorMessage}" />
+				</h:panelGroup>
+				<h:form id="LoginAdminForm" class="text-left"
+					style="color: #333333;">
+
+					<!-- Email -->
+					<center>
+						<table style="width: 450px;">
+							<tr>
+								<td>#{fbresource['User_Name']}<font color="red">*</font>
+								</td>
+								<td><h:inputText redisplay="true"
+										title="#{fbresource['Please_enter_User_Name']}"
+										value="#{CCPLoginBean.userName}"
+										requiredMessage="#{fbresource['Please_enter_User_Name']}"
+										size="20" id="userName" required="true" maxlength="20">
+									</h:inputText> <o:floatingIconMessage style="border-color: red;"
+										for="userName" showDetail="true" showSummary="false" /></td>
+
+							</tr>
+							<tr>
+								<td>#{fbresource['Password']}<font color="red">*</font>
+								</td>
+								<td><h:inputSecret redisplay="true"
+										style="margin-top:5px;margin-bottom:5px;"
+										onclick="showPassword('LoginForm','password');"
+										title="#{fbresource['Please_enter_Password']}"
+										value="#{CCPLoginBean.password}" size="20" id="password"
+										requiredMessage="#{fbresource['Please_enter_Password']}"
+										maxlength="15" required="true">
+									</h:inputSecret> <o:floatingIconMessage style="border-color: red;"
+										for="password" showDetail="true" showSummary="false" /></td>
+
+							</tr>
+							<tr>
+								<ui:include src="imageText.xhtml" />
+							</tr>
+							<tr>
+
+								<td><a href="#" data-toggle="modal" data-dismiss="modal"
+									data-target="#forgotpasswordModal">#{fbresource['Forgot_password']}</a>
+								</td>
+
+								<td><o:commandButton id="login"
+										styleClass="btn btn-primary glow"
+										style="margin-top:5px;margin-right:5px;"
+										render="errorPanel2 LoginAdminForm" execute="LoginAdminForm"
+										action="#{CCPLoginBean.validateLogin}"
+										title="#{fbresource['Click_here_to']} #{fbresource['Sign_In']}."
+										onajaxend="submitAdminForm('LoginAdminForm:hiddenLoginAdmin');"
+										value="#{fbresource['Sign_In']}" /> <h:commandButton
+										rendered="#{AdminUser.role ne null}"
+										value="#{fbresource['Successfully_Logged_in']}"
+										style="display:none" id="hiddenLoginAdmin"
+										action="#{CCPLoginBean.goToDashBoard}" /> <o:commandButton
+										styleClass="btn btn-primary glow"
+										value="#{fbresource['Sign_Up']}" id="Sign_Up"
+										style="margin-top:5px;"
+										title="#{fbresource['dont_have_account']} #{fbresource['Sign_Up']} "
+										onajaxend="showNotice('userAddButton');showNotice('adminLoginCloseButton');"
+										render="UserWindowFormAdd"
+										actionListener="#{UserTableBean.setUserToAdd}" /></td>
+
+							</tr>
+						</table>
+					</center>
+				</h:form>
+			</div>
+			<div class="modal-footer">
+				<a style="color: blue;" href="#" data-toggle="modal"
+					data-dismiss="modal" data-target="#termsAndConditions">#{fbresource['termsAndConditions']}</a>
+				<button id="adminLoginCloseButton" type="button"
+					class="btn btn-primary glow" data-dismiss="modal">
+					<i class="bx bx-x d-block d-sm-none" /> <span
+						class="d-none d-sm-block">#{fbresource['Close']}</span>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- Modal HTML -->
+<div class="modal fade" id="forgotpasswordModal" tabindex="-1"
+	style="margin-top: 90px;" role="dialog"
+	aria-labelledby="myModalLabel33">
+	<div class="modal-dialog modal-md modal-dialog-centered"
+		role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-success">
+				<h4 class="modal-title w-100 font-weight-bold">#{fbresource['Forgot_password']}</h4>
+			</div>
+			<h:form id="forgotAdminPassword">
+				<div class="modal-body">
+					<h:panelGroup id="errorPanel4">
+						<h:outputLabel title="#{fbresource['Success_Message']}"
+							rendered="#{UIBackingBean.successMessageBool}"
+							styleClass="alert alert-success"
+							value="#{UIBackingBean.successMessage}" />
+						<h:outputLabel title="#{fbresource['Info_Message']}"
+							rendered="#{UIBackingBean.infoMessageBool}"
+							styleClass="infoMessage" value="#{UIBackingBean.infoMessage}" />
+						<h:outputLabel title="#{fbresource['Error_Message']}"
+							rendered="#{UIBackingBean.errorMessageBool}"
+							styleClass="alert alert-danger"
+							value="#{UIBackingBean.errorMessage}" />
+					</h:panelGroup>
+					<p>#{fbresource['forgotPasswordMessage']}</p>
+					<div class="md-form">
+						<h:inputText value="#{CCPLoginBean.userName}"
+							styleClass="form-control" id="forgotuserName" required="true"
+							maxlength="20">
+						</h:inputText>
+						<o:floatingIconMessage style="border-color: red;"
+							for="forgotuserName" showDetail="true" showSummary="false" />
+						<label for="forgotpasswordemail">#{fbresource['User_Name']}<font
+							color="red">*</font></label>
+					</div>
+					<div class="md-form">
+						<h:inputText style="margin-top:10px;" id="email" required="true"
+							value="#{CCPLoginBean.email}" size="35" styleClass="form-control"
+							requiredMessage="#{fbresource['Please_enter_email']}">
+							<f:validator validatorId="EmailValidator" />
+						</h:inputText>
+						<o:floatingIconMessage style="border-color: red;" for="email"
+							showDetail="true" showSummary="false" />
+						<label for="forgotpasswordemail">#{fbresource['E_mail']}<font
+							color="red">*</font></label>
+					</div>
+				</div>
+				<div class="modal-footer d-flex justify-content-center">
+					<button id="cancel" class="btn btn-primary glow"
+						data-dismiss="modal" aria-label="Close">#{fbresource['Cancel']}</button>
+
+					<o:commandButton id="submit" style="marfin-right:20px;"
+						styleClass="btn btn-primary glow" render="forgotAdminPassword"
+						execute="forgotAdminPassword"
+						action="#{CCPLoginBean.sendUserPassword}"
+						title="#{fbresource['Please_click_here_to_reset_password']}"
+						value="#{fbresource['submit']}" />
+
+				</div>
+			</h:form>
+		</div>
+	</div>
+</div>
+<!-- / Modal HTML -->
+
+<!-- Modal HTML -->
+<div class="modal fade" id="editStudentEmail" tabindex="-1"
+	style="margin-top: 90px;" role="dialog"
+	aria-labelledby="myModalLabel33">
+	<div class="modal-dialog modal-md modal-dialog-centered"
+		role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-success">
+				<h4 class="modal-title w-100 font-weight-bold">#{fbresource['Edit_Email']}</h4>
+			</div>
+			<h:form id="editStudentEmailForm"
+				rendered="#{StudentRegistrationBean.currentMode eq 'Update'}">
+				<div class="modal-body">
+					<h:panelGroup id="editEmail">
+						<center>
+							<TABLE>
+								<tr>
+									<td>#{fbresource['Old_Email']}</td>
+									<td><h:inputText readonly="true" size="30"
+											title="#{fbresource['It_is_important_to_add_valid_Email']}"
+											value="#{StudentRegistrationBean.registration.email}" /></td>
+								</tr>
+								<tr>
+									<td>#{fbresource['New_Email']}<font color="red">*</font>
+									</td>
+									<td><h:inputText size="30" id="newEmail" required="true"
+											maxlength="100"
+											title="#{fbresource['It_is_important_to_add_valid_Email']}"
+											value="#{StudentRegistrationBean.newEmail}">
+											<o:ajax
+												onajaxstart="document.getElementById('updateEmail').disabled = true"
+												onajaxend="document.getElementById('updateEmail').disabled = false"
+												execute="newEmail" render="editEmail" />
+											<f:validator validatorId="EmailValidator" />
+										</h:inputText> <o:floatingIconMessage style="border-color: red;"
+											for="newEmail" showDetail="true" showSummary="false" /></td>
+								</tr>
+							</TABLE>
+						</center>
+					</h:panelGroup>
+				</div>
+				<div class="modal-footer d-flex justify-content-center">
+					<button id="cancel" class="btn btn-primary glow"
+						data-dismiss="modal" aria-label="Close">#{fbresource['Cancel']}</button>
+
+					<h:commandButton id="updateEmail" class="btn btn-primary glow"
+						action="#{StudentRegistrationBean.updateEmail}"
+						value="#{fbresource['Update_Email']}" />
+
+				</div>
+			</h:form>
+		</div>
+	</div>
+</div>
+<!-- / Modal HTML -->
+
+<!-- Modal HTML -->
+<h:form id="editUserEmailForm">
+
+	<div class="modal fade" id="editUserEmail" tabindex="-1"
+		style="margin-top: 90px;" role="dialog"
+		aria-labelledby="myModalLabel33">
+		<div class="modal-dialog modal-md modal-dialog-centered"
+			role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-success">
+					<h4 class="modal-title w-100 font-weight-bold">#{fbresource['Edit_Email']}</h4>
+				</div>
+				<div class="modal-body">
+					<h:panelGroup id="editEmail">
+						<center>
+							<TABLE>
+								<tr>
+									<td>#{fbresource['Old_Email']}</td>
+									<td><h:inputText readonly="true" size="30"
+											title="#{fbresource['It_is_important_to_add_valid_Email']}"
+											value="#{CreateUser.userdetails.email}" /></td>
+								</tr>
+								<tr>
+									<td>#{fbresource['New_Email']}<font color="red">*</font>
+									</td>
+									<td><h:inputText size="30" id="newEmail" required="true"
+											maxlength="100" style="margin-top:5px;"
+											title="#{fbresource['It_is_important_to_add_valid_Email']}"
+											value="#{CreateUser.newEmail}">
+											<o:ajax
+												onajaxstart="document.getElementById('updateEmail').disabled = true"
+												onajaxend="document.getElementById('updateEmail').disabled = false"
+												execute="newEmail" render="editEmail" />
+											<f:validator validatorId="EmailValidator" />
+										</h:inputText> <o:floatingIconMessage style="border-color: red;"
+											for="newEmail" showDetail="true" showSummary="false" /></td>
+								</tr>
+							</TABLE>
+						</center>
+					</h:panelGroup>
+				</div>
+				<div class="modal-footer d-flex justify-content-center">
+					<button id="cancel" class="btn btn-primary glow"
+						data-dismiss="modal" aria-label="Close">#{fbresource['Cancel']}</button>
+
+					<h:commandButton id="updateEmail" class="btn btn-primary glow"
+						action="#{CreateUser.updateEmail}"
+						value="#{fbresource['Update_Email']}" />
+
+				</div>
+			</div>
+		</div>
+	</div>
+</h:form>
+
+<!-- / Modal HTML -->
+
+
+<!-- Modal HTML -->
+<div class="modal fade" id="editStudentNumber" tabindex="-1"
+	style="margin-top: 90px;" role="dialog"
+	aria-labelledby="myModalLabel33">
+	<div class="modal-dialog modal-md modal-dialog-centered"
+		role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-success">
+				<h4 class="modal-title w-100 font-weight-bold">#{fbresource['Edit_mobile_Number']}</h4>
+			</div>
+			<h:form id="editStudentNumberForm"
+				rendered="#{StudentRegistrationBean.currentMode eq 'Update'}">
+				<div class="modal-body">
+					<h:panelGroup id="numberEmail">
+						<center>
+							<TABLE>
+								<tr>
+									<td>#{fbresource['Old_Number']}</td>
+									<td>#{StudentRegistrationBean.contactinfo.mobileNumber}</td>
+								</tr>
+								<tr>
+									<td>#{fbresource['New_Number']}<font color="red">*</font>
+									</td>
+									<td><h:inputText required="true" maxlength="10"
+											immediate="true" size="10"
+											value="#{StudentRegistrationBean.newMobileNumber}"
+											id="newmobileNumber">
+											<f:validateLength minimum="10" />
+										</h:inputText> <o:floatingIconMessage style="border-color: red;"
+											for="newmobileNumber" showDetail="true" showSummary="false" /></td>
+								</tr>
+							</TABLE>
+						</center>
+					</h:panelGroup>
+				</div>
+				<div class="modal-footer d-flex justify-content-center">
+					<button id="cancel" class="btn btn-primary glow"
+						data-dismiss="modal" aria-label="Close">#{fbresource['Cancel']}</button>
+
+					<h:commandButton id="updateNumber" class="btn btn-primary glow"
+						action="#{StudentRegistrationBean.updateNumber}"
+						value="#{fbresource['Update_Number']}" />
+
+				</div>
+			</h:form>
+		</div>
+	</div>
+</div>
+<!-- / Modal HTML -->
+
+<!-- Modal HTML -->
+<div class="modal fade" id="editUserNumber" tabindex="-1"
+	style="margin-top: 90px;" role="dialog"
+	aria-labelledby="myModalLabel33">
+	<div class="modal-dialog modal-md modal-dialog-centered"
+		role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-success">
+				<h4 class="modal-title w-100 font-weight-bold">#{fbresource['Edit_mobile_Number']}</h4>
+			</div>
+			<h:form id="editUserNumberForm">
+				<div class="modal-body">
+					<h:panelGroup id="numberEmail">
+						<center>
+							<TABLE>
+								<tr>
+									<td>#{fbresource['Old_Number']}</td>
+									<td>#{CreateUser.userdetails.mobleNo}</td>
+								</tr>
+								<tr>
+									<td>#{fbresource['New_Number']}<font color="red">*</font>
+									</td>
+									<td><h:inputText required="true" maxlength="10"
+											immediate="true" size="10"
+											value="#{CreateUser.newMobileNumber}" id="newmobileNumber">
+											<f:validateLength minimum="10" />
+										</h:inputText> <o:floatingIconMessage style="border-color: red;"
+											for="newmobileNumber" showDetail="true" showSummary="false" /></td>
+								</tr>
+							</TABLE>
+						</center>
+					</h:panelGroup>
+				</div>
+				<div class="modal-footer d-flex justify-content-center">
+					<button id="cancel" class="btn btn-primary glow"
+						data-dismiss="modal" aria-label="Close">#{fbresource['Cancel']}</button>
+
+					<h:commandButton id="updateNumber" class="btn btn-primary glow"
+						action="#{CreateUser.updateNumber}"
+						value="#{fbresource['Update_Number']}" />
+
+				</div>
+			</h:form>
+		</div>
+	</div>
+</div>
+<!-- / Modal HTML -->
+
+<h:form id="updateOpenningForm">
+	<h:panelGroup id="updateOpenningPanel"
+		rendered="#{OpenningListTableBean.hallTicket ne null}">
+		<button style="display: none" id="updateOpenningButton" type="button"
+			data-toggle="modal" data-target="#updateOpenning" />
+		<div class="modal fade text-left" id="updateOpenning" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel160" aria-hidden="true">
+			<div
+				class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl"
+				role="document">
+				<div class="modal-content">
+					<div class="modal-header bg-primary">
+						<h5 class="modal-title white" id="myModalLabel160">#{OpenningListTableBean.hallTicket.hallTicketId}-#{OpenningListTableBean.hallTicket.companyID}
+							#{fbresource['update']}</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<i class="bx bx-x"></i>
+						</button>
+					</div>
+					<div class="modal-body">
+						<ui:include src="/xhtml/errorPanel.xhtml" />
+
+						<table align="center" styleClass="registration_table"
+							cellPadding="2">
+
+							<tr>
+								<td>#{fbresource['Date_Of_Visit']} <font color="red">*</font></td>
+								<td><o:dateChooser pattern="dd/MM/yyyy" required="true"
+										buttonImageUrl="/images/calendar.gif"
+										value="#{OpenningListTableBean.hallTicket.date}"
+										id="dateofvisit">
+									</o:dateChooser> <o:floatingIconMessage style="border-color: red;"
+										for="dateofvisit" showDetail="true" showSummary="false" /></td>
+
+								<td>#{fbresource['Reporting_Time']}<font color="red">*</font></td>
+								<td><h:inputText required="true"
+										requiredMessage="#{fbresource['Please_enter']} #{fbresource['Reporting_Time']}"
+										id="time" size="5"
+										value="#{OpenningListTableBean.hallTicket.time}"
+										title="#{fbresource['Please_enter']} #{fbresource['Reporting_Time']}">
+									</h:inputText> <o:floatingIconMessage style="border-color: red;" for="time"
+										showDetail="true" showSummary="false" /></td>
+
+							</tr>
+							<tr>
+								<td>#{fbresource['lastDateToApply']} <font color="red">*</font></td>
+								<td><o:dateChooser pattern="dd/MM/yyyy" required="true"
+										buttonImageUrl="/images/calendar.gif"
+										value="#{OpenningListTableBean.hallTicket.lastDateToApply}"
+										id="lastDateToApply">
+									</o:dateChooser> <o:floatingIconMessage style="border-color: red;"
+										for="dateofvisit" showDetail="true" showSummary="false" /></td>
+								<td>#{fbresource['Package_Offering']}<font color="red">*</font></td>
+								<td><h:inputText required="true" maxlength="50"
+										requiredMessage="#{fbresource['Please_enter']} #{fbresource['Package_Offered_by_Company']}"
+										id="packageOffering" size="15"
+										value="#{OpenningListTableBean.hallTicket.packageOffering}"
+										title="#{fbresource['Please_enter']} #{fbresource['Package_Offered_by_Company']}">
+									</h:inputText> <o:floatingIconMessage style="border-color: red;"
+										for="packageOffering" showDetail="true" showSummary="false" /></td>
+							</tr>
+
+							<tr>
+								<td>#{fbresource['interviewLocation']} <font color="red">*</font></td>
+								<td><h:inputText required="true"
+										requiredMessage="#{fbresource['Please_enter']} #{fbresource['interviewLocation']}"
+										id="interviewLocation"
+										value="#{OpenningListTableBean.hallTicket.interviewLocation}"
+										title="#{fbresource['Please_enter']} #{fbresource['interviewLocation']}" />
+								</td>
+								<td>#{fbresource['postingLocation']} <font color="red">*</font></td>
+								<td><h:inputText required="true"
+										requiredMessage="#{fbresource['Please_enter']} #{fbresource['postingLocation']}"
+										id="postingLocation"
+										value="#{OpenningListTableBean.hallTicket.postingLocation}"
+										title="#{fbresource['Please_enter']} #{fbresource['postingLocation']}" /></td>
+							</tr>
+							<tr>
+								<td>#{fbresource['Role']} <font color="red">*</font></td>
+								<td><h:inputText required="true"
+										requiredMessage="#{fbresource['Please_enter']} #{fbresource['Role']}"
+										id="Role" value="#{OpenningListTableBean.hallTicket.role}"
+										title="#{fbresource['Please_enter']} #{fbresource['Role']}" /></td>
+								<td>#{fbresource['AllowDigitalSignature']} <font
+									color="red">*</font></td>
+								<td><h:selectOneMenu style="margin-top:2px;"
+										required="true"
+										title="#{fbresource['Please_select']} #{fbresource['AllowDigitalSignature']}"
+										value="#{OpenningListTableBean.hallTicket.allowDigitalSignature}"
+										id="allowDigitalSignature">
+										<f:selectItem itemValue="true"
+											itemLabel="#{fbresource['YES']}" />
+										<f:selectItem itemValue="false"
+											itemLabel="#{fbresource['NO']}" />
+									</h:selectOneMenu></td>
+							</tr>
+
+							<tr>
+								<td><h:commandButton class="btn btn-primary glow"
+										title="#{fbresource['Click_here_to']} #{fbresource['submit']}"
+										value="#{fbresource['submit']}"
+										action="#{OpenningListTableBean.updateOpenning}" /></td>
+							</tr>
+
+						</table>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary glow"
+							data-dismiss="modal">
+							<i class="bx bx-x d-block d-sm-none"></i> <span
+								class="d-none d-sm-block">#{fbresource['Close']}</span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</h:panelGroup>
+</h:form>
+
+<h:form id="noticeForm" prependId="false">
+	<!--Notice Message start -->
+	<h:panelGroup id="updateOpenningPanel"
+		rendered="#{StudentRegistrationBean.notice ne null}">
+		<button style="display: none" id="noticeButton" type="button"
+			data-toggle="modal" data-target="#notice" />
+		<div class="modal fade text-left" id="notice" tabindex="-1"
+			style="margin-top: 120px;" role="dialog"
+			aria-labelledby="myModalLabel160" aria-hidden="true">
+			<div
+				class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl"
+				role="document">
+				<div class="modal-content">
+					<div class="modal-header bg-primary">
+						<h5 class="modal-title white" id="myModalLabel160">#{fbresource['Notice_Message']}</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<i class="bx bx-x"></i>
+						</button>
+					</div>
+					<div class="modal-body">
+						<font color='red'>#{fbresource['impTag']}:<b><h:outputText
+									rendered="#{StudentRegistrationBean.notice.impTag}"
+									value="#{fbresource['YES']}" /> <h:outputText
+									rendered="#{!StudentRegistrationBean.notice.impTag}"
+									value="#{fbresource['NO']}" /> </b></font> <font color='red'>#{fbresource['studentSpecific']}:<b><h:outputText
+									rendered="#{StudentRegistrationBean.notice.studentSpecific}"
+									value="#{fbresource['YES']}" /> <h:outputText
+									rendered="#{!StudentRegistrationBean.notice.studentSpecific}"
+									value="#{fbresource['NO']}" /> </b></font> <br />
+						<h:outputText value="#{StudentRegistrationBean.notice.notice}"
+							escape="false" />
+						<o:commandLink styleClass="btn btn-primary glow"
+							rendered="#{StudentRegistrationBean.notice.fileName1 ne null and StudentRegistrationBean.notice.fileName1  ne ''}"
+							actionListener="#{StudentRegistrationBean.setFileName}"
+							onajaxend="document.getElementById('fileButton').click();"
+							render="fileFullInfo" style="margin-right:5px;">
+							<f:param name="1"
+								value="#{StudentRegistrationBean.notice.fileName1}" />
+				#{StudentRegistrationBean.notice.fileName1}
+				</o:commandLink>
+
+						<o:commandLink styleClass="btn btn-primary glow"
+							rendered="#{StudentRegistrationBean.notice.fileName2 ne null and StudentRegistrationBean.notice.fileName2  ne ''}"
+							actionListener="#{StudentRegistrationBean.setFileName}"
+							onajaxend="document.getElementById('fileButton').click();"
+							render="fileFullInfo" style="margin-right:5px;">
+							<f:param name="2"
+								value="#{StudentRegistrationBean.notice.fileName2}" />
+				#{StudentRegistrationBean.notice.fileName2}
+				</o:commandLink>
+
+						<o:commandLink styleClass="btn btn-primary glow"
+							rendered="#{StudentRegistrationBean.notice.fileName3 ne null and StudentRegistrationBean.notice.fileName3  ne ''}"
+							actionListener="#{StudentRegistrationBean.setFileName}"
+							onajaxend="document.getElementById('fileButton').click();"
+							render="fileFullInfo" style="margin-right:5px;">
+							<f:param name="3"
+								value="#{StudentRegistrationBean.notice.fileName3}" />
+				#{StudentRegistrationBean.notice.fileName3}
+				</o:commandLink>
+
+						<o:commandLink styleClass="btn btn-primary glow"
+							rendered="#{StudentRegistrationBean.notice.fileName4 ne null and StudentRegistrationBean.notice.fileName4  ne ''}"
+							actionListener="#{StudentRegistrationBean.setFileName}"
+							onajaxend="document.getElementById('fileButton').click();"
+							render="fileFullInfo" style="margin-right:5px;">
+							<f:param name="4"
+								value="#{StudentRegistrationBean.notice.fileName4}" />
+				#{StudentRegistrationBean.notice.fileName4}
+				</o:commandLink>
+
+						<o:commandLink styleClass="btn btn-primary glow"
+							rendered="#{StudentRegistrationBean.notice.fileName5 ne null and StudentRegistrationBean.notice.fileName5  ne ''}"
+							actionListener="#{StudentRegistrationBean.setFileName}"
+							onajaxend="document.getElementById('fileButton').click();"
+							render="fileFullInfo" style="margin-right:5px;">
+							<f:param name="5"
+								value="#{StudentRegistrationBean.notice.fileName5}" />
+				#{StudentRegistrationBean.notice.fileName5}
+				</o:commandLink>
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary glow"
+							data-dismiss="modal">
+							<i class="bx bx-x d-block d-sm-none"></i> <span
+								class="d-none d-sm-block">#{fbresource['Close']}</span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--Notice Message start -->
+	</h:panelGroup>
+</h:form>
+
+<h:form id="fileForm" prependId="false">
+	<!--Notice Message start -->
+	<button style="display: none" id="fileButton" type="button"
+		data-toggle="modal" data-target="#file" />
+	<div class="modal fade text-left" id="file" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel160" aria-hidden="true">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+			role="document">
+			<div class="modal-content">
+				<div class="modal-header bg-primary">
+					<h5 class="modal-title white" id="myModalLabel160">#{fbresource['Large_Photo']}</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<i class="bx bx-x"></i>
+					</button>
+				</div>
+				<div class="modal-body">
+					<h:panelGroup id="fileFullInfo">
+						<center>
+							<o:dynamicImage
+								rendered="#{StudentRegistrationBean.notice ne null and StudentRegistrationBean.fileName ne null}"
+								id="dynamicImage1"
+								data="#{StudentRegistrationBean.imageBytesAsImage}" />
+							<br /> #{StudentRegistrationBean.fileName} <br />
+							<h:commandButton style="margin-left:30px;"
+								class="btn btn-primary glow"
+								title="#{fbresource['Please_click_here_to_download_document']}"
+								action="#{StudentRegistrationBean.downloadDocument()}"
+								value="#{fbresource['download_file']}" />
+						</center>
+					</h:panelGroup>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary glow"
+						data-dismiss="modal">
+						<i class="bx bx-x d-block d-sm-none"></i> <span
+							class="d-none d-sm-block">#{fbresource['Close']}</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--Notice Message start -->
+</h:form>
+
+<h:form id="UserWindowForm" prependId="false"
+	enctype="multipart/form-data">
+	<script src="/FB/ckeditor/ckeditor.js"></script>
+	<!--Notice Message start -->
+	<h:panelGroup id="userPanel"
+		rendered="#{CreateUser.logindetails ne null}">
+		<button style="display: none" id="userButton" type="button"
+			data-toggle="modal" data-target="#user" />
+		<div class="modal fade text-left" id="user" tabindex="-1"
+			style="margin-top: 20px;" role="dialog"
+			aria-labelledby="myModalLabel160" aria-hidden="true">
+			<div
+				class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl"
+				role="document">
+				<div class="modal-content">
+					<div class="modal-header bg-primary">
+						<h5 class="modal-title white" id="myModalLabel160">#{fbresource['User']}
+							#{fbresource['ADD_OR_UPDATE']}</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<i class="bx bx-x"></i>
+						</button>
+					</div>
+					<div class="modal-body">
+						<table>
+							<tr>
+								<h:panelGroup
+									rendered="#{CreateUser.currentDocMode eq 'Update'}">
+									<td>
+										<table>
+											<tr>
+												<td>#{fbresource['profile_Pic']}<br />  <img
+											height="100px;" width="200px;"
+											src="#{parent.imageServiceUrl}/download/userprofilepics/#{CreateUser.logindetails.userName}.png" />
+												</td>
+											</tr>
+											<tr>
+												<td>#{fbresource['Photo_Logo']}<br /> <img
+											height="100px;" width="200px;"
+											style="height: 100px; width: 200px; margin-bottom: 840px;"
+											src="#{parent.imageServiceUrl}/download/userlogo/#{CreateUser.logindetails.userName}.png" />
+												</td>
+											</tr>
+										</table>
+									</td>
+								</h:panelGroup>
+								<td>
+									<table align="center" cellPadding="2">
+										<tr>
+											<td>#{fbresource['User_Name']}<font color="red">*</font></td>
+											<td><h:inputText
+													title="#{fbresource['Please_enter']} #{fbresource['User_Name']}"
+													readonly="#{CreateUser.currentDocMode eq 'Update'}"
+													value="#{CreateUser.logindetails.userName}" id="LoginName"
+													size="15" maxlength="20" required="true"
+													requiredMessage="#{fbresource['Please_enter']} #{fbresource['User_Name']}" /></td>
+											<td>#{fbresource['Valid_Till']}<font color="red">*</font></td>
+											<td><o:dateChooser pattern="dd/MM/yyyy hh:mm:ss"
+													buttonImageUrl="/images/calendar.gif" immediate="true"
+													value="#{CreateUser.logindetails.validTill}" id="validTill"
+													required="true">
+
+												</o:dateChooser> <o:floatingIconMessage style="border-color: red;"
+													for="validTill" showDetail="true" showSummary="false" /></td>
+										</tr>
+
+										<tr>
+											<td>#{fbresource['First_Name']}<font color="red">*</font></td>
+											<td><h:inputText
+													title="#{fbresource['Please_enter']} #{fbresource['First_Name']}"
+													value="#{CreateUser.userdetails.firstName}" id="firstName"
+													size="15" required="true" maxlength="50"
+													requiredMessage="#{fbresource['Please_enter']} #{fbresource['First_Name']}" /></td>
+											<td>#{fbresource['Last_Name']}<font color="red">*</font></td>
+											<td><h:inputText
+													title="#{fbresource['Please_enter']} #{fbresource['Last_Name']}"
+													value="#{CreateUser.userdetails.lastName}" id="lastName"
+													size="15" required="true" maxlength="50"
+													requiredMessage="#{fbresource['Please_enter']} #{fbresource['Last_Name']}" /></td>
+										</tr>
+										<h:panelGroup
+											rendered="#{CreateUser.currentDocMode eq 'Create'}">
+											<tr>
+												<td>#{fbresource['Password']}<font color="red">*</font></td>
+												<td><h:inputSecret redisplay="true"
+														rendered="#{CreateUser.currentDocMode eq 'Create'}"
+														title="#{fbresource['Password_must_contains_one_lower_case_char_6_15']}"
+														value="#{CreateUser.logindetails.password}" id="password"
+														size="15" required="true" maxlength="15"
+														requiredMessage="#{fbresource['Please_enter']} #{fbresource['Password']}">
+														<f:validator validatorId="PasswordValidator" />
+													</h:inputSecret></td>
+												<td>#{fbresource['Confirm_Password']}<font color="red">*</font></td>
+												<td><h:inputSecret onchange="validatePassword(this);"
+														redisplay="true"
+														title="#{fbresource['Password_must_contains_one_lower_case_char_6_15']}"
+														value="#{CreateUser.confirmPassword}" maxlength="15"
+														id="confirmPasswordProfile" size="15" required="true"
+														requiredMessage="#{fbresource['Please_enter']} #{fbresource['Confirm_Password']}">
+														<f:validator validatorId="PasswordValidator" />
+														<o:validateEqual for="password" />
+													</h:inputSecret></td>
+											</tr>
+										</h:panelGroup>
+										<tr>
+											<td>#{fbresource['E_mail']}<font color="red">*</font></td>
+											<td><h:inputText
+													style="#{CreateUser.userdetails.emailVarified eq true and CreateUser.currentDocMode eq 'Update' ? 'background:green;color:white;':'background:red;color:white;'}"
+													title="#{CreateUser.userdetails.emailVarified eq true and CreateUser.currentDocMode eq 'Update' ?'Verified E-mail Address':'E-mail Address is not verified.It is important to add valid E-mail.It is required for all the communication.'}"
+													value="#{CreateUser.userdetails.email}" id="email"
+													size="30" required="true" maxlength="100"
+													requiredMessage="#{fbresource['Please_enter']} #{fbresource['E_mail']}">
+													<f:validator validatorId="EmailValidator" />
+												</h:inputText> <h:graphicImage
+													rendered="#{CreateUser.userdetails.emailVarified eq true}"
+													title="Verified E-mail Address" height="15px;"
+													width="15px;" url="/css/success.png" /> <h:graphicImage
+													rendered="#{CreateUser.userdetails.emailVarified eq false}"
+													title="#{fbresource['Email_Address_is_not_verified']}"
+													height="15px;" width="15px;" url="/css/error.png"
+													styleClass="blinking" /></td>
+											<td><o:commandButton styleClass="btn btn-primary glow"
+													style="margin-left:10px;"
+													title="#{fbresource['Your_Email_is_not_verified']}"
+													id="verifyEmail"
+													rendered="#{CreateUser.userdetails.emailVarified eq false and CreateUser.currentDocMode eq 'Update'}"
+													value="#{fbresource['Verify']}"
+													action="#{CreateUser.sendEmail}">
+												</o:commandButton></td>
+										</tr>
+										<tr>
+											<td>#{fbresource['Mobile_Number']}<font color="red">*</font></td>
+											<td><h:inputText
+													style="#{CreateUser.userdetails.numberVerified eq true and CreateUser.currentDocMode eq 'Update' ? 'background:green;color:white;':'background:red;color:white;'}"
+													title="#{fbresource['Please_enter']} #{fbresource['Mobile_Number']}"
+													value="#{CreateUser.userdetails.mobleNo}" id="mobleno"
+													size="15" required="true" maxlength="10"
+													requiredMessage="#{fbresource['Please_enter']} #{fbresource['Mobile_Number']}">
+													<f:validateLength minimum="10" />
+												</h:inputText> <h:graphicImage
+													rendered="#{CreateUser.userdetails.numberVerified eq true and CreateUser.currentDocMode eq 'Update'}"
+													title="#{fbresource['Verified_Mobile_Number']}"
+													height="15px;" width="15px;" url="/css/success.png" /> <h:graphicImage
+													styleClass="blinking"
+													rendered="#{CreateUser.userdetails.numberVerified eq false and CreateUser.currentDocMode eq 'Update'}"
+													title="#{fbresource['Mobile_Number_is_not_verified']}"
+													height="15px;" width="15px;" url="/css/error.png" /></td>
+											<td><o:commandButton styleClass="btn btn-primary glow"
+													style="margin-left:10px;"
+													action="#{CreateUser.verifyNumberFromAdmin}"
+													title="#{fbresource['Your_number_is_not_verified']}"
+													rendered="#{CreateUser.userdetails.numberVerified eq false and CreateUser.currentDocMode eq 'Update'}"
+													value="#{fbresource['Verify']}" /></td>
+										</tr>
+
+										<tr>
+											<h:panelGroup rendered="#{AdminUser.role eq 'Super User'}">
+
+												<td><h:outputText value="#{fbresource['Role']}" /> <f:verbatim>
+														<font color="red">*</font>
+													</f:verbatim></td>
+												<td><h:selectOneMenu
+														rendered="#{AdminUser.role eq 'Admin' || AdminUser.role eq 'College' || AdminUser.role eq 'Company'}"
+														title="#{fbresource['Please_select']} #{fbresource['Role']}"
+														value="#{CreateUser.logindetails.role}" id="role"
+														required="true"
+														requiredMessage="#{fbresource['Please_select']} #{fbresource['Role']}">
+														<f:selectItem itemValue="U"
+															itemLabel="#{fbresource['User']}" />
+													</h:selectOneMenu> <h:selectOneMenu
+														rendered="#{AdminUser.role eq 'Super User'}"
+														title="#{fbresource['Please_select']} #{fbresource['Role']}"
+														value="#{CreateUser.logindetails.role}" id="role1"
+														required="true"
+														requiredMessage="#{fbresource['Please_select']} #{fbresource['Role']}">
+														<f:selectItem itemLabel="" itemValue="" />
+														<f:selectItem itemValue="U"
+															itemLabel="#{fbresource['User']}" />
+														<f:selectItem id="Admin" itemValue="A"
+															itemLabel="#{fbresource['Admin']}" />
+														<f:selectItem id="CollegeUser" itemValue="C"
+															itemLabel="#{fbresource['CollegeUser']}" />
+														<f:selectItem id="CompanyUser" itemValue="N"
+															itemLabel="#{fbresource['CompanyUser']}" />
+														<f:selectItem id="SuperUser" itemValue="S"
+															itemLabel="#{fbresource['SuperUser']}" />
+													</h:selectOneMenu></td>
+											</h:panelGroup>
+											<td>#{fbresource['Website']}</td>
+											<td><h:inputText
+													title="#{fbresource['Please_enter']} #{fbresource['Website']}"
+													value="#{CreateUser.userdetails.website}" id="website"
+													size="20" maxlength="100">
+												</h:inputText></td>
+
+										</tr>
+										<tr>
+											<td>#{fbresource['Gender']}<font color="red">*</font></td>
+											<td><h:selectOneMenu
+													title="#{fbresource['Please_select']} #{fbresource['Gender']}"
+													value="#{CreateUser.userdetails.gender}" id="gender"
+													required="true"
+													requiredMessage="#{fbresource['Please_select']} #{fbresource['Gender']}">
+													<f:selectItem itemLabel="" itemValue="" />
+													<f:selectItem itemLabel="#{fbresource['Male']}"
+														itemValue="M" />
+													<f:selectItem itemLabel="#{fbresource['Female']}"
+														itemValue="F" />
+													<f:selectItem itemLabel="#{fbresource['NA']}" itemValue="N" />
+												</h:selectOneMenu></td>
+											<h:panelGroup rendered="#{AdminUser.role eq 'Super User'}">
+												<td>#{fbresource['Logo_Display_on_MainPage']}<font
+													color="red">*</font></td>
+												<td><h:selectOneMenu
+														title="#{fbresource['Please_select']} #{fbresource['Logo_Display_on_MainPage']}"
+														value="#{CreateUser.logindetails.logoDisplay}"
+														id="logoDisplay" required="true"
+														requiredMessage="#{fbresource['Please_select']} #{fbresource['Logo_Display_on_MainPage']}">
+														<f:selectItem itemLabel="" itemValue="" />
+														<f:selectItem itemLabel="#{fbresource['YES']}"
+															itemValue="true" />
+														<f:selectItem itemLabel="#{fbresource['NO']}"
+															itemValue="false" />
+													</h:selectOneMenu></td>
+											</h:panelGroup>
+										</tr>
+
+										<h:panelGroup
+											rendered="#{CreateUser.currentDocMode eq 'Update'}">
+											<tr>
+												<td>#{fbresource['profile_Pic']}</td>
+												<td><h:inputFile style="margin-left: 10;"
+														id="profilePic" value="#{CreateUser.profileFile}" /></td>
+												<td><h:commandButton class="btn btn-primary glow"
+														value="#{fbresource['Upload']}"
+														title="#{fbresource['Note_Please_select_only_Image_file_Max_size_100KB']}"
+														styleClass="exam_submit_button"
+														action="#{CreateUser.uploadProfileImage}" /></td>
+											</tr>
+											<tr>
+												<td>#{fbresource['Photo_Logo']}</td>
+												<td><h:inputFile style="margin-left: 10;" id="image"
+														value="#{CreateUser.file}" /></td>
+												<td><h:commandButton class="btn btn-primary glow"
+														value="#{fbresource['Upload']}"
+														title="#{fbresource['Note_Please_select_only_Image_file_Max_size_100KB']}"
+														styleClass="exam_submit_button"
+														action="#{CreateUser.uploadImage}" /></td>
+											</tr>
+										</h:panelGroup>
+
+										<tr>
+											<td>#{fbresource['Address']}<font color="red">*</font></td>
+											<td colspan="4"><h:inputTextarea
+													title="#{fbresource['Please_enter']} #{fbresource['Address']}"
+													rows="3" value="#{CreateUser.userdetails.address}"
+													id="address" size="50" required="true" maxlength="1000"
+													requiredMessage="#{fbresource['Please_enter']} #{fbresource['Address']}" /></td>
+										</tr>
+
+										<tr>
+											<td>#{fbresource['Profile']}</td>
+											<td colspan="4"><h:inputTextarea maxlength="5000"
+													value="#{CreateUser.userdetails.details}" id="details"
+													width="1000" height="270" /></td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+
+						<table align="center" cellSpacing="15" width="200">
+							<tr>
+								<td><h:commandButton class="btn btn-primary glow"
+										title="#{fbresource['Click_here_to']} #{fbresource['submit']}"
+										value="#{fbresource['submit']}"
+										action="#{CreateUser.saveAction}" /></td>
+							</tr>
+						</table>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary glow" id="close"
+							data-dismiss="modal">
+							<i class="bx bx-x d-block d-sm-none"></i> <span
+								class="d-none d-sm-block">#{fbresource['Close']}</span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--Notice Message start -->
+		<script>
+			CKEDITOR.replace('address');
+			CKEDITOR.replace('details');
+		</script>
+	</h:panelGroup>
+</h:form>
+
+<!--Notice Message start -->
+<button style="display: none" id="userAddButton" type="button"
+	data-toggle="modal" data-target="#userAdd" />
+<div class="modal fade text-left" id="userAdd" tabindex="-1"
+	style="margin-top: 50px;" role="dialog"
+	aria-labelledby="myModalLabel33" aria-hidden="true">
+	<div
+		class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl"
+		role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-primary">
+				<h4 class="modal-title" id="myModalLabel33">#{fbresource['Register_with_Freshers_Buddy']}</h4>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<i class="bx bx-x" />
+				</button>
+			</div>
+			<div class="modal-body">
+				<h:panelGroup id="errorPanelAdd">
+					<h:outputLabel title="#{fbresource['Success_Message']}"
+						rendered="#{UIBackingBean.successMessageBool}"
+						styleClass="alert alert-success"
+						value="#{UIBackingBean.successMessage}" />
+					<h:outputLabel title="#{fbresource['Info_Message']}"
+						rendered="#{UIBackingBean.infoMessageBool}"
+						styleClass="infoMessage" value="#{UIBackingBean.infoMessage}" />
+					<h:outputLabel title="#{fbresource['Error_Message']}"
+						rendered="#{UIBackingBean.errorMessageBool}"
+						styleClass="alert alert-danger"
+						value="#{UIBackingBean.errorMessage}" />
+				</h:panelGroup>
+				<h:form id="UserWindowFormAdd" class="text-left"
+					style="color: #333333;">
+
+					<script src="/FB/ckeditor/ckeditor.js" />
+					<table>
+						<tr>
+							<td>
+								<table align="center" cellPadding="2">
+									<tr>
+										<td>#{fbresource['User_Name']}<font color="red">*</font></td>
+										<td><h:panelGroup id="userNamePanel">
+												<h:inputText immediate="true"
+													title="#{fbresource['Please_enter']} #{fbresource['User_Name']}"
+													value="#{CreateUser.logindetails.userName}"
+													id="userNameProfile" size="15" maxlength="20"
+													required="true"
+													requiredMessage="#{fbresource['Please_enter']} #{fbresource['User_Name']}">
+													<f:validator validatorId="UserNameValidator" />
+													<o:ajax render="userNamePanel userSubmitButton" />
+												</h:inputText>
+												<o:floatingIconMessage id="userNameProfile_msg"
+													style="border-color: red;" for="userNameProfile"
+													showDetail="true" showSummary="false" />
+											</h:panelGroup></td>
+										<td>#{fbresource['Valid_Till']}<font color="red">*</font></td>
+										<td><o:dateChooser pattern="dd/MM/yyyy hh:mm:ss"
+												buttonImageUrl="/images/calendar.gif"
+												value="#{CreateUser.logindetails.validTill}" id="validTillDate"
+												required="true">
+
+											</o:dateChooser> <o:floatingIconMessage style="border-color: red;"
+												for="validTillDate" showDetail="true" showSummary="false" /></td>
+									</tr>
+
+									<tr>
+										<td>#{fbresource['First_Name']}<font color="red">*</font></td>
+										<td><h:inputText
+												title="#{fbresource['Please_enter']} #{fbresource['First_Name']}"
+												value="#{CreateUser.userdetails.firstName}" id="firstName"
+												size="15" required="true" maxlength="50"
+												requiredMessage="#{fbresource['Please_enter']} #{fbresource['First_Name']}" /></td>
+										<td>#{fbresource['Last_Name']}<font color="red">*</font></td>
+										<td><h:inputText
+												title="#{fbresource['Please_enter']} #{fbresource['Last_Name']}"
+												value="#{CreateUser.userdetails.lastName}" id="lastName"
+												size="15" required="true" maxlength="50"
+												requiredMessage="#{fbresource['Please_enter']} #{fbresource['Last_Name']}" /></td>
+									</tr>
+									<h:panelGroup
+										rendered="#{CreateUser.currentDocMode eq 'Create'}">
+										<tr>
+											<td>#{fbresource['Password']}<font color="red">*</font></td>
+											<td><h:inputSecret redisplay="true"
+													rendered="#{CreateUser.currentDocMode eq 'Create'}"
+													title="#{fbresource['Password_must_contains_one_lower_case_char_6_15']}"
+													value="#{CreateUser.logindetails.password}" id="password"
+													size="15" required="true" maxlength="15"
+													requiredMessage="#{fbresource['Please_enter']} #{fbresource['Password']}">
+													<f:validator validatorId="PasswordValidator" />
+												</h:inputSecret></td>
+											<td>#{fbresource['Confirm_Password']}<font color="red">*</font></td>
+											<td><h:inputSecret onchange="validatePassword(this);"
+													redisplay="true"
+													title="#{fbresource['Password_must_contains_one_lower_case_char_6_15']}"
+													value="#{CreateUser.confirmPassword}" maxlength="15"
+													id="confirmPasswordAdd" size="15" required="true"
+													requiredMessage="#{fbresource['Please_enter']} #{fbresource['Confirm_Password']}">
+													<f:validator validatorId="PasswordValidator" />
+													<o:validateEqual for="password" />
+												</h:inputSecret></td>
+										</tr>
+									</h:panelGroup>
+									<tr>
+										<td>#{fbresource['E_mail']}<font color="red">*</font></td>
+										<td><h:panelGroup id="emailPanel">
+												<h:inputText immediate="true"
+													title="#{fbresource['Please_enter']} #{fbresource['E_mail']}"
+													value="#{CreateUser.userdetails.email}" id="email"
+													size="30" required="true" maxlength="100"
+													requiredMessage="#{fbresource['Please_enter']} #{fbresource['E_mail']}">
+													<f:validator validatorId="EmailValidator" />
+													<o:ajax render="emailPanel userSubmitButton" />
+												</h:inputText>
+												<o:floatingIconMessage id="emailPanel_msg"
+													style="border-color: red;" for="email" showDetail="true"
+													showSummary="false" />
+											</h:panelGroup></td>
+										<td>#{fbresource['Website']}</td>
+										<td><h:inputText
+												title="#{fbresource['Please_enter']} #{fbresource['Website']}"
+												value="#{CreateUser.userdetails.website}" id="website"
+												size="25" maxlength="100">
+											</h:inputText></td>
+									</tr>
+
+									<tr>
+										<td>#{fbresource['Mobile_Number']}<font color="red">*</font></td>
+										<td><h:inputText
+												title="#{fbresource['Please_enter']} #{fbresource['Mobile_Number']}"
+												value="#{CreateUser.userdetails.mobleNo}" id="mobleno"
+												size="15" required="true" maxlength="10"
+												requiredMessage="#{fbresource['Please_enter']} #{fbresource['Mobile_Number']}">
+												<f:validateLength minimum="10" />
+											</h:inputText></td>
+										<td>#{fbresource['Gender']}<font color="red">*</font></td>
+										<td><h:selectOneMenu
+												title="#{fbresource['Please_select']} #{fbresource['Gender']}"
+												value="#{CreateUser.userdetails.gender}" id="gender"
+												required="true"
+												requiredMessage="#{fbresource['Please_select']} #{fbresource['Gender']}">
+												<f:selectItem itemLabel="" itemValue="" />
+												<f:selectItem itemLabel="#{fbresource['Male']}"
+													itemValue="M" />
+												<f:selectItem itemLabel="#{fbresource['Female']}"
+													itemValue="F" />
+												<f:selectItem itemLabel="#{fbresource['NA']}" itemValue="N" />
+											</h:selectOneMenu></td>
+									</tr>
+									<tr>
+										<td>#{fbresource['Address']}<font color="red">*</font></td>
+										<td colspan="4"><h:inputTextarea
+												title="#{fbresource['Please_enter']} #{fbresource['Address']}"
+												rows="3" value="#{CreateUser.userdetails.address}"
+												width="1000" height="50" id="address" size="50"
+												required="true" maxlength="1000"
+												requiredMessage="#{fbresource['Please_enter']} #{fbresource['Address']}" /></td>
+									</tr>
+									<tr>
+										<td>#{fbresource['Profile']}</td>
+										<td colspan="4"><h:inputTextarea maxlength="5000"
+												value="#{CreateUser.userdetails.details}" id="details"
+												width="1000" height="50" /></td>
+									</tr>
+									<tr>
+										<td></td>
+										<td><h:commandButton id="userSubmitButton"
+												styleClass="btn btn-primary glow"
+												action="#{CreateUser.saveAction}"
+												title="#{fbresource['Click_here_to']} #{fbresource['submit']}"
+												value="#{fbresource['submit']}">
+												<o:confirmation id="buttonConfirmation" width="400px"
+													details="Click #{fbresource['accept']} to create the account."
+													okButtonText="#{fbresource['accept']}"
+													cancelButtonText="#{fbresource['declined']}"
+													message="#{fbresource['termsAndConditionsConfirm']}"
+													draggable="true" />
+											</h:commandButton></td>
+									</tr>
+									<tr>
+										<td></td>
+										<td><a style="margin-bottom: 100px; color: blue;"
+											href="#" data-toggle="modal" data-dismiss="modal"
+											data-target="#termsAndConditions">#{fbresource['termsAndConditions']}</a></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+
+					<script>
+						CKEDITOR.replace('UserWindowFormAdd:address');
+						CKEDITOR.replace('UserWindowFormAdd:details');
+					</script>
+
+				</h:form>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!--Notice Message start -->
+<button style="display: none" id="questionButton" type="button"
+	data-toggle="modal" data-target="#question" />
+
+<div class="modal fade text-left" id="question" tabindex="-1"
+	style="margin-top: 50px;" role="dialog"
+	aria-labelledby="myModalLabel33" aria-hidden="true">
+	<div
+		class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl"
+		role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-primary">
+				<h4 class="modal-title" id="myModalLabel33">#{fbresource['Question']}
+					#{fbresource['Add_Update']}</h4>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<i class="bx bx-x" />
+				</button>
+			</div>
+
+			<div class="modal-body">
+				<h:form id="QuestionWindowForm" class="text-left"
+					style="color: #333333;" enctype="multipart/form-data">
+					<script src="/FB/ckeditor/ckeditor.js" />
+					<h:panelGroup id="questionAddPanel"
+						rendered="#{QuestionAddBean.questions ne null}">
+						<table align="center" cellSpacing="2" width="100%">
+							<tr>
+								<td>#{fbresource['Exam_Name']}<font color="red">*</font></td>
+								<td><o:dropDownField id="testType" maxlength="50"
+										required="true" immediate="true" style="width: 200px;"
+										disabled="#{QuestionAddBean.currentDocMode eq 'Update'}"
+										listItemStyle="white-space: nowrap;"
+										suggestionMode="stringStart" var="testName"
+										value="#{QuestionAddBean.id.qtype}" suggestionMinChars="1">
+										<o:dropDownItems value="#{ExamTableBean.testList}" />
+										<o:column>
+											<h:outputText value="#{testName}"
+												styleClass="dropDownValuesClass" />
+										</o:column>
+									</o:dropDownField> <o:floatingIconMessage style="border-color: red;"
+										for="examName" showDetail="true" showSummary="false" /></td>
+							</tr>
+
+							<tr>
+								<td><f:verbatim
+										rendered="#{QuestionAddBean.currentDocMode eq 'Update'}">#{fbresource['Question_No']}<font
+											color="red">*</font>
+									</f:verbatim></td>
+								<td><h:inputText value="#{QuestionAddBean.id.qno}"
+										style="margin-top:5px;"
+										rendered="#{QuestionAddBean.currentDocMode eq 'Update'}"
+										disabled="true" id="QuestionNo" size="2" required="true"
+										requiredMessage="#{fbresource['Please_enter']} #{fbresource['Question_No']}">
+									</h:inputText> <o:floatingIconMessage style="border-color: red;"
+										for="QuestionNo" showDetail="true" showSummary="false" /></td>
+
+							</tr>
+							<tr>
+								<td><h:outputText value="#{fbresource['Assigned_No']}" /></td>
+								<td><h:inputText style="margin-top:5px;"
+										value="#{QuestionAddBean.questions.assignedNo}"
+										id="assignedNo" size="6"
+										requiredMessage="#{fbresource['Please_enter']} #{fbresource['Assigned_No']}" /></td>
+							</tr>
+							<tr>
+								<td>#{fbresource['Select_File']}</td>
+
+								<td><h:inputFile id="uploadlble" style="margin-top:5px;"
+										value="#{QuestionAddBean.file}" /> <o:dynamicImage
+										rendered="#{QuestionAddBean.questions.isImage eq true}"
+										onclick="O$('QuestionWindowForm:biggerPhoto').show();"
+										onmousemove="O$('QuestionWindowForm:biggerPhoto').show();"
+										onmouseout="O$('QuestionWindowForm:biggerPhoto').hide();"
+										alt="#{fbresource['Click_here_to_See_Full_Message']}"
+										id="dynamicImage" width="100" height="100"
+										data="#{QuestionAddBean.questions.imageBytes}" /> <o:popupLayer
+										id="biggerPhoto" left="448" top="20" style="z-index: 100;">
+										<o:dynamicImage
+											rendered="#{QuestionAddBean.questions.isImage eq true}"
+											width="400" height="440" alt="#{fbresource['Full_Image']}"
+											data="#{QuestionAddBean.questions.imageBytes}" />
+									</o:popupLayer></td>
+							</tr>
+							<tr>
+								<td colspan="2"><div style="margin-bottom: 20px;"></div></td>
+							</tr>
+							<tr>
+								<td>#{fbresource['Question']}<font color="red">*</font></td>
+								<td><h:inputTextarea style="margin-top:5px;"
+										value="#{QuestionAddBean.questions.question}" id="Ques"
+										width="800" height="100" required="true"
+										requiredMessage="#{fbresource['Please_enter']} your question" />
+									<o:floatingIconMessage style="border-color: red;" for="Ques"
+										showDetail="true" showSummary="false" /></td>
+							</tr>
+							<tr>
+								<td colspan="2"><div style="margin-bottom: 20px;"></div></td>
+							</tr>
+							<tr>
+								<td>#{fbresource['Option_A']}<font color="red">*</font></td>
+								<td><h:inputTextarea style="margin-top:5px;"
+										value="#{QuestionAddBean.questions.optiona}" id="OptionA"
+										width="800" height="100" required="true"
+										requiredMessage="#{fbresource['Please_enter']} your Option A" />
+									<o:floatingIconMessage style="border-color: red;" for="OptionA"
+										showDetail="true" showSummary="false" /></td>
+							</tr>
+							<tr>
+								<td colspan="2"><div style="margin-bottom: 20px;"></div></td>
+							</tr>
+							<tr>
+								<td>#{fbresource['Option_B']}<font color="red">*</font></td>
+								<td><h:inputTextarea style="margin-top:5px;"
+										value="#{QuestionAddBean.questions.optionb}" id="OptionB"
+										width="800" height="100" required="true"
+										requiredMessage="#{fbresource['Please_enter']} your Option B" />
+									<o:floatingIconMessage style="border-color: red;" for="OptionB"
+										showDetail="true" showSummary="false" /></td>
+							</tr>
+							<tr>
+								<td colspan="2"><div style="margin-bottom: 20px;"></div></td>
+							</tr>
+							<tr>
+								<td>#{fbresource['Option_C']}<font color="red">*</font></td>
+								<td><h:inputTextarea style="margin-top:5px;"
+										value="#{QuestionAddBean.questions.optionc}" id="OptionC"
+										width="800" height="100" required="true"
+										requiredMessage="#{fbresource['Please_enter']} your Option C" />
+									<o:floatingIconMessage style="border-color: red;" for="OptionC"
+										showDetail="true" showSummary="false" /></td>
+							</tr>
+							<tr>
+								<td colspan="2"><div style="margin-bottom: 20px;"></div></td>
+							</tr>
+							<tr>
+								<td>#{fbresource['Option_D']}<font color="red">*</font></td>
+								<td><h:inputTextarea id="optionDText"
+										style="margin-top:5px;"
+										value="#{QuestionAddBean.questions.optiond}" width="800"
+										height="100" required="true"
+										requiredMessage="#{fbresource['Please_enter']} your Option D" />
+									<o:floatingIconMessage style="border-color: red;" for="optionD"
+										showDetail="true" showSummary="false" /></td>
+							</tr>
+							<tr>
+								<td>#{fbresource['QType']}<font color="red">*</font></td>
+								<td><h:selectOneMenu style="margin-top:5px;"
+										value="#{QuestionAddBean.questions.questionType}"
+										id="questionType" required="true"
+										requiredMessage="#{fbresource['Please_select']} #{fbresource['QType']}">
+										<f:selectItem itemLabel="#{fbresource['Single']}"
+											itemValue="Single" id="Single" />
+										<f:selectItem itemLabel="#{fbresource['Multiple']}"
+											itemValue="Multiple" id="Multiple" />
+										<f:selectItem itemLabel="#{fbresource['Compile']}"
+											itemValue="Compile" id="Compile" />
+									</h:selectOneMenu> <o:floatingIconMessage style="border-color: red;"
+										for="questionType" showDetail="true" showSummary="false" /></td>
+							</tr>
+							<tr>
+								<td>#{fbresource['Answer']}<font color="red">*</font></td>
+								<td><h:inputText style="margin-top:5px;margin-bottom:5px;"
+										value="#{QuestionAddBean.questions.answer}" id="Answer1"
+										required="true" maxlength="10"
+										requiredMessage="#{fbresource['Please_enter']} your Answer with coma , seprated value.">
+									</h:inputText> <o:floatingIconMessage style="border-color: red;"
+										for="Answer1" showDetail="true" showSummary="false" /></td>
+							</tr>
+						</table>
+						<table halign="left">
+							<tr>
+								<td><h:commandButton class="btn btn-primary glow"
+										value="#{fbresource['save']}"
+										title="#{fbresource['Please_click_here_save_data']}"
+										action="#{QuestionAddBean.insertQuestion}" /></td>
+								<td><h:commandButton class="btn btn-primary glow"
+										value="#{fbresource['Reset']}" type="reset"
+										rendered="#{QuestionAddBean.currentDocMode ne 'Update'}"
+										title="#{fbresource['Please_click_here_to_reset_form_values']}" /></td>
+								<td><h:commandButton class="btn btn-primary glow"
+										value="#{fbresource['Close']}" type="button"
+										onclick="O$('QuestionWindowForm:Question').hide();"
+										title="#{fbresource['Please_click_here_to_close']}" /></td>
+							</tr>
+							<tr>
+								<td colspan="1"><div style="margin-bottom: 50px;"></div></td>
+							</tr>
+						</table>
+					</h:panelGroup>
+					<script>
+						CKEDITOR.replace('QuestionWindowForm:Ques');
+						CKEDITOR.replace('QuestionWindowForm:OptionA');
+						CKEDITOR.replace('QuestionWindowForm:OptionB');
+						CKEDITOR.replace('QuestionWindowForm:OptionC');
+						CKEDITOR.replace('QuestionWindowForm:optionDText');
+						function validateForm() {
+							var x = document
+									.getElementById("QuestionWindowForm:OptionA");
+							if ('' == x.value) {
+								alert("#{fbresource['Please_enter']} Question.");
+								return false;
+							}
+							x = document
+									.getElementById("QuestionWindowForm:OptionA");
+							if (x.value == null || '' == x.value) {
+								alert("#{fbresource['Please_enter']} OptionA.");
+								return false;
+							}
+							x = document
+									.getElementById("QuestionWindowForm:OptionB");
+							if (x.value == null || '' == x.value) {
+								alert("#{fbresource['Please_enter']} OptionB.");
+								return false;
+							}
+							x = document
+									.getElementById("QuestionWindowForm:OptionC");
+							if (x.value == null || '' == x.value) {
+								alert("#{fbresource['Please_enter']} OptionC.");
+								return false;
+							}
+							x = document
+									.getElementById("QuestionWindowForm:OptionA");
+							if (x.value == null || '' == x.value) {
+								alert("#{fbresource['Please_enter']} OptionD.");
+								return false;
+							}
+
+						}
+					</script>
+
+				</h:form>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+
+<!--Notice Message start -->
+
+<!-- Terms and Conditions -->
+<div class="modal fade text-left" id="termsAndConditions" tabindex="-1"
+	style="margin-top: 130px;" role="dialog"
+	aria-labelledby="myModalLabel33" aria-hidden="true">
+	<div
+		class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg"
+		role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-primary">
+				<h4 class="modal-title" id="myModalLabel33">#{fbresource['termsAndConditions']}</h4>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<i class="bx bx-x" />
+				</button>
+			</div>
+			<div class="modal-body">
+				<center>
+					<FONT size="4" color="red"><b>#{fbresource['termsAndConditions']}</b></FONT>
+					<p align="justify">
+						<h:outputText escape="false" 
+							value="#{fbresource['termsAndConditionsMessage_fb']}" />
+					</p>
+				</center>
+			</div>
+		</div>
+	</div>
+</div>
+<!--Terms and Conditions end -->
+
+</html>

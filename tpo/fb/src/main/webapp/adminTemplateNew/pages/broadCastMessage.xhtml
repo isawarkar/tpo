@@ -1,0 +1,134 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<ui:composition template="adminLayoutNew.xhtml">
+	<ui:define name="content">
+		<section id="card-actions">
+			<!-- Info table about action starts -->
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-header">
+							<h4 class="card-title">#{fbresource['broadCastMessage']}</h4>
+							<a class="heading-elements-toggle"> <i
+								class='bx bx-dots-vertical font-medium-3' /></a>
+							<div class="heading-elements">
+								<ul class="list-inline mb-0">
+									<li><h:form>
+											<h:panelGroup id="bookmarkButtonPanel">
+												<o:commandLink id="bookmarkButton" execute="bookmarkButton"
+													render="bookmarkButtonPanel bookmarkList errorPanel"
+													actionListener="#{BookmarkBean.setBookmark}">
+													<f:param name="bookmarkName" value="broadCastMessage" />
+													
+													<i title="#{fbresource['bookmarkToolTip']}"
+														class="ficon bx #{BookmarkBean.getIcon('broadCastMessage')} warning" />
+												</o:commandLink>
+											</h:panelGroup>
+										</h:form></li>
+									<li><a data-action="collapse"> <i
+											class="bx bx-chevron-down" /></a></li>
+									<li><a data-action="expand"> <i
+											class="bx bx-fullscreen" /></a></li>
+									<li><a data-action="reload"> <i class="bx bx-revision" /></a></li>
+									<li><a data-action="close"> <i class="bx bx-x" /></a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="card-content collapse show">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="table-responsive">
+											<h:form id="broadCastMessageForm">
+												<table cellPadding="1" align="center">
+													<tr>
+														<td>#{fbresource['messageSeverity']}</td>
+														<td><h:selectOneMenu
+																value="#{BroadCastMessageBean.broadCastMessage.messageSeverity}">
+																<f:selectItem itemLabel="" itemValue="" />
+																<f:selectItem itemLabel="#{fbresource['Urgent']}"
+																	itemValue="Urgent" />
+																<f:selectItem itemLabel="#{fbresource['High']}"
+																	itemValue="High" />
+																<f:selectItem itemLabel="#{fbresource['Medium']}"
+																	itemValue="Medium" />
+																<f:selectItem itemLabel="#{fbresource['Low']}"
+																	itemValue="Low" />
+															</h:selectOneMenu></td>
+													</tr>
+													<tr>
+														<td>#{fbresource['Valid_From']}<font color="red">*</font></td>
+														<td><o:dateChooser pattern="dd/MM/yyyy hh:mm:ss"
+																buttonImageUrl="/images/calendar.gif" immediate="true"
+																value="#{BroadCastMessageBean.broadCastMessage.validFrom}"
+																id="validFrom" required="true">
+
+															</o:dateChooser> <o:floatingIconMessage style="border-color: red;"
+																for="validFrom" showDetail="true" showSummary="false" /></td>
+													</tr>
+													<tr>
+														<td>#{fbresource['Valid_Till']}<font color="red">*</font></td>
+														<td><o:dateChooser pattern="dd/MM/yyyy hh:mm:ss"
+																buttonImageUrl="/images/calendar.gif" immediate="true"
+																value="#{BroadCastMessageBean.broadCastMessage.validTill}"
+																id="validTill" required="true">
+
+															</o:dateChooser> <o:floatingIconMessage style="border-color: red;"
+																for="validTill" showDetail="true" showSummary="false" /></td>
+													</tr>
+													<tr>
+														<td>#{fbresource['broadCastMessageTitle']}</td>
+														<td><h:inputText
+																value="#{BroadCastMessageBean.broadCastMessage.broadcastMessageTitle}"
+																title="#{fbresource['Please_enter']} #{fbresource['broadCastMessageTitle']}"
+																size="20" id="broadCastMessageTitle" maxlength="100">
+															</h:inputText></td>
+													</tr>
+													<tr>
+														<td>#{fbresource['broadCastMessage']}</td>
+														<td><h:inputTextarea rows="5" cols="80"
+																immediate="true"
+																value="#{BroadCastMessageBean.broadCastMessage.broadcastMessage}"
+																maxlength="10000" id="broadcastMessage">
+															</h:inputTextarea></td>
+													</tr>
+												</table>
+
+												<table align="center" cellSpacing="15" width="150">
+													<tr>
+														<td><h:commandButton class="btn btn-primary glow"
+																title="#{fbresource['Are_you__sure_you_want_to']} #{fbresource['submit']}"
+																id="saveRecord" value="#{fbresource['submit']}"
+																action="#{BroadCastMessageBean.saveRecord}">
+															</h:commandButton></td>
+														<td><h:commandButton class="btn btn-primary glow"
+																rendered="#{BroadCastMessageBean.currentDocMode eq 'Update'}"
+																title="#{fbresource['Are_you__sure_you_want_to']} #{fbresource['delete']}"
+																id="delete" value="#{fbresource['delete']}"
+																action="#{BroadCastMessageBean.deleteMessage}">
+															</h:commandButton></td>
+														<td><h:commandButton class="btn btn-primary glow"
+																type="reset" value="#{fbresource['Reset']}" /></td>
+													</tr>
+												</table>
+											</h:form>
+											<script>
+												CKEDITOR
+														.replace('broadCastMessageForm:broadcastMessage');
+											</script>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</ui:define>
+</ui:composition>
+</html>

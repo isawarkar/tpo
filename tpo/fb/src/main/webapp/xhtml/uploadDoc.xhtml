@@ -1,0 +1,173 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+    <script>
+			$(function() {
+
+				$("#documnetPopUp").dialog({
+					autoOpen : false,
+					width : 500,
+					show : {
+						effect : "blind",
+						duration : 1000
+					},
+					hide : {
+						effect : "explode",
+						duration : 1000
+					}
+				});
+
+				$("#documentFullInformation").dialog({
+					autoOpen : false,
+					width : 500,
+					show : {
+						effect : "blind",
+						duration : 1000
+					},
+					hide : {
+						effect : "explode",
+						duration : 1000
+					}
+				});
+
+			});
+
+			function openDocumnetPopUp() {
+				$("#documnetPopUp").dialog("open");
+			}
+			function closeDocumnetPopUp() {
+				$("#documnetPopUp").dialog("close");
+			}
+			function openDocumentFullInformation() {
+				$("#documentFullInformation").dialog("open");
+			}
+			function closeDocumentFullInformation() {
+				$("#documentFullInformation").dialog("close");
+			}
+		</script>
+<div id="documentFullInformation" title="#{fbresource['Large_Photo']}">
+	<h:form>
+		<h:panelGroup id="documentFullInfo">
+			<center>
+				<o:dynamicImage rendered="#{DocumentUploadBean.fileName ne null}"
+					id="dynamicImage1" data="#{DocumentUploadBean.imageBytesAsImage}" />
+				<br /> #{DocumentUploadBean.fileName} <br /> <INPUT
+					title="#{fbresource['Please_click_here_to_close']}" type="button"
+					onclick="closeDocumentFullInformation();"
+					value="#{fbresource['Close']}" />
+				<h:commandButton style="margin-left:30px;"
+					title="#{fbresource['Please_click_here_to_download_document']}"
+					rendered="#{StudentRegistrationBean.currentMode eq 'Update'}"
+					action="#{DocumentUploadBean.downloadDocument()}"
+					value="#{fbresource['download_Certificate']}" />
+			</center>
+		</h:panelGroup>
+	</h:form>
+</div>
+
+<div id="documnetPopUp" title="#{fbresource['Upload_Document']}"
+	style="width: 500px;">
+	<h:form rendered="#{StudentRegistrationBean.currentMode eq 'Update'}"
+		id="uploadDocumetForm" prependId="false" enctype="multipart/form-data">
+		<table align="center" style="margin-top: 20px;" width="400px">
+			<tr>
+				<td colspan="2" valign="top"><label for="imageFile">
+						<p>
+							#{fbresource['Document_Name']}<font color="red">*</font>
+						</p>
+				</label></td>
+				<td><h:selectOneMenu immediate="true"
+						value="#{DocumentUploadBean.documentName}" id="documentName"
+						required="true"
+						requiredMessage="#{fbresource['Please_select']} #{fbresource['Document_Name']}">
+						<f:selectItem itemValue="" itemLabel="" />
+						<f:selectItem itemValue="High_School"
+							itemLabel="#{fbresource['High_School']}" />
+						<f:selectItem itemValue="Higher_Secondary"
+							itemLabel="#{fbresource['Higher_Secondary']}" />
+						<f:selectItem itemValue="Diploma"
+							itemLabel="#{fbresource['Diploma']}" />
+						<f:selectItem itemValue="Diploma_1_Semester"
+							itemLabel="#{fbresource['Diploma_1_Semester']}" />
+						<f:selectItem itemValue="Diploma_2_Semester"
+							itemLabel="#{fbresource['Diploma_2_Semester']}" />
+						<f:selectItem itemValue="Diploma_3_Semester"
+							itemLabel="#{fbresource['Diploma_3_Semester']}" />
+						<f:selectItem itemValue="Diploma_4_Semester"
+							itemLabel="#{fbresource['Diploma_4_Semester']}" />
+						<f:selectItem itemValue="Diploma_5_Semester"
+							itemLabel="#{fbresource['Diploma_5_Semester']}" />
+						<f:selectItem itemValue="Diploma_6_Semester"
+							itemLabel="#{fbresource['Diploma_6_Semester']}" />
+
+						<f:selectItem itemValue="Graduation"
+							itemLabel="#{fbresource['Graduation']}" />
+						<f:selectItem itemValue="Graduation_1_Semester"
+							itemLabel="#{fbresource['Graduation_1_Semester']}" />
+						<f:selectItem itemValue="Graduation_2_Semester"
+							itemLabel="#{fbresource['Graduation_2_Semester']}" />
+						<f:selectItem itemValue="Graduation_3_Semester"
+							itemLabel="#{fbresource['Graduation_3_Semester']}" />
+						<f:selectItem itemValue="Graduation_4_Semester"
+							itemLabel="#{fbresource['Graduation_4_Semester']}" />
+						<f:selectItem itemValue="Graduation_5_Semester"
+							itemLabel="#{fbresource['Graduation_5_Semester']}" />
+						<f:selectItem itemValue="Graduation_6_Semester"
+							itemLabel="#{fbresource['Graduation_6_Semester']}" />
+						<f:selectItem itemValue="Graduation_7_Semester"
+							itemLabel="#{fbresource['Graduation_7_Semester']}" />
+						<f:selectItem itemValue="Graduation_8_Semester"
+							itemLabel="#{fbresource['Graduation_8_Semester']}" />
+
+						<f:selectItem itemValue="Post_Graduation"
+							itemLabel="#{fbresource['Post_Graduation']}" />
+						<f:selectItem itemValue="PG_1_Semester"
+							itemLabel="#{fbresource['PG_1_Semester']}" />
+						<f:selectItem itemValue="PG_2_Semester"
+							itemLabel="#{fbresource['PG_2_Semester']}" />
+						<f:selectItem itemValue="PG_3_Semester"
+							itemLabel="#{fbresource['PG_3_Semester']}" />
+						<f:selectItem itemValue="PG_4_Semester"
+							itemLabel="#{fbresource['PG_4_Semester']}" />
+						<f:selectItem itemValue="Other_Document"
+							itemLabel="#{fbresource['Other_Document']}" />
+					</h:selectOneMenu> <o:floatingIconMessage style="border-color: red;"
+						for="currentCourse" showDetail="true" showSummary="false" /></td>
+			</tr>
+			<tr>
+				<td colspan="2" valign="top"><label for="Other_Document">
+						<p>#{fbresource['Other_Document']}</p>
+				</label></td>
+				<td><h:inputText id="Other_Document"
+						required="#{DocumentUploadBean.documnet eq 'Other_Document'}"
+						value="#{DocumentUploadBean.documentNameOther}">
+					</h:inputText> <o:floatingIconMessage style="border-color: red;"
+						for="Other_Document" showDetail="true" showSummary="false" /></td>
+			</tr>
+			<tr>
+				<td colspan="2" valign="top"><label for="imageFile">
+						<p>
+							#{fbresource['Document']}<font color="red">*</font>
+						</p>
+				</label></td>
+				<td><h:inputFile required="true" id="documnetFile"
+						value="#{DocumentUploadBean.documnet}">
+					</h:inputFile> <o:floatingIconMessage style="border-color: red;" for="imageFile"
+						showDetail="true" showSummary="false" /></td>
+			</tr>
+			<tr>
+				<td><o:commandButton value="#{fbresource['Upload_Document']}"
+						id="uploadDocument" action="#{DocumentUploadBean.uploadDocument}" /></td>
+				<td><INPUT title="#{fbresource['Please_click_here_to_close']}"
+					type="button" onclick="closeDocumnetPopUp();"
+					value="#{fbresource['Close']}" /></td>
+			</tr>
+		</table>
+		<font color="red">#{fbresource['document_Size_Type']}</font>
+		<div id="loadMessage" style="color: green; display: none;"></div>
+	</h:form>
+</div>
+</html>

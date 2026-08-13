@@ -1,0 +1,249 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<ui:composition template="/studentTemplate/studentHomeLayout.xhtml">
+	<ui:define name="content">
+		<h:form>
+			<script>
+				$(function() {
+					$("#CriteriaInfo").dialog({
+						autoOpen : false,
+						width : 1110,
+						height : 565,
+						show : {
+							effect : "blind",
+							duration : 1000
+						},
+						hide : {
+							effect : "explode",
+							duration : 1000
+						}
+					});
+
+					$("#compantdetails").dialog({
+						autoOpen : false,
+						width : 1110,
+						height : 565,
+						show : {
+							effect : "blind",
+							duration : 1000
+						},
+						hide : {
+							effect : "explode",
+							duration : 1000
+						}
+					});
+
+				});
+
+				function openCriteria() {
+					$("#CriteriaInfo").dialog("open");
+				}
+				function closeCriteria() {
+					$("#CriteriaInfo").dialog("close");
+				}
+
+				function openCompantdetails() {
+					$("#compantdetails").dialog("open");
+				}
+				function closeCompantdetails() {
+					$("#compantdetails").dialog("close");
+				}
+			</script>
+
+					<h1>#{fbresource['Hall_Ticket']}</h1>
+					<table width="99%">
+						<tr>
+							<td>
+								<table inlineStyle="color:green;" halign="left" cellSpacing="5">
+									<tr>
+										<td><h:commandButton
+												value="#{fbresource['Download_Hall_Ticket']}" id="download"
+												title="#{fbresource['Click_here_to']} #{fbresource['Download_Hall_Ticket']}"
+												action="#{StudentHallTicketTableBean.download}">
+											</h:commandButton></td>
+										<td><h:commandButton value="#{fbresource['Apply']}"
+												id="Apply"
+												title="#{fbresource['Click_here_to']} #{fbresource['Apply']}"
+												action="#{StudentHallTicketTableBean.apply}">
+												<o:confirmation id="applybuttonConfirmation"
+													message="#{fbresource['Are_you__sure_you_want_to_Apply']}"
+													draggable="true" />
+											</h:commandButton></td>
+										<td><h:commandButton
+												value="#{fbresource['Not_Attending']}" id="removefromApply"
+												title="#{fbresource['Click_here_to']}#{fbresource['Not_Attending']}"
+												action="#{StudentHallTicketTableBean.remove}">
+												<o:confirmation id="removebuttonConfirmation"
+													message="#{fbresource['Are_you__sure_you_want_to_remove_from_Apply']}"
+													draggable="true" />
+											</h:commandButton></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+					<h:panelGroup id="paginationTableContainner">
+						<o:dataTable id="bookMultipleSelection" var="hallTicket"
+							value="#{StudentHallTicketTableBean.hallTicketList}"
+							sortColumnId="hallTicketId" sortAscending="true"
+							sortableHeaderRolloverStyle="background: #d4d4d4"
+							style="width: 100%;margin-top: 10px; line-height: 17px;"
+							styleClass="datatable" rolloverRowStyle="background: #f1f1f1;">
+							<o:multipleRowSelection
+								rowDatas="#{StudentHallTicketTableBean.hallTicketSelectedList}"
+								style="background: #a4aec5; color: white;" />
+							<o:columnReordering />
+							<f:facet name="columnMenu">
+								<o:columnMenu />
+							</f:facet>
+							<o:selectionColumn style="width: 6%;" sortable="true"
+								header="#{fbresource['Selection']}">
+								<f:facet name="header">
+									<o:selectAllCheckbox />
+								</f:facet>
+							</o:selectionColumn>
+							<o:column header="#{fbresource['HallTicket_ID']}"
+								sortingExpression="#{hallTicket.id.hallTicket.hallTicketId}"
+								style="text-align: center;">
+								<h:outputText value="#{hallTicket.id.hallTicket.hallTicketId}" />
+							</o:column>
+
+							<o:column header="#{fbresource['Company_Name']}"
+								sortingExpression="#{hallTicket.id.hallTicket.companyName}"
+								style="text-align: center;">
+								<o:commandLink style="color:blue;"
+									actionListener="#{StudentHallTicketTableBean.setCompanyName}"
+									onajaxend="openCompantdetails();" render="compantdetails"
+									id="companyLink">
+									<f:param name="companyID"
+										value="#{hallTicket.id.hallTicket.companyID}" />
+									<h:outputText value="#{hallTicket.id.hallTicket.companyName}" />
+								</o:commandLink>
+							</o:column>
+							<o:column header="#{fbresource['Date_Of_Visit']}"
+								sortingExpression="#{hallTicket.id.hallTicket.date}"
+								style="text-align: center;">
+								<h:outputText value="#{hallTicket.id.hallTicket.date}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</o:column>
+							<o:column header="#{fbresource['lastDate']}"
+								sortingExpression="#{hallTicket.id.hallTicket.lastDateToApply}"
+								style="text-align: center;">
+								<h:outputText
+									value="#{hallTicket.id.hallTicket.lastDateToApply}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</h:outputText>
+							</o:column>
+							<o:column header="#{fbresource['Time']}"
+								sortingExpression="#{hallTicket.id.hallTicket.time}"
+								style="text-align: center;">
+								<h:outputText value="#{hallTicket.id.hallTicket.time}" />
+							</o:column>
+							<o:column header="#{fbresource['Package_Offering']}"
+								sortingExpression="#{hallTicket.id.hallTicket.packageOffering}"
+								style="text-align: center;">
+								<h:outputText
+									value="#{hallTicket.id.hallTicket.packageOffering} RS" />
+							</o:column>
+							<o:column header="#{fbresource['Applied']}"
+								sortingExpression="#{hallTicket.isApplied}"
+								style="text-align: center;">
+								<h:outputText rendered="#{hallTicket.isApplied eq true}"
+									value="#{fbresource['YES']}" />
+								<h:outputText rendered="#{hallTicket.isApplied eq false}"
+									value="#{fbresource['NO']}" />
+							</o:column>
+							<o:column header="#{fbresource['Applied_On']}"
+								sortingExpression="#{hallTicket.appliedOn}"
+								style="text-align: center;">
+								<h:outputText value="#{hallTicket.appliedOn}">
+									<f:convertDateTime pattern="dd/MM/yyyy hh:mm:ss a" />
+								</h:outputText>
+							</o:column>
+							<o:column header="#{fbresource['Approved']}"
+								sortingExpression="#{hallTicket.isApproved}"
+								style="text-align: center;">
+								<h:outputText rendered="#{hallTicket.isApproved eq true}"
+									value="#{fbresource['YES']}" />
+								<h:outputText rendered="#{hallTicket.isApproved eq false}"
+									value="#{fbresource['NO']}" />
+							</o:column>
+							<o:column header="#{fbresource['Approved_ON']}"
+								sortingExpression="#{hallTicket.approvedOn}"
+								style="text-align: center;">
+								<h:outputText value="#{hallTicket.approvedOn}">
+									<f:convertDateTime pattern="dd/MM/yyyy hh:mm:ss a" />
+								</h:outputText>
+							</o:column>
+							<o:column header="#{fbresource['Status']}"
+								sortingExpression="#{hallTicket.id.hallTicket.isActive}"
+								style="text-align: center;">
+								<h:outputText
+									rendered="#{hallTicket.id.hallTicket.isActive eq true}"
+									value="#{fbresource['Active']}" />
+								<h:outputText
+									rendered="#{hallTicket.id.hallTicket.isActive eq false}"
+									value="#{fbresource['InActive']}" />
+							</o:column>
+							<o:column header="#{fbresource['Criteria']}"
+								sortingExpression="#{hallTicket.id.hallTicket.hallTicketId}"
+								style="width: 50px; text-align: left;color:blue;">
+								<o:commandLink style="color:blue;" id="Criteria"
+									actionListener="#{StudentHallTicketTableBean.setCritera}"
+									onajaxend="openCriteria();" render="criteriaInfo"
+									value="#{fbresource['Click_here']}"
+									title="#{fbresource['Click_here_to_see_the_Criteria_Details']}">
+									<f:param value="#{hallTicket.id.hallTicket.criteria}" />
+									#{fbresource['Click_here']}
+								</o:commandLink>
+
+							</o:column>
+							<f:event listener="#{StudentHallTicketTableBean.inIt}"
+								type="preRenderView" />
+						</o:dataTable>
+						<table align="right" style="margin-right: 20px;">
+							<tr>
+								<td><ui:include src="/xhtml/pagination.xhtml" /></td>
+							</tr>
+						</table>
+					</h:panelGroup>
+			<div id="CriteriaInfo" title="#{fbresource['Criteria']}"
+				style="width: 500px;">
+				<h:panelGroup id="criteriaInfo">
+					<center>
+						<h:outputText escape="false"
+							value="#{StudentHallTicketTableBean.criteria}" />
+						<br /> <INPUT type="button" onclick="closeCriteria();"
+							value="#{fbresource['Close']}"
+							title="#{fbresource['Please_click_here_to_close']}" />
+					</center>
+				</h:panelGroup>
+			</div>
+			<h:form id="compantdetailsForm">
+				<div id="compantdetails" title="#{fbresource['Large_Photo']}">
+					<h:panelGroup id="compantdetails">
+						<center>
+							<f:verbatim
+								rendered="#{StudentHallTicketTableBean.companyList.size() == 0}">
+								<font color="red">#{fbresource['Company_has_been_deleted']}</font>
+								<br />
+							</f:verbatim>
+							<o:forEach items="#{StudentHallTicketTableBean.companyList}"
+								var="company">
+								<ui:include src="/xhtml/companyInfo.xhtml" />
+							</o:forEach>
+							<INPUT title="#{fbresource['Please_click_here_to_close']}"
+								type="button" onclick="closeCompantdetails();"
+								value="#{fbresource['Close']}" />
+					</center>
+					</h:panelGroup>
+				</div>
+			</h:form>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

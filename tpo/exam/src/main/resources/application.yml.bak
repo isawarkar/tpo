@@ -1,0 +1,61 @@
+spring:
+  application:
+    name: exam
+  main:
+    allow-bean-definition-overriding: true
+  profiles:
+    active: prod
+
+management:
+  security:
+    enabled: false
+
+logging:
+  level:
+    root: INFO
+
+---
+
+spring:
+  profiles: dev
+
+server:
+  address: localhost
+  port: 8080
+
+eureka:
+  client:
+    healthcheck:
+      enabled: true
+    serviceUrl:
+      defaultZone: http://host.docker.internal:8761/eureka
+  instance:
+    statusPageUrl: http://localhost:8080/exam/actuator/health
+    healthCheckUrl: http://localhost:8080/exam/actuator/health
+    homePageUrl: http://localhost:8080/exam/index.faces
+    ip-address: ${server.address}:${server.port}
+    nonSecurePortEnabled: true
+    preferIpAddress: true
+
+---
+
+spring:
+  profiles: prod
+
+server:
+  address: 0.0.0.0  # ✅ Bind to all interfaces, better for EKS
+  port: 8080
+
+eureka:
+  client:
+    healthcheck:
+      enabled: true
+    serviceUrl:
+      defaultZone: http://54.152.32.45:8761/eureka
+  instance:
+    statusPageUrl: https://exam.fresherbuddy.in/exam/actuator/health
+    healthCheckUrl: https://exam.fresherbuddy.in/exam/actuator/health
+    homePageUrl: https://exam.fresherbuddy.in/
+    ip-address: ${server.address}
+    nonSecurePortEnabled: true
+    preferIpAddress: true

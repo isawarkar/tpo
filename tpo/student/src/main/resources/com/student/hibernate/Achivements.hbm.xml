@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.hibernate.Achivements" table="achivements" >
+        <id name="rollnumber" type="java.lang.String">
+            <column name="rollnumber" length="14" />
+            <generator class="assigned" />
+        </id>
+        <one-to-one name="registration" class="com.hibernate.Registration" constrained="true"></one-to-one>
+        <property name="acedamic" type="java.lang.String">
+            <column name="acedamic" length="1000" />
+        </property>
+        <property name="sports" type="java.lang.String">
+            <column name="sports" length="1000" />
+        </property>
+        <property name="others" type="java.lang.String">
+            <column name="others" length="1000" />
+        </property>
+         <property name="lastUpdated" type="java.util.Date">
+            <column name="lastUpdated" />
+        </property>
+        <property name="lastUpdatedBy" type="java.lang.String">
+            <column name="lastUpdatedBy" />
+        </property>
+    </class>
+</hibernate-mapping>

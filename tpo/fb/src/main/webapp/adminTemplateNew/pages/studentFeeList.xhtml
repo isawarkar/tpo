@@ -1,0 +1,206 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:o="http://openfaces.org/">
+<ui:composition template="adminLayoutNew.xhtml">
+	<ui:define name="content">
+		<section id="card-actions">
+			<ui:include src="feeWindow.xhtml" />
+
+			<!-- Info table about action starts -->
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-header">
+							<h4 class="card-title">#{fbresource['Student_fee_list']}</h4>
+							<a class="heading-elements-toggle"> <i
+								class='bx bx-dots-vertical font-medium-3' /></a>
+							<div class="heading-elements">
+								<ul class="list-inline mb-0">
+									<li><h:form>
+											<h:panelGroup id="bookmarkButtonPanel">
+												<o:commandLink id="bookmarkButton" execute="bookmarkButton"
+													render="bookmarkButtonPanel bookmarkList errorPanel"
+													actionListener="#{BookmarkBean.setBookmark}">
+													<f:param name="bookmarkName" value="studentFeeList" />
+													
+													<i title="#{fbresource['bookmarkToolTip']}"
+														class="ficon bx #{BookmarkBean.getIcon('studentFeeList')} warning" />
+												</o:commandLink>
+											</h:panelGroup>
+										</h:form></li>
+									<li><a data-action="collapse"> <i
+											class="bx bx-chevron-down" /></a></li>
+									<li><a data-action="expand"> <i
+											class="bx bx-fullscreen" /></a></li>
+									<li><a data-action="reload"> <i class="bx bx-revision" /></a></li>
+									<li><a data-action="close"> <i class="bx bx-x" /></a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="card-content collapse show">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="table-responsive">
+											<h:form id="feeForm">
+												<table width="99%">
+													<tr>
+														<td>
+															<table inlineStyle="color:green;" halign="left"
+																cellSpacing="5">
+																<tr>
+																	<td><h:outputText
+																			value="#{fbresource['Enrollment_No']}" /></td>
+																	<td><h:inputText
+																			value="#{FeeTableBean.enrollmentNumber}"
+																			id="rollNumber" columns="15" maximumLength="14">
+																		</h:inputText></td>
+																	<td><h:commandButton class="btn btn-primary glow"
+																			value="#{fbresource['search']}"
+																			title="#{fbresource['Click_here_to']} #{fbresource['Search_Record']}"
+																			action="#{FeeTableBean.searchRecord}" /></td>
+																	<td><o:commandButton
+																			styleClass="btn btn-primary glow"
+																			value="#{fbresource['add']}" id="addCompany"
+																			title="#{fbresource['Click_here_to']} #{fbresource['add']}"
+																			onajaxend="if(O$('feeWindowForm:studentFeeDetails') != null){O$('feeWindowForm:studentFeeDetails').show();}"
+																			render="feeWindowForm"
+																			actionListener="#{FeeTableBean.setFeeRecordToAdd}" /></td>
+																	<td><o:commandButton
+																			styleClass="btn btn-primary glow"
+																			value="#{fbresource['update']}" id="update"
+																			title="#{fbresource['Click_here_to']} #{fbresource['update']}"
+																			onajaxend="if(O$('feeWindowForm:studentFeeDetails') != null){O$('feeWindowForm:studentFeeDetails').show();}"
+																			execute="feeListTable"
+																			render="feeWindowForm errorPanel"
+																			actionListener="#{FeeTableBean.setFeeDetails}" /></td>
+																	<td><h:commandButton class="btn btn-primary glow"
+																			value="#{fbresource['delete']}"
+																			id="deleteButtonAction"
+																			title="#{fbresource['Click_here_to']} #{fbresource['delete']}"
+																			action="#{FeeTableBean.deleteSeletedRecord}">
+																			<o:confirmation id="buttonConfirmation"
+																				message="#{fbresource['Are_you__sure_you_want_to_delete']}"
+																				draggable="true" />
+																		</h:commandButton></td>
+																	<td><input type="button"
+																		value="#{fbresource['Print']}"
+																		class="btn btn-primary glow"
+																		title="#{fbresource['Click_here_to']} #{fbresource['Print']}"
+																		onClick="window.print()" /></td>
+																	<td><h:commandButton
+																			title="#{fbresource['Generate']} #{fbresource['Excel_report']}"
+																			value="#{fbresource['Excel_report']}"
+																			image="/images/excel_button.png"
+																			style="height:40px;width:40px;" id="generateXls"
+																			action="#{FeeTableBean.generateXls}" /></td>
+																	<td><h:commandButton
+																			title="#{fbresource['Generate']} #{fbresource['PDF_report']}"
+																			value="#{fbresource['PDF_report']}"
+																			image="/images/pdf_button.png"
+																			style="height:40px;width:40px;"
+																			action="#{FeeTableBean.generatePdfReport}" /></td>
+
+																</tr>
+															</table>
+														</td>
+													</tr>
+												</table>
+												<h:panelGroup id="paginationTableContainner">
+													<o:dataTable
+														rendered="#{not empty FeeTableBean.feeDetailsList}"
+														id="feeListTable" var="feeDeatail"
+														value="#{FeeTableBean.feeDetailsList}"
+														sortColumnId="rollnumber" sortAscending="true"
+														sortableHeaderRolloverStyle="background: #d4d4d4"
+														style="width: 100%; line-height: 17px;"
+														styleClass="datatable"
+														rolloverRowStyle="background: #f1f1f1;">
+														<o:multipleRowSelection
+															rowDatas="#{FeeTableBean.selectedList}"
+															style="background: #a4aec5; color: white;" />
+														<o:columnReordering />
+														<f:facet name="columnMenu">
+															<o:columnMenu />
+														</f:facet>
+														<o:selectionColumn style="width: 6%;" sortable="true"
+															header="#{fbresource['Selection']}">
+															<f:facet name="header">
+																<o:selectAllCheckbox />
+															</f:facet>
+														</o:selectionColumn>
+														<o:column header="#{fbresource['Enrollment_No']}"
+															sortingExpression="#{feeDeatail.rollNumber}"
+															style="text-align: center;">
+															<h:outputText value="#{feeDeatail.rollNumber}" />
+															<o:popupMenu>
+																<o:menuItem iconUrl="/images/icons/save-16x16.png"
+																	value="#{fbresource['set_reminder_on']}"
+																	action="#{FeeTableBean.setReminderOn}" />
+																<o:menuItem iconUrl="/images/icons/cut-16x16.png"
+																	value="#{fbresource['set_reminder_off']}"
+																	action="#{FeeTableBean.setReminderOff}" />
+															</o:popupMenu>
+														</o:column>
+														<o:column header="#{fbresource['Amount_Paid']}"
+															sortingExpression="#{feeDeatail.amountPaid}"
+															style="text-align: center;">
+															<h:outputText value="#{feeDeatail.amountPaid}" />
+														</o:column>
+														<o:column header="#{fbresource['Amount_Paid_On']}"
+															sortingExpression="#{feeDeatail.paidOn}"
+															style="text-align: center;">
+															<h:outputText value="#{feeDeatail.paidOn}">
+																<f:convertDateTime pattern="dd/MM/yyyy" />
+															</h:outputText>
+														</o:column>
+
+														<o:column header="#{fbresource['Amount_Due']}"
+															sortingExpression="#{feeDeatail.amountDue}"
+															style="text-align: center;">
+															<h:outputText value="#{feeDeatail.amountDue}" />
+														</o:column>
+														<o:column header="#{fbresource['Amount_Due_On']}"
+															sortingExpression="#{feeDeatail.dueOn}"
+															style="text-align: center;">
+															<h:outputText value="#{feeDeatail.dueOn}">
+																<f:convertDateTime pattern="dd/MM/yyyy" />
+															</h:outputText>
+														</o:column>
+
+														<o:column header="#{fbresource['Reminder_On']}"
+															sortingExpression="#{feeDeatail.reminderOn}"
+															style="text-align: center;">
+															<h:outputText style="color:red;"
+																rendered="#{feeDeatail.reminderOn}"
+																value="#{feeDeatail.reminderOn eq 'true' ?fbresource['YES']:fbresource['NO']}" />
+															<h:outputText style="color:green;"
+																rendered="#{!feeDeatail.reminderOn}"
+																value="#{feeDeatail.reminderOn eq 'true' ?fbresource['YES']:fbresource['NO']}" />
+														</o:column>
+														<f:event listener="#{FeeTableBean.inIt}"
+															type="preRenderView" />
+													</o:dataTable>
+													<table align="right">
+														<tr>
+															<td><ui:include src="/xhtml/pagination.xhtml" /></td>
+														</tr>
+													</table>
+												</h:panelGroup>
+												<font style="margin-left: 20px;" color="red">#{fbresource['Note_Right_click_on_Enrollment_Number_for_more_options']}</font>
+											</h:form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</ui:define>
+</ui:composition>
+</html>
