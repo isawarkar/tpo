@@ -69,7 +69,7 @@ public class Encryption {
 	}
 
 	public static void main(String[] args) {
-		String encrypted = Encryption.getEncyptedPassword("localhost");
+		String encrypted = Encryption.getEncyptedPassword("jdbc:mysql://fresher-buddy-new.c8pwq24yavum.us-east-1.rds.amazonaws.com:3306/fb");
 		System.out.println(encrypted);
 		System.out.println(Encryption.getDecryptPassword("O4ym+mbdF1GjjvFQ3z9/qQ=="));
 		//System.out.println(Encryption.getDecryptPassword("fQ+ZtxTGIPzKy1oJXCZANt2w6ETRKMb28Cl8/RhXBFg="));

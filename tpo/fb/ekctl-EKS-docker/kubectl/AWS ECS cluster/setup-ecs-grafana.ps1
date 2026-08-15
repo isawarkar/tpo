@@ -1,7 +1,7 @@
 # =========================
 # VARIABLES
 # =========================
-$awsAcId = 542115677157
+$awsAcId = 356723301672
 $alias               = "fb"
 $clusterName         = "$alias-ecs"
 $serviceNamegrafana  = "$alias-service-grafana"

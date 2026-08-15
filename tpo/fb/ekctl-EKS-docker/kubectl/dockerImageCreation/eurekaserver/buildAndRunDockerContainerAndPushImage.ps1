@@ -1,11 +1,14 @@
 $RepositoryName = "eureka"
 $Region = "us-east-1"
-copy D:\Mywork\eurekaserver\target\eurekaServer-0.0.1-SNAPSHOT.jar D:\Mywork\fb\ekctl-EKS-docker\kubectl\dockerImageCreation\eureka\eurekaServer-0.0.1-SNAPSHOT.jar
+cd D:\latestworks\tpo\$appname
+mvn install
 D:
-cd D:\Mywork\fb\ekctl-EKS-docker\kubectl\dockerImageCreation\eureka
+copy D:\latestworks\tpo\eurekaserver\target\eurekaServer-0.0.1-SNAPSHOT.jar D:\latestworks\tpo\fb\ekctl-EKS-docker\kubectl\dockerImageCreation\eurekaserver\eurekaServer-0.0.1-SNAPSHOT.jar
+D:
+cd D:\latestworks\tpo\fb\ekctl-EKS-docker\kubectl\dockerImageCreation\eurekaserver
 docker build -t fb-eureka .
-aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 542115677157.dkr.ecr.us-east-1.amazonaws.com
-docker tag fb-eureka:latest 542115677157.dkr.ecr.us-east-1.amazonaws.com/eureka:latest
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 356723301672.dkr.ecr.us-east-1.amazonaws.com
+docker tag fb-eureka:latest 356723301672.dkr.ecr.us-east-1.amazonaws.com/eureka:latest
 Write-Host "Checking if ECR repository '$RepositoryName' exists in region '$Region'..."
 
 $repo = aws ecr describe-repositories `
@@ -30,5 +33,5 @@ else {
     Write-Host "✅ Repository '$RepositoryName' already exists."
 }
 
-docker push 542115677157.dkr.ecr.us-east-1.amazonaws.com/eureka:latest
+docker push 356723301672.dkr.ecr.us-east-1.amazonaws.com/eureka:latest
 #docker run -d --name A1 -p 8761:8761 fb-eureka

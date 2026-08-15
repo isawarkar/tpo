@@ -1,7 +1,7 @@
 # =========================
 # VARIABLES
 # =========================
-$AccountId = "542115677157"
+$AccountId = "356723301672"
 $alias = "fb"
 $appName = "$alias-fresher-buddy"
 $ClusterName = "eks-$appName"

@@ -116,7 +116,7 @@ Resources:
       ExecutionRoleArn: !GetAtt ECSTaskExecutionRole.Arn
       ContainerDefinitions:
         - Name: FB-Container
-          Image: 542115677157.dkr.ecr.us-east-1.amazonaws.com/fb
+          Image: 356723301672.dkr.ecr.us-east-1.amazonaws.com/fb
           Essential: true
           PortMappings:
             - ContainerPort: 8080

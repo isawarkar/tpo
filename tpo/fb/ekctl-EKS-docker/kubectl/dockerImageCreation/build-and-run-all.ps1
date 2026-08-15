@@ -33,7 +33,7 @@ $ErrorActionPreference = "Stop"
 # Global Configuration
 # ============================================================
 
-$accId = 542115677157
+$accId = 356723301672
 $Region = "us-east-1"
 
 $BaseProjectPath = "D:\latestworks\tpo"
@@ -52,13 +52,13 @@ $Applications = @(
     # 1. Eureka Server
     # --------------------------------------------------------
     @{
-        Name              = "eurekaserver"
-        MavenProject      = "$BaseProjectPath\eurekaserver"
-        DockerPath        = "$DockerBasePath\eurekaserver"
+        Name              = "356723301672"
+        MavenProject      = "$BaseProjectPath\356723301672"
+        DockerPath        = "$DockerBasePath\356723301672"
         ArtifactType      = "JAR"
-        ArtifactName      = "eurekaserver-0.0.1-SNAPSHOT.jar"
-        ImageName         = "eurekaserver"
-        ContainerName     = "eurekaserver-container"
+        ArtifactName      = "356723301672-0.0.1-SNAPSHOT.jar"
+        ImageName         = "356723301672"
+        ContainerName     = "356723301672-container"
         HostPort          = 8761
         ContainerPort     = 8761
         ApplicationUrl    = "http://localhost:8761/"
@@ -427,9 +427,9 @@ Write-Host "============================================================" -Foreg
 
 Write-Host ""
 Write-Host "Eureka:" -ForegroundColor Yellow
-Write-Host "  docker logs -f eurekaserver-container"
-Write-Host "  docker stop eurekaserver-container"
-Write-Host "  docker start eurekaserver-container"
+Write-Host "  docker logs -f 356723301672-container"
+Write-Host "  docker stop 356723301672-container"
+Write-Host "  docker start 356723301672-container"
 
 Write-Host ""
 Write-Host "FB:" -ForegroundColor Yellow

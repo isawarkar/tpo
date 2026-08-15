@@ -32,9 +32,9 @@ if (-not $VpcSecurityGroupId) {
 # -------------------------------
 Write-Host "Checking if RDS instance exists..." -ForegroundColor Cyan
 
-$rdsExists = $true
+$rdsExists = $false
 try {
-    aws --% rds describe-db-instances --db-instance-identifier fresher-buddy-new --region us-east-1 | Out-Null
+   aws --% rds describe-db-instances --db-instance-identifier fresher-buddy-new --region us-east-1
 }
 catch {
     $rdsExists = $false

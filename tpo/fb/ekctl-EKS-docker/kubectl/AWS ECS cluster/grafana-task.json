@@ -4,8 +4,8 @@
   "requiresCompatibilities": ["FARGATE"],
   "cpu": "512",
   "memory": "1024",
-  "executionRoleArn": "arn:aws:iam::542115677157:role/ecsTaskExecutionRole",
-  "taskRoleArn": "arn:aws:iam::542115677157:role/GrafanaEcsTaskRole",
+  "executionRoleArn": "arn:aws:iam::356723301672:role/ecsTaskExecutionRole",
+  "taskRoleArn": "arn:aws:iam::356723301672:role/GrafanaEcsTaskRole",
   "containerDefinitions": [
     {
       "name": "grafana",

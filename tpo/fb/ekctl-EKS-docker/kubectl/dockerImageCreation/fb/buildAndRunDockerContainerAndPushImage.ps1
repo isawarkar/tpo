@@ -1,15 +1,15 @@
 $appname = "fb"
-$accId = 542115677157
+$accId = 356723301672
 $RepositoryName = $appname
 $Region = "us-east-1"
-cd D:\Mywork\$appname
+cd D:\latestworks\tpo\$appname
 mvn install
 D:
-cd D:\Mywork\fb\ekctl-EKS-docker\kubectl\dockerImageCreation\$appname
-copy D:\Mywork\$appname\target\FB.war FB.war
+cd D:\latestworks\tpo\fb\ekctl-EKS-docker\kubectl\dockerImageCreation\$appname
+copy D:\latestworks\tpo\$appname\target\FB.war FB.war
 docker build -t "$appname-image:latest" .
 aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin "$accId.dkr.ecr.us-east-1.amazonaws.com"
-docker tag fb-image:latest 542115677157.dkr.ecr.us-east-1.amazonaws.com/fb:latest
+docker tag fb-image:latest 356723301672.dkr.ecr.us-east-1.amazonaws.com/fb:latest
 
 Write-Host "Checking if ECR repository '$RepositoryName' exists in region '$Region'..."
 
@@ -35,5 +35,5 @@ else {
     Write-Host "✅ Repository '$RepositoryName' already exists."
 }
 
-docker push 542115677157.dkr.ecr.us-east-1.amazonaws.com/fb:latest
+docker push 356723301672.dkr.ecr.us-east-1.amazonaws.com/fb:latest
 #docker run -d --name A2 -p 8080:8080 $appname-image:latest

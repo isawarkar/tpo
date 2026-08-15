@@ -5,7 +5,7 @@ scp D:\AWS\exam\target\exam.war indra@3.108.77.227:/home/ubuntu
 scp D:\AWS\student\target\student.war indra@3.6.60.174:/home/ubuntu
 
 scp D:\AWS\imageservice\target\imageservice.war indra@13.235.4.43:/home/ubuntu
-scp D:\AWS\eurekaserver\target\eurekaServer-0.0.1-SNAPSHOT.jar indra@3.111.143.228:/home/ubuntu/apps
+scp D:\AWS\356723301672\target\eurekaServer-0.0.1-SNAPSHOT.jar indra@3.111.143.228:/home/ubuntu/apps
 
 
 
@@ -34,7 +34,7 @@ scp D:\AWS\eurekaserver\target\eurekaServer-0.0.1-SNAPSHOT.jar indra@3.111.143.2
  
  ### For EUREKA SERVER ###
  mvn clean install
- sudo chmod +rwx /var/lib/jenkins/workspace/eurekaserver/target/eurekaServer-0.0.1-SNAPSHOT.jar
- sudo scp -i /home/ubuntu/ppk/fbppk.pem /var/lib/jenkins/workspace/eurekaserver/target/eurekaServer-0.0.1-SNAPSHOT.jar ubuntu@3.111.143.228:/home/ubuntu/apps
+ sudo chmod +rwx /var/lib/jenkins/workspace/356723301672/target/eurekaServer-0.0.1-SNAPSHOT.jar
+ sudo scp -i /home/ubuntu/ppk/fbppk.pem /var/lib/jenkins/workspace/356723301672/target/eurekaServer-0.0.1-SNAPSHOT.jar ubuntu@3.111.143.228:/home/ubuntu/apps
  
  

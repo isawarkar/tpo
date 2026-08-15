@@ -51,7 +51,7 @@ eureka:
     healthcheck:
       enabled: true
     serviceUrl:
-      defaultZone: http://54.152.32.45:8761/eureka
+      defaultZone: http://100.24.40.147:8761/eureka
   instance:
     statusPageUrl: https://www.fresherbuddy.in/FB/actuator/health
     healthCheckUrl: https://www.fresherbuddy.in/FB/actuator/health

@@ -1,6 +1,6 @@
 
 # Configuration
-$awsAcId = 542115677157
+$awsAcId = 356723301672
 $alias = "student"
 $appName = "$alias-fresher-buddy"
 $clusterName = "eks-$appName"

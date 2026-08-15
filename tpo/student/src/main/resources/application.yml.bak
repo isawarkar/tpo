@@ -1,8 +1,10 @@
 spring:
   application:
     name: student
+
   main:
     allow-bean-definition-overriding: true
+
   profiles:
     active: prod
 
@@ -20,20 +22,23 @@ spring:
   profiles: dev
 
 server:
-  address: localhost
+  address: 0.0.0.0
   port: 8080
 
 eureka:
   client:
     healthcheck:
       enabled: true
+
     serviceUrl:
       defaultZone: http://host.docker.internal:8761/eureka
+
   instance:
-    statusPageUrl: http://localhost:8080/student/actuator/health
-    healthCheckUrl: http://localhost:8080/student/actuator/health
-    homePageUrl: http://localhost:8080/student/index.faces
-    ip-address: ${server.address}:${server.port}
+    statusPageUrl: http://host.docker.internal:8081/student/actuator/health
+    healthCheckUrl: http://host.docker.internal:8081/student/actuator/health
+    homePageUrl: http://host.docker.internal:8081/student/
+    ip-address: ${server.address}
+    nonSecurePort: 8080
     nonSecurePortEnabled: true
     preferIpAddress: true
 
@@ -43,19 +48,22 @@ spring:
   profiles: prod
 
 server:
-  address: 0.0.0.0  # ✅ Bind to all interfaces, better for EKS
+  address: 0.0.0.0
   port: 8080
 
 eureka:
   client:
     healthcheck:
       enabled: true
+
     serviceUrl:
-      defaultZone: http://54.152.32.45:8761/eureka
+      defaultZone: http://100.24.40.147:8761/eureka
+
   instance:
     statusPageUrl: https://student.fresherbuddy.in/student/actuator/health
     healthCheckUrl: https://student.fresherbuddy.in/student/actuator/health
-    homePageUrl: https://student.fresherbuddy.in/
+    homePageUrl: https://student.fresherbuddy.in/student/
     ip-address: ${server.address}
+    nonSecurePort: 8080
     nonSecurePortEnabled: true
     preferIpAddress: true

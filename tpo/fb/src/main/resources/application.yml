@@ -4,7 +4,7 @@ spring:
   main:
     allow-bean-definition-overriding: true
   profiles:
-    active: dev
+    active: prod
 
 management:
   security:
@@ -51,7 +51,7 @@ eureka:
     healthcheck:
       enabled: true
     serviceUrl:
-      defaultZone: http://54.237.65.49:8761/eureka
+      defaultZone: http://52.90.118.192:8761/eureka
   instance:
     statusPageUrl: https://www.fresherbuddy.in/FB/actuator/health
     healthCheckUrl: https://www.fresherbuddy.in/FB/actuator/health

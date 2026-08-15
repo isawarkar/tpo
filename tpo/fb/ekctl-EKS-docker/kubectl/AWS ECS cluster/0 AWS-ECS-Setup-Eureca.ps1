@@ -9,7 +9,7 @@ $clusterName = "EUREKA"
 $taskName = "EUREKA_TASK"
 $serviceName = "EUREKA_SERVICE"
 $region = "us-east-1"
-$awsAccountId = "542115677157"
+$awsAccountId = "356723301672"
 $imageName = "$awsAccountId.dkr.ecr.$region.amazonaws.com/eureka"
 $port = 8761
 $ecsTaskExecutionRoleName = "ecsTaskExecutionRole"
@@ -242,9 +242,9 @@ Add-Type -AssemblyName System.Windows.Forms
 
            Write-Host "Access your Eureca app at: http://${publicIp}:${port}"
 		   
-		   & .\Update-EurekaDefaultZone.ps1 -RootFolder "D:\Mywork\fb" -NewEurekaHost "$publicIp"
-		   & .\Update-EurekaDefaultZone.ps1 -RootFolder "D:\Mywork\exam" -NewEurekaHost "$publicIp"
-		   & .\Update-EurekaDefaultZone.ps1 -RootFolder "D:\Mywork\student" -NewEurekaHost "$publicIp"
+		   & .\Update-EurekaDefaultZone.ps1 -RootFolder "D:\latestworks\tpo\fb" -NewEurekaHost "$publicIp"
+		   & .\Update-EurekaDefaultZone.ps1 -RootFolder "D:\latestworks\tpo\exam" -NewEurekaHost "$publicIp"
+		   & .\Update-EurekaDefaultZone.ps1 -RootFolder "D:\latestworks\tpo\student" -NewEurekaHost "$publicIp"
 
         } else {
             Write-Host "⚠️ Public IP not assigned yet."

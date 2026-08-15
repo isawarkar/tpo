@@ -4,7 +4,7 @@ $PSDefaultParameterValues['Out-Host:Paging'] = $false
 $env:AWS_PAGER = ""
 
 # Configuration Variables
-$awsAcId = 542115677157
+$awsAcId = 356723301672
 $alias = "exam"
 $clusterName = "$alias-ecs"
 $taskName = "$alias-task"

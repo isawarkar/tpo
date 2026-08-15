@@ -1,6 +1,6 @@
-$clusterName = "fb-ecs"
-$serviceName = "fb-service"
-$newImage = "542115677157.dkr.ecr.us-east-1.amazonaws.com/fb"
+$clusterName = "student-ecs"
+$serviceName = "student-service"
+$newImage = "356723301672.dkr.ecr.us-east-1.amazonaws.com/student"
 
 # Disable PowerShell paging
 $PSDefaultParameterValues['Out-Host:Paging'] = $false

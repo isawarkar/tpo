@@ -9,7 +9,7 @@ metadata:
     alb.ingress.kubernetes.io/healthcheck-path: "/FB/actuator/health"
     alb.ingress.kubernetes.io/success-codes: "200"
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:542115677157:certificate/b07794cc-9659-41e9-8721-05a2a03d6437
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:356723301672:certificate/b07794cc-9659-41e9-8721-05a2a03d6437
     alb.ingress.kubernetes.io/backend-protocol: HTTP
 spec:
   ingressClassName: alb
