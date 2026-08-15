@@ -1,61 +1,62 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /FB
+
 spring:
   application:
     name: fb
-  main:
-    allow-bean-definition-overriding: true
+
   profiles:
-    active: prod
+    active: dev
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/your_database?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: your_password
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+        show_sql: false
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+eureka:
+  client:
+    enabled: true
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+  instance:
+    hostname: localhost
+    prefer-ip-address: false
+    non-secure-port: 8080
+    health-check-url: http://localhost:8080/FB/actuator/health
+    status-page-url: http://localhost:8080/FB/actuator/info
 
 management:
-  security:
-    enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
 
 logging:
   level:
     root: INFO
-
----
-
-spring:
-  profiles: dev
-
-server:
-  address: localhost
-  port: 8080
-
-eureka:
-  client:
-    healthcheck:
-      enabled: true
-    serviceUrl:
-      defaultZone: http://host.docker.internal:8761/eureka
-  instance:
-    statusPageUrl: http://localhost:8080/FB/actuator/health
-    healthCheckUrl: http://localhost:8080/FB/actuator/health
-    homePageUrl: http://localhost:8080/FB/index.faces
-    ip-address: ${server.address}:${server.port}
-    nonSecurePortEnabled: true
-    preferIpAddress: true
-
----
-
-spring:
-  profiles: prod
-
-server:
-  address: 0.0.0.0  # ✅ Bind to all interfaces, better for EKS
-  port: 8080
-
-eureka:
-  client:
-    healthcheck:
-      enabled: true
-    serviceUrl:
-      defaultZone: http://52.90.118.192:8761/eureka
-  instance:
-    statusPageUrl: https://www.fresherbuddy.in/FB/actuator/health
-    healthCheckUrl: https://www.fresherbuddy.in/FB/actuator/health
-    homePageUrl: https://www.fresherbuddy.in/
-    ip-address: ${server.address}
-    nonSecurePortEnabled: true
-    preferIpAddress: true
+    org.springframework: INFO
+    org.springframework.cloud.netflix.eureka: INFO
+    org.hibernate: INFO

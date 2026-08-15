@@ -37,7 +37,7 @@ public class Parent {
 			if (imageService == null) {
 				String s3Url = discoveryClient.getServiceUrlsFromConfig("eureka.client.serviceUrl.defaultZone", true).get(0);
 				s3Url = s3Url.replace("/eureka", "");
-				imageService = s3Url + "imagRpaeService";
+				imageService = s3Url + "imageService";
 
 			}
 		} catch (RuntimeException e) {
