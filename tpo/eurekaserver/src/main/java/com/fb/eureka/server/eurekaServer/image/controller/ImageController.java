@@ -121,4 +121,8 @@ public class ImageController {
 		}
 	}
 
+	@GetMapping("/hello")
+    public String hello() {
+        return "Hello World";
+    }
 }
