@@ -1,12 +1,10 @@
 package tpo.dao;
 
 import java.io.File;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Blob;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -75,7 +73,6 @@ import tpo.util.CCPConstant;
 import tpo.util.Encryption;
 import tpo.util.FbMessageUtil;
 import tpo.util.IMAGECONS;
-import tpo.util.SystemUtil;
 import tpo.util.TpoUtil;
 
 @Repository("CommonDBBean")
@@ -331,7 +328,7 @@ public class CommonDBBean extends Parent {
 			if (registration == null) {
 				UIBackingBean.setErrorMessage(FbMessageUtil.getLabel("Please_enter_valid_old_Password"));
 			} else {
-				String pass = AES.symmetricDecrypt(SystemUtil.getLabel("defaultPass"), TpoUtil.geyKeyInfo());
+				String pass = AES.symmetricDecrypt(defaultPass, TpoUtil.getKeyInfo());
 				registration.setPassword(Encryption.getEncryptedString(pass));
 				session.update(registration);
 				UIBackingBean.setSuccessMessage(FbMessageUtil.getLabel("Password_changed_successfully"));
@@ -571,7 +568,6 @@ public class CommonDBBean extends Parent {
 				String pattern = "yyyy-MM-dd hh:mm:ss";
 				SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 				String date = simpleDateFormat.format(new Date());
-				String supperUser = SystemUtil.getLabel("supperUser");
 				NativeQuery<String> query = session.createSQLQuery("SELECT noticeName FROM notice where createdBy='"
 						+ supperUser + "' and active = true and expiry >= '" + date + "'");
 				adminMessageList = query.list();
@@ -1191,7 +1187,6 @@ public class CommonDBBean extends Parent {
 			String createdBy = (String) query.uniqueResult();
 			List<String> createdByList = new ArrayList<String>(2);
 			createdByList.add(createdBy);
-			String supperUser = SystemUtil.getLabel("supperUser");
 			createdByList.add(supperUser);
 			criteria.add(Restrictions.in("userName", createdByList));
 			criteria.add(Restrictions.eq("isActive", true));
@@ -1389,7 +1384,6 @@ public class CommonDBBean extends Parent {
 			createdByList.add(enNo);
 		} else {
 			createdByList.add(createdBy);
-			String supperUser = SystemUtil.getLabel("supperUser");
 			createdByList.add(supperUser);
 			createdByList.add(enNo);
 		}
@@ -2208,7 +2202,7 @@ public class CommonDBBean extends Parent {
 
 	public String getEnvirnment() {
 		if (envirnment == null) {
-			envirnment = SystemUtil.getLabel("envirnment");
+			envirnment = super.envirnment;
 		}
 		return envirnment;
 	}

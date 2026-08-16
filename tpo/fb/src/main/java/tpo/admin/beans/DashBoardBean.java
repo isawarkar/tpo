@@ -44,7 +44,6 @@ import tpo.hibernate.annotation.BroadCastMessage;
 import tpo.util.CCPConstant;
 import tpo.util.FbMessageUtil;
 import tpo.util.ResourceID;
-import tpo.util.SystemUtil;
 import tpo.util.TpoUtil;
 
 /**
@@ -276,7 +275,6 @@ public class DashBoardBean extends Parent {
 				CommandLink link = (CommandLink) event.getSource();
 				if (link != null) {
 					String noticeName = (String) link.getValue();
-					String supperUser = SystemUtil.getLabel("supperUser");
 					Criteria criteria = session.createCriteria(Notice.class);
 					criteria.add(Restrictions.eq("noticeName", noticeName));
 					criteria.add(Restrictions.in("createdBy", supperUser));

@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 import tpo.email.EmailUtil;
 import tpo.hibernate.annotation.Complaint;
 import tpo.util.FbMessageUtil;
-import tpo.util.SystemUtil;
 import tpo.util.TpoUtil;
 
 @Repository("FeedBackBean")
@@ -59,7 +58,7 @@ public class FeedBackBean extends Parent {
 				}
 				List<String> address = new ArrayList<String>(2);
 				String subject;
-				address.add(SystemUtil.getLabel("superUserEmail"));
+				address.add(superUserEmail);
 				address.add(TpoUtil.ADMIN_EMAIL);
 				subject = "Feedback from " + complaint.getName() + " Number is " + complaint.getContactNumber() + "";
 				emailUtill

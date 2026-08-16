@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 import tpo.beans.Parent;
 import tpo.imageservice.client.FileUploadUtility;
 import tpo.util.IMAGECONS;
-import tpo.util.SystemUtil;
 import tpo.util.TpoUtil;
 
 /**
@@ -201,7 +200,7 @@ public class AdminUser extends Parent {
 	}
 
 	public String getEnvirnment() {
-		return SystemUtil.getLabel("envirnment");
+		return envirnment;
 	}
 
 	public String getFullName() {

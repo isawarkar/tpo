@@ -29,6 +29,7 @@ import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,6 +43,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import images.R;
@@ -54,6 +56,34 @@ import tpo.dao.CommonDBBean;
 @Component("TpoUtil")
 public class TpoUtil extends Parent {
 
+	
+	@Value("${key}")
+	private String keyValue;
+
+	private static String keyval;
+
+	@PostConstruct
+	public void init() {
+	    keyval = keyValue;
+	}
+
+	public static String getKeyInfo() {
+
+	    if (keyval == null || keyval.isEmpty()) {
+	        try {
+	            keyval = RegQuery.getKeyInfo();
+	            if (keyval == null || keyval.isEmpty()) {
+	            	keyval = "XMzDdG4D03CKm2IxIWQw7g==";
+	            }
+	        } catch (MissingResourceException e) {
+	            keyval = "";
+	        }
+	    }
+
+	    return keyval;
+	}
+	
+	
 	static Logger logger = LoggerFactory.getLogger(TpoUtil.class);
 
 	public static String ADMIN_EMAIL = "fresherbuddy.yourtruefriend@gmail.com";
@@ -511,19 +541,7 @@ public class TpoUtil extends Parent {
 		return false;
 	}
 
-	public static String geyKeyInfo() {
-		if (key == null || key.isEmpty()) {
-			try {
-				key = SystemUtil.getLabel("key");
-			} catch (MissingResourceException e) {
-				key = "";
-			}
-			if (key.isEmpty()) {
-				key = RegQuery.getKeyInfo();
-			}
-		}
-		return key;
-	}
+	
 
 	public static void moveTheFile(String backupPath, File file, String date) {
 		String newFileName = null;
@@ -602,7 +620,7 @@ public class TpoUtil extends Parent {
 			sbPostData.append(SmsUtil.getLabel("bulkSmsParam1Name")).append("=")
 					.append(URLEncoder.encode(SmsUtil.getLabel("bulkSmsParam1Value"), "UTF-8"));
 			sbPostData.append("&").append(SmsUtil.getLabel("bulkSmsParam2Name")).append("=").append(URLEncoder.encode(
-					AES.symmetricDecrypt(SmsUtil.getLabel("bulkSmsParam2Value"), TpoUtil.geyKeyInfo()), "UTF-8"));
+					AES.symmetricDecrypt(SmsUtil.getLabel("bulkSmsParam2Value"), TpoUtil.getKeyInfo()), "UTF-8"));
 			sbPostData.append("&message=").append(URLEncoder.encode(message, "UTF-8"));
 			sbPostData.append("&").append(SmsUtil.getLabel("bulkSmsParam3Name")).append("=")
 					.append(URLEncoder.encode(SmsUtil.getLabel("bulkSmsParam3Value"), "UTF-8"));
@@ -1004,4 +1022,6 @@ public class TpoUtil extends Parent {
 		boolean found = matcher.find();
 		return found;
 	}
+	
+
 }

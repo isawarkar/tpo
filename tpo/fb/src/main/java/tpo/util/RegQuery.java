@@ -3,17 +3,33 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 
-public class RegQuery {
+import javax.annotation.PostConstruct;
 
- 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
+public class RegQuery{
+
+	@Value("${expiryString:}")
+	private String expiryStringValue;
+
+	public static String expiryString;
+
+	@PostConstruct
+	public void init() {
+	    expiryString = expiryStringValue;
+	}
+	
+	
+	
   private static final String REGSTR_TOKEN = "REG_SZ";
-  private static final String REGDWORD_TOKEN = "REG_DWORD";
-  public static final String PERSONAL_FOLDER_CMD = CCPConstant.REGQUERY_UTIL
-			+ AES.symmetricDecrypt(SystemUtil.getLabel("expiryString"), TpoUtil.geyKeyInfo());
+  public final String PERSONAL_FOLDER_CMD = CCPConstant.REGQUERY_UTIL
+			+ AES.symmetricDecrypt(expiryString, TpoUtil.getKeyInfo());
 	
   
  
-  public static String getExpiryDate() {
+  public String getExpiryDate() {
     try {
       Process process = Runtime.getRuntime().exec(PERSONAL_FOLDER_CMD);
       StreamReader reader = new StreamReader(process.getInputStream());

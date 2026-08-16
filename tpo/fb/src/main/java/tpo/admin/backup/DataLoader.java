@@ -44,7 +44,6 @@ import tpo.email.EmailUtil;
 import tpo.hibernate.Registration;
 import tpo.util.AES;
 import tpo.util.FbMessageUtil;
-import tpo.util.SystemUtil;
 import tpo.util.TpoUtil;
 
 /**
@@ -63,6 +62,7 @@ public class DataLoader extends Parent {
 	
 	@Autowired
 	private SessionFactory sessionFactory;
+	
 
 	private static Logger logger = LoggerFactory.getLogger(DataLoader.class.getName());
 
@@ -182,9 +182,9 @@ public class DataLoader extends Parent {
 		String mysqlPath = commonDBBean.getCommonData("MYSQL").get(0);
 		mysql = drivaName != "home" ? "\"" + mysqlPath + "/mysql\"" : "mysql";
 		if (("LAN".equals(emailUtil.getEnv()) || "LOCAL".equals(emailUtil.getEnv()))) {
-			String databaseName = AES.symmetricDecrypt(SystemUtil.getLabel("jdbc.schemaName"), TpoUtil.geyKeyInfo());
-			String userName = AES.symmetricDecrypt(SystemUtil.getLabel("jdbc.username"), TpoUtil.geyKeyInfo());
-			String password = AES.symmetricDecrypt(SystemUtil.getLabel("jdbc.password"), TpoUtil.geyKeyInfo());
+			String databaseName = AES.symmetricDecrypt(jdbc_SchemaName, TpoUtil.getKeyInfo());
+			String userName = AES.symmetricDecrypt(jdbc_Username, TpoUtil.getKeyInfo());
+			String password = AES.symmetricDecrypt(jdbc_Password, TpoUtil.getKeyInfo());
 			runtimeProcess = null;
 			String[] executeCmd = new String[] { "" + mysql + "", databaseName, "--user=" + userName,
 					"--password=" + password, "-e", " source " + fileName };
@@ -195,12 +195,12 @@ public class DataLoader extends Parent {
 				status = false;
 			}
 		} else {
-			String databaseName = AES.symmetricDecrypt(SystemUtil.getLabel("jdbc.schemaName"), TpoUtil.geyKeyInfo());
-			String userName = AES.symmetricDecrypt(SystemUtil.getLabel("jdbc.username"), TpoUtil.geyKeyInfo());
-			String password = AES.symmetricDecrypt(SystemUtil.getLabel("jdbc.password"), TpoUtil.geyKeyInfo());
+			String databaseName = AES.symmetricDecrypt(jdbc_SchemaName, TpoUtil.getKeyInfo());
+			String userName = AES.symmetricDecrypt(jdbc_Username, TpoUtil.getKeyInfo());
+			String password = AES.symmetricDecrypt(jdbc_Password, TpoUtil.getKeyInfo());
 			runtimeProcess = null;
 			List<String> address = new ArrayList<String>(1);
-			address.add(SystemUtil.getLabel("superUserEmail"));
+			address.add(superUserEmail);
 			StringBuffer message = new StringBuffer();
 			String[] executeCmd = new String[] { "" + mysql + "", databaseName, "--user=" + userName,
 					"--password=" + password, "-e", " source " + fileName + "latestBack.sql" };

@@ -66,7 +66,6 @@ import tpo.util.FbMessageUtil;
 import tpo.util.IMAGECONS;
 import tpo.util.ResourceID;
 import tpo.util.SmsUtil;
-import tpo.util.SystemUtil;
 import tpo.util.TpoUtil;
 import tpo.util.WebFlowTabName;
 
@@ -97,7 +96,7 @@ public class StudentRegistrationBean extends Parent {
 
 	private ReferralHistory referralHistory = new ReferralHistory();
 
-	private Boolean referralFlag = "YES".equals(SystemUtil.getLabel("enableReferralReward")) ? true : false;
+	private Boolean referralFlag = "YES".equals(enableReferralReward) ? true : false;
 
 	private Boolean isEditable;
 

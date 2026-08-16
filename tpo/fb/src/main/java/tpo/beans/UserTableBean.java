@@ -47,7 +47,6 @@ import tpo.util.CCPConstant;
 import tpo.util.Encryption;
 import tpo.util.FbMessageUtil;
 import tpo.util.ResourceID;
-import tpo.util.SystemUtil;
 import tpo.util.TpoUtil;
 
 /**
@@ -250,7 +249,7 @@ public class UserTableBean extends Parent {
 						message.append(TpoUtil.getMesageString());
 						List<String> recipients = new ArrayList<String>(2);
 						recipients.add(emailAddress);
-						recipients.add(SystemUtil.getLabel("superUserEmail"));
+						recipients.add(superUserEmail);
 						emailUtill.postMail(recipients, FbMessageUtil.getLabel("Password_Reset_Email"),
 								message.toString(), TpoUtil.ADMIN_EMAIL, Message.RecipientType.BCC);
 					}
@@ -308,7 +307,7 @@ public class UserTableBean extends Parent {
 						if (emailUtill != null) {
 							List<String> recipients = new ArrayList<String>(2);
 							recipients.add(selectedUserList.get(0).getUserdetails().getEmail());
-							recipients.add(SystemUtil.getLabel("superUserEmail"));
+							recipients.add(superUserEmail);
 							emailUtill.postMail(recipients, FbMessageUtil.getLabel("User_deleted_from_Freshers_Buddy"),
 									FbMessageUtil.getLabel("User_and_its_all_the_childrens_are_deleted_successfully")
 											+ "<br><br><br>" + message.toString(),

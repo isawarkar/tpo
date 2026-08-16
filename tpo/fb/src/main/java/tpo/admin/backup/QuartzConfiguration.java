@@ -5,10 +5,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
 import org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean;
 
-import tpo.util.SystemUtil;
+import tpo.beans.Parent;
 
 @Configuration
-public class QuartzConfiguration {
+public class QuartzConfiguration extends Parent {
 
 	@Bean
 	public MethodInvokingJobDetailFactoryBean doBackup() {
@@ -51,7 +51,7 @@ public class QuartzConfiguration {
 		stFactory.setStartDelay(3000);
 		stFactory.setName("cronTriggerFactoryBeanDoBackup");
 		stFactory.setGroup("mygroup");
-		stFactory.setCronExpression(SystemUtil.getLabel("cronExpression"));
+		stFactory.setCronExpression(cronExpression);
 		return stFactory;
 	}
 
@@ -64,7 +64,7 @@ public class QuartzConfiguration {
 		stFactory.setStartDelay(3000);
 		stFactory.setName("cronTriggerFactoryBeanCheckUserLicence");
 		stFactory.setGroup("mygroup");
-		stFactory.setCronExpression(SystemUtil.getLabel("cronExpression"));
+		stFactory.setCronExpression(cronExpression);
 		return stFactory;
 	}
 
@@ -75,7 +75,7 @@ public class QuartzConfiguration {
 		stFactory.setStartDelay(3000);
 		stFactory.setName("cronTriggerFactoryBeanSendBirthDayEmail");
 		stFactory.setGroup("mygroup");
-		stFactory.setCronExpression(SystemUtil.getLabel("cronExpression"));
+		stFactory.setCronExpression(cronExpression);
 		return stFactory;
 	}
 
@@ -86,7 +86,7 @@ public class QuartzConfiguration {
 		stFactory.setStartDelay(3000);
 		stFactory.setName("cronTriggerFactoryBeanSendFeePayReminder");
 		stFactory.setGroup("mygroup");
-		stFactory.setCronExpression(SystemUtil.getLabel("cronExpression"));
+		stFactory.setCronExpression(cronExpression);
 		return stFactory;
 	}
 

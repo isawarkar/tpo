@@ -46,7 +46,7 @@ public class AES {
 	}
 
 	public static void main(String[] args) {
-		String secretKey = TpoUtil.geyKeyInfo(); // String value1= "He**o@19**";
+		String secretKey = TpoUtil.getKeyInfo(); // String value1= "He**o@19**";
 		String value1 = "ka6n2EF5ETay3LBMwPxKyJSe8o7lod1PtEk+B3GY";
 		String decryptedValue1 = symmetricEncrypt(value1, secretKey);
 		System.out.println(decryptedValue1);

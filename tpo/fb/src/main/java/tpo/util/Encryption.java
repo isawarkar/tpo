@@ -47,7 +47,7 @@ public class Encryption {
 		try {
 			/* BASE64Encoder decoder = new BASE64Encoder(); */
 			// encrypt the text
-			decrypted = AES.symmetricEncrypt(pass, TpoUtil.geyKeyInfo());
+			decrypted = AES.symmetricEncrypt(pass, TpoUtil.getKeyInfo());
 			System.err.println(decrypted);
 		} catch (Exception e) {
 
@@ -61,7 +61,7 @@ public class Encryption {
 		/* BASE64Decoder decoder = new BASE64Decoder(); */
 		String decodedPassword = null;
 		try {
-			decodedPassword = AES.symmetricDecrypt(password, TpoUtil.geyKeyInfo());
+			decodedPassword = AES.symmetricDecrypt(password, TpoUtil.getKeyInfo());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -69,7 +69,7 @@ public class Encryption {
 	}
 
 	public static void main(String[] args) {
-		String encrypted = Encryption.getEncyptedPassword("jdbc:mysql://fresher-buddy-new.c8pwq24yavum.us-east-1.rds.amazonaws.com:3306/fb");
+		String encrypted = Encryption.getEncyptedPassword("host.docker.internal");
 		System.out.println(encrypted);
 		System.out.println(Encryption.getDecryptPassword("O4ym+mbdF1GjjvFQ3z9/qQ=="));
 		//System.out.println(Encryption.getDecryptPassword("fQ+ZtxTGIPzKy1oJXCZANt2w6ETRKMb28Cl8/RhXBFg="));

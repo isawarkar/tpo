@@ -44,7 +44,6 @@ import tpo.util.Encryption;
 import tpo.util.FbMessageUtil;
 import tpo.util.IMAGECONS;
 import tpo.util.ResourceID;
-import tpo.util.SystemUtil;
 import tpo.util.TpoUtil;
 
 /**
@@ -239,7 +238,6 @@ public class CreateUser extends Parent{
 						if(AdminUser.getUser().getUserName() != null) {
 						logindetails.setCreatedBy(AdminUser.getUser().getUserName());
 						}else {
-							String supperUser = SystemUtil.getLabel("supperUser");
 							logindetails.setCreatedBy(supperUser);
 						}
 						session.save(logindetails);

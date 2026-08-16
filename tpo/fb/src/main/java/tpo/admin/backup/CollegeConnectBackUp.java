@@ -20,6 +20,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
+import javax.annotation.PostConstruct;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIParameter;
 import javax.faces.event.ActionEvent;
@@ -32,6 +33,7 @@ import org.openfaces.component.command.CommandLink;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import tpo.beans.Parent;
@@ -41,7 +43,6 @@ import tpo.email.EmailUtil;
 import tpo.util.AES;
 import tpo.util.FbMessageUtil;
 import tpo.util.ResourceID;
-import tpo.util.SystemUtil;
 import tpo.util.TpoUtil;
 
 /**
@@ -50,9 +51,18 @@ import tpo.util.TpoUtil;
 @Component("collegeConnectBackUp")
 public class CollegeConnectBackUp extends Parent {
 	
-	public static final String unixBackupPath = "/DB_Backup/";
-	public static final String bucketName = SystemUtil.getLabel("dbBackups3bucketName");
+	@Value("${hostname:}")
+	private String hostnameValue;
 
+	public static String hostname;
+
+	@PostConstruct
+	public void init() {
+	    hostname = hostnameValue;
+	}
+	
+	public static final String unixBackupPath = "/DB_Backup/";
+	
 	@Autowired
 	private CommonDBBean commonDBBean;
 
@@ -103,10 +113,10 @@ public class CollegeConnectBackUp extends Parent {
 				if ("b".equals(flag)) {
 					dateAndTime = null;
 				}
-				String databaseName = AES.symmetricDecrypt(SystemUtil.getLabel("jdbc.schemaName"),
-						TpoUtil.geyKeyInfo());
-				String userName = AES.symmetricDecrypt(SystemUtil.getLabel("jdbc.username"), TpoUtil.geyKeyInfo());
-				String password = AES.symmetricDecrypt(SystemUtil.getLabel("jdbc.password"), TpoUtil.geyKeyInfo());
+				String databaseName = AES.symmetricDecrypt(jdbc_SchemaName,
+						TpoUtil.getKeyInfo());
+				String userName = AES.symmetricDecrypt(jdbc_Username, TpoUtil.getKeyInfo());
+				String password = AES.symmetricDecrypt(jdbc_Password, TpoUtil.getKeyInfo());
 				String bacupkFileName = TpoUtil.getDateToStringYYYYMMdd(Calendar.getInstance().getTime())
 						+ "-latestFB.sql";
 				runtimeProcess = doBackupNow(bacupkFileName, flag, databaseName, userName, password, mysql, sqldum, path);
@@ -146,7 +156,7 @@ public class CollegeConnectBackUp extends Parent {
 	private void sendBackupEmail(EmailUtil emailUtil, String body, String subject,String m) throws MessagingException {
 		StringBuffer message = new StringBuffer();
 		List<String> address = new ArrayList<String>(1);
-		address.add(SystemUtil.getLabel("superUserEmail"));
+		address.add(superUserEmail);
 		message.append(body);
 		message.append(new Date().toString());
 		message.append(m);
@@ -161,7 +171,7 @@ public class CollegeConnectBackUp extends Parent {
 		if (flag.equals("b")) {
 			
 			if (TpoUtil.isUnix()) {
-				String host = AES.symmetricDecrypt(SystemUtil.getLabel("hostname"), TpoUtil.geyKeyInfo());
+				String host = AES.symmetricDecrypt(hostname, TpoUtil.getKeyInfo());
 				cmd = "" + sqldum + " -h " + host + " -u " + userName + " -p" + password + " " + databaseName + " -r "
 						+ unixBackupPath + "" + bacupkFileName + " --set-gtid-purged=off";
 			} else {
@@ -231,7 +241,7 @@ public class CollegeConnectBackUp extends Parent {
 								+ FbMessageUtil.getLabel("MB"));
 				if (emailUtill != null) {
 					List<String> address = new ArrayList<String>(1);
-					address.add(SystemUtil.getLabel("superUserEmail"));
+					address.add(superUserEmail);
 					message.append(TpoUtil.getMesageString());
 					emailUtill.postMail(address, FbMessageUtil.getLabel("Heap_size_alert"), message.toString(),
 							TpoUtil.ADMIN_EMAIL, Message.RecipientType.TO);

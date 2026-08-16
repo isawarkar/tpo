@@ -1,5 +1,8 @@
 package tpo.beans;
 
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -13,15 +16,24 @@ import tpo.hibernate.annotation.BroadCastMessage;
 import tpo.hibernate.annotation.CustomerReview;
 import tpo.util.AES;
 import tpo.util.CCPConstant;
-import tpo.util.SystemUtil;
 import tpo.util.TpoUtil;
 
 @Component("AdminMenu")
 @Scope("session")
-public class AdminMenu {
+public class AdminMenu extends Parent {
 
-	public String enableEffortSystemFlag = AES.symmetricDecrypt(SystemUtil.getLabel("enableEffortSystem"),
-			TpoUtil.geyKeyInfo());
+	@Value("${enableEffortSystem:}")
+	private String enableEffortSystem;
+
+	private String enableEffortSystemFlag;
+
+	@PostConstruct
+	public void init() {
+	    enableEffortSystemFlag = AES.symmetricDecrypt(
+	        enableEffortSystem,
+	        TpoUtil.getKeyInfo()
+	    );
+	}
 
 	/*
 	*/

@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import tpo.admin.beans.AdminUser;
+import tpo.beans.Parent;
 import tpo.beans.UIBackingBean;
 import tpo.hibernate.Achivements;
 import tpo.hibernate.Backdetails;
@@ -40,14 +41,13 @@ import tpo.hibernate.Personalinfo;
 import tpo.hibernate.Registration;
 import tpo.util.FbMessageUtil;
 import tpo.util.FbResourceUtil;
-import tpo.util.SystemUtil;
 import tpo.util.TpoUtil;
 
 /**
  * @author Uddanda Technologies
  */
 @Component("excelSheetReader")
-public class ExcelSheetReader {
+public class ExcelSheetReader extends Parent {
 
 	private Logger logger = LoggerFactory.getLogger(ExcelSheetReader.class);
 
@@ -110,7 +110,7 @@ public class ExcelSheetReader {
 						registration.setLastUpdated(Calendar.getInstance().getTime());
 						String updatedBy = null;
 						if (userName == null) {
-							updatedBy = SystemUtil.getLabel("supperUser");
+							updatedBy = supperUser;
 							if (AdminUser.getUser() != null) {
 								updatedBy = AdminUser.getUser().getUserName();
 							}

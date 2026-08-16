@@ -16,21 +16,20 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import tpo.admin.backup.CollegeConnectBackUp;
+import tpo.beans.Parent;
 import tpo.util.FbMessageUtil;
 import tpo.util.FbResourceUtil;
-import tpo.util.SystemUtil;
 import tpo.util.TpoUtil;
 
 @Component("LanguageLocaleBean")
 @Scope("session")
-public class LanguageLocaleBean implements Serializable {
+public class LanguageLocaleBean extends Parent implements Serializable {
 
 	private static String OS = System.getProperty("os.name").toLowerCase();
 	
 	private static final long serialVersionUID = 1L;
 
-	private String defaultLocal = null;
-
+	
 	private String countryCode = "us";
 
 	private String countryLanguage = "English";
@@ -39,17 +38,14 @@ public class LanguageLocaleBean implements Serializable {
 
 	private Integer colorCode = 1;
 
-	/**
-	 * @return the locale
-	 */
 	public Locale getLocale() {
-		if (defaultLocal == null) {
-			defaultLocal = SystemUtil.getLabel("defaultLocal");
-		}
-		locale = new Locale(defaultLocal);
-		FbMessageUtil.setLocale(locale);
-		FbResourceUtil.setLocale(locale);
-		return locale;
+	    Locale newLocale = new Locale(defaultLocal);
+
+	        locale = newLocale;
+	        FbMessageUtil.setLocale(locale);
+	        FbResourceUtil.setLocale(locale);
+	  
+	    return locale;
 	}
 
 	/**

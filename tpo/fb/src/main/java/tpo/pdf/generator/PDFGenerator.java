@@ -365,7 +365,7 @@ public class PDFGenerator extends Parent {
 					pdfPCell.setBorder(0);
 					String sigNString = registration.getRollnumber() + "#" + hallTicket.getDigitalSignature();
 					byte[] qrImage = GenerateQRCode.getInstance()
-							.createQRImage(AES.symmetricEncrypt(sigNString, TpoUtil.geyKeyInfo()), 125, "png");
+							.createQRImage(AES.symmetricEncrypt(sigNString, TpoUtil.getKeyInfo()), 125, "png");
 					image = Image.getInstance(qrImage);
 					image.setBorder(0);
 					image.setAlignment(Image.ALIGN_RIGHT);
