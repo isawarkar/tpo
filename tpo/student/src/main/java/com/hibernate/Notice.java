@@ -14,9 +14,6 @@ import java.util.Date;
 import org.json.simple.JSONAware;
 import org.json.simple.JSONObject;
 
-import com.beans.FileUploadUtility;
-import com.lowagie.text.pdf.codec.Base64;
-import com.util.IMAGECONS;
 import com.util.TpoUtil;
 
 /**

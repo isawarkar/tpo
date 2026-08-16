@@ -19,11 +19,10 @@ import org.json.simple.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.util.FbMessageUtil;
-import com.util.FbResourceUtil;
-
 import com.beans.QuestionBean;
 import com.hibernate.Questions;
+import com.util.FbMessageUtil;
+import com.util.FbResourceUtil;
 
 /**
  * @author Uddanda Technologies

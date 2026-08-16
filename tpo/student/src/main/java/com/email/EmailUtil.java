@@ -37,7 +37,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.beans.UIBackingBean;
-import com.netflix.discovery.util.SystemUtil;
 import com.util.Encryption;
 import com.util.FbMessageUtil;
 import com.util.TpoUtil;
