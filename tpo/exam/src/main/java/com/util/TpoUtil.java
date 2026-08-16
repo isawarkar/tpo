@@ -19,6 +19,7 @@ import java.util.MissingResourceException;
 import java.util.Random;
 import java.util.StringTokenizer;
 
+import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,9 +31,11 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import images.R;
+
 
 @Component("TpoUtil")
 public class TpoUtil {
@@ -52,7 +55,30 @@ public class TpoUtil {
 	// 500 kb
 	public static final Integer IMAGE_SIZE = 525000;
 
-	public static String key = null;
+	@Value("${key}")
+	private String keyValue;
+
+	private static String keyval;
+
+	@PostConstruct
+	public void init() {
+	    keyval = keyValue;
+	}
+
+	public static String getKeyInfo() {
+
+	    if (keyval == null || keyval.isEmpty()) {
+	        try {
+	            if (keyval == null || keyval.isEmpty()) {
+	            	keyval = "XMzDdG4D03CKm2IxIWQw7g==";
+	            }
+	        } catch (MissingResourceException e) {
+	            keyval = "";
+	        }
+	    }
+
+	    return keyval;
+	}
 
 	public static List<String> imageTypes = new ArrayList<String>();
 
@@ -438,17 +464,7 @@ public class TpoUtil {
 		return false;
 	}
 
-	public static String geyKeyInfo() {
-		if (key == null || key.isEmpty()) {
-			try {
-				key = SystemUtil.getLabel("key");
-			} catch (MissingResourceException e) {
-				key = "";
-			}
-		}
-		return key;
-	}
-
+	
 	public static void moveTheFile(String backupPath, File file, String date) {
 		String newFileName = null;
 		File newFile = null;

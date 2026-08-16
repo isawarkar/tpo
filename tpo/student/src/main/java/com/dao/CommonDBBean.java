@@ -57,7 +57,7 @@ import com.util.CCPConstant;
 import com.util.Encryption;
 import com.util.FbMessageUtil;
 import com.util.IMAGECONS;
-import com.util.SystemUtil;
+
 import com.util.TpoUtil;
 
 @Repository("CommonDBBean")
@@ -512,7 +512,6 @@ public class CommonDBBean extends Parent {
 			String createdBy = (String) query.uniqueResult();
 			List<String> createdByList = new ArrayList<String>(2);
 			createdByList.add(createdBy);
-			String supperUser = SystemUtil.getLabel("supperUser");
 			createdByList.add(supperUser);
 			criteria.add(Restrictions.in("userName", createdByList));
 			criteria.add(Restrictions.eq("isActive", true));
@@ -545,7 +544,6 @@ public class CommonDBBean extends Parent {
 			createdByList.add(enNo);
 		} else {
 			createdByList.add(createdBy);
-			String supperUser = SystemUtil.getLabel("supperUser");
 			createdByList.add(supperUser);
 			createdByList.add(enNo);
 		}

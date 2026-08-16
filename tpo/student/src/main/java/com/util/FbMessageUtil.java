@@ -12,18 +12,29 @@ import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 /**
  * @author Uddanda Technologies
  */
-public class FbMessageUtil {
+@Component
+public class FbMessageUtil  {
 
-	static ResourceBundle labels;
-	static Locale locale;
-	static {
-		locale = new Locale(SystemUtil.getLabel("defaultLocal"));
-		labels = ResourceBundle.getBundle("com.student.fbmessages",locale);
+	
+	@Value("${defaultLocal:en}")
+	private String defaultLocal;
+
+	private static ResourceBundle labels;
+	private static Locale locale;
+
+	@PostConstruct
+	public void init() {
+	    locale = new Locale(defaultLocal);
+	    labels = ResourceBundle.getBundle("com.student.fbmessages", locale);
 	}
-
 	public static String getLabel(String key) {
 		String text;
 		try {
@@ -61,10 +72,8 @@ public class FbMessageUtil {
 	}
 
 	public static void setLocale(Locale locale) {
-		if(!FbMessageUtil.locale.toString().equals(locale.toString())){
 		FbMessageUtil.locale = locale;
 		labels = ResourceBundle.getBundle("com.student.fbmessages",locale);
-		}
 	}
 	
 	

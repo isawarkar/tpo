@@ -47,7 +47,7 @@ public class Encryption {
 		try {
 			/* BASE64Encoder decoder = new BASE64Encoder(); */
 			// encrypt the text
-			decrypted = AES.symmetricEncrypt(pass, TpoUtil.geyKeyInfo());
+			decrypted = AES.symmetricEncrypt(pass, TpoUtil.getKeyInfo());
 			System.err.println(decrypted);
 		} catch (Exception e) {
 			
@@ -61,7 +61,7 @@ public class Encryption {
 		/* BASE64Decoder decoder = new BASE64Decoder(); */
 		String decodedPassword = null;
 		try {
-			decodedPassword = AES.symmetricDecrypt(password, TpoUtil.geyKeyInfo());
+			decodedPassword = AES.symmetricDecrypt(password, TpoUtil.getKeyInfo());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

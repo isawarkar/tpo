@@ -26,6 +26,7 @@ import java.util.MissingResourceException;
 import java.util.Random;
 import java.util.StringTokenizer;
 
+import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,11 +39,13 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.beans.UIBackingBean;
 
 import images.R;
+
 
 
 
@@ -68,6 +71,33 @@ public class TpoUtil {
 	public static final Integer IMAGE_SIZE = 525000;
 	
 	public static String key = null;
+	
+	@Value("${key}")
+	private String keyValue;
+
+	private static String keyval;
+
+	@PostConstruct
+	public void init() {
+	    keyval = keyValue;
+	}
+
+	public static String getKeyInfo() {
+
+	    if (keyval == null || keyval.isEmpty()) {
+	        try {
+	            keyval = RegQuery.getKeyInfo();
+	            if (keyval == null || keyval.isEmpty()) {
+	            	keyval = "XMzDdG4D03CKm2IxIWQw7g==";
+	            }
+	        } catch (MissingResourceException e) {
+	            keyval = "";
+	        }
+	    }
+
+	    return keyval;
+	}
+	
 
 	public static List<String> imageTypes = new ArrayList<String>();
 
@@ -454,19 +484,7 @@ public class TpoUtil {
 		return false;
 	}
 
-	public static String geyKeyInfo() {
-		if (key == null || key.isEmpty()) {
-			try {
-				key = SystemUtil.getLabel("key");
-			} catch (MissingResourceException e) {
-				key = "";
-			}
-			if (key.isEmpty()) {
-				key = RegQuery.getKeyInfo();
-			}
-		}
-		return key;
-	}
+	
 
 	public static void moveTheFile(String backupPath, File file, String date) {
 		String newFileName = null;
@@ -785,7 +803,7 @@ public class TpoUtil {
 			sbPostData.append(SmsUtil.getLabel("bulkSmsParam1Name")).append("=")
 					.append(URLEncoder.encode(SmsUtil.getLabel("bulkSmsParam1Value"), "UTF-8"));
 			sbPostData.append("&").append(SmsUtil.getLabel("bulkSmsParam2Name")).append("=").append(URLEncoder.encode(
-					AES.symmetricDecrypt(SmsUtil.getLabel("bulkSmsParam2Value"), TpoUtil.geyKeyInfo()), "UTF-8"));
+					AES.symmetricDecrypt(SmsUtil.getLabel("bulkSmsParam2Value"), TpoUtil.getKeyInfo()), "UTF-8"));
 			sbPostData.append("&message=").append(URLEncoder.encode(message, "UTF-8"));
 			sbPostData.append("&").append(SmsUtil.getLabel("bulkSmsParam3Name")).append("=")
 					.append(URLEncoder.encode(SmsUtil.getLabel("bulkSmsParam3Value"), "UTF-8"));

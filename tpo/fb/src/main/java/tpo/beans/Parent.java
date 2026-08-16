@@ -53,8 +53,6 @@ public class Parent {
 	@Value("${envirnment}")
 	public String envirnment;
 
-	
-
 	@Value("${expiryString}")
 	public String expiryString;
 
@@ -67,7 +65,6 @@ public class Parent {
 	@Value("${dataLoaderExpression}")
 	public String dataLoaderExpression;
 
-	
 	@Value("${enableReferralReward}")
 	public String enableReferralReward;
 
@@ -79,8 +76,6 @@ public class Parent {
 
 	@Value("${version}")
 	public String version;
-
-	
 
 	@Value("${dbBackupEnable}")
 	public String dbBackupEnable;

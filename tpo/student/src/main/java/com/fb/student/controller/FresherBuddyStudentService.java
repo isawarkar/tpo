@@ -446,7 +446,7 @@ public class FresherBuddyStudentService extends Parent {
 				JSONObject fileJSON = new JSONObject();
 				fileJSON.put("fileContent", base64EncodedData);
 				String base64EncodedDataQr = Base64.encodeBytes(GenerateQRCode.getInstance()
-						.createQRImage(AES.symmetricEncrypt(enrollmentNo, TpoUtil.geyKeyInfo()), 125, "png"));
+						.createQRImage(AES.symmetricEncrypt(enrollmentNo, TpoUtil.getKeyInfo()), 125, "png"));
 				fileJSON.put("qrCodeImage", base64EncodedDataQr);
 				if (commonDBBean != null) {
 					Registration registration = commonDBBean.getRegistration(enrollmentNo);

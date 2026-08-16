@@ -33,12 +33,13 @@ import javax.servlet.ServletException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.beans.UIBackingBean;
+import com.netflix.discovery.util.SystemUtil;
 import com.util.Encryption;
 import com.util.FbMessageUtil;
-import com.util.SystemUtil;
 import com.util.TpoUtil;
 
 /**
@@ -51,8 +52,15 @@ public class EmailUtil extends EmailTool {
 	
 	private String env;
 
+
+	@Value("${superUserEmail}")
+	public String superUserEmail;
+	
+	@Value("${envirnment}")
+	public String envirnment;
+
 	public String getEnvirnment() {
-		env =  SystemUtil.getLabel("envirnment");
+		env = envirnment;
 		return env;
 	}
 
@@ -129,7 +137,7 @@ public class EmailUtil extends EmailTool {
 				mes.append("<br>" + address.toString());
 			}
 			List<String> r = new ArrayList<String>(1);
-			r.add(SystemUtil.getLabel("superUserEmail"));
+			r.add(superUserEmail);
 			postMail(r, "This are the wrong email address", mes.toString(), from, RecipientType.TO);
 		} catch (MalformedURLException e) {
 			e.printStackTrace();

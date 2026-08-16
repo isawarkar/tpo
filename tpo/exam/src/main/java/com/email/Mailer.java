@@ -5,14 +5,19 @@ import java.util.Properties;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import com.util.AES;
-import com.util.SystemUtil;
 import com.util.TpoUtil;
 
 public class Mailer {
+	
+	@Value("${gp}")
+	public String gp;
+	
 	public Session getSeesionForGmail() {
 
-		final String pass = AES.symmetricDecrypt(SystemUtil.getLabel("gp"), TpoUtil.geyKeyInfo());
+		final String pass = AES.symmetricDecrypt(gp, TpoUtil.getKeyInfo());
 		Properties props = new Properties();
 		props.put("mail.smtp.user", TpoUtil.ADMIN_EMAIL);
 		props.put("mail.smtp.password", pass);

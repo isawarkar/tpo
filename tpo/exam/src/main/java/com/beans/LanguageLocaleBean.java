@@ -11,34 +11,34 @@ import org.springframework.stereotype.Component;
 
 import com.util.FbMessageUtil;
 import com.util.FbResourceUtil;
-import com.util.SystemUtil;
 import com.util.TpoUtil;
+
 
 @Component("LanguageLocaleBean")
 @Scope("session")
-public class LanguageLocaleBean implements Serializable {
+public class LanguageLocaleBean extends Parent implements Serializable {
 
+	private static String OS = System.getProperty("os.name").toLowerCase();
+	
 	private static final long serialVersionUID = 1L;
 
-	private String defaultLocal = null;
-
+	
 	private String countryCode = "us";
 
 	private String countryLanguage = "English";
 
 	private Locale locale;
 
-	/**
-	 * @return the locale
-	 */
+	private Integer colorCode = 1;
+
 	public Locale getLocale() {
-		if (defaultLocal == null) {
-			defaultLocal = SystemUtil.getLabel("defaultLocal");
-		}
-		locale = new Locale(defaultLocal);
-		FbMessageUtil.setLocale(locale);
-		FbResourceUtil.setLocale(locale);
-		return locale;
+	    Locale newLocale = new Locale(defaultLocal);
+
+	        locale = newLocale;
+	        FbMessageUtil.setLocale(locale);
+	        FbResourceUtil.setLocale(locale);
+	  
+	    return locale;
 	}
 
 	/**
@@ -72,6 +72,11 @@ public class LanguageLocaleBean implements Serializable {
 		return defaultLocal;
 	}
 
+	public String changeTheme(ValueChangeEvent e) {
+		colorCode = Integer.valueOf(e.getNewValue().toString());
+		return "CCPHomePage";
+	}
+
 	public void countryLocaleCodeChanged(ValueChangeEvent e) {
 		defaultLocal = e.getNewValue().toString();
 
@@ -85,7 +90,7 @@ public class LanguageLocaleBean implements Serializable {
 	}
 
 	public void setHindi() {
-		defaultLocal = "in";
+	defaultLocal = "in";
 		countryCode = "in";
 		countryLanguage = "Hindi";
 	}
@@ -104,6 +109,20 @@ public class LanguageLocaleBean implements Serializable {
 
 	public void setCountryLanguage(String countryLanguage) {
 		this.countryLanguage = countryLanguage;
+	}
+
+	public Integer getColorCode() {
+		return colorCode;
+	}
+
+	public void setColorCode(Integer colorCode) {
+		this.colorCode = colorCode;
+	}
+
+
+
+	private boolean isUnix() {
+		return (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0 );
 	}
 
 }
