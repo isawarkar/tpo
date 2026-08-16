@@ -6,7 +6,7 @@ spring:
     allow-bean-definition-overriding: true
 
   profiles:
-    active: prod
+    active: dev
 
 management:
   security:
@@ -15,53 +15,3 @@ management:
 logging:
   level:
     root: INFO
-
----
-
-spring:
-  profiles: dev
-
-server:
-  address: 0.0.0.0
-  port: 8080
-
-eureka:
-  client:
-    healthcheck:
-      enabled: true
-    serviceUrl:
-      defaultZone: http://host.docker.internal:8761/eureka
-
-  instance:
-    statusPageUrl: http://host.docker.internal:8082/exam/actuator/health
-    healthCheckUrl: http://host.docker.internal:8082/exam/actuator/health
-    homePageUrl: http://host.docker.internal:8082/exam/
-    ip-address: ${server.address}
-    nonSecurePort: 8080
-    nonSecurePortEnabled: true
-    preferIpAddress: true
-
----
-
-spring:
-  profiles: prod
-
-server:
-  address: 0.0.0.0
-  port: 8080
-
-eureka:
-  client:
-    healthcheck:
-      enabled: true
-    serviceUrl:
-      defaultZone: http://52.90.118.192:8761/eureka
-
-  instance:
-    statusPageUrl: https://exam.fresherbuddy.in/exam/actuator/health
-    healthCheckUrl: https://exam.fresherbuddy.in/exam/actuator/health
-    homePageUrl: https://exam.fresherbuddy.in/exam/
-    ip-address: ${server.address}
-    nonSecurePort: 8080
-    nonSecurePortEnabled: true
-    preferIpAddress: true

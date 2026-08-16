@@ -1,0 +1,31 @@
+server:
+  address: 0.0.0.0
+  port: 8080
+
+spring:
+  config:
+    activate:
+      on-profile: docker
+
+eureka:
+  client:
+    healthcheck:
+      enabled: true
+    service-url:
+      defaultZone: http://host.docker.internal:8761/eureka/
+
+  instance:
+    status-page-url: http://host.docker.internal:8080/FB/actuator/health
+    health-check-url: http://host.docker.internal:8080/FB/actuator/health
+    home-page-url: http://host.docker.internal:8080/FB/
+    ip-address: ${server.address}
+    non-secure-port: 8080
+    non-secure-port-enabled: true
+    prefer-ip-address: true
+
+logging:
+  level:
+    root: INFO
+    org.springframework: WARN
+    org.springframework.cloud.netflix.eureka: INFO
+    org.hibernate: WARN

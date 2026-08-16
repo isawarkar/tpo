@@ -1,0 +1,31 @@
+server:
+  address: 0.0.0.0
+  port: 8080
+
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+eureka:
+  client:
+    healthcheck:
+      enabled: true
+    service-url:
+      defaultZone: http://52.90.118.192:8761/eureka/
+
+  instance:
+    status-page-url: https://www.fresherbuddy.in/exam/actuator/health
+    health-check-url: https://www.fresherbuddy.in/exam/actuator/health
+    home-page-url: https://www.fresherbuddy.in/exam/
+    ip-address: ${server.address}
+    non-secure-port: 8080
+    non-secure-port-enabled: true
+    prefer-ip-address: true
+
+logging:
+  level:
+    root: INFO
+    org.springframework: WARN
+    org.springframework.cloud.netflix.eureka: INFO
+    org.hibernate: WARN
