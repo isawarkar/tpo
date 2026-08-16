@@ -316,10 +316,10 @@ public class DashBoardBean extends Parent {
 	public void downloadBackup() {
 		EmailUtil emailUtil = getEmailInstance();
 		String path = TpoUtil.backupPath;
-
 		String bacupkFileName = null;
 		if (emailUtil != null && !TpoUtil.isUnix()) {
-			path = TpoUtil.backupPath;
+			String dName = commonDBBean.getCommonData("DriveName").get(0);
+			path = dName + "\\" + path;
 		} else {
 			path = CollegeConnectBackUp.unixBackupPath;
 			bacupkFileName = TpoUtil.getDateToStringYYYYMMdd(Calendar.getInstance().getTime()).replaceAll(" ","_");

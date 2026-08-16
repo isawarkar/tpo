@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.amazonaws.AmazonServiceException;
@@ -17,12 +18,14 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.amazonaws.util.IOUtils;
-import com.fb.eureka.server.eurekaServer.image.config.BucketName;
 
 @Service
 public class FileStore {
 	@Autowired
 	private AmazonS3 amazonS3;
+	
+	@Value("${bucketName}")
+	String bucketName;
 
 	public void upload(String path, String fileName, Optional<Map<String, String>> optionalMetaData,
 			InputStream inputStream) {
@@ -41,7 +44,7 @@ public class FileStore {
 
 	public byte[] downloadS3(String path, String fileName) {
 		try {
-			S3Object object = amazonS3.getObject(BucketName.bucketName + "/" + path, fileName);
+			S3Object object = amazonS3.getObject(bucketName + "/" + path, fileName);
 			S3ObjectInputStream objectContent = object.getObjectContent();
 			return IOUtils.toByteArray(objectContent);
 		} catch (AmazonServiceException | IOException e) {
@@ -52,7 +55,7 @@ public class FileStore {
 
 	public byte[] download(String path, String fileName) {
 		try {
-			S3Object object = amazonS3.getObject(BucketName.bucketName + "/" + path, fileName + ".png");
+			S3Object object = amazonS3.getObject(bucketName + "/" + path, fileName + ".png");
 			S3ObjectInputStream objectContent = object.getObjectContent();
 			return IOUtils.toByteArray(objectContent);
 		} catch (AmazonServiceException | IOException e) {
@@ -63,7 +66,7 @@ public class FileStore {
 
 	public byte[] downloadFile(String path, String fileName) {
 		try {
-			S3Object object = amazonS3.getObject(BucketName.bucketName + "/" + path, fileName);
+			S3Object object = amazonS3.getObject(bucketName + "/" + path, fileName);
 			S3ObjectInputStream objectContent = object.getObjectContent();
 			return IOUtils.toByteArray(objectContent);
 		} catch (AmazonServiceException | IOException e) {
@@ -74,7 +77,7 @@ public class FileStore {
 
 	public void deleteFile(String path, String fileName) {
 		try {
-			amazonS3.deleteObject(BucketName.bucketName + "/" + path, fileName);
+			amazonS3.deleteObject(bucketName + "/" + path, fileName);
 		} catch (AmazonServiceException e) {
 			System.out.println(e.getMessage());
 		}
@@ -82,7 +85,7 @@ public class FileStore {
 
 	public boolean isFileExist(String path, String fileName) {
 		try {
-			return amazonS3.doesObjectExist(BucketName.bucketName + "/" + path, fileName);
+			return amazonS3.doesObjectExist(bucketName + "/" + path, fileName);
 		} catch (AmazonServiceException e) {
 			System.out.println(e.getMessage());
 		}
@@ -92,7 +95,7 @@ public class FileStore {
 	public void deleteFolder(String name) {
 		try {
 		
-		   ObjectListing listing= amazonS3.listObjects(BucketName.bucketName, name);
+		   ObjectListing listing= amazonS3.listObjects(bucketName, name);
 		   List<S3ObjectSummary> summaries = listing.getObjectSummaries();
 
 		   while (listing.isTruncated()) {
@@ -100,7 +103,7 @@ public class FileStore {
 		      summaries.addAll (listing.getObjectSummaries());
 		   }
 		  for(S3ObjectSummary s:summaries) {
-			  amazonS3.deleteObject(BucketName.bucketName, s.getKey());
+			  amazonS3.deleteObject(bucketName, s.getKey());
 		  }
 		} catch (AmazonServiceException e) {
 			System.out.println(e.getMessage());
