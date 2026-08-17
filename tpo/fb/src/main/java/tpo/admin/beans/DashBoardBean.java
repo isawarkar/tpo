@@ -313,7 +313,7 @@ public class DashBoardBean extends Parent {
 
 	public void downloadBackup() {
 		EmailUtil emailUtil = getEmailInstance();
-		String path = TpoUtil.backupPath;
+		String path = backupPath;
 		String bacupkFileName = null;
 		if (emailUtil != null && !TpoUtil.isUnix()) {
 			String dName = commonDBBean.getCommonData("DriveName").get(0);

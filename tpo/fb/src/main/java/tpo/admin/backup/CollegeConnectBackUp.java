@@ -104,7 +104,7 @@ public class CollegeConnectBackUp extends Parent {
 					sqldum = "mysqldump";
 					mysql = "mysql";
 				} else {
-					path = dName != "home" ? dName + TpoUtil.backupPath : TpoUtil.backupPath;
+					path = dName != "home" ? dName + backupPath : backupPath;
 					String mysqlPath = commonDBBean.getCommonData("MYSQL").get(0);
 					sqldum = dName != "home" ? "\"" + mysqlPath + "/mysqldump\"" : "mysqldump";
 					mysql = dName != "home" ? "\"" + mysqlPath + "/mysql\"" : "mysql";
@@ -290,7 +290,7 @@ public class CollegeConnectBackUp extends Parent {
 			if (TpoUtil.isUnix()) {
 				path = unixBackupPath;
 			}else {
-				path = dname != "home" ? dname + TpoUtil.backupPath : TpoUtil.backupPath;
+				path = dname != "home" ? dname +  backupPath : backupPath;
 				path = path.replaceAll("/", "\\\\");
 				
 			}
@@ -343,7 +343,7 @@ public class CollegeConnectBackUp extends Parent {
 						path = "rm "  + path + fileName;
 					} else {
 						String dName = commonDBBean.getCommonData("DriveName").get(0);
-						path = dName != "home" ? dName + TpoUtil.backupPath : TpoUtil.backupPath;
+						path = dName != "home" ? dName + backupPath : backupPath;
 						path = "del "  + "\"" + path + fileName + "\"";
 						path = "cmd /c " + path.replace("/", "\\") + " /f /s /q";
 					}
@@ -379,7 +379,7 @@ public class CollegeConnectBackUp extends Parent {
 						path = "aws s3 cp "+ path + fileName+" s3://"+bucketName+"";
 					} else {
 						String dName = commonDBBean.getCommonData("DriveName").get(0);
-						path = dName != "home" ? dName + TpoUtil.backupPath : TpoUtil.backupPath;
+						path = dName != "home" ? dName + backupPath : backupPath;
 						path = "aws s3 cp "+ path + fileName;
 						path = path.replace("/", "\\") + " s3://"+bucketName+"";
 					}

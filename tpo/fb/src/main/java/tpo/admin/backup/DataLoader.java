@@ -92,8 +92,8 @@ public class DataLoader extends Parent {
 			if (emailUtil != null) {
 				String drivaName = commonDBBean.getCommonData("DriveName").get(0);
 					Session session = sessionFactory.getCurrentSession();
-					String path = drivaName != "home" ? drivaName + TpoUtil.dataLoader : TpoUtil.dataLoader;
-					String backupPath = drivaName != "home" ? drivaName + TpoUtil.backupPath : TpoUtil.backupPath;
+					String path = drivaName != "home" ? drivaName + dataLoader : dataLoader;
+					String backupPathNew = drivaName != "home" ? drivaName + backupPath : backupPath;
 					Path directory = Paths.get(path);
 					File settingFile= new File(path+"setting.txt");
 					List<String> fileContentsList=readSettingFile(settingFile);
@@ -105,7 +105,7 @@ public class DataLoader extends Parent {
 							if (file.isFile() && file.getName().endsWith(".sql") && !fileContentsList.contains(".sql")) {
 								status = importSqlFile(status, emailUtil, drivaName, file.getAbsolutePath());
 								if (status) {
-									TpoUtil.moveTheFile(backupPath, file, TpoUtil.getDateToStringYYYYMMdd(new Date()));
+									TpoUtil.moveTheFile(backupPathNew, file, TpoUtil.getDateToStringYYYYMMdd(new Date()));
 								}
 							} else if (file.isFile() && file.getName().endsWith(".xls") && !fileContentsList.contains(".xls")) {
 								String userName = null;
@@ -125,7 +125,7 @@ public class DataLoader extends Parent {
 										session.saveOrUpdate(registration.getContactinfo());
 										session.saveOrUpdate(registration.getAchivements());
 									}
-									TpoUtil.moveTheFile(backupPath, file, null);
+									TpoUtil.moveTheFile(backupPathNew, file, null);
 								}
 							}
 

@@ -90,10 +90,7 @@ public class TpoUtil extends Parent {
 
 	public static String HOSTNAME = "www.fresherbuddy.in";
 
-	public static final String backupPath = FbResourceUtil.getLabel("backupPath");
-
-	public static final String dataLoader = FbResourceUtil.getLabel("dataLoader");
-
+	
 	public static final String SMS_FLAG_FB = SmsUtil.getLabel("enableSMSApiForFB");
 	public static final String SMS_FLAG_BB = SmsUtil.getLabel("enableSMSApiForBB");
 

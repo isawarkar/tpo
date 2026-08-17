@@ -80,6 +80,12 @@ public class Parent {
 	@Value("${dbBackupEnable}")
 	public String dbBackupEnable;
 
+	@Value("${backupPath}")
+	public String backupPath;
+	
+	@Value("${dataLoader}")
+	public String dataLoader;
+	
 	@Autowired
 	private EurekaClient discoveryClient;
 
