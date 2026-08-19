@@ -11,9 +11,10 @@ Add-Type -AssemblyName System.Windows.Forms
 
 $AwsRegion = "us-east-1"
 
-# ------------------------------------------------------------
+
+# ============================================================
 # DOMAIN / ACM CONFIGURATION
-# ------------------------------------------------------------
+# ============================================================
 
 $RootDomain = "fresherbuddy.in"
 
@@ -26,35 +27,47 @@ $CertificateDomains = @(
     "student.fresherbuddy.in"
 )
 
-# ------------------------------------------------------------
+
+# ============================================================
 # ROUTE 53
-# ------------------------------------------------------------
+# ============================================================
 
 # Leave empty to automatically find the hosted zone.
 #
 # Example:
+#
 # $HostedZoneId = "Z123456789ABCDE"
 #
 $HostedZoneId = ""
 
-# ------------------------------------------------------------
-# ALB / TARGET GROUP
-# ------------------------------------------------------------
 
-# IMPORTANT:
-# Change these to your actual ALB and target group names.
-#
+# ============================================================
+# ALB / TARGET GROUP
+# ============================================================
+
 $HttpsLoadBalancerName = "fresherbuddy-alb"
 $HttpsTargetGroupName = "fresherbuddy-tg"
 
 $HttpsListenerPort = 443
 
-# ------------------------------------------------------------
+
+# ============================================================
 # ACM WAIT CONFIGURATION
-# ------------------------------------------------------------
+# ============================================================
 
 $AcmTimeoutMinutes = 30
 $AcmCheckIntervalSeconds = 15
+
+
+# ============================================================
+# ACM CERTIFICATE CONFIGURATION
+# ============================================================
+
+# RSA_2048 is a safe choice for ALB.
+$AcmKeyAlgorithm = "RSA_2048"
+
+# ACM certificate validation.
+$RequireIssuedCertificate = $true
 
 
 # ============================================================
@@ -62,6 +75,7 @@ $AcmCheckIntervalSeconds = 15
 # ============================================================
 
 function Show-ErrorDetails {
+
     param(
         [Parameter(Mandatory = $true)]
         [System.Management.Automation.ErrorRecord]$ErrorRecord
@@ -125,6 +139,7 @@ function Invoke-SetupScript {
     )
 
     if (-not (Test-Path -LiteralPath $ScriptPath)) {
+
         throw "Required script not found: $ScriptPath"
     }
 
@@ -147,6 +162,7 @@ function Invoke-SetupScript {
         Write-Host "✅ $Description completed successfully." -ForegroundColor Green
     }
     catch {
+
         throw
     }
 }
@@ -163,11 +179,13 @@ function Test-DockerDesktopRunning {
         docker info *> $null
 
         if ($LASTEXITCODE -eq 0) {
+
             return $true
         }
     }
     catch {
-        # Continue to process check.
+
+        # Continue.
     }
 
     $dockerProcess = Get-Process `
@@ -175,6 +193,7 @@ function Test-DockerDesktopRunning {
         -ErrorAction SilentlyContinue
 
     if ($dockerProcess) {
+
         return $true
     }
 
@@ -269,13 +288,15 @@ function Get-HostedZoneId {
             $zoneId = $zoneId.Replace("/hostedzone/", "")
         }
 
-        Write-Host "Using configured Hosted Zone: $zoneId" `
+        Write-Host `
+            "Using configured Hosted Zone: $zoneId" `
             -ForegroundColor Green
 
         return $zoneId
     }
 
-    Write-Host "Searching for hosted zone: $RootDomain" `
+    Write-Host `
+        "Searching for hosted zone: $RootDomain" `
         -ForegroundColor Cyan
 
     $zoneJson = aws route53 list-hosted-zones-by-name `
@@ -284,14 +305,12 @@ function Get-HostedZoneId {
 
     if ($LASTEXITCODE -ne 0) {
 
-        throw `
-            "Unable to query Route 53 hosted zones."
+        throw "Unable to query Route 53 hosted zones."
     }
 
     if ([string]::IsNullOrWhiteSpace($zoneJson)) {
 
-        throw `
-            "Route 53 returned an empty response."
+        throw "Route 53 returned an empty response."
     }
 
     $zoneResponse = $zoneJson | ConvertFrom-Json
@@ -331,15 +350,15 @@ function Get-HostedZoneId {
 
 
 # ============================================================
-# FIND EXISTING ACM CERTIFICATE
+# GET ALL ACM CERTIFICATES
 # ============================================================
 
-function Get-ExistingAcmCertificate {
+function Get-AllAcmCertificates {
 
     Write-Host ""
-    Write-Host "===== ACM CERTIFICATE CHECK =====" -ForegroundColor Cyan
+    Write-Host "===== ACM CERTIFICATE LIST =====" -ForegroundColor Cyan
 
-    $certificatesJson = aws acm list-certificates `
+    $certificateJson = aws acm list-certificates `
         --certificate-statuses ISSUED `
         --certificate-statuses PENDING_VALIDATION `
         --region $AwsRegion `
@@ -347,36 +366,204 @@ function Get-ExistingAcmCertificate {
 
     if ($LASTEXITCODE -ne 0) {
 
-        throw `
-            "Unable to list ACM certificates."
+        throw "Unable to list ACM certificates."
     }
 
-    if ([string]::IsNullOrWhiteSpace($certificatesJson)) {
+    if ([string]::IsNullOrWhiteSpace($certificateJson)) {
 
-        return $null
+        return @()
     }
 
-    $certificates = $certificatesJson | ConvertFrom-Json
+    $response = $certificateJson | ConvertFrom-Json
 
-    if ($null -eq $certificates.CertificateSummaryList) {
+    if ($null -eq $response.CertificateSummaryList) {
 
-        return $null
+        return @()
     }
 
-    foreach ($certificate in $certificates.CertificateSummaryList) {
+    return @($response.CertificateSummaryList)
+}
 
-        if ($certificate.DomainName -eq $RootDomain) {
 
-            Write-Host ""
-            Write-Host "Existing ACM certificate found." `
-                -ForegroundColor Green
+# ============================================================
+# CHECK CERTIFICATE DOMAINS
+# ============================================================
 
-            Write-Host "Domain : $($certificate.DomainName)"
-            Write-Host "Status : $($certificate.Status)"
-            Write-Host "ARN    : $($certificate.CertificateArn)"
+function Test-CertificateDomains {
 
-            return $certificate
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$CertificateArn
+    )
+
+    $certificate = Get-AcmCertificateDetails `
+        -CertificateArn $CertificateArn
+
+    if ($null -eq $certificate) {
+
+        return $false
+    }
+
+    $certificateDomains = @()
+
+    if ($certificate.DomainName) {
+
+        $certificateDomains += $certificate.DomainName
+    }
+
+    if ($certificate.SubjectAlternativeNames) {
+
+        $certificateDomains += @(
+            $certificate.SubjectAlternativeNames
+        )
+    }
+
+    $certificateDomains = @(
+        $certificateDomains |
+        ForEach-Object {
+            $_.ToString().Trim().ToLower()
+        } |
+        Sort-Object -Unique
+    )
+
+    foreach ($requiredDomain in $CertificateDomains) {
+
+        $required = $requiredDomain.Trim().ToLower()
+
+        if ($certificateDomains -notcontains $required) {
+
+            return $false
         }
+    }
+
+    return $true
+}
+
+
+# ============================================================
+# FIND BEST EXISTING ACM CERTIFICATE
+# ============================================================
+
+function Get-ExistingAcmCertificate {
+
+    Write-Host ""
+    Write-Host "===== ACM CERTIFICATE CHECK =====" -ForegroundColor Cyan
+
+    $certificates = Get-AllAcmCertificates
+
+    if ($certificates.Count -eq 0) {
+
+        Write-Host `
+            "No ACM certificates found." `
+            -ForegroundColor Yellow
+
+        return $null
+    }
+
+    $matchingCertificates = @()
+
+    foreach ($certificateSummary in $certificates) {
+
+        if (
+            [string]::IsNullOrWhiteSpace(
+                $certificateSummary.CertificateArn
+            )
+        ) {
+
+            continue
+        }
+
+        try {
+
+            $matches = Test-CertificateDomains `
+                -CertificateArn $certificateSummary.CertificateArn
+
+            if ($matches) {
+
+                $matchingCertificates += $certificateSummary
+            }
+        }
+        catch {
+
+            Write-Host `
+                "⚠️ Unable to inspect certificate $($certificateSummary.CertificateArn)" `
+                -ForegroundColor Yellow
+        }
+    }
+
+    if ($matchingCertificates.Count -eq 0) {
+
+        Write-Host ""
+        Write-Host `
+            "No certificate containing all required domains was found." `
+            -ForegroundColor Yellow
+
+        return $null
+    }
+
+    Write-Host ""
+    Write-Host "Matching certificates found:" -ForegroundColor Cyan
+
+    foreach ($certificate in $matchingCertificates) {
+
+        Write-Host ""
+        Write-Host "Domain : $($certificate.DomainName)"
+        Write-Host "Status : $($certificate.Status)"
+        Write-Host "ARN    : $($certificate.CertificateArn)"
+    }
+
+    # --------------------------------------------------------
+    # IMPORTANT
+    #
+    # ALWAYS prefer ISSUED over PENDING_VALIDATION.
+    # --------------------------------------------------------
+
+    $issued = @(
+        $matchingCertificates |
+        Where-Object {
+            $_.Status -eq "ISSUED"
+        }
+    )
+
+    if ($issued.Count -gt 0) {
+
+        $selected = $issued |
+            Select-Object -First 1
+
+        Write-Host ""
+        Write-Host `
+            "✅ Selecting ISSUED ACM certificate." `
+            -ForegroundColor Green
+
+        Write-Host `
+            "Selected ARN: $($selected.CertificateArn)" `
+            -ForegroundColor Green
+
+        return $selected
+    }
+
+    $pending = @(
+        $matchingCertificates |
+        Where-Object {
+            $_.Status -eq "PENDING_VALIDATION"
+        }
+    )
+
+    if ($pending.Count -gt 0) {
+
+        $selected = $pending |
+            Select-Object -First 1
+
+        Write-Host ""
+        Write-Host `
+            "⏳ Selecting existing PENDING_VALIDATION certificate." `
+            -ForegroundColor Yellow
+
+        Write-Host `
+            "Selected ARN: $($selected.CertificateArn)" `
+            -ForegroundColor Yellow
+
+        return $selected
     }
 
     return $null
@@ -408,27 +595,52 @@ function Request-AcmCertificate {
         }
     )
 
+    Write-Host ""
+    Write-Host `
+        "Requesting ACM certificate with key algorithm: $AcmKeyAlgorithm" `
+        -ForegroundColor Cyan
+
+    # --------------------------------------------------------
+    # IMPORTANT:
+    #
+    # --key-algorithm RSA_2048
+    #
+    # This avoids unsupported key configuration.
+    # --------------------------------------------------------
+
     $certificateArn = aws acm request-certificate `
         --domain-name $RootDomain `
         --subject-alternative-names $sanDomains `
         --validation-method DNS `
+        --key-algorithm $AcmKeyAlgorithm `
         --region $AwsRegion `
         --query "CertificateArn" `
         --output text
 
     if ($LASTEXITCODE -ne 0) {
 
-        throw `
-            "Failed to request ACM certificate."
+        throw "Failed to request ACM certificate."
     }
 
     if ([string]::IsNullOrWhiteSpace($certificateArn)) {
 
-        throw `
-            "ACM certificate ARN was empty."
+        throw "ACM certificate ARN was empty."
     }
 
     $certificateArn = $certificateArn.Trim()
+
+    # --------------------------------------------------------
+    # Validate ARN format
+    # --------------------------------------------------------
+
+    if (
+        $certificateArn -notmatch `
+        "^arn:aws:acm:$([regex]::Escape($AwsRegion)):\d+:certificate/[a-zA-Z0-9-]+$"
+    ) {
+
+        throw `
+            "ACM returned an invalid certificate ARN: $certificateArn"
+    }
 
     Write-Host ""
     Write-Host "✅ ACM certificate request created." `
@@ -452,6 +664,13 @@ function Get-AcmCertificateDetails {
         [Parameter(Mandatory = $true)]
         [string]$CertificateArn
     )
+
+    if ([string]::IsNullOrWhiteSpace($CertificateArn)) {
+
+        throw "Certificate ARN is empty."
+    }
+
+    $CertificateArn = $CertificateArn.Trim()
 
     $certificateJson = aws acm describe-certificate `
         --certificate-arn $CertificateArn `
@@ -479,6 +698,181 @@ function Get-AcmCertificateDetails {
     }
 
     return $response.Certificate
+}
+
+
+# ============================================================
+# VALIDATE CERTIFICATE BEFORE ALB
+# ============================================================
+
+function Validate-AcmCertificateForAlb {
+
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$CertificateArn
+    )
+
+    Write-Host ""
+    Write-Host "===== FINAL ACM / ALB CERTIFICATE CHECK =====" `
+        -ForegroundColor Cyan
+
+    if ([string]::IsNullOrWhiteSpace($CertificateArn)) {
+
+        throw "Certificate ARN is empty."
+    }
+
+    $CertificateArn = $CertificateArn.Trim()
+
+    Write-Host ""
+    Write-Host "Certificate ARN: $CertificateArn"
+
+    # --------------------------------------------------------
+    # ARN REGION
+    # --------------------------------------------------------
+
+    if (
+        $CertificateArn `
+        -notmatch `
+        "^arn:aws:acm:$([regex]::Escape($AwsRegion)):"
+    ) {
+
+        throw `
+            "Certificate is not in AWS region '$AwsRegion'. ARN: $CertificateArn"
+    }
+
+    $certificate = Get-AcmCertificateDetails `
+        -CertificateArn $CertificateArn
+
+    # --------------------------------------------------------
+    # STATUS
+    # --------------------------------------------------------
+
+    Write-Host "Status         : $($certificate.Status)"
+
+    if ($certificate.Status -ne "ISSUED") {
+
+        throw `
+            "Certificate cannot be attached to ALB because ACM status is '$($certificate.Status)'."
+    }
+
+    # --------------------------------------------------------
+    # DOMAIN
+    # --------------------------------------------------------
+
+    Write-Host "Primary Domain : $($certificate.DomainName)"
+
+    if (
+        [string]::IsNullOrWhiteSpace(
+            $certificate.DomainName
+        )
+    ) {
+
+        throw `
+            "Certificate does not contain a valid fully-qualified domain name."
+    }
+
+    # --------------------------------------------------------
+    # KEY ALGORITHM
+    # --------------------------------------------------------
+
+    Write-Host "Key Algorithm  : $($certificate.KeyAlgorithm)"
+
+    if (
+        [string]::IsNullOrWhiteSpace(
+            $certificate.KeyAlgorithm
+        )
+    ) {
+
+        throw `
+            "Certificate key algorithm could not be determined."
+    }
+
+    $supportedAlgorithms = @(
+        "RSA_1024",
+        "RSA_2048",
+        "RSA_3072",
+        "RSA_4096",
+        "EC_prime256v1",
+        "EC_secp384r1",
+        "EC_secp521r1"
+    )
+
+    if (
+        $supportedAlgorithms `
+        -notcontains `
+        $certificate.KeyAlgorithm
+    ) {
+
+        throw `
+            "Certificate uses unsupported key algorithm: $($certificate.KeyAlgorithm)"
+    }
+
+    # --------------------------------------------------------
+    # SIGNATURE
+    # --------------------------------------------------------
+
+    if ($certificate.SignatureAlgorithm) {
+
+        Write-Host `
+            "Signature      : $($certificate.SignatureAlgorithm)"
+    }
+
+    # --------------------------------------------------------
+    # SAN CHECK
+    # --------------------------------------------------------
+
+    Write-Host ""
+    Write-Host "Certificate domains:" -ForegroundColor Cyan
+
+    $certificateDomains = @()
+
+    if ($certificate.DomainName) {
+
+        $certificateDomains += $certificate.DomainName
+    }
+
+    if ($certificate.SubjectAlternativeNames) {
+
+        $certificateDomains += @(
+            $certificate.SubjectAlternativeNames
+        )
+    }
+
+    $certificateDomains = @(
+        $certificateDomains |
+        ForEach-Object {
+            $_.ToString().Trim()
+        } |
+        Sort-Object -Unique
+    )
+
+    foreach ($domain in $certificateDomains) {
+
+        Write-Host "  ✓ $domain" -ForegroundColor Green
+    }
+
+    foreach ($requiredDomain in $CertificateDomains) {
+
+        $required = $requiredDomain.Trim().ToLower()
+
+        $found = $certificateDomains |
+            Where-Object {
+                $_.ToLower() -eq $required
+            }
+
+        if (-not $found) {
+
+            throw `
+                "Required domain '$requiredDomain' is missing from certificate."
+        }
+    }
+
+    Write-Host ""
+    Write-Host `
+        "✅ Certificate passed ALB validation." `
+        -ForegroundColor Green
+
+    return $certificate
 }
 
 
@@ -517,13 +911,13 @@ function Create-AcmValidationRecords {
 
         Write-Host ""
         Write-Host `
-            "🔧 Creating Route 53 validation record for: $domainName" `
+            "🔧 Processing validation record for: $domainName" `
             -ForegroundColor Cyan
 
         if ($null -eq $validation.ResourceRecord) {
 
             Write-Host `
-                "⏳ Validation record is not available yet. Waiting..." `
+                "⏳ ACM has not generated ResourceRecord yet." `
                 -ForegroundColor Yellow
 
             continue
@@ -550,7 +944,7 @@ function Create-AcmValidationRecords {
         if ($processedRecords.ContainsKey($recordKey)) {
 
             Write-Host `
-                "ℹ️ Validation record already processed." `
+                "ℹ️ Duplicate validation record. Skipping." `
                 -ForegroundColor DarkGray
 
             continue
@@ -616,7 +1010,8 @@ function Create-AcmValidationRecords {
     }
 
     Write-Host ""
-    Write-Host "✅ DNS validation records created." `
+    Write-Host `
+        "✅ DNS validation records created/updated." `
         -ForegroundColor Green
 }
 
@@ -636,7 +1031,8 @@ function Show-AcmValidationStatus {
         -CertificateArn $CertificateArn
 
     Write-Host ""
-    Write-Host "ACM Certificate Status: $($certificate.Status)" `
+    Write-Host `
+        "ACM Certificate Status: $($certificate.Status)" `
         -ForegroundColor Yellow
 
     Write-Host ""
@@ -647,18 +1043,36 @@ function Show-AcmValidationStatus {
         $status = $validation.ValidationStatus
 
         if ($status -eq "SUCCESS") {
+
             $color = "Green"
         }
         elseif ($status -eq "FAILED") {
+
             $color = "Red"
         }
         else {
+
             $color = "Yellow"
         }
 
         Write-Host `
             ("  {0,-40} {1}" -f $validation.DomainName, $status) `
             -ForegroundColor $color
+
+        if ($validation.ResourceRecord) {
+
+            Write-Host `
+                "      Record : $($validation.ResourceRecord.Name)" `
+                -ForegroundColor DarkGray
+
+            Write-Host `
+                "      Type   : $($validation.ResourceRecord.Type)" `
+                -ForegroundColor DarkGray
+
+            Write-Host `
+                "      Value  : $($validation.ResourceRecord.Value)" `
+                -ForegroundColor DarkGray
+        }
     }
 
     return $certificate
@@ -683,7 +1097,8 @@ function Wait-ForAcmCertificateIssued {
     Write-Host "============================================================" `
         -ForegroundColor Cyan
 
-    Write-Host "       WAITING FOR ACM CERTIFICATE VALIDATION" `
+    Write-Host `
+        "       WAITING FOR ACM CERTIFICATE VALIDATION" `
         -ForegroundColor Cyan
 
     Write-Host "============================================================" `
@@ -715,10 +1130,12 @@ function Wait-ForAcmCertificateIssued {
         if ($status -eq "ISSUED") {
 
             Write-Host ""
-            Write-Host "✅ ACM certificate is ISSUED." `
+            Write-Host `
+                "✅ ACM certificate is ISSUED." `
                 -ForegroundColor Green
 
-            Write-Host "Certificate is ready for ALB." `
+            Write-Host `
+                "Certificate is ready for ALB." `
                 -ForegroundColor Green
 
             return $true
@@ -731,26 +1148,12 @@ function Wait-ForAcmCertificateIssued {
         if ($status -eq "FAILED") {
 
             Write-Host ""
+
             Show-AcmValidationStatus `
                 -CertificateArn $CertificateArn
 
             throw `
                 "ACM certificate validation FAILED."
-        }
-
-        # ----------------------------------------------------
-        # TIMED OUT
-        # ----------------------------------------------------
-
-        if ($status -eq "VALIDATION_TIMED_OUT") {
-
-            Write-Host ""
-
-            Show-AcmValidationStatus `
-                -CertificateArn $CertificateArn
-
-            throw `
-                "ACM certificate validation timed out."
         }
 
         # ----------------------------------------------------
@@ -792,7 +1195,8 @@ function Wait-ForAcmCertificateIssued {
                 "ACM validation timeout. Current status: $status"
         }
 
-        Start-Sleep -Seconds $AcmCheckIntervalSeconds
+        Start-Sleep `
+            -Seconds $AcmCheckIntervalSeconds
 
         $elapsedSeconds += $AcmCheckIntervalSeconds
     }
@@ -811,8 +1215,7 @@ function Get-HttpsLoadBalancer {
 
     if ([string]::IsNullOrWhiteSpace($HttpsLoadBalancerName)) {
 
-        throw `
-            "HttpsLoadBalancerName is empty."
+        throw "HttpsLoadBalancerName is empty."
     }
 
     $lbJson = aws elbv2 describe-load-balancers `
@@ -861,8 +1264,7 @@ function Get-HttpsTargetGroup {
 
     if ([string]::IsNullOrWhiteSpace($HttpsTargetGroupName)) {
 
-        throw `
-            "HttpsTargetGroupName is empty."
+        throw "HttpsTargetGroupName is empty."
     }
 
     $tgJson = aws elbv2 describe-target-groups `
@@ -925,9 +1327,17 @@ function Get-ExistingHttpsListener {
             "Unable to describe ALB listeners."
     }
 
+    if ([string]::IsNullOrWhiteSpace($listenerJson)) {
+
+        return $null
+    }
+
     $response = $listenerJson | ConvertFrom-Json
 
-    if ($null -eq $response.Listeners) {
+    if (
+        $null -eq $response.Listeners -or
+        $response.Listeners.Count -eq 0
+    ) {
 
         return $null
     }
@@ -968,6 +1378,31 @@ function Create-HttpsListener {
     Write-Host "===== CREATING HTTPS LISTENER =====" `
         -ForegroundColor Cyan
 
+    # --------------------------------------------------------
+    # FINAL SAFETY CHECK
+    # --------------------------------------------------------
+
+    $CertificateArn = $CertificateArn.Trim()
+
+    if (
+        $CertificateArn `
+        -notmatch `
+        "^arn:aws:acm:$([regex]::Escape($AwsRegion)):\d+:certificate/[a-zA-Z0-9-]+$"
+    ) {
+
+        throw `
+            "Invalid certificate ARN supplied to Create-HttpsListener: '$CertificateArn'"
+    }
+
+    $certificate = Validate-AcmCertificateForAlb `
+        -CertificateArn $CertificateArn
+
+    if ($certificate.Status -ne "ISSUED") {
+
+        throw `
+            "Refusing to create HTTPS listener because certificate is not ISSUED."
+    }
+
     Write-Host ""
     Write-Host "Load Balancer : $LoadBalancerArn"
     Write-Host "Target Group  : $TargetGroupArn"
@@ -975,15 +1410,30 @@ function Create-HttpsListener {
     Write-Host "Port          : $HttpsListenerPort"
     Write-Host ""
 
+    # --------------------------------------------------------
     # IMPORTANT:
-    # At this point ACM has already been confirmed as ISSUED.
+    #
+    # Exactly ONE certificate must be supplied as default.
+    #
+    # Never pass multiple ARNs in this variable.
+    # --------------------------------------------------------
+
+    $certificateParameter = "CertificateArn=$CertificateArn"
+
+    $defaultAction = `
+        "Type=forward,TargetGroupArn=$TargetGroupArn"
+
+    Write-Host ""
+    Write-Host `
+        "Creating ALB HTTPS listener..." `
+        -ForegroundColor Cyan
 
     $listenerArn = aws elbv2 create-listener `
         --load-balancer-arn $LoadBalancerArn `
         --protocol HTTPS `
         --port $HttpsListenerPort `
-        --certificates "CertificateArn=$CertificateArn" `
-        --default-actions "Type=forward,TargetGroupArn=$TargetGroupArn" `
+        --certificates $certificateParameter `
+        --default-actions $defaultAction `
         --region $AwsRegion `
         --query "Listeners[0].ListenerArn" `
         --output text
@@ -996,7 +1446,7 @@ function Create-HttpsListener {
 
     if (
         [string]::IsNullOrWhiteSpace($listenerArn) -or
-        $listenerArn -eq "None"
+        $listenerArn.Trim() -eq "None"
     ) {
 
         throw `
@@ -1006,7 +1456,8 @@ function Create-HttpsListener {
     $listenerArn = $listenerArn.Trim()
 
     Write-Host ""
-    Write-Host "✅ HTTPS listener created." `
+    Write-Host `
+        "✅ HTTPS listener created." `
         -ForegroundColor Green
 
     Write-Host "Listener ARN: $listenerArn"
@@ -1036,16 +1487,31 @@ function Update-HttpsListener {
     Write-Host "===== UPDATING HTTPS LISTENER =====" `
         -ForegroundColor Cyan
 
+    $CertificateArn = $CertificateArn.Trim()
+
+    # --------------------------------------------------------
+    # FINAL SAFETY CHECK
+    # --------------------------------------------------------
+
+    Validate-AcmCertificateForAlb `
+        -CertificateArn $CertificateArn | Out-Null
+
     Write-Host ""
     Write-Host "Listener ARN  : $ListenerArn"
     Write-Host "Certificate   : $CertificateArn"
     Write-Host "Target Group  : $TargetGroupArn"
     Write-Host ""
 
+    $certificateParameter = `
+        "CertificateArn=$CertificateArn"
+
+    $defaultAction = `
+        "Type=forward,TargetGroupArn=$TargetGroupArn"
+
     aws elbv2 modify-listener `
         --listener-arn $ListenerArn `
-        --certificates "CertificateArn=$CertificateArn" `
-        --default-actions "Type=forward,TargetGroupArn=$TargetGroupArn" `
+        --certificates $certificateParameter `
+        --default-actions $defaultAction `
         --region $AwsRegion `
         --output json
 
@@ -1056,7 +1522,8 @@ function Update-HttpsListener {
     }
 
     Write-Host ""
-    Write-Host "✅ HTTPS listener updated." `
+    Write-Host `
+        "✅ HTTPS listener updated." `
         -ForegroundColor Green
 
     return $ListenerArn
@@ -1081,6 +1548,8 @@ function Verify-HttpsListener {
     Write-Host "===== VERIFYING HTTPS LISTENER =====" `
         -ForegroundColor Cyan
 
+    $CertificateArn = $CertificateArn.Trim()
+
     $listenerJson = aws elbv2 describe-listeners `
         --listener-arns $ListenerArn `
         --region $AwsRegion `
@@ -1101,11 +1570,7 @@ function Verify-HttpsListener {
     $response = $listenerJson | ConvertFrom-Json
 
     # --------------------------------------------------------
-    # IMPORTANT FIX:
-    # Never blindly use:
-    #
-    # $response.Listeners[0]
-    #
+    # IMPORTANT FIX
     # --------------------------------------------------------
 
     if (
@@ -1140,6 +1605,7 @@ function Verify-HttpsListener {
             if ($certificate.CertificateArn -eq $CertificateArn) {
 
                 $certificateFound = $true
+
                 break
             }
         }
@@ -1152,7 +1618,8 @@ function Verify-HttpsListener {
     }
 
     Write-Host ""
-    Write-Host "✅ HTTPS listener verification successful." `
+    Write-Host `
+        "✅ HTTPS listener verification successful." `
         -ForegroundColor Green
 
     Write-Host ""
@@ -1160,6 +1627,16 @@ function Verify-HttpsListener {
     Write-Host "Protocol     : $($listener.Protocol)"
     Write-Host "Port         : $($listener.Port)"
     Write-Host "SSL Policy   : $($listener.SslPolicy)"
+
+    Write-Host ""
+    Write-Host "Attached certificates:" -ForegroundColor Cyan
+
+    foreach ($certificate in $listener.Certificates) {
+
+        Write-Host `
+            "  $($certificate.CertificateArn)" `
+            -ForegroundColor Green
+    }
 }
 
 
@@ -1174,7 +1651,8 @@ function Invoke-HttpsSetup {
     Write-Host "============================================================" `
         -ForegroundColor Cyan
 
-    Write-Host "          HTTPS / ACM / ROUTE 53 SETUP" `
+    Write-Host `
+        "          HTTPS / ACM / ROUTE 53 SETUP" `
         -ForegroundColor Cyan
 
     Write-Host "============================================================" `
@@ -1208,18 +1686,25 @@ function Invoke-HttpsSetup {
 
     if ($null -ne $existingCertificate) {
 
-        $certificateArn = $existingCertificate.CertificateArn
-        $certificateStatus = $existingCertificate.Status
+        $certificateArn = `
+            $existingCertificate.CertificateArn.Trim()
+
+        $certificateStatus = `
+            $existingCertificate.Status
 
         Write-Host ""
-        Write-Host "Using existing ACM certificate." `
+        Write-Host `
+            "Using existing matching ACM certificate." `
             -ForegroundColor Green
+
+        Write-Host "Certificate ARN : $certificateArn"
+        Write-Host "Certificate Status : $certificateStatus"
     }
     else {
 
         Write-Host ""
         Write-Host `
-            "Certificate for $RootDomain does not exist. Creating..." `
+            "No suitable ACM certificate found. Creating new certificate..." `
             -ForegroundColor Yellow
 
         $certificateArn = Request-AcmCertificate
@@ -1228,16 +1713,40 @@ function Invoke-HttpsSetup {
     }
 
     # --------------------------------------------------------
+    # MAKE SURE ARN IS ONLY ONE VALUE
+    # --------------------------------------------------------
+
+    $certificateArn = $certificateArn.Trim()
+
+    if (
+        $certificateArn -match "\s"
+    ) {
+
+        throw `
+            "Certificate ARN contains whitespace or multiple values: '$certificateArn'"
+    }
+
+    Write-Host ""
+    Write-Host "Selected Certificate ARN:" -ForegroundColor Cyan
+    Write-Host $certificateArn -ForegroundColor Green
+
+    # --------------------------------------------------------
     # ACM VALIDATION
     # --------------------------------------------------------
 
     Write-Host ""
-    Write-Host "Current ACM Status: $certificateStatus" `
+    Write-Host `
+        "Current ACM Status: $certificateStatus" `
         -ForegroundColor Yellow
 
     if ($certificateStatus -eq "PENDING_VALIDATION") {
 
-        # Give ACM a moment to populate ResourceRecord.
+        Write-Host ""
+        Write-Host `
+            "Certificate requires DNS validation." `
+            -ForegroundColor Yellow
+
+        # Give ACM a moment to populate validation records.
         Start-Sleep -Seconds 5
 
         Create-AcmValidationRecords `
@@ -1273,13 +1782,15 @@ function Invoke-HttpsSetup {
     # FINAL ACM CHECK
     # --------------------------------------------------------
 
-    $finalCertificate = Get-AcmCertificateDetails `
+    Write-Host ""
+    Write-Host `
+        "Performing final ACM validation before touching ALB..." `
+        -ForegroundColor Cyan
+
+    $finalCertificate = Validate-AcmCertificateForAlb `
         -CertificateArn $certificateArn
 
     if ($finalCertificate.Status -ne "ISSUED") {
-
-        Show-AcmValidationStatus `
-            -CertificateArn $certificateArn
 
         throw `
             "Certificate is not ISSUED. Current status: $($finalCertificate.Status)"
@@ -1289,7 +1800,8 @@ function Invoke-HttpsSetup {
     Write-Host "============================================================" `
         -ForegroundColor Green
 
-    Write-Host "       ✅ ACM CERTIFICATE IS READY" `
+    Write-Host `
+        "       ✅ ACM CERTIFICATE IS READY" `
         -ForegroundColor Green
 
     Write-Host "============================================================" `
@@ -1336,10 +1848,12 @@ function Invoke-HttpsSetup {
     else {
 
         Write-Host ""
-        Write-Host "Existing HTTPS listener found." `
+        Write-Host `
+            "Existing HTTPS listener found." `
             -ForegroundColor Green
 
-        Write-Host "Listener ARN: $($existingListener.ListenerArn)"
+        Write-Host `
+            "Listener ARN: $($existingListener.ListenerArn)"
 
         $listenerArn = Update-HttpsListener `
             -ListenerArn $existingListener.ListenerArn `
@@ -1363,7 +1877,8 @@ function Invoke-HttpsSetup {
     Write-Host "============================================================" `
         -ForegroundColor Green
 
-    Write-Host "           ✅ HTTPS SETUP COMPLETED" `
+    Write-Host `
+        "           ✅ HTTPS SETUP COMPLETED" `
         -ForegroundColor Green
 
     Write-Host "============================================================" `
@@ -1390,7 +1905,8 @@ function Invoke-HttpsSetup {
 
     Write-Host ""
 
-    Write-Host "✅ HTTPS configuration completed successfully." `
+    Write-Host `
+        "✅ HTTPS configuration completed successfully." `
         -ForegroundColor Green
 }
 
@@ -1406,7 +1922,8 @@ try {
     Write-Host "============================================================" `
         -ForegroundColor Cyan
 
-    Write-Host "              PROJECT SETUP WIZARD" `
+    Write-Host `
+        "              PROJECT SETUP WIZARD" `
         -ForegroundColor Cyan
 
     Write-Host "============================================================" `
@@ -1874,17 +2391,18 @@ try {
 
     Write-Host ""
     Write-Host ""
+
     Write-Host "============================================================" `
         -ForegroundColor Green
 
-    Write-Host "       ✅ SETUP COMPLETED SUCCESSFULLY" `
+    Write-Host `
+        "       ✅ SETUP COMPLETED SUCCESSFULLY" `
         -ForegroundColor Green
 
     Write-Host "============================================================" `
         -ForegroundColor Green
 
     Write-Host ""
-
 }
 catch {
 
@@ -1896,7 +2414,8 @@ catch {
         -ErrorRecord $_
 
     Write-Host ""
-    Write-Host "❌ Project setup FAILED." `
+    Write-Host `
+        "❌ Project setup FAILED." `
         -ForegroundColor Red
 
     Write-Host ""

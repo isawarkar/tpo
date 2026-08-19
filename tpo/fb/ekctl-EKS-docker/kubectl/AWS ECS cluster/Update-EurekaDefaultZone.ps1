@@ -10,69 +10,118 @@ param(
     [switch]$DryRun
 )
 
-$resourcesPath = Join-Path $RootFolder "src\main\resources"
-if (-not (Test-Path -LiteralPath $resourcesPath)) {
-    throw "Resources folder not found: $resourcesPath"
+if (-not (Test-Path -LiteralPath $RootFolder)) {
+    throw "Root folder not found: $RootFolder"
 }
 
-$targetUrl = "http://$NewEurekaHost`:$EurekaPort/eureka"
+$targetUrl = "http://$NewEurekaHost`:$EurekaPort/eureka/"
 
-$files = Get-ChildItem -LiteralPath $resourcesPath -Recurse -File |
-    Where-Object { $_.Extension -in @(".yml", ".yaml") }
+# Find both files recursively
+$files = Get-ChildItem `
+    -LiteralPath $RootFolder `
+    -Recurse `
+    -File |
+    Where-Object {
+        $_.Name -eq "application.properties" -or
+        $_.Name -eq "application-prod.properties"
+    }
 
 $updated = @()
 $skipped = @()
 
 foreach ($f in $files) {
+
     $lines = Get-Content -LiteralPath $f.FullName
     $changed = $false
 
     for ($i = 0; $i -lt $lines.Count; $i++) {
+
         $line = $lines[$i]
 
-        # Match defaultZone pointing to Eureka BUT exclude host.docker.internal
+        # ============================================================
+        # application-prod.properties
+        # Update Eureka defaultZone
+        # ============================================================
         if (
-            $line -match '^\s*defaultZone\s*:\s*.*?/eureka\s*$' -and
+            $f.Name -eq "application-prod.properties" -and
+            $line -match '^\s*eureka\.client\.service-url\.defaultZone\s*=' -and
+            $line -match '/eureka/?\s*$' -and
             $line -notmatch '(?i)host\.docker\.internal'
         ) {
-            # Keep indentation
+
             $indent = ($line -replace '^(\s*).*$', '$1')
 
-            # Preserve quote style
-            if ($line -match 'defaultZone\s*:\s*"') {
-                $newLine = "${indent}defaultZone: `"$targetUrl`""
-            }
-            elseif ($line -match "defaultZone\s*:\s*'") {
-                $newLine = "${indent}defaultZone: '$targetUrl'"
-            }
-            else {
-                $newLine = "${indent}defaultZone: $targetUrl"
-            }
+            $newLine = "${indent}eureka.client.service-url.defaultZone=$targetUrl"
 
             if ($newLine -ne $line) {
                 $lines[$i] = $newLine
                 $changed = $true
+
+                Write-Host "  Eureka defaultZone -> $targetUrl" -ForegroundColor Cyan
+            }
+        }
+
+        # ============================================================
+        # application.properties
+        # Update active Spring profile
+        # ============================================================
+        if (
+            $f.Name -eq "application.properties" -and
+            $line -match '^\s*spring\.profiles\.active\s*='
+        ) {
+
+            $indent = ($line -replace '^(\s*).*$', '$1')
+
+            $newLine = "${indent}spring.profiles.active=prod"
+
+            if ($newLine -ne $line) {
+                $lines[$i] = $newLine
+                $changed = $true
+
+                Write-Host "  Spring profile -> prod" -ForegroundColor Cyan
             }
         }
     }
 
     if ($changed) {
+
         if ($DryRun) {
-            Write-Host "[DRYRUN] Would update: $($f.FullName)" -ForegroundColor Cyan
-        } else {
-            Copy-Item -LiteralPath $f.FullName -Destination ($f.FullName + ".bak") -Force
-            Set-Content -LiteralPath $f.FullName -Value $lines -Encoding UTF8
+
+            Write-Host "[DRYRUN] Would update: $($f.FullName)" -ForegroundColor Yellow
+
+        }
+        else {
+
+            # Backup original file
+            Copy-Item `
+                -LiteralPath $f.FullName `
+                -Destination ($f.FullName + ".bak") `
+                -Force
+
+            # Write updated content
+            Set-Content `
+                -LiteralPath $f.FullName `
+                -Value $lines `
+                -Encoding UTF8
+
             Write-Host "Updated: $($f.FullName)" -ForegroundColor Green
         }
+
         $updated += $f.FullName
-    } else {
+    }
+    else {
+
+        Write-Host "[SKIP] No changes required: $($f.FullName)" -ForegroundColor Gray
+
         $skipped += $f.FullName
     }
 }
 
 Write-Host ""
 Write-Host "========== SUMMARY ==========" -ForegroundColor Magenta
+Write-Host ("Found files   : {0}" -f $files.Count) -ForegroundColor White
 Write-Host ("Updated files : {0}" -f $updated.Count) -ForegroundColor Green
 Write-Host ("Skipped files : {0}" -f $skipped.Count) -ForegroundColor Yellow
-Write-Host ("Target URL    : {0}" -f $targetUrl) -ForegroundColor Cyan
-Write-Host ("Scanned path  : {0}" -f $resourcesPath) -ForegroundColor Cyan
+Write-Host ("Eureka URL    : {0}" -f $targetUrl) -ForegroundColor Cyan
+Write-Host ("Spring Profile: prod") -ForegroundColor Cyan
+Write-Host ("Root path     : {0}" -f $RootFolder) -ForegroundColor Cyan

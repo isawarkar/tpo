@@ -41,7 +41,7 @@ public class Parent {
 	@Value("${superUserEmail}")
 	public String superUserEmail;
 
-	@Value("${superUser}")
+	@Value("${supperUser}")
 	public String supperUser;
 
 	@Value("${defaultPass}")

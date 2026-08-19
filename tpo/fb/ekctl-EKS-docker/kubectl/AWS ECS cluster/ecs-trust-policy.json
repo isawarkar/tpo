@@ -4,11 +4,11 @@
     {
       "Action": "UPSERT",
       "ResourceRecordSet": {
-        "Name": "student.fresherbuddy.in",
+        "Name": "exam.fresherbuddy.in",
         "Type": "A",
         "AliasTarget": {
           "HostedZoneId": "Z35SXDOTRQ7X7K",
-          "DNSName": "fb-ecs-load-balancer-116304416.us-east-1.elb.amazonaws.com",
+          "DNSName": "fb-ecs-load-balancer-1808611089.us-east-1.elb.amazonaws.com",
           "EvaluateTargetHealth": true
         }
       }
