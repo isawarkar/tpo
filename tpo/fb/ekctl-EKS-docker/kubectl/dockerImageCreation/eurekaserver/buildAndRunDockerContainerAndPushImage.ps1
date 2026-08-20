@@ -1,6 +1,6 @@
 $RepositoryName = "eureka"
 $Region = "us-east-1"
-cd D:\latestworks\tpo\$appname
+cd D:\latestworks\tpo\eurekaserver
 mvn install
 D:
 copy D:\latestworks\tpo\eurekaserver\target\eurekaServer-0.0.1-SNAPSHOT.jar D:\latestworks\tpo\fb\ekctl-EKS-docker\kubectl\dockerImageCreation\eurekaserver\eurekaServer-0.0.1-SNAPSHOT.jar

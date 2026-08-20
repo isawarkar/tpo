@@ -124,15 +124,25 @@ if (-not $CleanupOnly) {
         $ecsTrustPolicy | Out-File -Encoding ASCII -FilePath $trustFile
         aws iam create-role --role-name $ecsTaskExecutionRoleName --assume-role-policy-document file://$trustFile
         aws iam attach-role-policy --role-name $ecsTaskExecutionRoleName --policy-arn arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
-
-        $ecsLogPolicy = @"
+		aws iam attach-role-policy --role-name $ecsTaskExecutionRoleName --policy-arn arn:aws:iam::aws:policy/AmazonS3FullAccess
+       $ecsLogPolicy = @"
 {
   "Version": "2012-10-17",
   "Statement": [
     {
       "Effect": "Allow",
-      "Action": [ "logs:CreateLogStream", "logs:PutLogEvents" ],
+      "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
       "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "secretsmanager:GetSecretValue"
+      ],
+      "Resource": "arn:aws:secretsmanager:us-east-1:356723301672:secret:eureka/aws-credentials-*"
     }
   ]
 }
@@ -140,6 +150,33 @@ if (-not $CleanupOnly) {
         $logPolicyFile = "$env:TEMP\ecs-log-policy.json"
         $ecsLogPolicy | Out-File -Encoding ASCII -FilePath $logPolicyFile
         aws iam put-role-policy --role-name $ecsTaskExecutionRoleName --policy-name MyEcsTaskLoggingPolicy --policy-document file://$logPolicyFile
+		
+		
+		# Allow ECS to read your Secrets Manager secret
+$secretsPolicy = @"
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "secretsmanager:GetSecretValue"
+      ],
+      "Resource": "arn:aws:secretsmanager:us-east-1:356723301672:secret:eureka/aws-credentials-*"
+    }
+  ]
+}
+"@
+
+$secretsPolicyFile = "$env:TEMP\ecs-secrets-policy.json"
+$secretsPolicy | Out-File -Encoding ASCII -FilePath $secretsPolicyFile
+
+# Attach Secrets Manager permission to the execution role
+aws iam put-role-policy `
+  --role-name $ecsTaskExecutionRoleName `
+  --policy-name "EurekaSecretsManagerAccess" `
+  --policy-document file://$secretsPolicyFile
+  
         Write-Host "Role $ecsTaskExecutionRoleName created and configured."
     }
 
@@ -149,20 +186,40 @@ if (-not $CleanupOnly) {
     Write-Host "Log Group created: $logGroupName"
 
     # Prepare Task Definition
-    $containerDef = @"
+ $secretArn = aws secretsmanager describe-secret `
+  --secret-id "eureka/aws-credentials" `
+  --query "ARN" `
+  --output text
+
+Write-Host "Secret ARN: $secretArn"
+
+$containerDef = @"
 [
   {
     "name": "$containerName",
     "image": "$imageName",
     "essential": true,
+
+    "secrets": [
+      {
+        "name": "AWS_ACCESS_KEY",
+        "valueFrom": "${secretArn}:accessKey::"
+      },
+      {
+        "name": "AWS_SECRET_KEY",
+        "valueFrom": "${secretArn}:secretKey::"
+      }
+    ],
+
     "logConfiguration": {
-        "logDriver": "awslogs",
-        "options": {
-          "awslogs-group": "$logGroupName",
-          "awslogs-region": "$region",
-          "awslogs-stream-prefix": "ecs"
-        }
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "$logGroupName",
+        "awslogs-region": "$region",
+        "awslogs-stream-prefix": "ecs"
+      }
     },
+
     "portMappings": [
       {
         "containerPort": $port,
@@ -192,6 +249,7 @@ if (-not $CleanupOnly) {
         --cpu "256" `
         --memory "512" `
         --execution-role-arn $ecsTaskExecutionRoleArn `
+		--task-role-arn $ecsTaskExecutionRoleArn `
         --container-definitions $containerDef `
         --query 'taskDefinition.taskDefinitionArn' --output text
     Write-Host "Task definition registered: $taskDefArn"
@@ -202,6 +260,7 @@ $taskArn = aws ecs run-task `
     --cluster $clusterName `
     --task-definition $taskName `
     --launch-type FARGATE `
+	--enable-execute-command `
     --network-configuration "awsvpcConfiguration={subnets=[$subnet1,$subnet2],securityGroups=[$sg],assignPublicIp='ENABLED'}" `
     --query 'tasks[0].taskArn' `
     --output text

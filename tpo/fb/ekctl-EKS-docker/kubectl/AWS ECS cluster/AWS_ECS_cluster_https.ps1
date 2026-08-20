@@ -550,7 +550,7 @@ function createECSCluster {
         $ecsTrustPolicy | Out-File -Encoding ASCII -FilePath $trustFile
         aws iam create-role --role-name $ecsTaskExecutionRoleName --assume-role-policy-document file://$trustFile
         aws iam attach-role-policy --role-name $ecsTaskExecutionRoleName --policy-arn arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
-
+		aws iam attach-role-policy --role-name $ecsTaskExecutionRoleName --policy-arn arn:aws:iam::aws:policy/AmazonS3FullAccess
         $ecsLogPolicy = @"
 {
   "Version": "2012-10-17",
@@ -636,6 +636,7 @@ Write-Host "Subnets : $subnet1 , $subnet2 under with VPC ID : $vpcId , Total sub
         --cpu $cpu `
         --memory $memory `
         --execution-role-arn $ecsTaskExecutionRoleArn `
+		--task-role-arn $ecsTaskExecutionRoleArn `
         --container-definitions $containerDef `
         --query 'taskDefinition.taskDefinitionArn' --output text
     Write-Host "Task definition registered: $taskDefArn"
@@ -813,6 +814,7 @@ createRule -listenerArn $listenerArn
     --task-definition $taskName `
     --desired-count $desiredTgCount `
     --launch-type FARGATE `
+	--enable-execute-command `
     --network-configuration "awsvpcConfiguration={subnets=[$subnet1,$subnet2],securityGroups=[$sg],assignPublicIp=ENABLED}" `
     --load-balancers "[{""targetGroupArn"":""$targetGroupArn"",""containerName"":""$containerName"",""containerPort"":$port}]" `
     --deployment-configuration "maximumPercent=200,minimumHealthyPercent=100"
