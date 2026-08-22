@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView01"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <LinearLayout
+        android:id="@+id/aboutLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:orientation="vertical" >
+
+        <ProgressBar
+            android:id="@+id/progressbar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/framelauout"
+            android:layout_marginTop="-7dp"
+            android:backgroundTint="#FEFBDE"
+            android:indeterminate="true"
+            android:indeterminateTint="#1a09d6"
+            android:max="100"
+            android:visibility="gone" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/versionNo"
+            android:textColor="#FF0000"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/versionNo"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#009933"
+            android:textSize="30sp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/developedBy"
+            android:textColor="#FF0000"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/uddanda"
+            android:textColor="#009933"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/address"
+            android:textColor="#FF0000"
+            android:textSize="15sp" />
+
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="305sp"
+            android:layout_height="250sp"
+            />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/addressdetails"
+            android:textColor="#FF0000"
+            android:textSize="10sp" />
+
+        <Button
+            android:id="@+id/submitButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="140sp"
+            android:layout_weight="0.20"
+            android:background="@drawable/gradient_lyout"
+            android:text="@string/ok" />
+    </LinearLayout>
+
+</ScrollView>
