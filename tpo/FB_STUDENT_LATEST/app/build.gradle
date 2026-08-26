@@ -1,0 +1,61 @@
+plugins {
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.compose)
+}
+
+android {
+    namespace 'com.ut.fbn'
+    compileSdk 37
+
+    defaultConfig {
+        applicationId "com.ut.fbn"
+        minSdk 26
+        targetSdk 37
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [MAPS_API_KEY: "AIzaSyA6bJ9pBAtQzr0shrp_2vej3zc9Iculnw4"]
+    }
+
+    buildTypes {
+        release {
+            optimization {
+                enable false
+            }
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    buildFeatures {
+        compose true
+    }
+}
+
+dependencies {
+    implementation platform(libs.androidx.compose.bom)
+    implementation libs.androidx.activity.compose
+    implementation libs.androidx.appcompat
+    implementation libs.androidx.compose.material3
+    implementation libs.androidx.compose.ui
+    implementation libs.androidx.compose.ui.graphics
+    implementation libs.androidx.compose.ui.tooling.preview
+    implementation libs.androidx.core.ktx
+    implementation libs.androidx.preference
+    implementation libs.androidx.fragment
+    implementation libs.androidx.viewpager
+    implementation libs.androidx.annotation
+    implementation libs.androidx.lifecycle.runtime.ktx
+    testImplementation libs.junit
+    androidTestImplementation platform(libs.androidx.compose.bom)
+    androidTestImplementation libs.androidx.compose.ui.test.junit4
+    androidTestImplementation libs.androidx.espresso.core
+    androidTestImplementation libs.androidx.junit
+    debugImplementation libs.androidx.compose.ui.test.manifest
+    debugImplementation libs.androidx.compose.ui.tooling
+    implementation fileTree(dir: "libs", include: ["*.jar"], exclude: ["google-play-services.jar", "android-support-v13.jar", "android-support-v7-appcompat.jar"])
+    implementation("com.google.android.gms:play-services-maps:20.0.0")
+}

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_marginEnd="10dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginTop="5dp"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="350dp"
+        android:layout_height="100dp" >
+    </androidx.viewpager.widget.ViewPager>
+
+    <LinearLayout
+        android:id="@+id/settingLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <ProgressBar
+            android:id="@+id/progressbar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/framelauout"
+            android:layout_marginTop="-7dp"
+            android:backgroundTint="#FEFBDE"
+            android:indeterminate="true"
+            android:indeterminateTint="#1a09d6"
+            android:max="100"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/openingNotification"
+                android:layout_width="222dp"
+                android:layout_height="40dp"
+                android:text="Show Opening Notifications"
+                android:textColor="#FF0000"
+                android:textSize="6pt" />
+
+            <CheckBox
+                android:id="@+id/openingNotificationBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/noticeNotification"
+                android:layout_width="222dp"
+                android:layout_height="40dp"
+                android:text="Show Notice Notifications"
+                android:textColor="#FF0000"
+                android:textSize="6pt" />
+
+            <CheckBox
+                android:id="@+id/noticeNotificationBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/feeNotification"
+                android:layout_width="222dp"
+                android:layout_height="40dp"
+                android:text="Show Fee Notifications"
+                android:textColor="#FF0000"
+                android:textSize="6pt" />
+
+            <CheckBox
+                android:id="@+id/feeNotificationBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/saveSetting"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/gradient_lyout"
+                android:text="Save Setting" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

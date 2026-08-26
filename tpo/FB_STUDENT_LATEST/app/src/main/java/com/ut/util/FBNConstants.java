@@ -1,0 +1,28 @@
+package com.ut.util;
+
+import android.graphics.Color;
+import android.os.Environment;
+
+public interface FBNConstants {
+	String USERNAME = "userName";
+	String OPENINGS = "OPENINGS";
+	String NOTICS = "NOTICS";
+	String FEE_REMINDER = "FEE_REMINDER";
+	String EVENTS = "EVENTS";
+	String ELIGIBLE_OPENINGS = "ELIGIBLE_OPENINGS";
+	String RESULT_LIST = "RESULT_LIST";
+	String DOCUMENT_LIST = "DOCUMENT_LIST";
+	Integer NOTIFICATION_TIME_IN_MINUTE = 1;
+	String OPENNING_NOTOFICATION = "OPENNING_NOTOFICATION";
+	String NOTICE_NOTOFICATION = "NOTICE_NOTOFICATION";
+	String FEE_NOTOFICATION = "FEE_NOTOFICATION";
+	String PROFILE_TEXT = "PROFILE_TEXT";
+	String MOBILE_NO = "MOBILE_NO";
+	String MOBILE_VERIFIED = "MOBILE_VERIFIED";
+	String EMAIL_VERIFIED = "EMAIL_VERIFIED";
+	String EMAIL_ADDRESS = "EMAIL_ADDRESS";
+	int FONT_COLOR = Color.MAGENTA;
+	int LIST_BACKGROUND_COLOR = Color.CYAN;
+	String TOTAL_VERIFIED = "TOTAL_VERIFIED";
+	String FBN_DOWNLOAD_DIR = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/FBN/";
+}
