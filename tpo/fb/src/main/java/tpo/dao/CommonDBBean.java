@@ -2172,30 +2172,39 @@ public class CommonDBBean extends Parent {
 
 	public byte[] getCompanyePic(String companyId) {
 		byte[] buf = null;
-		companyId = companyId + ".png";
-		if (companyId != null) {
+		if (companyId != null &&  !"".equals(companyId)) {
+			companyId = companyId + ".png";
+			
 			buf = fileUploadUtility.downloadFileWithParam(getImageServiceUrl() + "/downloadImage", companyId,
 					IMAGECONS.company.toString());
+		}
+		else {
+			TpoUtil.getNABytes();
 		}
 		return buf;
 	}
 
 	public byte[] getClientLogo(String userName) {
 		byte[] buf = null;
+		if(userName != null && !"".equals(userName)) {
 		userName = userName + ".png";
-		if (userName != null) {
-			buf = fileUploadUtility.downloadFileWithParam(getImageServiceUrl() + "/downloadImage", userName,
+				buf = fileUploadUtility.downloadFileWithParam(getImageServiceUrl() + "/downloadImage", userName,
 					IMAGECONS.userlogo.toString());
+		}else {
+			TpoUtil.getNABytes();
 		}
 		return buf;
 	}
 
 	public byte[] getUserProfilePic(String userName) {
 		byte[] buf = null;
-		userName = userName + ".png";
-		if (userName != null) {
+		if (userName != null &&  !"".equals(userName)) {
+			userName = userName + ".png";
 			buf = fileUploadUtility.downloadFileWithParam(getImageServiceUrl() + "/downloadImage", userName,
 					IMAGECONS.userprofilepics.toString());
+		}
+		else {
+			TpoUtil.getNABytes();
 		}
 		return buf;
 	}
